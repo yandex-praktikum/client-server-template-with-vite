@@ -1,5 +1,5 @@
 ARG NODE_VERSION=16
-ARG SERVER_PORT=3000
+ARG SERVER_PORT=3001
 
 FROM node:$NODE_VERSION-buster as base
 
@@ -12,7 +12,7 @@ COPY . .
 
 RUN yarn install --frozen-lockfile
 RUN yarn lerna bootstrap
-RUN yarn build --scope=server
+RUN rm -rf /app/packages/server/dist/ && yarn build --scope=server
 
 
 FROM node:$NODE_VERSION-buster-slim as production
