@@ -1,0 +1,32 @@
+html {
+  box-sizing: border-box;
+  font-size: 18px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+*:focus {
+  outline: none;
+}
+
+img {
+  box-sizing: content-box;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+select,
+label {
+  cursor: pointer;
+}
+
+body {
+  margin: 0;
+  font: 1rem Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
