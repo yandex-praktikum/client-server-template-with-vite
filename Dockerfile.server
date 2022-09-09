@@ -3,14 +3,15 @@ ARG SERVER_PORT=3001
 
 FROM node:$NODE_VERSION-buster as base
 
-RUN mkdir -p /app
 WORKDIR /app
 
 FROM base as builder
 
+COPY package.json yarn.lock
+RUN yarn install --frozen-lockfile
+
 COPY . .
 
-RUN yarn install --frozen-lockfile
 RUN yarn lerna bootstrap
 RUN rm -rf /app/packages/server/dist/ && yarn build --scope=server
 
