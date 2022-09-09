@@ -1,0 +1,10 @@
+body, html {
+    margin: 0 auto;
+    padding: 0;
+    width: 1440px;
+    min-width: 1440px;
+    max-width: 1440px;
+    overflow: hidden;
+    font-family: Inter, sans-serif;
+    font-weight: 500;
+}

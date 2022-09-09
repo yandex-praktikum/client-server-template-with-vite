@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import './App.css'
+import ProfilePage from './components/ProfilePage/ProfilePage'
 
 function App() {
   useEffect(() => {
@@ -11,7 +12,7 @@ function App() {
 
     fetchServerData()
   }, [])
-  return <div className="App">Вот тут будет жить ваше приложение :)</div>
+  return <div className="App"><ProfilePage /></div>
 }
 
 export default App
