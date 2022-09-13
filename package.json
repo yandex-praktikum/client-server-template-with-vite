@@ -8,7 +8,7 @@
     "dev:server": "lerna run dev --scope=server",
     "dev": "lerna run dev",
     "test": "lerna run test",
-    "lint": "lerna run lint",
+    "lint": "lerna run lint --fix",
     "format": "lerna run format",
     "preview": "lerna run preview"
   },

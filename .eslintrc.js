@@ -2,21 +2,21 @@ module.exports = {
   env: {
     browser: true,
     es2020: true,
-    node: true
+    node: true,
   },
   extends: [
     'eslint:recommended',
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript",
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:sonarjs/recommended',
-    'prettier'
+    'prettier',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 11
+    ecmaVersion: 11,
   },
   plugins: ['@typescript-eslint', 'sonarjs'],
   rules: {
@@ -30,12 +30,12 @@ module.exports = {
         'objects': 'always-multiline',
         'imports': 'always-multiline',
         'exports': 'always-multiline',
-        'functions': 'only-multiline'
-      }
+        'functions': 'only-multiline',
+      },
     ],
     'eol-last': [
       'error',
-      'always'
+      'always',
     ],
     'import/default': 2,
     'import/export': 2,
@@ -43,8 +43,8 @@ module.exports = {
     'import/namespace': [
       2,
       {
-        'allowComputed': false
-      }
+        'allowComputed': false,
+      },
     ],
     'import/no-restricted-paths': 2,
     'import/order': [
@@ -52,7 +52,7 @@ module.exports = {
       {
         'alphabetize': {
           'order': 'asc',
-          'caseInsensitive': true
+          'caseInsensitive': true,
         },
         'groups': [
           'external',
@@ -61,10 +61,10 @@ module.exports = {
           'sibling',
           'parent',
           'builtin',
-          'object'
+          'object',
         ],
-        'newlines-between': 'always'
-      }
+        'newlines-between': 'always',
+      },
     ],
     'max-len': [
       'error',
@@ -72,61 +72,61 @@ module.exports = {
         'code': 120,
         'ignoreStrings': true,
         'ignoreTemplateLiterals': true,
-        'ignoreRegExpLiterals': true
-      }
+        'ignoreRegExpLiterals': true,
+      },
     ],
     'no-multiple-empty-lines': [
       'error',
       {
-        'max': 1
-      }
+        'max': 1,
+      },
     ],
     'no-trailing-spaces': [
-      'error'
+      'error',
     ],
     'object-curly-spacing': [
       'error',
-      'always'
+      'always',
     ],
     'padding-line-between-statements': [
       'error',
       {
         'blankLine': 'always',
         'prev': '*',
-        'next': 'return'
+        'next': 'return',
       },
       {
         'blankLine': 'always',
         'prev': '*',
-        'next': 'block'
+        'next': 'block',
       },
       {
         'blankLine': 'always',
         'prev': 'block',
-        'next': '*'
+        'next': '*',
       },
       {
         'blankLine': 'always',
         'prev': '*',
-        'next': 'block-like'
+        'next': 'block-like',
       },
       {
         'blankLine': 'always',
         'prev': 'block-like',
-        'next': '*'
-      }
+        'next': '*',
+      },
     ],
     'quotes': [
       'error',
       'single',
       {
-        'avoidEscape': true
-      }
+        'avoidEscape': true,
+      },
     ],
     'semi': [
       'error',
-      'always'
+      'always',
     ],
-    '@typescript-eslint/no-misused-promises': 0
-  }
-}
+    '@typescript-eslint/no-misused-promises': 0,
+  },
+};

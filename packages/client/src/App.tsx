@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 
-export function App(): JSX.Element {
+// import './App.css'
+import LeaderboardPage from './components/LeaderboardPage/LeaderboardPage';
+
+function App() {
   useEffect(() => {
     const fetchServerData = async () => {
       const response = await fetch('http://localhost:3001');
@@ -11,5 +14,11 @@ export function App(): JSX.Element {
     fetchServerData();
   }, []);
 
-  return <div className='App'>Вот тут будет жить ваше приложение :)</div>;
+  return (
+    <div className="App">
+      <LeaderboardPage />
+    </div>
+  );
 }
+
+export default App;
