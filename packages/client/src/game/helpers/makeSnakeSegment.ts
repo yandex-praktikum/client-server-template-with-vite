@@ -1,3 +1,5 @@
+import {blue, green, yellow, red} from '@material-ui/core/colors'
+
 import { TSnakeColor } from '../Snake.types'
 
 // Создает рисунок одного кружочка змейки
@@ -10,7 +12,23 @@ export const makeSnakeSegment = (size: number, color: TSnakeColor) => {
 
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
-  ctx.fillStyle = color
+  switch (color) {
+    case 'blue':
+      ctx.fillStyle = blue.A100
+      break
+    case 'red':
+      ctx.fillStyle = red.A100
+      break
+    case 'yellow':
+      ctx.fillStyle = yellow.A100
+      break
+    case 'green':
+      ctx.fillStyle = green.A200
+      break
+    default:
+      ctx.fillStyle = color
+  }
+
   ctx.strokeStyle = 'black'
   ctx.lineWidth = 2
 
@@ -21,7 +39,7 @@ export const makeSnakeSegment = (size: number, color: TSnakeColor) => {
   ctx.arc(
     canvas.width * 0.5,
     canvas.height * 0.5,
-    size - SHADOW_SIZE ,
+    size - SHADOW_SIZE,
     0,
     Math.PI * 2
   )
