@@ -2,9 +2,11 @@ import { makeSnakeSegment } from './helpers/makeSnakeSegment'
 import { TSnakeColor } from './Snake.types'
 import { getDistanceBetweenTwoPoints } from './helpers/getDistanceBetweenTwoPoints'
 
+const SHOW_LOGS = false
+
 const SIZE_BETWEEN_SEGMENTS = 20
 const SPEED = 2
-const BOOST_SPEED = 6
+const BOOST_SPEED = 4
 
 export class MySnake {
   // позиция головы змейки по горизонтали
@@ -29,12 +31,13 @@ export class MySnake {
     y: number,
     ctx: CanvasRenderingContext2D,
     color?: TSnakeColor,
-    initialSnakeLength = 20
+    initialSnakeLength = 20,
+    size = 30
   ) {
     this.x = x
     this.y = y
     this.ctx = ctx
-    this.r = 30
+    this.r = size
     this.segments = []
     this.color = color || 'red'
 
@@ -113,6 +116,9 @@ export class MySnake {
   }
 
   drawCoordinateLogs(index: number, x: number, y: number) {
+    if (!SHOW_LOGS) {
+      return
+    }
     this.ctx.font = '20px serif'
     this.ctx.fillStyle = this.color
     this.ctx.fillText(
@@ -123,6 +129,9 @@ export class MySnake {
   }
 
   drawEyesLogs(x: number, y: number) {
+    if (!SHOW_LOGS) {
+      return
+    }
     this.ctx.font = '20px serif'
     this.ctx.fillStyle = this.color
     this.ctx.fillText(`eye_x: ${x} ; eye_y: ${y}`, 300, 100)
