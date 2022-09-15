@@ -83,6 +83,8 @@ export function PreviewAnimationCanvas() {
       30
     )
 
+    let loopId: number | null = null
+
     const drawMapLoop = () => {
       ctx.clearRect(0, 0, MAP_WIDTH, MAP_HEIGHT)
       ctx.fillStyle = '#1c1c1c'
@@ -122,10 +124,16 @@ export function PreviewAnimationCanvas() {
       greenSnake.draw()
       blueSnake.draw()
 
-      requestAnimationFrame(drawMapLoop)
+      loopId = requestAnimationFrame(drawMapLoop)
     }
 
     drawMapLoop()
+
+    return () => {
+      if (loopId) {
+        cancelAnimationFrame(loopId)
+      }
+    }
   }, [])
 
   return <canvas ref={ref} />

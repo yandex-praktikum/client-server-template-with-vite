@@ -62,6 +62,8 @@ export function CanvasComponent() {
       snake.move(mousePositionX, mousePositionY, boost)
     }
 
+    let loopId: number | null = null
+
     const drawMapLoop = () => {
       // очищаем все и рисуем карту заново
       ctx.clearRect(0, 0, MAP_WIDTH, MAP_HEIGHT)
@@ -72,7 +74,7 @@ export function CanvasComponent() {
 
       drawLogs()
 
-      requestAnimationFrame(drawMapLoop)
+      loopId = requestAnimationFrame(drawMapLoop)
     }
 
     const intervalId = setInterval(sendCoordsLoop, 0)
@@ -81,6 +83,9 @@ export function CanvasComponent() {
     return () => {
       document.removeEventListener('mousemove', onMouseMove)
       clearInterval(intervalId)
+      if (loopId) {
+        cancelAnimationFrame(loopId)
+      }
     }
   }, [])
 
