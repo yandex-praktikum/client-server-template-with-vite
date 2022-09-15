@@ -71,11 +71,15 @@ export const StartPage = () => {
       <Dialog open={rulesOpen} onClose={handleCloseRules}>
         <DialogTitle>RULES</DialogTitle>
         <DialogContent>
-          <DialogContentText>// TODO: Description rules</DialogContentText>
           <DialogContentText>
-            Some text some text some text some text some text some text some
-            text some text some text some text some text some text
+            Eat items and grow to the maximum possible length. You have 1
+            minute, after which the game will end. Don't crash into the walls
+            otherwise the game will end early.
           </DialogContentText>
+          <DialogContentText>
+            Be the best and you will see yourself on the Leaderboard.
+          </DialogContentText>
+          <DialogContentText>Good luck!</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button
