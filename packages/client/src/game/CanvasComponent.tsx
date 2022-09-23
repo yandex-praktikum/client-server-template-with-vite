@@ -1,6 +1,10 @@
 import React, { useEffect, useRef } from 'react'
 
 import { MySnake } from './Snake'
+import { getDistanceBetweenTwoPoints } from './helpers/getDistanceBetweenTwoPoints'
+import { makeFoodItem } from './helpers/makeFoodItem'
+
+const SHOW_LOGS = true
 
 export function CanvasComponent() {
   const ref = useRef<HTMLCanvasElement>(null)
@@ -47,14 +51,24 @@ export function CanvasComponent() {
     canvas.width = MAP_WIDTH
     canvas.height = MAP_HEIGHT
 
-    const snake = new MySnake(mousePositionX, mousePositionY, ctx, 'green')
+    let { foodY, foodX, foodImg } = makeFoodItem(canvas.width, canvas.height)
+
+    const snake = new MySnake(mousePositionX, mousePositionY, ctx, 'green', 2)
+    snake.showLogs = SHOW_LOGS
 
     const drawLogs = () => {
+      if (!SHOW_LOGS) {
+        return
+      }
       ctx.font = '20px serif'
       ctx.fillStyle = 'white'
       ctx.fillText(`Boost: ${boost}`, 10, 20)
       ctx.fillText(`Snake length: ${snake.segments.length}`, 10, 40)
       ctx.fillText(`Mouse x: ${mousePositionX} ; y: ${mousePositionY}`, 10, 60)
+
+      ctx.fillStyle = 'red'
+      ctx.fillText(`Food x: ${foodX}`, canvas.width - 200, 60)
+      ctx.fillText(`Food y: ${foodY}`, canvas.width - 200, 80)
     }
 
     const sendCoordsLoop = () => {
@@ -64,11 +78,34 @@ export function CanvasComponent() {
 
     let loopId: number | null = null
 
+    const increaseSnakeIfNeed = () => {
+      const distanceToFood = getDistanceBetweenTwoPoints(
+        { x: snake.x, y: snake.y },
+        { x: foodX, y: foodY }
+      )
+
+      if (distanceToFood < 50) {
+        changeFoodItem()
+        snake.increaseLength()
+      }
+    }
+
+    const changeFoodItem = () => {
+      const newFood = makeFoodItem(canvas.width, canvas.height)
+      foodY = newFood.foodY
+      foodX = newFood.foodX
+      foodImg = newFood.foodImg
+    }
+
     const drawMapLoop = () => {
+      increaseSnakeIfNeed()
+
       // очищаем все и рисуем карту заново
       ctx.clearRect(0, 0, MAP_WIDTH, MAP_HEIGHT)
       ctx.fillStyle = '#1c1c1c' // фон карты
       ctx.fillRect(0, 0, MAP_WIDTH, MAP_HEIGHT)
+
+      ctx.drawImage(foodImg, foodX, foodY)
 
       snake.draw()
 
