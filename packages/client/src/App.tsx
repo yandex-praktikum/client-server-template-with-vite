@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import ProfilePage from './components/ProfilePage/ProfilePage';
+import LeaderboardPage from './components/LeaderboardPage/LeaderboardPage';
 
 export function App(): JSX.Element {
   useEffect(() => {
@@ -15,7 +15,7 @@ export function App(): JSX.Element {
 
   return (
     <div className="App">
-      <ProfilePage />
+      <LeaderboardPage/>
     </div>
   );
 }
