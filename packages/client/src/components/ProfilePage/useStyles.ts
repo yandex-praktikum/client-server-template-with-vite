@@ -1,4 +1,4 @@
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -26,4 +26,4 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: 'grey',
     borderRadius: '50%',
   },
-}));
+}))

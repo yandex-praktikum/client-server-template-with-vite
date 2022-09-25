@@ -1,4 +1,4 @@
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -32,4 +32,4 @@ export const useStyles = makeStyles(theme => ({
     margin: theme.spacing(10, 3),
     color: 'black',
   },
-}));
+}))

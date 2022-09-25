@@ -1,10 +1,10 @@
-import { Button } from '@mui/material';
-import React from 'react';
+import { Button } from '@mui/material'
+import React from 'react'
 
-import { useStyles } from './useStyles';
+import { useStyles } from './useStyles'
 
 const Header = () => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <div className={classes.wrapper}>
@@ -36,7 +36,7 @@ const Header = () => {
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

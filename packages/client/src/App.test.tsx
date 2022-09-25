@@ -1,5 +1,5 @@
 // Временно что бы убрать ошибку экспорт пустого объекта.
-export {};
+export {}
 
 // import { render, screen } from '@testing-library/react';
 // //
