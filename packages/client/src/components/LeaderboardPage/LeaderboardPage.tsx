@@ -24,7 +24,7 @@ const LeaderboardPage = () => {
     //  Допустим тут будем обращаться к апи.
     setLeaders(leaderBoardsleaders)
   }, [])
-  return (
+   return (
     <Layout>
       <div className={styles.leaderBoard}>
         <div className={styles.header}>
