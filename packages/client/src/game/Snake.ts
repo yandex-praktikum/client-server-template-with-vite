@@ -2,19 +2,21 @@ import { makeSnakeSegment } from './helpers/makeSnakeSegment'
 import { TSnakeColor } from './Snake.types'
 import { getDistanceBetweenTwoPoints } from './helpers/getDistanceBetweenTwoPoints'
 
+const SHOW_LOGS = false
+
 const SIZE_BETWEEN_SEGMENTS = 20
 const SPEED = 2
-const BOOST_SPEED = 6
+const BOOST_SPEED = 4
 
 export class MySnake {
   // позиция головы змейки по горизонтали
-  private x: number
+  x: number
   // позиция головы змейки по вертикали
-  private y: number
+  y: number
   // контекст канваса, на котором необходимо нарисовать змейку
   private ctx: CanvasRenderingContext2D
   // размер змейки (по масштабу)
-  private readonly r: number
+  r: number
   // массив колец змейки с координатами расположения
   segments: {
     x: number
@@ -23,20 +25,23 @@ export class MySnake {
   // canvas с рисунком 1 кольца
   private readonly canvasSegment: HTMLCanvasElement
   private readonly color: TSnakeColor
+  showLogs: boolean
 
   constructor(
     x: number,
     y: number,
     ctx: CanvasRenderingContext2D,
     color?: TSnakeColor,
-    initialSnakeLength = 20
+    initialSnakeLength = 20,
+    size = 24
   ) {
     this.x = x
     this.y = y
     this.ctx = ctx
-    this.r = 30
+    this.r = size
     this.segments = []
     this.color = color || 'red'
+    this.showLogs = SHOW_LOGS
 
     for (let i = 0; i < initialSnakeLength; i++) {
       this.segments.push({
@@ -113,6 +118,9 @@ export class MySnake {
   }
 
   drawCoordinateLogs(index: number, x: number, y: number) {
+    if (!this.showLogs) {
+      return
+    }
     this.ctx.font = '20px serif'
     this.ctx.fillStyle = this.color
     this.ctx.fillText(
@@ -123,9 +131,13 @@ export class MySnake {
   }
 
   drawEyesLogs(x: number, y: number) {
+    if (!this.showLogs) {
+      return
+    }
     this.ctx.font = '20px serif'
     this.ctx.fillStyle = this.color
-    this.ctx.fillText(`eye_x: ${x} ; eye_y: ${y}`, 300, 100)
+    this.ctx.fillText(`eye_x: ${x}`, 300, 100)
+    this.ctx.fillText(`eye_y: ${y}`, 300, 120)
   }
 
   drawEyes() {
