@@ -32,4 +32,14 @@ export const useStyles = makeStyles(theme => ({
     margin: theme.spacing(10, 3),
     color: 'black',
   },
+  button: {
+    color: 'black !important',
+    minWidth: '120px !important',
+  },
+  signButton: {
+    color: 'red !important',
+    border: '1px solid red !important',
+    marginLeft: '32px !important',
+    minWidth: '120px !important',
+  },
 }));

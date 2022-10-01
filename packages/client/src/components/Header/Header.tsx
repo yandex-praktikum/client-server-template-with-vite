@@ -19,26 +19,19 @@ const Header = () => {
         <p className={classes.logoSubtitle}>Yandex Practicum Web Gaming</p>
       </div>
       <div className={classes.menu}>
-        <Button style={{ color: 'black', minWidth: 120 }} variant={'text'}>
+        <Button className={classes.button} variant={'text'}>
           about
         </Button>
-        <Button style={{ color: 'black', minWidth: 120 }} variant={'text'} onClick={handleForumClick}>
+        <Button className={classes.button} variant={'text'} onClick={handleForumClick}>
           forum
         </Button>
-        <Button style={{ color: 'black', minWidth: 120 }} variant={'text'}>
+        <Button className={classes.button} variant={'text'}>
           team
         </Button>
-        <Button style={{ color: 'black', minWidth: 120 }} variant={'text'}>
+        <Button className={classes.button} variant={'text'}>
           leaderboard
         </Button>
-        <Button
-          style={{
-            color: 'red',
-            border: '1px solid red',
-            marginLeft: 32,
-            minWidth: 120,
-          }}
-          variant={'outlined'}>
+        <Button className={classes.signButton} variant={'outlined'}>
           sign in
         </Button>
       </div>
