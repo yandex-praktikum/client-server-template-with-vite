@@ -3,7 +3,5 @@
   "rules": {
     "selector-class-pattern": null
   },
-  "ignoreFiles": [
-    "dist/*"
-  ]
+  "ignoreFiles": ["dist/*"]
 }
