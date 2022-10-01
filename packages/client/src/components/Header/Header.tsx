@@ -1,14 +1,14 @@
-import React from 'react'
-import { Button } from '@mui/material'
+import { Button } from '@mui/material';
+import React from 'react';
 
-import { useStyles } from './useStyles'
+import { useStyles } from './useStyles';
 
 const Header = () => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   const handleForumClick = () => {
-    window.location.pathname = '/forum'
-  }
+    window.location.pathname = '/forum';
+  };
 
   return (
     <div className={classes.wrapper}>
@@ -22,10 +22,7 @@ const Header = () => {
         <Button style={{ color: 'black', minWidth: 120 }} variant={'text'}>
           about
         </Button>
-        <Button
-          style={{ color: 'black', minWidth: 120 }}
-          variant={'text'}
-          onClick={handleForumClick}>
+        <Button style={{ color: 'black', minWidth: 120 }} variant={'text'} onClick={handleForumClick}>
           forum
         </Button>
         <Button style={{ color: 'black', minWidth: 120 }} variant={'text'}>
@@ -46,7 +43,7 @@ const Header = () => {
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

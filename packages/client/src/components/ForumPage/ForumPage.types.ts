@@ -1,31 +1,31 @@
 export type TUser = {
-  avatar: string
-  firstName: string
-  lastName: string
-}
+  avatar: string;
+  firstName: string;
+  lastName: string;
+};
 
 export type TComment = {
-  id: number
+  id: number;
   // текст комментария
-  content: string
+  content: string;
   // автор комментария
-  author: TUser
+  author: TUser;
   // дата создания комментария
-  createdAt: string
+  createdAt: string;
   // ответы на комментарий
-  answers?: TComment[]
-}
+  answers?: TComment[];
+};
 
 export type TTheme = {
-  id: number
+  id: number;
   // название темы
-  title: string
+  title: string;
   // содержание
-  content: string
+  content: string;
   // автор темы
-  author: TUser
+  author: TUser;
   // дата создания темы
-  createdAt: string
+  createdAt: string;
   // обсуждения темы
-  discussions?: TComment[]
-}
+  discussions?: TComment[];
+};

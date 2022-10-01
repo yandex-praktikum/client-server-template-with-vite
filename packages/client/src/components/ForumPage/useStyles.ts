@@ -1,6 +1,6 @@
-import makeStyles from '@material-ui/core/styles/makeStyles'
-import { grey, red, green } from '@material-ui/core/colors'
-import { blue, blueGrey } from '@mui/material/colors'
+import { grey } from '@material-ui/core/colors';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import { blueGrey } from '@mui/material/colors';
 
 export const useStyles = makeStyles(() => ({
   wrapper: {
@@ -102,4 +102,4 @@ export const useStyles = makeStyles(() => ({
     alignItems: 'center',
     width: '100%',
   },
-}))
+}));

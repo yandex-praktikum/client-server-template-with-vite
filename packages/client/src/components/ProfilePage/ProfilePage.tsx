@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-import { useStyles } from './useStyles'
+import { useStyles } from './useStyles';
 
-import Layout from '../Layout/Layout'
+import Layout from '../Layout/Layout';
 
 const ProfilePage = () => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <Layout>
@@ -17,7 +17,7 @@ const ProfilePage = () => {
         <div className={classes.round} />
       </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default ProfilePage
+export default ProfilePage;

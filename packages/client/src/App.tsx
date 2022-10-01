@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+import ProfilePage from './components/ProfilePage/ProfilePage';
+
 export function App(): JSX.Element {
   useEffect(() => {
     const fetchServerData = async () => {
@@ -11,5 +13,9 @@ export function App(): JSX.Element {
     fetchServerData();
   }, []);
 
-  return <div className='App'>Вот тут будет жить ваше приложение :)</div>;
+  return (
+    <div className="App">
+      <ProfilePage />
+    </div>
+  );
 }

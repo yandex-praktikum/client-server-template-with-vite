@@ -1,5 +1,5 @@
-import makeStyles from '@material-ui/core/styles/makeStyles'
-import { grey, red, green } from '@material-ui/core/colors'
+import { grey, red } from '@material-ui/core/colors';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 export const useStyles = makeStyles(() => ({
   wrapper: {
@@ -32,4 +32,4 @@ export const useStyles = makeStyles(() => ({
     display: 'flex',
     justifyContent: 'center',
   },
-}))
+}));

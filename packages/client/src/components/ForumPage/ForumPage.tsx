@@ -1,33 +1,29 @@
-import React, { useState } from 'react'
+import { List, Typography } from '@material-ui/core';
+import { TreeView } from '@material-ui/lab';
 import {
   ExpandMore as ExpandMoreIcon,
   Comment as CommentIcon,
   ChevronRight as ChevronRightIcon,
   ArrowBack as ArrowBackIcon,
-} from '@mui/icons-material'
-import { Avatar, Button, ListItemButton, TextField } from '@mui/material'
-import { TreeView } from '@material-ui/lab'
-import { List, Typography } from '@material-ui/core'
+} from '@mui/icons-material';
+import { Avatar, Button, ListItemButton, TextField } from '@mui/material';
+import React, { useState } from 'react';
 
-import { useStyles } from './useStyles'
-import Layout from '../Layout/Layout'
-import { TTheme } from './ForumPage.types'
-import { TEMP_DATA } from './tempData'
-import { MemoizedComment } from './parts/Comment'
+import { TTheme } from './ForumPage.types';
+import { MemoizedComment } from './parts/Comment';
+import { TEMP_DATA } from './tempData';
+import { useStyles } from './useStyles';
+
+import Layout from '../Layout/Layout';
 
 export const ForumPage = () => {
-  const classes = useStyles()
-  const [selectedTheme, setSelectedTheme] = useState<TTheme | null>(null)
-  const [commentValue, setCommentValue] = useState<string>('')
+  const classes = useStyles();
+  const [selectedTheme, setSelectedTheme] = useState<TTheme | null>(null);
+  const [commentValue, setCommentValue] = useState<string>('');
 
-  const createdAtValue = selectedTheme?.createdAt
-    .slice(0, 10)
-    .split('-')
-    .reverse()
-    .join('.')
+  const createdAtValue = selectedTheme?.createdAt.slice(0, 10).split('-').reverse().join('.');
   const authorInitials =
-    (selectedTheme?.author.firstName.slice(0, 1) || '') +
-    (selectedTheme?.author.lastName.slice(0, 1) || '')
+    (selectedTheme?.author.firstName.slice(0, 1) || '') + (selectedTheme?.author.lastName.slice(0, 1) || '');
 
   return (
     <Layout>
@@ -55,26 +51,16 @@ export const ForumPage = () => {
         ) : (
           <>
             <div className={classes.themeContainer}>
-              <Typography
-                color={'textSecondary'}
-                variant="body2"
-                align={'right'}>
-                Created at:{' '}
-                <Typography variant="inherit">{createdAtValue}</Typography>
+              <Typography color={'textSecondary'} variant="body2" align={'right'}>
+                Created at: <Typography variant="inherit">{createdAtValue}</Typography>
               </Typography>
               <div className={classes.themeTitle}>
                 <div className={classes.themeAuthor}>
-                  <Avatar
-                    src={selectedTheme.author.avatar}
-                    sx={{ width: 100, height: 100 }}>
+                  <Avatar src={selectedTheme.author.avatar} sx={{ width: 100, height: 100 }}>
                     {authorInitials}
                   </Avatar>
-                  <Typography variant="body1">
-                    {selectedTheme.author.lastName}
-                  </Typography>
-                  <Typography variant="body1">
-                    {selectedTheme.author.firstName}
-                  </Typography>
+                  <Typography variant="body1">{selectedTheme.author.lastName}</Typography>
+                  <Typography variant="body1">{selectedTheme.author.firstName}</Typography>
                 </div>
                 <Typography variant="h3">{selectedTheme.title}</Typography>
               </div>
@@ -82,9 +68,7 @@ export const ForumPage = () => {
                 {selectedTheme.content}
               </Typography>
               <div className={classes.comments}>
-                <Typography variant={'h6'}>
-                  Comments: {selectedTheme.discussions?.length || 0}
-                </Typography>
+                <Typography variant={'h6'}>Comments: {selectedTheme.discussions?.length || 0}</Typography>
                 <TextField
                   label="Write a comment"
                   multiline
@@ -92,20 +76,13 @@ export const ForumPage = () => {
                   size={'small'}
                   value={commentValue}
                   onChange={e => {
-                    setCommentValue(e.target.value)
+                    setCommentValue(e.target.value);
                   }}
                 />
-                <Button
-                  variant={'text'}
-                  color={'info'}
-                  size={'small'}
-                  disabled={!commentValue}
-                  className={classes.btn}>
+                <Button variant={'text'} color={'info'} size={'small'} disabled={!commentValue} className={classes.btn}>
                   Send
                 </Button>
-                <TreeView
-                  defaultCollapseIcon={<ExpandMoreIcon />}
-                  defaultExpandIcon={<ChevronRightIcon />}>
+                <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
                   {selectedTheme.discussions?.map(comment => (
                     <MemoizedComment key={comment.id} data={comment} />
                   ))}
@@ -116,5 +93,5 @@ export const ForumPage = () => {
         )}
       </div>
     </Layout>
-  )
-}
+  );
+};

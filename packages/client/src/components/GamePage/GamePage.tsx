@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 
-import Layout from '../Layout/Layout'
-import { CanvasComponent } from '../../game/CanvasComponent'
+import { CanvasComponent } from '../../game/CanvasComponent';
+import Layout from '../Layout/Layout';
 
 export const GamePage = () => {
   return (
     <Layout>
       <CanvasComponent />
     </Layout>
-  )
-}
+  );
+};
