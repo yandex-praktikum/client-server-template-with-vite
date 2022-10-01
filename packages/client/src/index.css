@@ -1,10 +1,32 @@
-body, html {
-    margin: 0 auto;
-    padding: 0;
-    width: 1440px;
-    min-width: 1440px;
-    max-width: 1440px;
-    overflow: auto;
-    font-family: Inter, sans-serif;
-    font-weight: 500;
+html {
+  box-sizing: border-box;
+  font-size: 18px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+*:focus {
+  outline: none;
+}
+
+img {
+  box-sizing: content-box;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+select,
+label {
+  cursor: pointer;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, sans-serif;
 }

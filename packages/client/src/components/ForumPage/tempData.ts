@@ -1,4 +1,4 @@
-import { TTheme } from './ForumPage.types'
+import { TTheme } from './ForumPage.types';
 
 export const TEMP_DATA: TTheme[] = [
   {
@@ -22,8 +22,7 @@ export const TEMP_DATA: TTheme[] = [
     content:
       'Content content  content content  content  content  content  contentContent content  content content  content  content  content  contentContent content  content content  content  content  content  contentContent content  content content  content  content  content  contentContent content  content content  content  content  content  contentContent content  content content  content  content  content  contentContent content  content content  content  content  content  contentContent content  content content  content  content  content  contentContent content  content content  content  content  content  contentContent content  content content  content  content  content  contentContent content  content content  content  content  content  contentContent content  content content  content  content  content  contentContent content  content content  content  content  content  contentContent content  content content  content  content  content  contentContent content  content content  content  content  content  contentContent content  content content  content  content  content  contentContent content  content content  content  content  content  content',
     author: {
-      avatar:
-        'https://cdnstatic.rg.ru/uploads/images/gallery/84f24d10/19_b6265e7a.jpg',
+      avatar: 'https://cdnstatic.rg.ru/uploads/images/gallery/84f24d10/19_b6265e7a.jpg',
       firstName: 'FirstName2',
       lastName: 'LastLastLastName',
     },
@@ -32,8 +31,7 @@ export const TEMP_DATA: TTheme[] = [
       {
         id: 5,
         author: {
-          avatar:
-            'https://upload.wikimedia.org/wikipedia/commons/9/93/Amateur-made_Na%27vi.jpg',
+          avatar: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amateur-made_Na%27vi.jpg',
           firstName: 'Name',
           lastName: 'Family',
         },
@@ -114,4 +112,4 @@ export const TEMP_DATA: TTheme[] = [
       },
     ],
   },
-]
+];

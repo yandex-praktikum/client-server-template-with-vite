@@ -1,23 +1,22 @@
-import React, { useState, memo } from 'react'
-import { Avatar, Button, TextField } from '@mui/material'
-import { Typography } from '@material-ui/core'
-import { TreeItem } from '@material-ui/lab'
+import { Typography } from '@material-ui/core';
+import { TreeItem } from '@material-ui/lab';
+import { Avatar, Button, TextField } from '@mui/material';
+import React, { useState, memo } from 'react';
 
-import { TComment } from '../ForumPage.types'
-import { useStyles } from '../useStyles'
+import { TComment } from '../ForumPage.types';
+import { useStyles } from '../useStyles';
 
-type TProps = { data: TComment }
+type TProps = { data: TComment };
 
 const Comment = ({ data }: TProps) => {
-  const { author, content, createdAt, answers, id } = data
-  const [showTextareaComment, setShowTextareaComment] = useState<boolean>(false)
-  const [commentValue, setCommentValue] = useState<string>('')
+  const { author, content, createdAt, answers, id } = data;
+  const [showTextareaComment, setShowTextareaComment] = useState<boolean>(false);
+  const [commentValue, setCommentValue] = useState<string>('');
 
-  const classes = useStyles()
+  const classes = useStyles();
 
-  const createdAtValue = createdAt.slice(0, 10).split('-').reverse().join('.')
-  const authorInitials =
-    author.firstName.slice(0, 1) + author.lastName.slice(0, 1)
+  const createdAtValue = createdAt.slice(0, 10).split('-').reverse().join('.');
+  const authorInitials = author.firstName.slice(0, 1) + author.lastName.slice(0, 1);
 
   return (
     <div className={classes.comment}>
@@ -26,14 +25,9 @@ const Comment = ({ data }: TProps) => {
           {authorInitials}
         </Avatar>
         <div className={classes.commentAuthorName}>
-          <Typography variant="h6">
-            {[author.lastName, author.firstName].join(' ')}
-          </Typography>
+          <Typography variant="h6">{[author.lastName, author.firstName].join(' ')}</Typography>
         </div>
-        <Typography
-          className={classes.commentCreatedAt}
-          variant="caption"
-          color={'textSecondary'}>
+        <Typography className={classes.commentCreatedAt} variant="caption" color={'textSecondary'}>
           {createdAtValue}
         </Typography>
       </div>
@@ -46,7 +40,7 @@ const Comment = ({ data }: TProps) => {
           color={'info'}
           size={'small'}
           onClick={() => {
-            setShowTextareaComment(true)
+            setShowTextareaComment(true);
           }}
           className={classes.btn}>
           Reply
@@ -63,7 +57,7 @@ const Comment = ({ data }: TProps) => {
               size={'small'}
               value={commentValue}
               onChange={e => {
-                setCommentValue(e.target.value)
+                setCommentValue(e.target.value);
               }}
             />
           </div>
@@ -73,17 +67,12 @@ const Comment = ({ data }: TProps) => {
               color={'error'}
               size={'small'}
               onClick={() => {
-                setShowTextareaComment(false)
+                setShowTextareaComment(false);
               }}
               className={classes.btn}>
               Cancel
             </Button>
-            <Button
-              variant={'text'}
-              color={'info'}
-              size={'small'}
-              disabled={!commentValue}
-              className={classes.btn}>
+            <Button variant={'text'} color={'info'} size={'small'} disabled={!commentValue} className={classes.btn}>
               Send
             </Button>
           </div>
@@ -99,11 +88,11 @@ const Comment = ({ data }: TProps) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 function isEqual(prev: TProps, next: TProps) {
-  return prev.data.id === next.data.id
+  return prev.data.id === next.data.id;
 }
 
-export const MemoizedComment = memo(Comment, isEqual)
+export const MemoizedComment = memo(Comment, isEqual);

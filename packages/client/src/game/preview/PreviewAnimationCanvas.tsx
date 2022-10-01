@@ -1,50 +1,53 @@
-import React, { useEffect, useRef } from 'react'
-import { MySnake } from '../Snake'
-import { changeCoords } from './helpers/changeCoords'
+import React, { useEffect, useRef } from 'react';
+
+import { changeCoords } from './helpers/changeCoords';
+
+import { MySnake } from '../Snake';
 
 const blueOptions = {
   x: 0,
   y: 0,
   margin: 150,
   size: 30,
-}
+};
 
 const greenOptions = {
   x: 0,
   y: 0,
   margin: 100,
   size: 20,
-}
+};
 
 const yellowOptions = {
   x: 0,
   y: 0,
   margin: 50,
   size: 20,
-}
+};
 
 const redOptions = {
   x: 0,
   y: 0,
   margin: 0,
   size: 20,
-}
+};
 
-const MAP_WIDTH = 1300
-const MAP_HEIGHT = 400
+const MAP_WIDTH = 1300;
+const MAP_HEIGHT = 400;
 
 export function PreviewAnimationCanvas() {
-  const ref = useRef<HTMLCanvasElement>(null)
+  const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const canvas = ref.current
-    const ctx = canvas?.getContext('2d')
+    const canvas = ref.current;
+    const ctx = canvas?.getContext('2d');
 
     if (!canvas || !ctx) {
-      throw Error('No canvas or context')
+      throw Error('No canvas or context');
     }
-    canvas.width = MAP_WIDTH
-    canvas.height = MAP_HEIGHT
+
+    canvas.width = MAP_WIDTH;
+    canvas.height = MAP_HEIGHT;
 
     const redSnake = new MySnake(
       redOptions.size + redOptions.margin,
@@ -52,8 +55,8 @@ export function PreviewAnimationCanvas() {
       ctx,
       'red',
       40,
-      34
-    )
+      34,
+    );
 
     const yellowSnake = new MySnake(
       yellowOptions.size + yellowOptions.margin,
@@ -62,8 +65,8 @@ export function PreviewAnimationCanvas() {
       ctx,
       'green',
       15,
-      26
-    )
+      26,
+    );
 
     const greenSnake = new MySnake(
       MAP_WIDTH - (greenOptions.size + greenOptions.margin),
@@ -71,8 +74,8 @@ export function PreviewAnimationCanvas() {
       ctx,
       'yellow',
       10,
-      22
-    )
+      22,
+    );
 
     const blueSnake = new MySnake(
       MAP_WIDTH - (blueOptions.size + blueOptions.margin),
@@ -80,61 +83,49 @@ export function PreviewAnimationCanvas() {
       ctx,
       'blue',
       30,
-      30
-    )
+      30,
+    );
 
-    let loopId: number | null = null
+    let loopId: number | null = null;
 
     const drawMapLoop = () => {
-      ctx.clearRect(0, 0, MAP_WIDTH, MAP_HEIGHT)
-      ctx.fillStyle = '#1c1c1c'
-      ctx.fillRect(0, 0, MAP_WIDTH, MAP_HEIGHT)
+      ctx.clearRect(0, 0, MAP_WIDTH, MAP_HEIGHT);
+      ctx.fillStyle = '#1c1c1c';
+      ctx.fillRect(0, 0, MAP_WIDTH, MAP_HEIGHT);
 
-      const { x: redSnakeX, y: redSnakeY } = redSnake.segments[0]
-      changeCoords(redSnakeX, redSnakeY, MAP_WIDTH, MAP_HEIGHT, redOptions)
+      const { x: redSnakeX, y: redSnakeY } = redSnake.segments[0];
+      changeCoords(redSnakeX, redSnakeY, MAP_WIDTH, MAP_HEIGHT, redOptions);
 
-      const { x: yellowSnakeX, y: yellowSnakeY } = yellowSnake.segments[0]
-      changeCoords(
-        yellowSnakeX,
-        yellowSnakeY,
-        MAP_WIDTH,
-        MAP_HEIGHT,
-        yellowOptions
-      )
+      const { x: yellowSnakeX, y: yellowSnakeY } = yellowSnake.segments[0];
+      changeCoords(yellowSnakeX, yellowSnakeY, MAP_WIDTH, MAP_HEIGHT, yellowOptions);
 
-      const { x: greenSnakeX, y: greenSnakeY } = greenSnake.segments[0]
-      changeCoords(
-        greenSnakeX,
-        greenSnakeY,
-        MAP_WIDTH,
-        MAP_HEIGHT,
-        greenOptions
-      )
+      const { x: greenSnakeX, y: greenSnakeY } = greenSnake.segments[0];
+      changeCoords(greenSnakeX, greenSnakeY, MAP_WIDTH, MAP_HEIGHT, greenOptions);
 
-      const { x: blueSnakeX, y: blueSnakeY } = blueSnake.segments[0]
-      changeCoords(blueSnakeX, blueSnakeY, MAP_WIDTH, MAP_HEIGHT, blueOptions)
+      const { x: blueSnakeX, y: blueSnakeY } = blueSnake.segments[0];
+      changeCoords(blueSnakeX, blueSnakeY, MAP_WIDTH, MAP_HEIGHT, blueOptions);
 
-      redSnake.move(redOptions.x, redOptions.y, false)
-      yellowSnake.move(yellowOptions.x, yellowOptions.y, true)
-      greenSnake.move(greenOptions.x, greenOptions.y, true)
-      blueSnake.move(blueOptions.x, blueOptions.y, false)
+      redSnake.move(redOptions.x, redOptions.y, false);
+      yellowSnake.move(yellowOptions.x, yellowOptions.y, true);
+      greenSnake.move(greenOptions.x, greenOptions.y, true);
+      blueSnake.move(blueOptions.x, blueOptions.y, false);
 
-      redSnake.draw()
-      yellowSnake.draw()
-      greenSnake.draw()
-      blueSnake.draw()
+      redSnake.draw();
+      yellowSnake.draw();
+      greenSnake.draw();
+      blueSnake.draw();
 
-      loopId = requestAnimationFrame(drawMapLoop)
-    }
+      loopId = requestAnimationFrame(drawMapLoop);
+    };
 
-    drawMapLoop()
+    drawMapLoop();
 
     return () => {
       if (loopId) {
-        cancelAnimationFrame(loopId)
+        cancelAnimationFrame(loopId);
       }
-    }
-  }, [])
+    };
+  }, []);
 
-  return <canvas ref={ref} />
+  return <canvas ref={ref} />;
 }
