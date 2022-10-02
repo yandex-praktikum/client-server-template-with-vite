@@ -1,13 +1,16 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react'
+import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material'
 
-import { getDistanceBetweenTwoPoints } from './helpers/getDistanceBetweenTwoPoints';
-import { makeFoodItem } from './helpers/makeFoodItem';
-import { MySnake } from './Snake';
+import { MySnake } from './Snake'
+import { getDistanceBetweenTwoPoints } from './helpers/getDistanceBetweenTwoPoints'
+import { makeFoodItem } from './helpers/makeFoodItem'
+import { makeCountDownClock } from './helpers/makeCountDownClock'
 
-const SHOW_LOGS = true;
+const SHOW_LOGS = false
 
 export function CanvasComponent() {
-  const ref = useRef<HTMLCanvasElement>(null);
+  const ref = useRef<HTMLCanvasElement>(null)
+  const [score, setScore] = useState<number | null>(null)
 
   const MAP_WIDTH = 1200;
   const MAP_HEIGHT = 800;
@@ -51,6 +54,10 @@ export function CanvasComponent() {
 
     const snake = new MySnake(mousePositionX, mousePositionY, ctx, 'green', 2);
     snake.showLogs = SHOW_LOGS;
+
+    const countDownClock = makeCountDownClock(MAP_WIDTH, MAP_HEIGHT, () => {
+      setScore(snake.segments.length)
+    })
 
     const drawLogs = () => {
       if (!SHOW_LOGS) {
@@ -99,7 +106,8 @@ export function CanvasComponent() {
       ctx.fillStyle = '#1c1c1c'; // фон карты
       ctx.fillRect(0, 0, MAP_WIDTH, MAP_HEIGHT);
 
-      ctx.drawImage(foodImg, foodX, foodY);
+      ctx.drawImage(foodImg, foodX, foodY)
+      ctx.drawImage(countDownClock, 0, 0)
 
       snake.draw();
 
@@ -121,5 +129,21 @@ export function CanvasComponent() {
     };
   }, []);
 
-  return <canvas ref={ref} onMouseDown={onMouseDown} onMouseUp={onMouseUp} />;
+  const handleClose = () => {
+    window.location.reload()
+  }
+
+  return (
+    <>
+      <canvas ref={ref} onMouseDown={onMouseDown} onMouseUp={onMouseUp} />
+      <Dialog open={!!score} onClose={handleClose}>
+        <DialogTitle>Your score: {score}</DialogTitle>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            Play again
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  )
 }
