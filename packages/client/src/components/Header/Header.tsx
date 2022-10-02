@@ -1,14 +1,10 @@
-import { Button } from '@mui/material';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { useStyles } from './useStyles';
 
 const Header = () => {
   const classes = useStyles();
-
-  const handleForumClick = () => {
-    window.location.pathname = '/forum';
-  };
 
   return (
     <div className={classes.wrapper}>
@@ -19,21 +15,18 @@ const Header = () => {
         <p className={classes.logoSubtitle}>Yandex Practicum Web Gaming</p>
       </div>
       <div className={classes.menu}>
-        <Button className={classes.button} variant={'text'}>
+        <Link to={'/'} className={classes.button}>
           about
-        </Button>
-        <Button className={classes.button} variant={'text'} onClick={handleForumClick}>
+        </Link>
+        <Link to={'/forum'} className={classes.button}>
           forum
-        </Button>
-        <Button className={classes.button} variant={'text'}>
-          team
-        </Button>
-        <Button className={classes.button} variant={'text'}>
+        </Link>
+        <Link to={'/leaderboard'} className={classes.button}>
           leaderboard
-        </Button>
-        <Button className={classes.signButton} variant={'outlined'}>
+        </Link>
+        <Link to={'/sign-in'} className={classes.signButton}>
           sign in
-        </Button>
+        </Link>
       </div>
     </div>
   );
