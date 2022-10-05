@@ -22,10 +22,14 @@ export const useStyles = makeStyles(() => ({
     marginBottom: '100px',
   },
   menuItem: {
-    margin: '10px 0 !important',
-    fontSize: '30px !important',
+    margin: '10px 0',
+    fontSize: '30px',
+    color: 'black',
+    cursor: 'pointer',
+    textDecoration: 'none',
+
     '&:hover': {
-      color: `${red.A400} !important`,
+      color: `${red.A400}`,
     },
   },
   previewCanvas: {
