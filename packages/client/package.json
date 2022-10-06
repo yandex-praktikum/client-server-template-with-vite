@@ -19,11 +19,13 @@
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.4",
+    "@reduxjs/toolkit": "^1.8.5",
     "eslint-config-prettier": "^8.5.0",
     "normalize.css": "^8.0.1",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.4"
     "react-router-dom": "^6.4.1"
   },
   "devDependencies": {
