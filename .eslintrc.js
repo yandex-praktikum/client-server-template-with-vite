@@ -33,7 +33,6 @@ module.exports = {
         objects: MULTI_LINE,
         imports: MULTI_LINE,
         exports: MULTI_LINE,
-        functions: MULTI_LINE,
       },
     ],
     'eol-last': ['error', 'always'],
