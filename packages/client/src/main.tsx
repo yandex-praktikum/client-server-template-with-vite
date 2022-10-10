@@ -6,10 +6,14 @@ import { App } from './App';
 import './index.css';
 import ErrorBoundary from './components/ErrorBoundaries/ErrorBoundaries';
 
+import { addServiceWorker } from '../sw/addServiceWorker';
+
+addServiceWorker();
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ErrorBoundary>
       <App />
     </ErrorBoundary>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

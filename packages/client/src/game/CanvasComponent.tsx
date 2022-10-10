@@ -1,16 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material'
+import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { MySnake } from './Snake'
-import { getDistanceBetweenTwoPoints } from './helpers/getDistanceBetweenTwoPoints'
-import { makeFoodItem } from './helpers/makeFoodItem'
-import { makeCountDownClock } from './helpers/makeCountDownClock'
+import { getDistanceBetweenTwoPoints } from './helpers/getDistanceBetweenTwoPoints';
+import { makeCountDownClock } from './helpers/makeCountDownClock';
+import { makeFoodItem } from './helpers/makeFoodItem';
+import { MySnake } from './Snake';
 
-const SHOW_LOGS = false
+const SHOW_LOGS = false;
 
 export function CanvasComponent() {
-  const ref = useRef<HTMLCanvasElement>(null)
-  const [score, setScore] = useState<number | null>(null)
+  const ref = useRef<HTMLCanvasElement>(null);
+  const [score, setScore] = useState<number | null>(null);
+  let loopId: number | null = null;
 
   const MAP_WIDTH = 1200;
   const MAP_HEIGHT = 800;
@@ -56,8 +57,12 @@ export function CanvasComponent() {
     snake.showLogs = SHOW_LOGS;
 
     const countDownClock = makeCountDownClock(MAP_WIDTH, MAP_HEIGHT, () => {
-      setScore(snake.segments.length)
-    })
+      setScore(snake.segments.length);
+
+      if (loopId) {
+        cancelAnimationFrame(loopId);
+      }
+    });
 
     const drawLogs = () => {
       if (!SHOW_LOGS) {
@@ -80,8 +85,6 @@ export function CanvasComponent() {
       snake.move(mousePositionX, mousePositionY, boost);
     };
 
-    let loopId: number | null = null;
-
     const increaseSnakeIfNeed = () => {
       const distanceToFood = getDistanceBetweenTwoPoints({ x: snake.x, y: snake.y }, { x: foodX, y: foodY });
 
@@ -99,6 +102,8 @@ export function CanvasComponent() {
     };
 
     const drawMapLoop = () => {
+      loopId = requestAnimationFrame(drawMapLoop);
+
       increaseSnakeIfNeed();
 
       // очищаем все и рисуем карту заново
@@ -106,17 +111,17 @@ export function CanvasComponent() {
       ctx.fillStyle = '#1c1c1c'; // фон карты
       ctx.fillRect(0, 0, MAP_WIDTH, MAP_HEIGHT);
 
-      ctx.drawImage(foodImg, foodX, foodY)
-      ctx.drawImage(countDownClock, 0, 0)
+      ctx.drawImage(foodImg, foodX, foodY);
+      ctx.drawImage(countDownClock, 0, 0);
 
       snake.draw();
 
       drawLogs();
 
-      loopId = requestAnimationFrame(drawMapLoop);
     };
 
     const intervalId = setInterval(sendCoordsLoop, 0);
+
     drawMapLoop();
 
     return () => {
@@ -130,8 +135,8 @@ export function CanvasComponent() {
   }, []);
 
   const handleClose = () => {
-    window.location.reload()
-  }
+    window.location.reload();
+  };
 
   return (
     <>
@@ -145,5 +150,5 @@ export function CanvasComponent() {
         </DialogActions>
       </Dialog>
     </>
-  )
+  );
 }

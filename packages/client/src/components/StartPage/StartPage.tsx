@@ -7,9 +7,14 @@ import { useStyles } from './useStyles';
 import { PreviewAnimationCanvas } from '../../game/preview/PreviewAnimationCanvas';
 import Layout from '../Layout/Layout';
 
+type TMenuItem = {
+  itemName: string;
+} & ({ to: string; type: 'link' } | { onClick: () => void; type: 'button' });
+
 export const StartPage = () => {
   const classes = useStyles();
   const [rulesOpen, setRulesOpen] = useState(false);
+  const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
 
   const handleOpenRules = () => {
     setRulesOpen(true);
@@ -18,6 +23,43 @@ export const StartPage = () => {
   const handleCloseRules = () => {
     setRulesOpen(false);
   };
+
+  const handleStartClick = () => {
+    setIsStartMenuOpen(true);
+  };
+
+  const handleBackClick = () => {
+    setIsStartMenuOpen(false);
+  };
+
+  const MENU_ITEMS: TMenuItem[] = [
+    {
+      itemName: 'START',
+      onClick: handleStartClick,
+      type: 'button',
+    },
+    { itemName: 'RULES', onClick: handleOpenRules, type: 'button' },
+    { itemName: 'SETTINGS', to: '/settings', type: 'link' },
+    { itemName: 'LEADER BOARD', to: '/leaderboard', type: 'link' },
+  ];
+
+  const START_MENU_ITEMS: TMenuItem[] = [
+    {
+      itemName: 'SINGLE PLAYER',
+      to: '/game',
+      type: 'link',
+    },
+    {
+      itemName: 'MULTIPLAYER',
+      to: '/game-online',
+      type: 'link',
+    },
+    {
+      itemName: 'BACK',
+      onClick: handleBackClick,
+      type: 'button',
+    },
+  ];
 
   const gameResult = window.location.hash;
   const isVictory = gameResult === '#victory';
@@ -29,18 +71,17 @@ export const StartPage = () => {
       <div className={classes.wrapper}>
         <div className={classes.title}>{title}</div>
         <div className={classes.menu}>
-          <Link to={'/game'} className={classes.menuItem}>
-            START
-          </Link>
-          <p className={classes.menuItem} onClick={handleOpenRules}>
-            RULES
-          </p>
-          <Link to={'/settings'} className={classes.menuItem}>
-            SETTINGS
-          </Link>
-          <Link to={'/leaderboard'} className={classes.menuItem}>
-            LEADER BOARD
-          </Link>
+          {(isStartMenuOpen ? START_MENU_ITEMS : MENU_ITEMS).map(menuItem =>
+            menuItem.type === 'link' ? (
+              <Link key={menuItem.itemName} to={menuItem.to} className={classes.menuItem}>
+                {menuItem.itemName}
+              </Link>
+            ) : (
+              <p key={menuItem.itemName} className={classes.menuItem} onClick={menuItem.onClick}>
+                {menuItem.itemName}
+              </p>
+            )
+          )}
         </div>
       </div>
       <div className={classes.previewCanvas}>

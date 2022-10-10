@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "lib": ["ESNext"],
+    "target": "ESNext",
+    "skipLibCheck": true,
+    "outDir": "../public",
+    "declaration": false,
+    "removeComments": true
+  },
+  "include": [
+    "sw.ts"
+  ]
+}
