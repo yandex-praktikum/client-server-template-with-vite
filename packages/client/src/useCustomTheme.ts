@@ -13,3 +13,8 @@ export const useCustomTheme = createTheme({
     },
   },
 });
+
+useCustomTheme.typography.h1 = {
+  fontWeight: 'bold',
+  fontFamily: 'Karantina, cursive',
+};

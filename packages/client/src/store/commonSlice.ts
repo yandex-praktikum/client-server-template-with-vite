@@ -1,10 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface CommonState {
-  currentUser: string,
-  theme: string,
-  language: string,
+  currentUser: string;
+  theme: string;
+  language: string;
 }
 
 const initialState: CommonState = {

@@ -4,7 +4,7 @@ const BASE_URL = 'https://jsonplaceholder.typicode.com';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
-  prepareHeaders: (headers, { getState }) => {
+  prepareHeaders: headers => {
     // By default, if we have a token in the store, let's use that for authenticated requests
     // Это для авторизации в будущем.
     // const token = (getState() as RootState).auth.token

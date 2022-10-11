@@ -55,7 +55,7 @@ export function PreviewAnimationCanvas() {
       ctx,
       'red',
       40,
-      34,
+      34
     );
 
     const yellowSnake = new MySnake(
@@ -65,7 +65,7 @@ export function PreviewAnimationCanvas() {
       ctx,
       'green',
       15,
-      26,
+      26
     );
 
     const greenSnake = new MySnake(
@@ -74,7 +74,7 @@ export function PreviewAnimationCanvas() {
       ctx,
       'yellow',
       10,
-      22,
+      22
     );
 
     const blueSnake = new MySnake(
@@ -83,7 +83,7 @@ export function PreviewAnimationCanvas() {
       ctx,
       'blue',
       30,
-      30,
+      30
     );
 
     let loopId: number | null = null;

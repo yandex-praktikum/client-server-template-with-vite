@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
- 
 import { ForumPage } from './components/ForumPage/ForumPage';
 import { GamePage } from './components/GamePage/GamePage';
 import NotFoundPage from './components/NotFoundPage/NotFoundPage';

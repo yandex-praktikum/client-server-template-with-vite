@@ -1,7 +1,5 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-const FONT_FAMILY = 'Karantina, cursive';
-
 export const useStyles = makeStyles(theme => ({
   wrapper: {
     position: 'fixed',
@@ -28,8 +26,6 @@ export const useStyles = makeStyles(theme => ({
   },
   title: {
     margin: 0,
-    fontFamily: FONT_FAMILY,
-    fontWeight: 'bold',
     fontSize: theme.spacing(8),
     lineHeight: 1,
   },

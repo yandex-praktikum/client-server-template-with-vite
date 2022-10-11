@@ -10,7 +10,7 @@ const BOOST_SPEED = 4;
 
 export class MySnake {
   // Флаг для откусывания жопки по таймауту
-  isActiveTimeOut = false
+  isActiveTimeOut = false;
   // позиция головы змейки по горизонтали
   x: number;
   // позиция головы змейки по вертикали
@@ -35,7 +35,7 @@ export class MySnake {
     ctx: CanvasRenderingContext2D,
     color?: TSnakeColor,
     initialSnakeLength = 20,
-    size = 24,
+    size = 24
   ) {
     this.x = x;
     this.y = y;
@@ -52,9 +52,9 @@ export class MySnake {
       });
     }
 
-    setInterval(() => this.decreaseLength(), 2000)
+    setInterval(() => this.decreaseLength(), 2000);
 
-    this.canvasSegment = makeSnakeSegment(this.r, this.color)
+    this.canvasSegment = makeSnakeSegment(this.r, this.color);
   }
 
   increaseLength() {
@@ -63,8 +63,8 @@ export class MySnake {
 
   decreaseLength() {
     if (this.segments.length > 2 && this.isActiveTimeOut) {
-      this.segments.pop()
-      this.isActiveTimeOut = false
+      this.segments.pop();
+      this.isActiveTimeOut = false;
     }
   }
 
@@ -73,14 +73,14 @@ export class MySnake {
 
     // Если голова достигла курсора мыши, то змейка останавливается и пересчитывать ее кординаты не нужно
     if (distanceToMouse < this.r / 2) {
-      this.isActiveTimeOut = true
-      return
+      this.isActiveTimeOut = true;
+
+      return;
     }
 
-    this.isActiveTimeOut = false
+    this.isActiveTimeOut = false;
 
-    const speed = boost ? BOOST_SPEED : SPEED
-
+    const speed = boost ? BOOST_SPEED : SPEED;
 
     // Вычисления по формулам для нахождения прямой от головы змейки до курсора
     // На этой прямой находятся координаты x и y для следующего шага змейки

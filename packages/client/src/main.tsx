@@ -1,5 +1,3 @@
-// eslint-disable-next-line import/order
-import { useCustomTheme } from './useCustomTheme';
 import { StyledEngineProvider } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import React from 'react';
@@ -11,6 +9,7 @@ import 'normalize.css';
 import './index.css';
 import ErrorBoundary from './components/ErrorBoundaries/ErrorBoundaries';
 import { store } from './store/store';
+import { useCustomTheme } from './useCustomTheme';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

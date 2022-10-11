@@ -1,5 +1,5 @@
 import { Close } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import React from 'react';
 
 import LoginForm from './LoginForm/LoginForm';
@@ -22,7 +22,9 @@ const EntranceModal = ({ onClose }: IEntranceModalProps) => {
     <div className={classes.wrapper}>
       <div className={classes.modalBody}>
         <div className={classes.headingCase}>
-          <p className={classes.title}>{isRegistration ? 'Sign up' : 'Sign in'}</p>
+          <Typography variant={'h1'} className={classes.title}>
+            {isRegistration ? 'Sign up' : 'Sign in'}
+          </Typography>
           <Button onClick={onClose} className={classes.exitButton}>
             <Close className={classes.exitIcon} />
           </Button>
