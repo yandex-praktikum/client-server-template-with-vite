@@ -116,6 +116,13 @@ module.exports = {
     ],
     semi: ['error', 'always'],
     '@typescript-eslint/no-misused-promises': 0,
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      },
+    ],
   },
   overrides: [
     {

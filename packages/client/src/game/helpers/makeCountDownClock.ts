@@ -51,7 +51,11 @@ const changeCountDown = (params: {
 };
 
 // создает рисунок с линией таймера и кол-вом оставшихся секунд
-export const makeCountDownClock = (mapWidth: number, mapHeight: number, onTimeOut: () => void) => {
+export const makeCountDownClock = (
+  mapWidth: number,
+  mapHeight: number,
+  onTimeOut: () => void,
+) => {
   const canvas = document.createElement('canvas');
   canvas.width = mapWidth;
   canvas.height = mapHeight;

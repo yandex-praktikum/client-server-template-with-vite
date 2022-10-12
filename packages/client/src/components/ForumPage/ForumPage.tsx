@@ -14,6 +14,8 @@ import { MemoizedComment } from './parts/Comment';
 import { TEMP_DATA } from './tempData';
 import { useStyles } from './useStyles';
 
+import { getAuthorInitials } from '../../utils/getAuthorInitials';
+import { getCreatedAtValue } from '../../utils/getCreatedAtValue';
 import Layout from '../Layout/Layout';
 
 export const ForumPage = () => {
@@ -21,9 +23,8 @@ export const ForumPage = () => {
   const [selectedTheme, setSelectedTheme] = useState<TTheme | null>(null);
   const [commentValue, setCommentValue] = useState<string>('');
 
-  const createdAtValue = selectedTheme?.createdAt.slice(0, 10).split('-').reverse().join('.');
-  const authorInitials =
-    (selectedTheme?.author.firstName.slice(0, 1) || '') + (selectedTheme?.author.lastName.slice(0, 1) || '');
+  const createdAtValue = selectedTheme?.createdAt ? getCreatedAtValue(selectedTheme.createdAt) : '';
+  const authorInitials = selectedTheme?.author ? getAuthorInitials(selectedTheme.author) : '';
 
   return (
     <Layout>

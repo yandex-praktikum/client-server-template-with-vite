@@ -3,6 +3,8 @@ import { TreeItem } from '@material-ui/lab';
 import { Avatar, Button, TextField } from '@mui/material';
 import React, { useState, memo } from 'react';
 
+import { getAuthorInitials } from '../../../utils/getAuthorInitials';
+import { getCreatedAtValue } from '../../../utils/getCreatedAtValue';
 import { TComment } from '../ForumPage.types';
 import { useStyles } from '../useStyles';
 
@@ -15,8 +17,8 @@ const Comment = ({ data }: TProps) => {
 
   const classes = useStyles();
 
-  const createdAtValue = createdAt.slice(0, 10).split('-').reverse().join('.');
-  const authorInitials = author.firstName.slice(0, 1) + author.lastName.slice(0, 1);
+  const createdAtValue = getCreatedAtValue(createdAt);
+  const authorInitials = getAuthorInitials(author);
 
   return (
     <div className={classes.comment}>
