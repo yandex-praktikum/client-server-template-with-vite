@@ -47,21 +47,7 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   signButton: {
-    padding: theme.spacing(1, 2),
-    textAlign: 'center',
-    textDecoration: 'none',
-    color: 'red',
-    border: '1px solid red',
-    borderRadius: theme.spacing(0.2),
+    marginLeft: theme.spacing(2),
     textTransform: 'capitalize',
-    marginLeft: '32px',
-    minWidth: '120px',
-    transition: 'border, background-color 0.3s, color 0.3s',
-
-    '&:hover': {
-      color: 'black',
-      border: '1px solid black',
-      backgroundColor: 'rgba(0,0,0,.05)',
-    },
   },
 }));

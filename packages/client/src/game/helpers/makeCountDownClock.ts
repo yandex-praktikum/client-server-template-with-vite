@@ -15,7 +15,7 @@ const changeCountDown = (params: {
     const dateNowMs = dateNow.getTime();
 
     const remainingMs = Math.ceil(
-      MILLISECONDS_LIMIT - (dateNowMs - dateStartMs),
+      MILLISECONDS_LIMIT - (dateNowMs - dateStartMs)
     );
     const remainingSeconds = Math.ceil(remainingMs / 1000);
     const remainingSecondsStr =
@@ -40,7 +40,7 @@ const changeCountDown = (params: {
       0,
       0,
       ((mapWidth / (MILLISECONDS_LIMIT / 1000)) * remainingMs) / 1000,
-      10,
+      10
     );
 
     if (remainingMs <= 0) {
@@ -55,7 +55,7 @@ const changeCountDown = (params: {
 export const makeCountDownClock = (
   mapWidth: number,
   mapHeight: number,
-  onTimeOut: () => void,
+  onTimeOut: () => void
 ) => {
   const canvas = document.createElement('canvas');
   canvas.width = mapWidth;
