@@ -4,7 +4,8 @@ const BASE_URL = 'https://jsonplaceholder.typicode.com';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
-  prepareHeaders: headers => {
+
+  prepareHeaders: (headers, { getState: _ }) => {
     // By default, if we have a token in the store, let's use that for authenticated requests
     // Это для авторизации в будущем.
     // const token = (getState() as RootState).auth.token
@@ -33,7 +34,7 @@ export const api = createApi({
    */
   reducerPath: 'API',
   /**
-   * A bare bones base query would just be `baseQuery: fetchBaseQuery({ baseUrl: '/' })`
+   * A bare-bones base query would just be `baseQuery: fetchBaseQuery({ baseUrl: '/' })`
    */
   baseQuery: baseQueryWithRetry,
   /**

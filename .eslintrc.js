@@ -1,4 +1,7 @@
 const MULTI_LINE = 'always-multiline';
+const ONLY_MULTILINE = 'only-multiline';
+
+const IGNORE_FILES = ['packages/client/public/**', 'packages/client/dist/**'];
 
 module.exports = {
   env: {
@@ -21,6 +24,7 @@ module.exports = {
     ecmaVersion: 11,
   },
   plugins: ['@typescript-eslint', 'sonarjs'],
+  ignorePatterns: IGNORE_FILES,
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,
     '@typescript-eslint/no-unsafe-assignment': 0,
@@ -33,6 +37,7 @@ module.exports = {
         objects: MULTI_LINE,
         imports: MULTI_LINE,
         exports: MULTI_LINE,
+        functions: ONLY_MULTILINE,
       },
     ],
     'eol-last': ['error', 'always'],
@@ -111,5 +116,20 @@ module.exports = {
     ],
     semi: ['error', 'always'],
     '@typescript-eslint/no-misused-promises': 0,
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      },
+    ],
   },
+  overrides: [
+    {
+      files: ['packages/client/sw/sw.ts'],
+      rules: {
+        '@typescript-eslint/triple-slash-reference': 0,
+      },
+    },
+  ],
 };

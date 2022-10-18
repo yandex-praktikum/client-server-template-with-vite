@@ -11,8 +11,8 @@ export type TInitialUser = {
 
 export interface ICommonState {
   currentUser: TInitialUser;
-  theme: string;
+  theme: 'default';
   isAuthModalOpen: boolean;
   isLoading: boolean;
-  language: string;
+  language: 'RU';
 }

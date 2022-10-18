@@ -1,5 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 import { INITIAL_USER } from './constants';
 import { ICommonState, TInitialUser } from './interfaces';

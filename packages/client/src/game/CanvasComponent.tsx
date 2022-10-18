@@ -11,6 +11,7 @@ const SHOW_LOGS = false;
 export function CanvasComponent() {
   const ref = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState<number | null>(null);
+  let loopId: number | null = null;
 
   const MAP_WIDTH = 1200;
   const MAP_HEIGHT = 800;
@@ -57,6 +58,10 @@ export function CanvasComponent() {
 
     const countDownClock = makeCountDownClock(MAP_WIDTH, MAP_HEIGHT, () => {
       setScore(snake.segments.length);
+
+      if (loopId) {
+        cancelAnimationFrame(loopId);
+      }
     });
 
     const drawLogs = () => {
@@ -80,8 +85,6 @@ export function CanvasComponent() {
       snake.move(mousePositionX, mousePositionY, boost);
     };
 
-    let loopId: number | null = null;
-
     const increaseSnakeIfNeed = () => {
       const distanceToFood = getDistanceBetweenTwoPoints({ x: snake.x, y: snake.y }, { x: foodX, y: foodY });
 
@@ -99,6 +102,8 @@ export function CanvasComponent() {
     };
 
     const drawMapLoop = () => {
+      loopId = requestAnimationFrame(drawMapLoop);
+
       increaseSnakeIfNeed();
 
       // очищаем все и рисуем карту заново
@@ -113,10 +118,10 @@ export function CanvasComponent() {
 
       drawLogs();
 
-      loopId = requestAnimationFrame(drawMapLoop);
     };
 
     const intervalId = setInterval(sendCoordsLoop, 0);
+
     drawMapLoop();
 
     return () => {

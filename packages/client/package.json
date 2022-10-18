@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "dev:sw": "tsc --watch --project sw/tsconfig.sw.json",
+    "build:sw": "tsc --project sw/tsconfig.sw.json",
+    "build": "yarn run build:sw && tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
     "stylelint": "stylelint ./src/**/*.pcss",
@@ -34,6 +36,7 @@
     "@types/jest": "^29.0.0",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "@types/serviceworker": "^0.0.53",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "@vitejs/plugin-react": "^2.0.1",

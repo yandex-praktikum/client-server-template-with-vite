@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useStyles } from './useStyles';
@@ -7,17 +7,57 @@ import { useStyles } from './useStyles';
 import { PreviewAnimationCanvas } from '../../game/preview/PreviewAnimationCanvas';
 import Layout from '../Layout/Layout';
 
+type TMenuItem = {
+  itemName: string;
+} & ({ to: string; type: 'link' } | { onClick: () => void; type: 'button' });
+
 export const StartPage = () => {
   const classes = useStyles();
-  const [rulesOpen, setRulesOpen] = useState(false);
+  const [isRulesOpen, setIsRulesOpen] = useState(false);
+  const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
 
-  const handleOpenRules = () => {
-    setRulesOpen(true);
-  };
+  const toggleOpenRules = useCallback(() => {
+    setIsRulesOpen(!isRulesOpen);
+  }, [setIsRulesOpen, isRulesOpen]);
 
-  const handleCloseRules = () => {
-    setRulesOpen(false);
-  };
+  const toggleStartMenu = useCallback(() => {
+    setIsStartMenuOpen(!isStartMenuOpen);
+  }, [setIsStartMenuOpen, isStartMenuOpen]);
+
+  const MENU_ITEMS: TMenuItem[] = useMemo(
+    () => [
+      {
+        itemName: 'START',
+        onClick: toggleStartMenu,
+        type: 'button',
+      },
+      { itemName: 'RULES', onClick: toggleOpenRules, type: 'button' },
+      { itemName: 'SETTINGS', to: '/settings', type: 'link' },
+      { itemName: 'LEADER BOARD', to: '/leaderboard', type: 'link' },
+    ],
+    [toggleStartMenu]
+  );
+
+  const START_MENU_ITEMS: TMenuItem[] = useMemo(
+    () => [
+      {
+        itemName: 'SINGLE PLAYER',
+        to: '/game',
+        type: 'link',
+      },
+      {
+        itemName: 'MULTIPLAYER',
+        to: '/game-online',
+        type: 'link',
+      },
+      {
+        itemName: 'BACK',
+        onClick: toggleStartMenu,
+        type: 'button',
+      },
+    ],
+    [toggleStartMenu]
+  );
 
   const gameResult = window.location.hash;
   const isVictory = gameResult === '#victory';
@@ -29,24 +69,23 @@ export const StartPage = () => {
       <div className={classes.wrapper}>
         <div className={classes.title}>{title}</div>
         <div className={classes.menu}>
-          <Link to={'/game'} className={classes.menuItem}>
-            START
-          </Link>
-          <p className={classes.menuItem} onClick={handleOpenRules}>
-            RULES
-          </p>
-          <Link to={'/settings'} className={classes.menuItem}>
-            SETTINGS
-          </Link>
-          <Link to={'/leaderboard'} className={classes.menuItem}>
-            LEADER BOARD
-          </Link>
+          {(isStartMenuOpen ? START_MENU_ITEMS : MENU_ITEMS).map(menuItem =>
+            menuItem.type === 'link' ? (
+              <Link key={menuItem.itemName} to={menuItem.to} className={classes.menuItem}>
+                {menuItem.itemName}
+              </Link>
+            ) : (
+              <p key={menuItem.itemName} className={classes.menuItem} onClick={menuItem.onClick}>
+                {menuItem.itemName}
+              </p>
+            )
+          )}
         </div>
       </div>
       <div className={classes.previewCanvas}>
         <PreviewAnimationCanvas />
       </div>
-      <Dialog open={rulesOpen} onClose={handleCloseRules}>
+      <Dialog open={isRulesOpen} onClose={toggleOpenRules}>
         <DialogTitle>RULES</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -57,7 +96,7 @@ export const StartPage = () => {
           <DialogContentText>Good luck!</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseRules} color="secondary" variant="contained">
+          <Button onClick={toggleOpenRules} color="secondary" variant="contained">
             Got it
           </Button>
         </DialogActions>

@@ -17,6 +17,7 @@ const Loader = () => {
           .map((_, index) => {
             return (
               <div
+              key={index}
                 className={classes.snakePart}
                 style={{ animation: `pulse_${index} 2s infinite ease-in-out`, left: 95 + index * 40 }}
               />
