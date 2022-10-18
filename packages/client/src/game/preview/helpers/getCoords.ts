@@ -4,7 +4,7 @@ export const getCoords = (
   MAP_PADDING: number,
   SNAKE_SIZE: number,
   MAP_WIDTH: number,
-  MAP_HEIGHT: number,
+  MAP_HEIGHT: number
 ) => {
   const isRightDown =
     snakeX === MAP_WIDTH - (MAP_PADDING + SNAKE_SIZE) && snakeY === MAP_HEIGHT - (MAP_PADDING + SNAKE_SIZE);

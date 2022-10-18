@@ -20,6 +20,7 @@ export const useStyles = makeStyles(theme => ({
     fontFamily: 'Karantina, cursive',
     fontSize: theme.spacing(7.5),
     color: theme.palette.text.primary,
+    whiteSpace: 'nowrap',
   },
   logoSubtitle: {
     margin: 0,
@@ -33,9 +34,8 @@ export const useStyles = makeStyles(theme => ({
     color: 'black',
   },
   button: {
-    padding: theme.spacing(1, 2),
+    padding: theme.spacing(1, 3),
     color: 'black',
-    minWidth: '120px !important',
     textDecoration: 'none',
     textAlign: 'center',
     textTransform: 'capitalize',
@@ -47,21 +47,8 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   signButton: {
-    padding: theme.spacing(1, 2),
-    textAlign: 'center',
-    textDecoration: 'none',
-    color: 'red',
-    border: '1px solid red',
-    borderRadius: theme.spacing(0.2),
+    padding: theme.spacing(0.5, 3),
+    marginLeft: theme.spacing(2),
     textTransform: 'capitalize',
-    marginLeft: '32px',
-    minWidth: '120px',
-    transition: 'border, background-color 0.3s, color 0.3s',
-
-    '&:hover': {
-      color: 'black',
-      border: '1px solid black',
-      backgroundColor: 'rgba(0,0,0,.05)',
-    },
   },
 }));

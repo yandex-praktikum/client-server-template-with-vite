@@ -10,7 +10,7 @@ export const changeCoords = (
     size: number;
     x: number;
     y: number;
-  },
+  }
 ) => {
   const data = getCoords(snakeX, snakeY, opt.margin, opt.size, MAP_WIDTH, MAP_HEIGHT);
   const { isRightDown, isRightUp, toRightUp, toLeftUp, isLeftUp, toLeftDowm, isLeftDown, toRightDown } = data;
