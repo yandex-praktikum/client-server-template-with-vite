@@ -30,3 +30,39 @@ body {
   margin: 0;
   font-family: Inter, sans-serif;
 }
+
+@keyframes textOpacityPulse {
+  0% { opacity: 0.05; }
+  50% { opacity: 1; }
+  100% { opacity: 0.05; }
+}
+@keyframes pulse_0 {
+  0% { transform: scale(0); opacity: 0; }
+  20% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
+}
+@keyframes pulse_1 {
+  0% { transform: scale(0); opacity: 0; }
+  30% { transform: scale(1); opacity: 1; }
+  60% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
+}
+@keyframes pulse_2 {
+  0% { transform: scale(0); opacity: 0; }
+  40% { transform: scale(1); opacity: 1; }
+  70% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
+}
+@keyframes pulse_3 {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1); opacity: 1; }
+  80% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
+}
+@keyframes pulse_4 {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1); opacity: 1; }
+  90% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
+}

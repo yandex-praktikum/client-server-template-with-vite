@@ -33,9 +33,8 @@ export const useStyles = makeStyles(theme => ({
     color: 'black',
   },
   button: {
-    padding: theme.spacing(1, 2),
+    padding: theme.spacing(1, 3),
     color: 'black',
-    minWidth: '120px !important',
     textDecoration: 'none',
     textAlign: 'center',
     textTransform: 'capitalize',
@@ -47,6 +46,7 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   signButton: {
+    padding: theme.spacing(0.5, 3),
     marginLeft: theme.spacing(2),
     textTransform: 'capitalize',
   },

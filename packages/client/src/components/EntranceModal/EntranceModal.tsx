@@ -6,16 +6,20 @@ import LoginForm from './LoginForm/LoginForm';
 import RegistrationForm from './RegistrationForm/RegistrationForm';
 import { useStyles } from './useStyles';
 
-interface IEntranceModalProps {
-  onClose: () => void;
-}
+import { toggleAuthModalState } from '../../store/commonSlice';
+import { useAppDispatch } from '../../store/hooks';
 
-const EntranceModal = ({ onClose }: IEntranceModalProps) => {
+const EntranceModal = () => {
+  const dispatch = useAppDispatch();
   const [isRegistration, setIsRegistration] = React.useState(false);
   const classes = useStyles();
 
   const changeFormHandler = () => {
     setIsRegistration(!isRegistration);
+  };
+
+  const closeFormHandler = () => {
+    dispatch(toggleAuthModalState());
   };
 
   return (
@@ -25,7 +29,7 @@ const EntranceModal = ({ onClose }: IEntranceModalProps) => {
           <Typography variant={'h1'} className={classes.title}>
             {isRegistration ? 'Sign up' : 'Sign in'}
           </Typography>
-          <Button onClick={onClose} className={classes.exitButton}>
+          <Button onClick={closeFormHandler} className={classes.exitButton}>
             <Close className={classes.exitIcon} />
           </Button>
         </div>

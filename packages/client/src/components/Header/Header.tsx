@@ -1,22 +1,31 @@
 import { Button } from '@mui/material';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useStyles } from './useStyles';
 
+import { toggleAuthModalState } from '../../store/commonSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import EntranceModal from '../EntranceModal/EntranceModal';
 
 const Header = () => {
   const classes = useStyles();
-  const [isEntranceOpen, setIsEntranceOpen] = React.useState(false);
+  const navigate = useNavigate();
+  const { isAuthModalOpen, currentUser } = useAppSelector(state => state.common);
+  const { id } = currentUser;
+  const dispatch = useAppDispatch();
 
-  const openEntranceModalHandler = React.useCallback(() => {
-    setIsEntranceOpen(!isEntranceOpen);
-  }, [isEntranceOpen]);
+  const openEntranceModalHandler = () => {
+    dispatch(toggleAuthModalState());
+  };
+
+  const openProfilePageHandler = () => {
+    navigate('/profile');
+  };
 
   return (
     <>
-      {isEntranceOpen && <EntranceModal onClose={openEntranceModalHandler} />}
+      {isAuthModalOpen && <EntranceModal />}
       <div className={classes.wrapper}>
         <div>
           <h1 className={classes.logo}>
@@ -37,9 +46,9 @@ const Header = () => {
           <Button
             size={'medium'}
             variant={'outlined'}
-            onClick={openEntranceModalHandler}
+            onClick={id ? openProfilePageHandler : openEntranceModalHandler}
             className={classes.signButton}>
-            Sign in
+            {id ? 'Profile' : 'Sign in'}
           </Button>
         </div>
       </div>
