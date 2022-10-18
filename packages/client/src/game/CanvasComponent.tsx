@@ -140,7 +140,14 @@ export function CanvasComponent() {
 
   return (
     <>
-      <canvas ref={ref} onMouseDown={onMouseDown} onMouseUp={onMouseUp} />
+      <canvas
+        style={{
+          cursor: 'none',
+        }}
+        ref={ref}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+      />
       <Dialog open={!!score} onClose={handleClose}>
         <DialogTitle>Your score: {score}</DialogTitle>
         <DialogActions>

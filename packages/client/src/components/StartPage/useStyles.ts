@@ -25,7 +25,6 @@ export const useStyles = makeStyles(() => ({
     margin: '10px 0',
     fontSize: '30px',
     color: 'black',
-    cursor: 'pointer',
     textDecoration: 'none',
 
     '&:hover': {
