@@ -1,7 +1,7 @@
 export type TUser = {
   avatar: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  second_name: string;
 };
 
 export type TComment = {

@@ -14,6 +14,8 @@ import { useCustomTheme } from './useCustomTheme';
 
 import { addServiceWorker } from '../sw/addServiceWorker';
 
+// TODO: не запускать локально для develop
+// TODO: не сохранять запросы на авторизацию
 addServiceWorker();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

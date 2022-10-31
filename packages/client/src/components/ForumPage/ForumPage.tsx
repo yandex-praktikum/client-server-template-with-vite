@@ -60,8 +60,8 @@ export const ForumPage = () => {
                   <Avatar src={selectedTheme.author.avatar} sx={{ width: 100, height: 100 }}>
                     {authorInitials}
                   </Avatar>
-                  <Typography variant="body1">{selectedTheme.author.lastName}</Typography>
-                  <Typography variant="body1">{selectedTheme.author.firstName}</Typography>
+                  <Typography variant="body1">{selectedTheme.author.second_name}</Typography>
+                  <Typography variant="body1">{selectedTheme.author.first_name}</Typography>
                 </div>
                 <Typography variant="h3">{selectedTheme.title}</Typography>
               </div>

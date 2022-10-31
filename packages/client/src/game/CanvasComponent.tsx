@@ -6,12 +6,11 @@ import { makeCountDownClock } from './helpers/makeCountDownClock';
 import { makeFoodItem } from './helpers/makeFoodItem';
 import { MySnake } from './Snake';
 
-const SHOW_LOGS = false;
+const SHOW_LOGS = true;
 
 export function CanvasComponent() {
   const ref = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState<number | null>(null);
-  let loopId: number | null = null;
 
   const MAP_WIDTH = 1200;
   const MAP_HEIGHT = 800;
@@ -58,10 +57,6 @@ export function CanvasComponent() {
 
     const countDownClock = makeCountDownClock(MAP_WIDTH, MAP_HEIGHT, () => {
       setScore(snake.segments.length);
-
-      if (loopId) {
-        cancelAnimationFrame(loopId);
-      }
     });
 
     const drawLogs = () => {
@@ -85,6 +80,8 @@ export function CanvasComponent() {
       snake.move(mousePositionX, mousePositionY, boost);
     };
 
+    let loopId: number | null = null;
+
     const increaseSnakeIfNeed = () => {
       const distanceToFood = getDistanceBetweenTwoPoints({ x: snake.x, y: snake.y }, { x: foodX, y: foodY });
 
@@ -102,8 +99,6 @@ export function CanvasComponent() {
     };
 
     const drawMapLoop = () => {
-      loopId = requestAnimationFrame(drawMapLoop);
-
       increaseSnakeIfNeed();
 
       // очищаем все и рисуем карту заново
@@ -118,10 +113,10 @@ export function CanvasComponent() {
 
       drawLogs();
 
+      loopId = requestAnimationFrame(drawMapLoop);
     };
 
     const intervalId = setInterval(sendCoordsLoop, 0);
-
     drawMapLoop();
 
     return () => {
@@ -138,16 +133,13 @@ export function CanvasComponent() {
     window.location.reload();
   };
 
+  // TODO: cursor
   return (
     <>
       <canvas
-        style={{
-          cursor: 'none',
-        }}
-        ref={ref}
-        onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
-      />
+           style={{
+            cursor: 'none',
+          }} ref={ref} onMouseDown={onMouseDown} onMouseUp={onMouseUp} />
       <Dialog open={!!score} onClose={handleClose}>
         <DialogTitle>Your score: {score}</DialogTitle>
         <DialogActions>

@@ -1,2 +1,4 @@
-export const getAuthorInitials = (author: { firstName: string; lastName: string }) =>
-  author.firstName.slice(0, 1) + author.lastName.slice(0, 1);
+// TODO: добавить описание функции
+
+export const getAuthorInitials = (author: { first_name: string; second_name: string }) =>
+  author.first_name.slice(0, 1) + author.second_name.slice(0, 1);

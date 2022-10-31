@@ -8,7 +8,7 @@
     "dev:sw": "tsc --watch --project sw/tsconfig.sw.json",
     "build:sw": "tsc --project sw/tsconfig.sw.json",
     "build": "yarn run build:sw && tsc && vite build",
-    "preview": "vite preview",
+    "preview": "vite preview --host",
     "lint": "eslint .",
     "stylelint": "stylelint ./src/**/*.pcss",
     "format": "prettier --write .",
@@ -24,12 +24,15 @@
     "@reduxjs/toolkit": "^1.8.5",
     "@types/react-redux": "^7.1.24",
     "eslint-config-prettier": "^8.5.0",
+    "http": "^0.0.1-security",
     "normalize.css": "^8.0.1",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.4",
-    "react-router-dom": "^6.4.1"
+    "react-router-dom": "^6.4.1",
+    "socket.io": "^4.5.2",
+    "socket.io-client": "^4.5.2"
   },
   "devDependencies": {
     "@testing-library/react": "^13.3.0",
@@ -42,6 +45,7 @@
     "@vitejs/plugin-react": "^2.0.1",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^3.5.2",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-sonarjs": "^0.15.0",
     "jest": "^29.0.2",

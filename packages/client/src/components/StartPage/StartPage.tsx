@@ -7,6 +7,7 @@ import { useStyles } from './useStyles';
 import { PreviewAnimationCanvas } from '../../game/preview/PreviewAnimationCanvas';
 import Layout from '../Layout/Layout';
 
+// TODO: типизация ссылок роутера
 type TMenuItem = {
   itemName: string;
 } & ({ to: string; type: 'link' } | { onClick: () => void; type: 'button' });
@@ -47,7 +48,7 @@ export const StartPage = () => {
       },
       {
         itemName: 'MULTIPLAYER',
-        to: '/game-online',
+        to: '/game-multiplayer',
         type: 'link',
       },
       {

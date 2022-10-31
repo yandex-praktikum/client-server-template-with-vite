@@ -27,7 +27,7 @@ const Comment = ({ data }: TProps) => {
           {authorInitials}
         </Avatar>
         <div className={classes.commentAuthorName}>
-          <Typography variant="h6">{[author.lastName, author.firstName].join(' ')}</Typography>
+          <Typography variant="h6">{[author.second_name, author.first_name].join(' ')}</Typography>
         </div>
         <Typography className={classes.commentCreatedAt} variant="caption" color={'textSecondary'}>
           {createdAtValue}

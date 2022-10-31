@@ -17,5 +17,5 @@
     "jsx": "react-jsx"
   },
   "include": ["src", "sw/common.d.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [{ "path": "../shared" }, { "path": "./tsconfig.node.json" }]
 }

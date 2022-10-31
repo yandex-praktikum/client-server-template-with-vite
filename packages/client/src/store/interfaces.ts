@@ -1,3 +1,5 @@
+import type { TGame } from '../../../shared/types';
+
 export type TInitialUser = {
   id: number | null;
   first_name: string;
@@ -15,4 +17,6 @@ export interface ICommonState {
   isAuthModalOpen: boolean;
   isLoading: boolean;
   language: 'RU';
+  // TODO: точно ли нужно хранить в сторе ?
+  currentGame: TGame | null;
 }
