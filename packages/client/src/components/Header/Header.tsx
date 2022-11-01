@@ -7,6 +7,7 @@ import { useStyles } from './useStyles';
 import { useNavigatorOnLine } from '../../hooks/useNavigatorOnLine';
 import { toggleAuthModalState } from '../../store/commonSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { dispatchCursorHoverEvent } from '../../utils';
 import EntranceModal from '../EntranceModal/EntranceModal';
 
 const OnOffIndicator = styled('div')(({ isOnline }: { isOnline: boolean }) => ({
@@ -50,16 +51,17 @@ const Header = () => {
           <p className={classes.logoSubtitle}>Yandex Practicum Web Gaming</p>
         </div>
         <div className={classes.menu}>
-          <Link to={'/'} className={classes.button}>
+          <Link onMouseOver={dispatchCursorHoverEvent} to={'/'} className={classes.button}>
             about
           </Link>
-          <Link to={'/forum'} className={classes.button}>
+          <Link onMouseOver={dispatchCursorHoverEvent} to={'/forum'} className={classes.button}>
             forum
           </Link>
-          <Link to={'/leaderboard'} className={classes.button}>
+          <Link onMouseOver={dispatchCursorHoverEvent} to={'/leaderboard'} className={classes.button}>
             leaderboard
           </Link>
           <Button
+            onMouseOver={dispatchCursorHoverEvent}
             size={'medium'}
             variant={'outlined'}
             onClick={id ? openProfilePageHandler : openEntranceModalHandler}

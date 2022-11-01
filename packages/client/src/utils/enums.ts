@@ -3,3 +3,7 @@ export enum APP_Z_INDEXES {
   LOADER_INDEX = 2000,
   CURSOR = 1000000,
 }
+
+export enum CUSTOM_EVENTS {
+  CURSOR_HOVER = 'cursorHover',
+}
