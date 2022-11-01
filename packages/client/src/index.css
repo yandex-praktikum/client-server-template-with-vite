@@ -7,11 +7,6 @@ html {
 *::before,
 *::after {
   box-sizing: inherit;
-  cursor: none;
-}
-
-*:hover {
-  cursor: none;
 }
 
 *:focus {
@@ -24,11 +19,6 @@ img {
 
 table {
   border-collapse: collapse;
-}
-
-select,
-label {
-  cursor: pointer;
 }
 
 body {

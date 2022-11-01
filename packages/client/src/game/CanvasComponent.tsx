@@ -6,11 +6,14 @@ import { makeCountDownClock } from './helpers/makeCountDownClock';
 import { makeFoodItem } from './helpers/makeFoodItem';
 import { MySnake } from './Snake';
 
+import CustomCursor from '../components/CustomCursor/CustomCursor';
+
 const SHOW_LOGS = false;
 
 export function CanvasComponent() {
   const ref = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState<number | null>(null);
+  const [isCursorShown, setIsCursorShown] = useState(false);
   let loopId: number | null = null;
 
   const MAP_WIDTH = 1200;
@@ -117,7 +120,6 @@ export function CanvasComponent() {
       snake.draw();
 
       drawLogs();
-
     };
 
     const intervalId = setInterval(sendCoordsLoop, 0);
@@ -138,13 +140,20 @@ export function CanvasComponent() {
     window.location.reload();
   };
 
+  const handleCustomCursor = () => {
+    setIsCursorShown(prevState => !prevState);
+  };
+
   return (
     <>
+      {isCursorShown && <CustomCursor />}
       <canvas
         style={{
           cursor: 'none',
         }}
         ref={ref}
+        onMouseOver={handleCustomCursor}
+        onMouseLeave={handleCustomCursor}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
       />
