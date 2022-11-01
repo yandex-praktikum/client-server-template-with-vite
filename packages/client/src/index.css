@@ -7,12 +7,6 @@ html {
 *::before,
 *::after {
   box-sizing: inherit;
-  /* TODO: почему none везде ? сделать только в канвасе */
-  /*cursor: none;*/
-}
-
-*:hover {
-  /*cursor: none;*/
 }
 
 *:focus {
@@ -25,11 +19,6 @@ img {
 
 table {
   border-collapse: collapse;
-}
-
-select,
-label {
-  cursor: pointer;
 }
 
 body {

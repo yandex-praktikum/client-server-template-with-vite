@@ -4,7 +4,7 @@ import { APP_Z_INDEXES } from '../../utils/enums';
 
 export const useStyles = makeStyles(() => ({
   wrapper: {
-    position: 'absolute',
+    position: 'fixed',
     width: 50,
     height: 50,
     pointerEvents: 'none',

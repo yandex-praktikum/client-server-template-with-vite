@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-// import CustomCursor from './components/CustomCursor/CustomCursor';
 import { ForumPage } from './components/ForumPage/ForumPage';
 import { GameMultiplayerPage } from './components/GameMultiplayerPage/GameMultiplayerPage';
 import { GamePage } from './components/GamePage/GamePage';
@@ -35,8 +34,6 @@ export function App(): JSX.Element {
 
   return (
     <div className="App">
-      {/*TODO: CustomCursor*/}
-      {/*<CustomCursor />*/}
       {isLoading && <Loader />}
       <Routes>
         <Route path={'/'} element={<StartPage />} />

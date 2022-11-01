@@ -6,11 +6,15 @@ import { makeCountDownClock } from './helpers/makeCountDownClock';
 import { makeFoodItem } from './helpers/makeFoodItem';
 import { MySnake } from './Snake';
 
-const SHOW_LOGS = true;
+import CustomCursor from '../components/CustomCursor/CustomCursor';
+
+const SHOW_LOGS = false;
 
 export function CanvasComponent() {
   const ref = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState<number | null>(null);
+  const [isCursorShown, setIsCursorShown] = useState(false);
+  let loopId: number | null = null;
 
   const MAP_WIDTH = 1200;
   const MAP_HEIGHT = 800;
@@ -80,8 +84,6 @@ export function CanvasComponent() {
       snake.move(mousePositionX, mousePositionY, boost);
     };
 
-    let loopId: number | null = null;
-
     const increaseSnakeIfNeed = () => {
       const distanceToFood = getDistanceBetweenTwoPoints({ x: snake.x, y: snake.y }, { x: foodX, y: foodY });
 
@@ -133,13 +135,23 @@ export function CanvasComponent() {
     window.location.reload();
   };
 
-  // TODO: cursor
+  const handleCustomCursor = () => {
+    setIsCursorShown(prevState => !prevState);
+  };
+
   return (
     <>
+      {isCursorShown && <CustomCursor />}
       <canvas
-           style={{
-            cursor: 'none',
-          }} ref={ref} onMouseDown={onMouseDown} onMouseUp={onMouseUp} />
+        style={{
+          cursor: 'none',
+        }}
+        ref={ref}
+        onMouseOver={handleCustomCursor}
+        onMouseLeave={handleCustomCursor}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+      />
       <Dialog open={!!score} onClose={handleClose}>
         <DialogTitle>Your score: {score}</DialogTitle>
         <DialogActions>
