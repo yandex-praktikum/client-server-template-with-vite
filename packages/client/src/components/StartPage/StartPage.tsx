@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { useStyles } from './useStyles';
 
 import { PreviewAnimationCanvas } from '../../game/preview/PreviewAnimationCanvas';
-import { dispatchCursorHoverEvent } from '../../utils';
 import Layout from '../Layout/Layout';
 
 type TMenuItem = {
@@ -72,19 +71,11 @@ export const StartPage = () => {
         <div className={classes.menu}>
           {(isStartMenuOpen ? START_MENU_ITEMS : MENU_ITEMS).map(menuItem =>
             menuItem.type === 'link' ? (
-              <Link
-                onMouseOver={dispatchCursorHoverEvent}
-                key={menuItem.itemName}
-                to={menuItem.to}
-                className={classes.menuItem}>
+              <Link key={menuItem.itemName} to={menuItem.to} className={classes.menuItem}>
                 {menuItem.itemName}
               </Link>
             ) : (
-              <p
-                onMouseOver={dispatchCursorHoverEvent}
-                key={menuItem.itemName}
-                className={classes.menuItem}
-                onClick={menuItem.onClick}>
+              <p key={menuItem.itemName} className={classes.menuItem} onClick={menuItem.onClick}>
                 {menuItem.itemName}
               </p>
             )

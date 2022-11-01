@@ -11,8 +11,4 @@ export const useStyles = makeStyles(() => ({
     transform: 'translate(-50%, -50%)',
     zIndex: APP_Z_INDEXES.CURSOR,
   },
-  cursorAnimation: {
-    animation: 'cursorRotate 0.3s ease-in-out',
-    animationIterationCount: 1,
-  },
 }));

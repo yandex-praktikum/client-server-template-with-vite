@@ -7,11 +7,6 @@ html {
 *::before,
 *::after {
   box-sizing: inherit;
-  cursor: none;
-}
-
-*:hover {
-  cursor: none;
 }
 
 *:focus {
@@ -65,9 +60,4 @@ body {
   60% { transform: scale(1); opacity: 1; }
   90% { transform: scale(1); opacity: 1; }
   100% { transform: scale(0); opacity: 0; }
-}
-
-@keyframes cursorRotate {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
