@@ -6,12 +6,14 @@ import { ColorIndicator } from './parts/ColorIndicator';
 import { useStyles } from './useStyles';
 
 import type { TPlayer } from '../../../../shared/types';
+import { useSnackbarError } from '../../hooks/useSnackbarError';
 import { socket } from '../../services/socket/socket';
 import { useAppSelector } from '../../store/hooks';
 import { getAuthorInitials } from '../../utils/getAuthorInitials';
 import Layout from '../Layout/Layout';
 
 export const WaitingRoomPage = () => {
+  const { setError, SnackbarErrorComp } = useSnackbarError();
   // TODO: мб использовать useRef ?
   const { currentGame } = useAppSelector(state => state.common);
 
@@ -23,6 +25,9 @@ export const WaitingRoomPage = () => {
   useEffect(() => {
     socket.on('started', () => {
       navigate('/multi-game');
+    });
+    socket.on('error', message => {
+      setError(message);
     });
   }, []);
 
@@ -95,6 +100,7 @@ export const WaitingRoomPage = () => {
           <Alert severity="info">Wait until the host start the game</Alert>
         )}
       </Paper>
+      <SnackbarErrorComp />
     </Layout>
   );
 };
