@@ -1,6 +1,8 @@
 import { Alert, Snackbar } from '@mui/material';
 import React, { FunctionComponent, useState } from 'react';
 
+import { AUTO_HIDE_SNACKBAR_DURATION } from '../consts/settings';
+
 type TError = string | null | undefined;
 
 export const useSnackbarError = (): {
@@ -14,7 +16,7 @@ export const useSnackbarError = (): {
     <Snackbar
       open={!!error}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      autoHideDuration={2000}
+      autoHideDuration={AUTO_HIDE_SNACKBAR_DURATION}
       onClose={() => {
         setError(null);
       }}>

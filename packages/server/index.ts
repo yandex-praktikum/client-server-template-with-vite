@@ -54,7 +54,7 @@ io.on('connection', socket => {
   addCreateRoomEvent(socket, games, io);
 
   // для подключения к созданной комнате
-  addJoinRoomEvent(socket, games);
+  addJoinRoomEvent(socket, games, io);
 
   // для вызова начала игры (когда все игроки поключились к комнате и хост нажимает кнопку Старт)
   addStartEvent(socket, games, io);

@@ -29,6 +29,9 @@ export const WaitingRoomPage = () => {
     socket.on('error', message => {
       setError(message);
     });
+    socket.on('disconnect', () => {
+      setError('Disconnected');
+    });
   }, []);
 
   const { currentUser } = useAppSelector(state => state.common);
@@ -36,7 +39,7 @@ export const WaitingRoomPage = () => {
   if (!currentGame || !players) {
     navigate('/create-or-join-game');
 
-    return;
+    return null;
   }
 
   const isConnectedOnePlayer = players.length === 1;
@@ -68,7 +71,7 @@ export const WaitingRoomPage = () => {
                   <TableCell>
                     <Avatar src={row.user.avatar}>{getAuthorInitials({ ...row.user })}</Avatar>
                   </TableCell>
-                  <TableCell>{[row.user.first_name, row.user.second_name].join(' ')}</TableCell>
+                  <TableCell>{[row.user.first_name, row.user.second_name].join('\u00a0')}</TableCell>
                   <TableCell width="100%" align="center">
                     {currentUser.id === row.user.id ? <span className={classes.you}>you</span> : ''}
                   </TableCell>
@@ -82,22 +85,33 @@ export const WaitingRoomPage = () => {
           </Table>
         </TableContainer>
         {isHost && isConnectedOnePlayer && (
-          <Alert severity="error">Share the code to your friends and wait for them to connect to the game.</Alert>
+          <Alert className={classes.alert} severity="error">
+            Share the code to your friends and wait for them to connect to the game.
+          </Alert>
         )}
-        {isHost && isRoomNotFull && <Alert severity="info">If everyone is connected to the game, click START</Alert>}
-        {isHost && isRoomFull && <Alert severity="success">Room is full, click START!</Alert>}
+        {isHost && isRoomNotFull && (
+          <Alert className={classes.alert} severity="info">
+            If everyone is connected to the game, click START
+          </Alert>
+        )}
+        {isHost && isRoomFull && (
+          <Alert className={classes.alert} severity="success">
+            Room is full, click START!
+          </Alert>
+        )}
         {isHost ? (
           <Button
             variant="contained"
             className={classes.startBtn}
             size="large"
-            // TODO: вернуть условие
-            // disabled={isConnectedOnePlayer}
+            disabled={isConnectedOnePlayer}
             onClick={handleStartGame}>
             START
           </Button>
         ) : (
-          <Alert severity="info">Wait until the host start the game</Alert>
+          <Alert className={classes.alert} severity="info">
+            Wait until the host start the game
+          </Alert>
         )}
       </Paper>
       <SnackbarErrorComp />

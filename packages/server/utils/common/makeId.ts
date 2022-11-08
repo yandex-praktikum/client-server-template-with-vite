@@ -1,13 +1,10 @@
-// TODO: вынести константу в настройки
-const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-// TODO: добавить описание функции и тип возвращаемого значения
-export function makeid(length: number) {
+/** Возвращает случайно сгенерированную строку из указанных символов с указанной длиной */
+export function makeId(characters: string, length: number): string {
   let result = '';
-  const charactersLength = CHARACTERS.length;
+  const charactersLength = characters.length;
 
   for (let i = 0; i < length; i++) {
-    result += CHARACTERS.charAt(Math.floor(Math.random() * charactersLength));
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
 
   return result;

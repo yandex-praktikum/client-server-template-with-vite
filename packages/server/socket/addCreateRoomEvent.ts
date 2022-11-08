@@ -10,10 +10,11 @@ import {
   FOOD_COLORS,
   ROOM_CODE_LENGTH,
   SOCKET_ERRORS,
+  ROOM_CODE_CHARACTERS,
 } from '../../shared/consts';
 import type { IClientToServerEvents, IServerToClientEvents, TGame, TGames } from '../../shared/types';
 import { getRandomItem } from '../utils/common/getRandomItem';
-import { makeid } from '../utils/common/makeId';
+import { makeId } from '../utils/common/makeId';
 import { makeRandomPosition } from '../utils/common/makeRandomPosition';
 
 export const addCreateRoomEvent = (
@@ -22,7 +23,7 @@ export const addCreateRoomEvent = (
   io: socketIo.Server<IClientToServerEvents, IServerToClientEvents>
 ) => {
   socket.on('createRoom', userCreator => {
-    const roomId = makeid(ROOM_CODE_LENGTH);
+    const roomId = makeId(ROOM_CODE_CHARACTERS, ROOM_CODE_LENGTH);
 
     if (games[roomId]) {
       socket.emit('error', SOCKET_ERRORS.ROOM_ALREADY_EXISTS);

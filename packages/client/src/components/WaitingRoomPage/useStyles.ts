@@ -24,8 +24,9 @@ export const useStyles = makeStyles(theme => ({
     width: '50%',
   },
   tableContainer: {
-    marginBottom: theme.spacing(2),
+    margin: `0 auto ${theme.spacing(2)}px`,
     width: '800px',
+    maxWidth: '100%',
   },
   table: {
     minWidth: 650,
@@ -40,5 +41,9 @@ export const useStyles = makeStyles(theme => ({
     '&:last-child td, &:last-child th': {
       border: 0,
     },
+  },
+  alert: {
+    width: 'fit-content',
+    margin: '0 auto',
   },
 }));

@@ -8,13 +8,14 @@ import { makeCountDownClock } from '../../game/helpers/makeCountDownClock';
 import { makeSnakeSegment } from '../../game/helpers/makeSnakeSegment';
 import { socket } from '../../services/socket/socket';
 import { useAppSelector } from '../../store/hooks';
+import { fixPositionForMap } from '../../utils/fixPositionForMap';
 
 // TODO: разрешить играть оффлайн в одиночный режим
 
 // TODO: рефактор всего этого файла + вынести общие функции для оффлан и онлайн игр
 
 // TODO: почему не внутри и почему начальная позиция такая? мб лучше центр ? и вынести ее из константы из shared
-const cursorPosition: TPosition = { x: 100, y: 100 };
+let cursorPosition: TPosition = { x: 100, y: 100 };
 
 export const MultiCanvas = () => {
   // todo: выбрать начальную позицию
@@ -50,26 +51,10 @@ export const MultiCanvas = () => {
       throw Error('No game');
     }
 
-    cursorPosition.x = Math.ceil(e.clientX - ref.current.getBoundingClientRect().left);
-    cursorPosition.y = Math.ceil(e.clientY - ref.current.getBoundingClientRect().top);
-
-    // TODO: вынести в функцию fix position
-
-    if (cursorPosition.x < 0) {
-      cursorPosition.x = 0;
-    }
-
-    if (cursorPosition.x > MAP_WIDTH) {
-      cursorPosition.x = MAP_WIDTH;
-    }
-
-    if (cursorPosition.y < 0) {
-      cursorPosition.y = 0;
-    }
-
-    if (cursorPosition.y > MAP_HEIGHT) {
-      cursorPosition.y = MAP_HEIGHT;
-    }
+    cursorPosition = fixPositionForMap({
+      x: Math.ceil(e.clientX - ref.current.getBoundingClientRect().left),
+      y: Math.ceil(e.clientY - ref.current.getBoundingClientRect().top),
+    });
   }
 
   function onMouseDown() {

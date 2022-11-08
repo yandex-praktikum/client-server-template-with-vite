@@ -1,36 +1,47 @@
 import type { Socket } from 'socket.io';
+import type socketIo from 'socket.io';
 
-import { SNAKE_COLORS } from '../../shared/consts';
-import { INITIAL_CURSOR_POSITION, INITIAL_PLAYER_POSITIONS } from '../../shared/consts/settings';
+import {
+  SNAKE_COLORS,
+  INITIAL_CURSOR_POSITION,
+  INITIAL_PLAYER_POSITIONS,
+  SOCKET_ERRORS,
+  MAX_PLAYERS_IN_ROOM,
+} from '../../shared/consts';
 import type { IClientToServerEvents, IServerToClientEvents, TGames, TPlayer } from '../../shared/types';
 
-export const addJoinRoomEvent = (socket: Socket<IClientToServerEvents, IServerToClientEvents>, games: TGames) => {
+export const addJoinRoomEvent = (
+  socket: Socket<IClientToServerEvents, IServerToClientEvents>,
+  games: TGames,
+  io: socketIo.Server<IClientToServerEvents, IServerToClientEvents>
+) => {
   socket.on('joinRoom', (roomId, player) => {
     const game = games[roomId];
-    const playerNumber = game.players.length;
 
-    if (game) {
+    if (!game) {
+      socket.emit('error', SOCKET_ERRORS.GAME_NOT_FOUND);
+    } else if (game.players.find(p => p.user.id === player.id) !== undefined) {
+      socket.emit('error', SOCKET_ERRORS.ALREADY_JOINED_THE_GAME);
+    } else if (game.players.length >= MAX_PLAYERS_IN_ROOM) {
+      socket.emit('error', SOCKET_ERRORS.TOO_MANY_PLAYERS);
+    } else if (game.status !== 'waiting') {
+      socket.emit('error', SOCKET_ERRORS.THE_GAME_ALREADY_STARTED);
+    } else {
+      const playerNumber = game.players.length;
+      const initPlayerPosition = INITIAL_PLAYER_POSITIONS[playerNumber];
       const newPlayer: TPlayer = {
         color: SNAKE_COLORS[playerNumber],
         isHost: false,
         isBoost: false,
         user: player,
         cursorPosition: INITIAL_CURSOR_POSITION,
-        // TODO: через массив fill для более короткой записи
-        segments: [{ ...INITIAL_PLAYER_POSITIONS[playerNumber] }, { ...INITIAL_PLAYER_POSITIONS[playerNumber] }],
-        headCoords: { ...INITIAL_PLAYER_POSITIONS[playerNumber] },
+        segments: [{ ...initPlayerPosition }, { ...initPlayerPosition }],
+        headCoords: { ...initPlayerPosition },
       };
       game.players.push(newPlayer);
-      socket.join(roomId);
+      socket.join(game.roomId);
 
-      socket.to(game.roomId).emit('joinedRoom', game);
-      socket.emit('joinedRoom', game);
-    } else {
-      // TODO:
-      // добавить обработку ошибки, если игры не найдено
-      // добавить ошибку, если в комнате уже максимальное число игроков и нового нельзя добавить
-      // добавить ошибку, если игра уже началась и ее статус не waiting
-      // добавить ошибку, если этот игрок уже подключился ранее
+      io.in(game.roomId).emit('joinedRoom', game);
     }
   });
 };
