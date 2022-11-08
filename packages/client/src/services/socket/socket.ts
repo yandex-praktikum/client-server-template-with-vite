@@ -2,12 +2,12 @@ import { io, Socket } from 'socket.io-client';
 
 import type { IClientToServerEvents, IServerToClientEvents } from '../../../../shared/types';
 
-// TODO: change localhost for prod
+// todo: убрать хардкод (использовать url из env)
+// todo: возможно стоит вынести константу, но куда?
+const SERVER_SOCKET_URL =
+  import.meta.env.MODE === 'production' ? 'https://chicago-api.herokuapp.com' : 'http://localhost:3001';
 
-// const SERVER_URL = 'https://chicago-api.herokuapp.com/';
-const SERVER_URL = 'http://localhost:3001';
-
-export const socket: Socket<IServerToClientEvents, IClientToServerEvents> = io(SERVER_URL, {
+export const socket: Socket<IServerToClientEvents, IClientToServerEvents> = io(SERVER_SOCKET_URL, {
   // TODO: сравнить со значением на бэке и решить точно ли нужна эта опция
   transports: ['websocket'],
 });
