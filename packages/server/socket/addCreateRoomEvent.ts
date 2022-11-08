@@ -1,4 +1,5 @@
 import type { Socket } from 'socket.io';
+import type socketIo from 'socket.io';
 
 import {
   SNAKE_COLORS,
@@ -6,24 +7,34 @@ import {
   INITIAL_PLAYER_POSITIONS,
   MAP_HEIGHT,
   MAP_WIDTH,
-  MAX_PLAYERS_IN_ROOM,
   FOOD_COLORS,
+  ROOM_CODE_LENGTH,
+  SOCKET_ERRORS,
 } from '../../shared/consts';
 import type { IClientToServerEvents, IServerToClientEvents, TGame, TGames } from '../../shared/types';
 import { getRandomItem } from '../utils/common/getRandomItem';
 import { makeid } from '../utils/common/makeId';
 import { makeRandomPosition } from '../utils/common/makeRandomPosition';
 
-export const addCreateRoomEvent = (socket: Socket<IClientToServerEvents, IServerToClientEvents>, games: TGames) => {
+export const addCreateRoomEvent = (
+  socket: Socket<IClientToServerEvents, IServerToClientEvents>,
+  games: TGames,
+  io: socketIo.Server<IClientToServerEvents, IServerToClientEvents>
+) => {
   socket.on('createRoom', userCreator => {
-    // TODO: другая константа должна быть
-    const roomId = makeid(MAX_PLAYERS_IN_ROOM);
+    const roomId = makeid(ROOM_CODE_LENGTH);
+
+    if (games[roomId]) {
+      socket.emit('error', SOCKET_ERRORS.ROOM_ALREADY_EXISTS);
+
+      return;
+    }
+
     const initialPosition = INITIAL_PLAYER_POSITIONS[0];
     const newGame: TGame = {
       roomId: roomId,
       status: 'waiting',
       food: {
-        // TODO: 50 - вынести в константу и проверить где еще есть 50, либо флаг withMargin
         position: makeRandomPosition(MAP_WIDTH, MAP_HEIGHT, 50),
         color: getRandomItem(FOOD_COLORS),
       },
@@ -41,8 +52,7 @@ export const addCreateRoomEvent = (socket: Socket<IClientToServerEvents, IServer
     };
     games[roomId] = newGame;
 
-    // TODO: emit для всех игроков в одну строчку
     socket.join(roomId);
-    socket.emit('createdRoom', newGame);
+    io.in(roomId).emit('createdRoom', newGame);
   });
 };

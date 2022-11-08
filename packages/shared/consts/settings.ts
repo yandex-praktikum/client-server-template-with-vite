@@ -7,7 +7,7 @@ export const MAX_PLAYERS_IN_ROOM = 4;
 
 export const ROOM_CODE_LENGTH = 4;
 
-export const SERVER_SOCKET_DELAY = 30
+export const SERVER_SOCKET_DELAY = 30;
 
 // TODO: сделать начальные позиции не с нуля, а с небольшим отступом от границы карты
 export const INITIAL_PLAYER_POSITIONS: TPosition[] = [

@@ -51,7 +51,7 @@ io.on('connection', socket => {
   });
 
   // для создания комнаты хостом
-  addCreateRoomEvent(socket, games);
+  addCreateRoomEvent(socket, games, io);
 
   // для подключения к созданной комнате
   addJoinRoomEvent(socket, games);
