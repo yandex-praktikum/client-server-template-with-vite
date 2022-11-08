@@ -12,7 +12,7 @@ import Layout from '../Layout/Layout';
 
 // TODO: везде сокет офф нужен - что это я имела ввиду ????
 
-export const GameMultiplayerPage = () => {
+export const CreateOrJoinGamePage = () => {
   const classes = useStyles();
   const [roomValue, setRoomValue] = useState('');
   const { currentUser } = useAppSelector(state => state.common);
@@ -29,13 +29,13 @@ export const GameMultiplayerPage = () => {
     socket.on('createdRoom', (game: TGame) => {
       dispatch(setGame(game));
 
-      navigate('/play-multiplayer');
+      navigate('/waiting-room');
     });
 
     socket.on('joinedRoom', (game: TGame) => {
       dispatch(setGame(game));
 
-      navigate('/play-multiplayer');
+      navigate('/waiting-room');
     });
   }, []);
 
@@ -68,7 +68,6 @@ export const GameMultiplayerPage = () => {
               color={'secondary'}
               label={'Enter room code'}
               size="small"
-              className={classes.inputRoom}
             />
             <Button variant="contained" className={classes.btn} onClick={handleJoinRoomClick}>
               JOIN

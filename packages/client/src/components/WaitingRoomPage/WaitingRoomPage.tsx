@@ -1,18 +1,8 @@
-import {
-  Alert,
-  Avatar,
-  Button,
-  Paper,
-  styled,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-} from '@mui/material';
+import { Alert, Avatar, Button, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { ColorIndicator } from './parts/ColorIndicator';
 import { useStyles } from './useStyles';
 
 import type { TPlayer } from '../../../../shared/types';
@@ -21,17 +11,7 @@ import { useAppSelector } from '../../store/hooks';
 import { getAuthorInitials } from '../../utils/getAuthorInitials';
 import Layout from '../Layout/Layout';
 
-// TODO: аватаркам цвет изменить на нейтральный
-
-// TODO: вынести в parts + сделать реальные цвета (красивые)
-const ColorIndicator = styled('div')(({ color }: { color: 'red' | 'green' | 'blue' | 'yellow' }) => ({
-  width: '20px',
-  height: '20px',
-  background: color,
-  borderRadius: '50%',
-}));
-
-export const PlayMultiplayerPage = () => {
+export const WaitingRoomPage = () => {
   // TODO: мб использовать useRef ?
   const { currentGame } = useAppSelector(state => state.common);
 
@@ -42,15 +22,16 @@ export const PlayMultiplayerPage = () => {
 
   useEffect(() => {
     socket.on('started', () => {
-      navigate('/online');
+      navigate('/multi-game');
     });
   }, []);
 
   const { currentUser } = useAppSelector(state => state.common);
 
   if (!currentGame || !players) {
-    // TODO: это зачем?
-    return <>loading</>;
+    navigate('/create-or-join-game');
+
+    return;
   }
 
   const isConnectedOnePlayer = players.length === 1;
@@ -74,27 +55,22 @@ export const PlayMultiplayerPage = () => {
           ROOM CODE: <span className={classes.code}>{roomId}</span>
         </h1>
         <h3 className={classes.players}>PLAYERS: {players.length}/4</h3>
-        <TableContainer component={Paper} className={classes.table}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableContainer component={Paper} className={classes.tableContainer}>
+          <Table className={classes.table}>
             <TableBody>
               {players.map((row: TPlayer) => (
-                // TODO: можно ли вынести стили
-                <TableRow key={row.user.login} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableRow key={row.user.login} className={classes.login}>
                   <TableCell>
-                    <Avatar sx={{ bgcolor: row.color }} src={row.user.avatar}>
-                      {getAuthorInitials({ ...row.user })}
-                    </Avatar>
+                    <Avatar src={row.user.avatar}>{getAuthorInitials({ ...row.user })}</Avatar>
                   </TableCell>
-                  <TableCell width="100%">{[row.user.first_name, row.user.second_name].join(' ')}</TableCell>
+                  <TableCell>{[row.user.first_name, row.user.second_name].join(' ')}</TableCell>
+                  <TableCell width="100%" align="center">
+                    {currentUser.id === row.user.id ? <span className={classes.you}>you</span> : ''}
+                  </TableCell>
+                  <TableCell>{row.isHost ? <span className={classes.host}>host</span> : ''}</TableCell>
                   <TableCell>
                     <ColorIndicator color={row.color} />
                   </TableCell>
-                  <TableCell>
-                    {/* TODO: это по центру лучше и по середине */}
-                    {currentUser.id === row.user.id ? <span className={classes.you}>you</span> : ''}
-                  </TableCell>
-                  {/* TODO: хоста не предпоследнее место */}
-                  <TableCell>{row.isHost ? <span className={classes.host}>host</span> : ''}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

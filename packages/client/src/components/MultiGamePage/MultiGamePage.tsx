@@ -4,7 +4,7 @@ import { MultiCanvas } from './MultiCanvas';
 
 import Layout from '../Layout/Layout';
 
-export const OnlineGamePage = () => {
+export const MultiGamePage = () => {
   return (
     <Layout>
       <MultiCanvas />

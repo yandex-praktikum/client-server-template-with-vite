@@ -23,14 +23,22 @@ export const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2),
     width: '50%',
   },
-  table: {
+  tableContainer: {
     marginBottom: theme.spacing(2),
     width: '800px',
+  },
+  table: {
+    minWidth: 650,
   },
   host: {
     color: 'red',
   },
   you: {
     color: 'gray',
+  },
+  login: {
+    '&:last-child td, &:last-child th': {
+      border: 0,
+    },
   },
 }));

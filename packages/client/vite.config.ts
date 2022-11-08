@@ -9,7 +9,6 @@ export default defineConfig({
     port: Number(process.env.CLIENT_PORT) || 3000,
   },
   preview: {
-    // TODO: можно ли короче записать и PORT и CLIENT_PORT
     port: Number(process.env.PORT) || Number(process.env.CLIENT_PORT) || 3000,
   },
   plugins: [react()],

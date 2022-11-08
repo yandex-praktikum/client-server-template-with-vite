@@ -25,7 +25,7 @@ export const MultiCanvas = () => {
   const navigator = useNavigate();
 
   if (!currentGame) {
-    navigator('/game-multiplayer');
+    navigator('/create-or-join-game');
 
     return null;
   }

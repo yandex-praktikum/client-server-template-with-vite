@@ -26,8 +26,4 @@ export const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-between',
   },
-  inputRoom: {
-    // TODO: удалить это
-    // marginLeft: 'auto',
-  },
 }));
