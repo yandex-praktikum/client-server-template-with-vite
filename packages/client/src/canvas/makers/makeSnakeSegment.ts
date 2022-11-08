@@ -2,8 +2,16 @@ import { TSnakeColor } from '../../../../shared/types';
 import { PRETTY_SNAKE_COLORS } from '../../consts/prettySnakeColors';
 import { convertHexToRGBA } from '../../utils/convertHexToRGBA';
 
+const cashed: { [key: string]: HTMLCanvasElement } = {};
+
 /** Создает рисунок одного кружочка змейки */
-export const makeSnakeSegment = (size: number, color: TSnakeColor, count?: number) => {
+export const makeSnakeSegment = (size: number, color: TSnakeColor, opacity: number) => {
+  const cacheKey = `${size}-${color}-${opacity}`;
+
+  if (cashed[cacheKey]) {
+    return cashed[cacheKey];
+  }
+
   const SHADOW_SIZE = 6;
 
   const canvas = document.createElement('canvas');
@@ -14,10 +22,6 @@ export const makeSnakeSegment = (size: number, color: TSnakeColor, count?: numbe
 
   ctx.fillStyle = PRETTY_SNAKE_COLORS[color];
 
-  // TODO: переписать на более понятное
-  const opacity = count ? ((count || 10) < 10 ? count * 0.1 : 1) : 1;
-
-  // TODO: черный просто или с опасити или какой лучше?
   ctx.strokeStyle = convertHexToRGBA('#000000', opacity);
   ctx.lineWidth = 2;
 
@@ -31,6 +35,8 @@ export const makeSnakeSegment = (size: number, color: TSnakeColor, count?: numbe
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
+
+  cashed[cacheKey] = canvas;
 
   return canvas;
 };

@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { MultiCanvas } from './MultiCanvas';
-
+import { MultiGameCanvas } from '../../canvas/components/MultiGameCanvas/MultiGameCanvas';
 import Layout from '../Layout/Layout';
 
 export const MultiGamePage = () => {
   return (
     <Layout>
-      <MultiCanvas />
+      <MultiGameCanvas />
     </Layout>
   );
 };

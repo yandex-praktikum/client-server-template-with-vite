@@ -5,15 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { useStyles } from './useStyles';
 
 import type { TGame } from '../../../../shared/types';
-import { useSnackbarError } from '../../hooks/useSnackbarError';
 import { socket } from '../../services/socket/socket';
 import { setGame } from '../../store/commonSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import Layout from '../Layout/Layout';
 
 export const CreateOrJoinGamePage = () => {
-  const { setError, SnackbarErrorComp } = useSnackbarError();
-
   const classes = useStyles();
   const [roomValue, setRoomValue] = useState('');
   const { currentUser } = useAppSelector(state => state.common);
@@ -37,14 +34,6 @@ export const CreateOrJoinGamePage = () => {
       dispatch(setGame(game));
 
       navigate('/waiting-room');
-    });
-
-    socket.on('error', message => {
-      setError(message);
-    });
-
-    socket.on('disconnect', () => {
-      setError('Disconnected');
     });
   }, []);
 
@@ -84,7 +73,6 @@ export const CreateOrJoinGamePage = () => {
           </div>
         </Paper>
       </Paper>
-      <SnackbarErrorComp />
     </Layout>
   );
 };

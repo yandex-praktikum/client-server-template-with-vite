@@ -6,14 +6,12 @@ import { ColorIndicator } from './parts/ColorIndicator';
 import { useStyles } from './useStyles';
 
 import type { TPlayer } from '../../../../shared/types';
-import { useSnackbarError } from '../../hooks/useSnackbarError';
 import { socket } from '../../services/socket/socket';
 import { useAppSelector } from '../../store/hooks';
 import { getAuthorInitials } from '../../utils/getAuthorInitials';
 import Layout from '../Layout/Layout';
 
 export const WaitingRoomPage = () => {
-  const { setError, SnackbarErrorComp } = useSnackbarError();
   // TODO: мб использовать useRef ?
   const { currentGame } = useAppSelector(state => state.common);
 
@@ -25,12 +23,6 @@ export const WaitingRoomPage = () => {
   useEffect(() => {
     socket.on('started', () => {
       navigate('/multi-game');
-    });
-    socket.on('error', message => {
-      setError(message);
-    });
-    socket.on('disconnect', () => {
-      setError('Disconnected');
     });
   }, []);
 
@@ -104,17 +96,17 @@ export const WaitingRoomPage = () => {
             variant="contained"
             className={classes.startBtn}
             size="large"
-            disabled={isConnectedOnePlayer}
+            // TODO раскомментировать
+            // disabled={isConnectedOnePlayer}
             onClick={handleStartGame}>
             START
           </Button>
         ) : (
           <Alert className={classes.alert} severity="info">
-            Wait until the host start the game
+            Wait for the host to start the game
           </Alert>
         )}
       </Paper>
-      <SnackbarErrorComp />
     </Layout>
   );
 };

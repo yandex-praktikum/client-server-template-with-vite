@@ -15,7 +15,9 @@ export const addStartEvent = (
 
     if (!game) {
       socket.emit('error', SOCKET_ERRORS.GAME_NOT_FOUND);
-    } else if (game.players.length < 2) {
+
+      // todo изменить на 2
+    } else if (game.players.length < 1) {
       socket.emit('error', SOCKET_ERRORS.NOT_ENOUGH_PLAYERS);
     } else if (game.players.length > MAX_PLAYERS_IN_ROOM) {
       socket.emit('error', SOCKET_ERRORS.NOT_ENOUGH_PLAYERS);

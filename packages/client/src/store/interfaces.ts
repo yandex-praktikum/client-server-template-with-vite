@@ -17,6 +17,5 @@ export interface ICommonState {
   isAuthModalOpen: boolean;
   isLoading: boolean;
   language: 'RU';
-  // TODO: точно ли нужно хранить в сторе ?
   currentGame: TGame | null;
 }

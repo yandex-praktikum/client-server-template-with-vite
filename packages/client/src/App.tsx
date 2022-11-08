@@ -11,6 +11,7 @@ import NotFoundPage from './components/NotFoundPage/NotFoundPage';
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import { StartPage } from './components/StartPage/StartPage';
 import { WaitingRoomPage } from './components/WaitingRoomPage/WaitingRoomPage';
+import { useSnackbarError } from './hooks/useSnackbarError';
 import useAuthController from './services/controllers/useAuthController';
 import { useAppSelector } from './store/hooks';
 
@@ -18,6 +19,8 @@ export function App(): JSX.Element {
   const { checkUserAuth } = useAuthController();
   const { isLoading, currentUser } = useAppSelector(state => state.common);
   const { id } = currentUser;
+
+  const { SnackbarErrorComp } = useSnackbarError();
 
   useEffect(() => {
     checkUserAuth();
@@ -36,6 +39,10 @@ export function App(): JSX.Element {
       {isLoading && <Loader />}
       <Routes>
         <Route path={'/'} element={<StartPage />} />
+        {/*
+          todo: разрешить играть незалогиненному пользователю и в оффлайн в одиночный режиме
+          todo: просто сделать всплывашку, что пользователь не попадет в рейтинг
+         */}
         <Route path={'/game'} element={id ? <GamePage /> : <NoAuthPage />} />
         <Route path={'/create-or-join-game'} element={id ? <CreateOrJoinGamePage /> : <NoAuthPage />} />
         <Route path={'/waiting-room'} element={id ? <WaitingRoomPage /> : <NoAuthPage />} />
@@ -44,6 +51,7 @@ export function App(): JSX.Element {
         <Route path={'/forum'} element={id ? <ForumPage /> : <NoAuthPage />} />
         <Route path={'*'} element={<NotFoundPage />} />
       </Routes>
+      <SnackbarErrorComp />
     </div>
   );
 }

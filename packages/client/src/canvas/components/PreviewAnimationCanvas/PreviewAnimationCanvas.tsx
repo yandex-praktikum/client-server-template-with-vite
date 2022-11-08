@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 import { changeCoords } from './helpers/changeCoords';
 
-import { MySnake } from '../Snake';
+import { Snake } from '../../../game/Snake';
 
 const blueOptions = {
   x: 0,
@@ -49,7 +49,7 @@ export function PreviewAnimationCanvas() {
     canvas.width = MAP_WIDTH;
     canvas.height = MAP_HEIGHT;
 
-    const redSnake = new MySnake(
+    const redSnake = new Snake(
       redOptions.size + redOptions.margin,
       redOptions.size + redOptions.margin,
       ctx,
@@ -58,7 +58,7 @@ export function PreviewAnimationCanvas() {
       34
     );
 
-    const yellowSnake = new MySnake(
+    const yellowSnake = new Snake(
       yellowOptions.size + yellowOptions.margin,
       MAP_HEIGHT - (yellowOptions.size + yellowOptions.margin),
 
@@ -68,7 +68,7 @@ export function PreviewAnimationCanvas() {
       26
     );
 
-    const greenSnake = new MySnake(
+    const greenSnake = new Snake(
       MAP_WIDTH - (greenOptions.size + greenOptions.margin),
       MAP_HEIGHT - (greenOptions.size + greenOptions.margin),
       ctx,
@@ -77,7 +77,7 @@ export function PreviewAnimationCanvas() {
       22
     );
 
-    const blueSnake = new MySnake(
+    const blueSnake = new Snake(
       MAP_WIDTH - (blueOptions.size + blueOptions.margin),
       blueOptions.size + blueOptions.margin,
       ctx,

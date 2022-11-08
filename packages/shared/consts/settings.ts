@@ -5,11 +5,15 @@ export const MAP_HEIGHT = 800;
 
 export const MAX_PLAYERS_IN_ROOM = 4;
 
+//todo: retrun 60
+export const GAME_DURATION_MS = 10 * 1000;
+
 export const ROOM_CODE_LENGTH = 4;
 
-export const SERVER_SOCKET_DELAY = 30;
-
 export const ROOM_CODE_CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+export const SERVER_SOCKET_DELAY = 30;
+export const CLIENT_SOCKET_DELAY = 10;
 
 const OFFSET = 20;
 

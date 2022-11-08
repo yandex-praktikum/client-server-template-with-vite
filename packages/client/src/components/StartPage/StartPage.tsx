@@ -4,7 +4,7 @@ import { Link, type To } from 'react-router-dom';
 
 import { useStyles } from './useStyles';
 
-import { PreviewAnimationCanvas } from '../../game/preview/PreviewAnimationCanvas';
+import { PreviewAnimationCanvas } from '../../canvas/components/PreviewAnimationCanvas/PreviewAnimationCanvas';
 import Layout from '../Layout/Layout';
 
 type TMenuItem = {

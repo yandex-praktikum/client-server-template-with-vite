@@ -13,7 +13,7 @@ import {
   ROOM_CODE_CHARACTERS,
 } from '../../shared/consts';
 import type { IClientToServerEvents, IServerToClientEvents, TGame, TGames } from '../../shared/types';
-import { getRandomItem } from '../utils/common/getRandomItem';
+import { getRandomItem } from '../../shared/utils/getRandomItem';
 import { makeId } from '../utils/common/makeId';
 import { makeRandomPosition } from '../utils/common/makeRandomPosition';
 

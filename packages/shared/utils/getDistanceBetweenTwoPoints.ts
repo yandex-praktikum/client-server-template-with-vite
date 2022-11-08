@@ -1,4 +1,4 @@
-import type { TPosition } from '../../../shared/types';
+import type { TPosition } from '../types';
 
 /** Возвращает дистанцию между 2 точками */
 export const getDistanceBetweenTwoPoints = (first: TPosition, second: TPosition): number => {

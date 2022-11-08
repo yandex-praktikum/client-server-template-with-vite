@@ -1,6 +1,6 @@
 import { BOOST_SPEED, SIZE_BETWEEN_SEGMENTS, SPEED } from '../../../shared/consts';
 import type { TPlayer } from '../../../shared/types';
-import { getDistanceBetweenTwoPoints } from '../common/getDistanceBetweenTwoPoints';
+import { getDistanceBetweenTwoPoints } from '../../../shared/utils';
 
 // TODO: отрефакторить и вынести в общую функцию для бэка и фронта
 
