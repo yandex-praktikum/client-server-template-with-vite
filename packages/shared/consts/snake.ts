@@ -1,7 +1,10 @@
 import type { TSnakeColor } from '../types';
 
-export const SPEED = 2;
-export const BOOST_SPEED = 4;
+export const SINGLE_GAME_SPEED = 2;
+export const SINGLE_GAME_BOOST_SPEED = 4;
+
+export const MULTI_GAME_SPEED = 4;
+export const MULTI_GAME_BOOST_SPEED = 8;
 
 export const SEGMENT_SIZE = 24;
 

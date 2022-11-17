@@ -10,7 +10,7 @@ import type { TGame } from '../gameTypes';
 export interface IServerToClientEvents {
   createdRoom: (createdGame: TGame) => void;
   joinedRoom: (game: TGame) => void;
+  changedRoom: (game: TGame) => void;
   started: (game: TGame) => void;
-  movedSnakes: (game: TGame) => void;
   error: (message: TSocketErrorMessage) => void;
 }

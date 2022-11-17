@@ -1,6 +1,5 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-// TODO: поправить цвета игроков + выровнить игроков по центру (paper)
 export const useStyles = makeStyles(theme => ({
   wrapper: {
     maxWidth: '80%',

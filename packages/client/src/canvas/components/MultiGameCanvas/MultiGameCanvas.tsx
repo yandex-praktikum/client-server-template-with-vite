@@ -1,8 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { CLIENT_SOCKET_DELAY, INITIAL_CURSOR_POSITION, MAP_HEIGHT, MAP_WIDTH } from '../../../../../shared/consts';
+import {
+  CLIENT_SOCKET_DELAY,
+  FOOD_SIZE,
+  INITIAL_CURSOR_POSITION,
+  MAP_HEIGHT,
+  MAP_WIDTH,
+} from '../../../../../shared/consts';
 import type { TGame, TPlayer, TPosition } from '../../../../../shared/types';
+import { SNAKE_REDUCTION_TIME } from '../../../consts/settings';
 import { socket } from '../../../services/socket/socket';
 import { useAppSelector } from '../../../store/hooks';
 import { fixPositionForMap } from '../../../utils/fixPositionForMap';
@@ -22,15 +29,21 @@ export const MultiGameCanvas = () => {
 
   const navigate = useNavigate();
 
-  if (!currentGame) {
-    navigate('/create-or-join-game');
-
-    return null;
-  }
-
   let boost = false;
 
+  let mouseIntervalId: NodeJS.Timer | null = null;
+
   function onMouseMove(e: MouseEvent) {
+    if (mouseIntervalId) {
+      clearInterval(mouseIntervalId);
+    }
+
+    mouseIntervalId = setInterval(() => {
+      if (currentGame) {
+        socket.emit('decreaseSnake', currentGame.roomId, currentUser);
+      }
+    }, SNAKE_REDUCTION_TIME);
+
     if (!currentGame) {
       return;
     }
@@ -58,7 +71,11 @@ export const MultiGameCanvas = () => {
     MAP_HEIGHT,
     () => {
       onEnd();
-      // todo: сделать красивое завершение игры
+
+      if (currentGame) {
+        socket.emit('finish', currentGame.roomId);
+      }
+
       alert(`Finished. Scores: ${currentGame?.players.map(p => p.segments.length).join(' ')}`);
     }
   );
@@ -88,7 +105,11 @@ export const MultiGameCanvas = () => {
       ctx.drawImage(countDownClock, 0, 0);
 
       if (currentGame) {
-        ctx.drawImage(makeFoodItem(currentGame.food.color), currentGame.food.position.x, currentGame.food.position.y);
+        ctx.drawImage(
+          makeFoodItem(currentGame.food.color),
+          currentGame.food.position.x - FOOD_SIZE / 2,
+          currentGame.food.position.y - FOOD_SIZE / 2
+        );
         currentGame.players.forEach((player: TPlayer) => {
           drawPlayerSnake(player, ctx);
         });
@@ -114,9 +135,13 @@ export const MultiGameCanvas = () => {
   const intervalId = setInterval(sendCoordsLoop, CLIENT_SOCKET_DELAY);
 
   useEffect(() => {
-    socket.on('movedSnakes', (game: TGame) => {
+    socket.on('changedRoom', (game: TGame) => {
       currentGame = game;
     });
+
+    if (!currentGame) {
+      navigate('/create-or-join-game', { replace: true });
+    }
 
     return onEnd;
   }, []);

@@ -2,13 +2,13 @@ import type { Socket } from 'socket.io';
 import type socketIo from 'socket.io';
 
 import {
-  SNAKE_COLORS,
   INITIAL_CURSOR_POSITION,
   INITIAL_PLAYER_POSITIONS,
   SOCKET_ERRORS,
   MAX_PLAYERS_IN_ROOM,
 } from '../../shared/consts';
 import type { IClientToServerEvents, IServerToClientEvents, TGames, TPlayer } from '../../shared/types';
+import { getUniqColor } from '../utils/game/getUniqColor';
 
 export const addJoinRoomEvent = (
   socket: Socket<IClientToServerEvents, IServerToClientEvents>,
@@ -27,10 +27,10 @@ export const addJoinRoomEvent = (
     } else if (game.status !== 'waiting') {
       socket.emit('error', SOCKET_ERRORS.THE_GAME_ALREADY_STARTED);
     } else {
-      const playerNumber = game.players.length;
-      const initPlayerPosition = INITIAL_PLAYER_POSITIONS[playerNumber];
+      const color = getUniqColor(game);
+      const initPlayerPosition = INITIAL_PLAYER_POSITIONS[color];
       const newPlayer: TPlayer = {
-        color: SNAKE_COLORS[playerNumber],
+        color,
         isHost: false,
         isBoost: false,
         user: player,
@@ -42,6 +42,16 @@ export const addJoinRoomEvent = (
       socket.join(game.roomId);
 
       io.in(game.roomId).emit('joinedRoom', game);
+
+      socket.on('disconnect', () => {
+        if (game.players.length > 1) {
+          games[roomId] = { ...game, players: game.players.filter(p => p.user.id !== player.id) };
+
+          io.to(roomId).emit('joinedRoom', games[roomId]);
+        } else {
+          delete games[roomId];
+        }
+      });
     }
   });
 };

@@ -31,7 +31,8 @@ export const addCreateRoomEvent = (
       return;
     }
 
-    const initialPosition = INITIAL_PLAYER_POSITIONS[0];
+    const color = SNAKE_COLORS[0];
+    const initialPosition = INITIAL_PLAYER_POSITIONS[color];
     const newGame: TGame = {
       roomId: roomId,
       status: 'waiting',
@@ -41,7 +42,7 @@ export const addCreateRoomEvent = (
       },
       players: [
         {
-          color: SNAKE_COLORS[0],
+          color,
           isHost: true,
           isBoost: false,
           user: userCreator,
@@ -55,5 +56,16 @@ export const addCreateRoomEvent = (
 
     socket.join(roomId);
     io.in(roomId).emit('createdRoom', newGame);
+
+    socket.on('disconnect', () => {
+      if (newGame.players.length > 1) {
+        const changedGame: TGame = { ...newGame, players: newGame.players.filter(p => p.user.id !== userCreator.id) };
+        changedGame.players[0].isHost = true;
+        games[roomId] = changedGame;
+        io.to(roomId).emit('joinedRoom', changedGame);
+      } else {
+        delete games[roomId];
+      }
+    });
   });
 };

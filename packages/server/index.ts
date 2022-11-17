@@ -4,6 +4,9 @@ import express from 'express';
 import socketIo from 'socket.io';
 
 import { addCreateRoomEvent, addChangeCursorPositionEvent, addJoinRoomEvent, addStartEvent } from './socket';
+import { addDecreaseSnakeEvent } from './socket/addDecreaseSnakeEvent';
+import { addFinishEvent } from './socket/addFinishEvent';
+import { addUserDisconnectedEvent } from './socket/addUserDisconnectedEvent';
 
 import type { IClientToServerEvents, IServerToClientEvents, TGames } from '../shared/types';
 
@@ -20,9 +23,7 @@ const server = http.createServer(app);
 const io = new Server<IClientToServerEvents, IServerToClientEvents>(server, {
   transports: ['websocket', 'polling'],
   cors: {
-    // TODO: set origin for prod (this is client url)
-    origin: ['http://localhost:3000', 'https://chicago-api.herokuapp.com/', 'https://chicago-client.herokuapp.com/'],
-    // TODO: credentials, method и allowedHeaders - нужно ли???
+    origin: ['http://localhost:3000', 'https://chicago-client.herokuapp.com/'],
     credentials: true,
     methods: ['GET', 'POST'],
     allowedHeaders: ['Access-Control-Allow-Origin'],
@@ -31,10 +32,9 @@ const io = new Server<IClientToServerEvents, IServerToClientEvents>(server, {
 
 app.use(cors());
 
-// process.env.PORT и SERVER_PORT - можно ли как-то сократить ???
 const port = Number(process.env.PORT) || Number(process.env.SERVER_PORT) || 3001;
 
-// TODO:
+// todo:
 // сейчас все данные об играх хранятся в мутирующейся переменной games
 // возможно нужно хранить в базе данных это
 const games: TGames = {};
@@ -62,10 +62,14 @@ io.on('connection', socket => {
   // для вызова игроком, чтобы передать текущие координаты мыши
   addChangeCursorPositionEvent(socket, games);
 
-  // TODO: добавить событие на завершение игры
-  // TODO: добавить событие, если игрок оключился от игры + оповещение на фронте
-  // TODO: добавить событие, если отключился хост до начала игры + обработать это на фронте
-  // TODO: добавить событие или аргументы для boost игрока
+  // для исключения пользователя из игры, когда он подключился к комнате, а затем вышел из нее
+  addUserDisconnectedEvent(socket, games, io);
+
+  // для уменьшения длины змеи
+  addDecreaseSnakeEvent(socket, games);
+
+  // для указания, что игра завершена
+  addFinishEvent(socket, games);
 });
 
 server.listen(port, () => {

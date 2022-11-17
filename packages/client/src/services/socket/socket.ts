@@ -2,8 +2,7 @@ import { io, Socket } from 'socket.io-client';
 
 import type { IClientToServerEvents, IServerToClientEvents } from '../../../../shared/types';
 
-// todo: убрать хардкод (использовать url из env)
-// todo: возможно стоит вынести константу, но куда?
+// todo: убрать хардкод (вынести url в env или в константу)
 const SERVER_SOCKET_URL =
   import.meta.env.MODE === 'production' ? 'https://chicago-api.herokuapp.com' : 'http://localhost:3001';
 

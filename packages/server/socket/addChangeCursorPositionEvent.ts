@@ -1,6 +1,6 @@
 import type { Socket } from 'socket.io';
 
-import { FOOD_SIZE, SEGMENT_SIZE } from '../../shared/consts';
+import { SOCKET_ERRORS } from '../../shared/consts';
 import type { IClientToServerEvents, IServerToClientEvents, TGames } from '../../shared/types';
 import { getDistanceBetweenTwoPoints } from '../../shared/utils';
 import { changeFood } from '../utils/game/changeFood';
@@ -12,10 +12,6 @@ export const addChangeCursorPositionEvent = (
   games: TGames
 ) => {
   socket.on('changeCursorPosition', ({ roomId, playerId, coords, isBoost }) => {
-    // TODO: убрать длину змейки, если она неподвижна ( возможно это надо сделать на фронте) В общем подумать
-    // Пусть фронт запускает таймер, и отправляет эвент о простое
-    // (чтобы бэк в случае с задержкой сети не уменьшал длину игрока)
-
     const game = games[roomId];
 
     if (game) {
@@ -29,15 +25,15 @@ export const addChangeCursorPositionEvent = (
 
         const distanceToFood = getDistanceBetweenTwoPoints(player.headCoords, game.food.position);
 
-        // TODO: проверить, какое растояние должно быть действительно
-        if (distanceToFood < SEGMENT_SIZE + FOOD_SIZE / 2) {
+        if (distanceToFood < 50) {
           changeFood(game);
           increaseSnake(player);
         }
+      } else {
+        socket.emit('error', SOCKET_ERRORS.PLAYER_NOT_FOUND);
       }
     } else {
-      // TODO:
-      // добавить обработку ошибки, если игры не найдено или игрока
+      socket.emit('error', SOCKET_ERRORS.GAME_NOT_FOUND);
     }
   });
 };

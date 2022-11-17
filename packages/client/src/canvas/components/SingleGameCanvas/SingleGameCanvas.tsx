@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-import { FOOD_COLORS, MAP_HEIGHT, MAP_WIDTH } from '../../../../../shared/consts';
+import { FOOD_COLORS, FOOD_SIZE, MAP_HEIGHT, MAP_WIDTH } from '../../../../../shared/consts';
 import { getDistanceBetweenTwoPoints } from '../../../../../shared/utils';
 import { getRandomItem } from '../../../../../shared/utils/getRandomItem';
 import { Snake } from '../../../game/Snake';
@@ -64,7 +64,6 @@ export function SingleGameCanvas() {
       MAP_HEIGHT,
       () => {
         onEnd();
-        // todo: сделать красивое завершение игры
         alert(`END. SCORE: ${snake.segments.length}`);
       }
     );
@@ -88,7 +87,7 @@ export function SingleGameCanvas() {
 
       // очищаем все и рисуем карту заново
       drawMap(ctx);
-      ctx.drawImage(foodImg, foodX, foodY);
+      ctx.drawImage(foodImg, foodX - FOOD_SIZE / 2, foodY - FOOD_SIZE / 2);
       ctx.drawImage(countDownClock, 0, 0);
       snake.draw();
 

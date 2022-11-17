@@ -7,30 +7,45 @@ import { useStyles } from './useStyles';
 
 import type { TPlayer } from '../../../../shared/types';
 import { socket } from '../../services/socket/socket';
-import { useAppSelector } from '../../store/hooks';
+import { setGame } from '../../store/commonSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getAuthorInitials } from '../../utils/getAuthorInitials';
 import Layout from '../Layout/Layout';
 
 export const WaitingRoomPage = () => {
-  // TODO: мб использовать useRef ?
-  const { currentGame } = useAppSelector(state => state.common);
+  const { currentGame, currentUser } = useAppSelector(state => state.common);
+  const { roomId, players } = currentGame || {};
+
+  let isStarted = false;
 
   const classes = useStyles();
   const navigate = useNavigate();
-
-  const { roomId, players } = currentGame || {};
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     socket.on('started', () => {
+      isStarted = true;
       navigate('/multi-game');
     });
+
+    socket.on('changedRoom', game => {
+      dispatch(setGame(game));
+    });
+
+    if (!currentGame || !players) {
+      navigate('/create-or-join-game', { replace: true });
+    }
+
+    return () => {
+      if (!isStarted && !!currentGame) {
+        socket.emit('userDisconnected', currentGame.roomId, currentUser);
+      }
+
+      socket.off('changedRoom');
+    };
   }, []);
 
-  const { currentUser } = useAppSelector(state => state.common);
-
   if (!currentGame || !players) {
-    navigate('/create-or-join-game');
-
     return null;
   }
 
@@ -41,11 +56,7 @@ export const WaitingRoomPage = () => {
   const isHost = players.find((u: TPlayer) => u.user.id === currentUser.id)?.isHost;
 
   const handleStartGame = () => {
-    if (currentGame?.roomId) {
-      socket.emit('start', currentGame.roomId);
-    } else {
-      // TODO: бросить ошибку
-    }
+    socket.emit('start', currentGame.roomId);
   };
 
   return (
@@ -96,8 +107,7 @@ export const WaitingRoomPage = () => {
             variant="contained"
             className={classes.startBtn}
             size="large"
-            // TODO раскомментировать
-            // disabled={isConnectedOnePlayer}
+            disabled={isConnectedOnePlayer}
             onClick={handleStartGame}>
             START
           </Button>

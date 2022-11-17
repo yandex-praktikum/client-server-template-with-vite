@@ -40,8 +40,8 @@ export function App(): JSX.Element {
       <Routes>
         <Route path={'/'} element={<StartPage />} />
         {/*
-          todo: разрешить играть незалогиненному пользователю и в оффлайн в одиночный режиме
-          todo: просто сделать всплывашку, что пользователь не попадет в рейтинг
+          todo: разрешить играть незалогиненному пользователю и в оффлайн в одиночный режим
+          и просто сделать всплывашку, что пользователь не попадет в рейтинг
          */}
         <Route path={'/game'} element={id ? <GamePage /> : <NoAuthPage />} />
         <Route path={'/create-or-join-game'} element={id ? <CreateOrJoinGamePage /> : <NoAuthPage />} />

@@ -1,8 +1,9 @@
-import { BOOST_SPEED, SIZE_BETWEEN_SEGMENTS, SPEED } from '../../../shared/consts';
+import { SINGLE_GAME_BOOST_SPEED, SINGLE_GAME_SPEED, SIZE_BETWEEN_SEGMENTS } from '../../../shared/consts';
 import { TSnakeColor } from '../../../shared/types';
 import { getDistanceBetweenTwoPoints } from '../../../shared/utils';
 import { drawPlayerSnake } from '../canvas/drawers/drawPlayerSnake';
 import { makeSnakeSegment } from '../canvas/makers/makeSnakeSegment';
+import { SNAKE_REDUCTION_TIME } from '../consts/settings';
 
 export class Snake {
   // Флаг для откусывания жопки по таймауту
@@ -12,7 +13,7 @@ export class Snake {
   // позиция головы змейки по вертикали
   y: number;
   // контекст канваса, на котором необходимо нарисовать змейку
-  private ctx: CanvasRenderingContext2D;
+  private readonly ctx: CanvasRenderingContext2D;
   // размер змейки (по масштабу)
   r: number;
   // массив колец змейки с координатами расположения
@@ -46,7 +47,7 @@ export class Snake {
       });
     }
 
-    setInterval(() => this.decreaseLength(), 2000);
+    setInterval(() => this.decreaseLength(), SNAKE_REDUCTION_TIME);
 
     this.canvasSegment = makeSnakeSegment(this.r, this.color, 1);
   }
@@ -74,7 +75,7 @@ export class Snake {
 
     this.isActiveTimeOut = false;
 
-    const speed = boost ? BOOST_SPEED : SPEED;
+    const speed = boost ? SINGLE_GAME_BOOST_SPEED : SINGLE_GAME_SPEED;
 
     // Вычисления по формулам для нахождения прямой от головы змейки до курсора
     // На этой прямой находятся координаты x и y для следующего шага змейки
