@@ -1,5 +1,5 @@
 import { Alert, Avatar, Button, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ColorIndicator } from './parts/ColorIndicator';
@@ -16,7 +16,7 @@ export const WaitingRoomPage = () => {
   const { currentGame, currentUser } = useAppSelector(state => state.common);
   const { roomId, players } = currentGame || {};
 
-  let isStarted = false;
+  const isStarted = useRef<boolean>(false);
 
   const classes = useStyles();
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export const WaitingRoomPage = () => {
 
   useEffect(() => {
     socket.on('started', () => {
-      isStarted = true;
+      isStarted.current = true;
       navigate('/multi-game');
     });
 
@@ -37,7 +37,7 @@ export const WaitingRoomPage = () => {
     }
 
     return () => {
-      if (!isStarted && !!currentGame) {
+      if (!isStarted.current && !!currentGame) {
         socket.emit('userDisconnected', currentGame.roomId, currentUser);
       }
 
