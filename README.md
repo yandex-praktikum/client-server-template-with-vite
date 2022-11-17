@@ -67,7 +67,7 @@ heroku container:release web
 #### SERVER
 
 ```
-heroku git:remote -a chicago-api
+heroku git:remote -a chicago-server-api
 ```
 
 ```
@@ -77,14 +77,14 @@ heroku container:push web --arg SCOPE=server
 heroku container:release web
 ```
 
-Доп. информацию по деплою можно найти здесь https://dashboard.heroku.com/apps/chicago-api/deploy/heroku-container
+Доп. информацию по деплою можно найти здесь https://dashboard.heroku.com/apps/chicago-server-api/deploy/heroku-container
 
 ### Restart heroku app
 
 Для сервера
 
 ```
-heroku restart -a chicago-api
+heroku restart -a chicago-server-api
 ```
 
 Для клиента

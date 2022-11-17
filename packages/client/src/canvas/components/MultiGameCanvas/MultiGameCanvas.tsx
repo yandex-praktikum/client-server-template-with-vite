@@ -19,7 +19,7 @@ import { makeCountDownClock } from '../../makers/makeCountDownClock';
 import { makeFoodItem } from '../../makers/makeFoodItem';
 
 export const MultiGameCanvas = () => {
-  let cursorPosition: TPosition = { ...INITIAL_CURSOR_POSITION };
+  const cursorPosition = useRef<TPosition>({ ...INITIAL_CURSOR_POSITION });
 
   let { currentGame } = useAppSelector(state => state.common);
   const { currentUser } = useAppSelector(state => state.common);
@@ -52,7 +52,7 @@ export const MultiGameCanvas = () => {
       throw Error('Not found canvas');
     }
 
-    cursorPosition = fixPositionForMap({
+    cursorPosition.current = fixPositionForMap({
       x: Math.ceil(e.clientX - ref.current.getBoundingClientRect().left),
       y: Math.ceil(e.clientY - ref.current.getBoundingClientRect().top),
     });
@@ -127,7 +127,7 @@ export const MultiGameCanvas = () => {
       socket.emit('changeCursorPosition', {
         roomId: currentGame.roomId,
         playerId: currentUser.id,
-        coords: cursorPosition,
+        coords: cursorPosition.current,
         isBoost: boost,
       });
     }
@@ -148,6 +148,8 @@ export const MultiGameCanvas = () => {
   }, []);
 
   function onEnd() {
+    socket.off('changedRoom');
+
     if (loopId) {
       cancelAnimationFrame(loopId);
     }

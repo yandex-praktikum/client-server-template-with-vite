@@ -1,4 +1,4 @@
-import { SINGLE_GAME_BOOST_SPEED, SINGLE_GAME_SPEED, SIZE_BETWEEN_SEGMENTS } from '../../../shared/consts';
+import { BOOST_SPEED, SPEED, SIZE_BETWEEN_SEGMENTS } from '../../../shared/consts';
 import { TSnakeColor } from '../../../shared/types';
 import { getDistanceBetweenTwoPoints } from '../../../shared/utils';
 import { drawPlayerSnake } from '../canvas/drawers/drawPlayerSnake';
@@ -75,7 +75,7 @@ export class Snake {
 
     this.isActiveTimeOut = false;
 
-    const speed = boost ? SINGLE_GAME_BOOST_SPEED : SINGLE_GAME_SPEED;
+    const speed = boost ? BOOST_SPEED : SPEED;
 
     // Вычисления по формулам для нахождения прямой от головы змейки до курсора
     // На этой прямой находятся координаты x и y для следующего шага змейки

@@ -42,6 +42,7 @@ export const WaitingRoomPage = () => {
       }
 
       socket.off('changedRoom');
+      socket.off('started');
     };
   }, []);
 

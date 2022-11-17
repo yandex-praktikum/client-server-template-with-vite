@@ -1,4 +1,4 @@
-import { MULTI_GAME_BOOST_SPEED, MULTI_GAME_SPEED, SIZE_BETWEEN_SEGMENTS } from '../../../shared/consts';
+import { BOOST_SPEED, SPEED, SIZE_BETWEEN_SEGMENTS } from '../../../shared/consts';
 import type { TPlayer } from '../../../shared/types';
 import { getDistanceBetweenTwoPoints } from '../../../shared/utils';
 
@@ -14,7 +14,7 @@ export const moveSnake = (player: TPlayer): void => {
     return;
   }
 
-  const speed = isBoost ? MULTI_GAME_BOOST_SPEED : MULTI_GAME_SPEED;
+  const speed = isBoost ? BOOST_SPEED : SPEED;
 
   // Вычисления по формулам для нахождения прямой от головы змейки до курсора
   // На этой прямой находятся координаты x и y для следующего шага змейки
@@ -31,27 +31,10 @@ export const moveSnake = (player: TPlayer): void => {
     return;
   } else {
     // Иначе смещаем каждый элемент змейки ближе к голове
-    const newSegments = [];
 
-    for (let i = 1; i < segments.length; i++) {
-      const cur = segments[i];
-      const prev = segments[i - 1];
-
-      const distance = getDistanceBetweenTwoPoints(prev, cur);
-
-      if (distance >= SIZE_BETWEEN_SEGMENTS) {
-        newSegments.push({
-          x: prev.x,
-          y: prev.y,
-        });
-      } else {
-        newSegments.push({
-          x: cur.x,
-          y: cur.y,
-        });
-      }
-    }
-
-    player.segments = [{ ...headCoords }, ...newSegments];
+    const newSegments = [...player.segments];
+    newSegments.pop();
+    newSegments.unshift({ ...headCoords });
+    player.segments = newSegments;
   }
 };

@@ -7,7 +7,9 @@ export const runEmitCoordsLoop = (io: socketIo.Server<IClientToServerEvents, ISe
   const intervalId = setInterval(() => {
     io.in(game.roomId).emit('changedRoom', game);
   }, SERVER_SOCKET_DELAY);
-  game.intervalId;
+
+  game.intervalId = intervalId;
+
   setTimeout(() => {
     clearInterval(intervalId);
   }, GAME_DURATION_MS);
