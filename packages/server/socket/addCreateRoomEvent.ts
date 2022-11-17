@@ -64,6 +64,8 @@ export const addCreateRoomEvent = (
         games[roomId] = changedGame;
         io.to(roomId).emit('joinedRoom', changedGame);
       } else {
+        const intervalId = games[roomId]?.intervalId;
+        clearInterval(intervalId);
         delete games[roomId];
       }
     });

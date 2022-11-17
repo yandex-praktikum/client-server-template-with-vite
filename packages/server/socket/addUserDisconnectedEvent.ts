@@ -21,6 +21,8 @@ export const addUserDisconnectedEvent = (
           game.players[0].isHost = true;
           io.in(roomId).emit('changedRoom', game);
         } else {
+          const intervalId = games[roomId]?.intervalId;
+          clearInterval(intervalId);
           delete games[roomId];
         }
       }
