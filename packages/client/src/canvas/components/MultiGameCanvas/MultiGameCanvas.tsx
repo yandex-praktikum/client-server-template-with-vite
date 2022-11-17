@@ -77,6 +77,7 @@ export const MultiGameCanvas = () => {
       }
 
       alert(`Finished. Scores: ${currentGame?.players.map(p => p.segments.length).join(' ')}`);
+      navigate('/', { replace: true });
     }
   );
 
@@ -155,6 +156,10 @@ export const MultiGameCanvas = () => {
 
     document.removeEventListener('mousemove', onMouseMove);
     clearInterval(intervalId);
+
+    if (mouseIntervalId) {
+      clearInterval(mouseIntervalId);
+    }
   }
 
   return (
