@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { CanvasComponent } from '../../game/CanvasComponent';
+import { SingleGameCanvas } from '../../canvas/components/SingleGameCanvas/SingleGameCanvas';
 import Layout from '../Layout/Layout';
 
 export const GamePage = () => {
   return (
     <Layout>
-      <CanvasComponent />
+      <SingleGameCanvas />
     </Layout>
   );
 };

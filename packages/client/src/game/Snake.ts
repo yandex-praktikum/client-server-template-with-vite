@@ -1,14 +1,11 @@
-import { getDistanceBetweenTwoPoints } from './helpers/getDistanceBetweenTwoPoints';
-import { makeSnakeSegment } from './helpers/makeSnakeSegment';
-import { TSnakeColor } from './Snake.types';
+import { BOOST_SPEED, SPEED, SIZE_BETWEEN_SEGMENTS } from '../../../shared/consts';
+import { TSnakeColor } from '../../../shared/types';
+import { getDistanceBetweenTwoPoints } from '../../../shared/utils';
+import { drawPlayerSnake } from '../canvas/drawers/drawPlayerSnake';
+import { makeSnakeSegment } from '../canvas/makers/makeSnakeSegment';
+import { SNAKE_REDUCTION_TIME } from '../consts/settings';
 
-const SHOW_LOGS = false;
-
-const SIZE_BETWEEN_SEGMENTS = 20;
-const SPEED = 2;
-const BOOST_SPEED = 4;
-
-export class MySnake {
+export class Snake {
   // Флаг для откусывания жопки по таймауту
   isActiveTimeOut = false;
   // позиция головы змейки по горизонтали
@@ -16,7 +13,7 @@ export class MySnake {
   // позиция головы змейки по вертикали
   y: number;
   // контекст канваса, на котором необходимо нарисовать змейку
-  private ctx: CanvasRenderingContext2D;
+  private readonly ctx: CanvasRenderingContext2D;
   // размер змейки (по масштабу)
   r: number;
   // массив колец змейки с координатами расположения
@@ -27,7 +24,6 @@ export class MySnake {
   // canvas с рисунком 1 кольца
   private readonly canvasSegment: HTMLCanvasElement;
   private readonly color: TSnakeColor;
-  showLogs: boolean;
 
   constructor(
     x: number,
@@ -43,7 +39,6 @@ export class MySnake {
     this.r = size;
     this.segments = [];
     this.color = color || 'red';
-    this.showLogs = SHOW_LOGS;
 
     for (let i = 0; i < initialSnakeLength; i++) {
       this.segments.push({
@@ -52,9 +47,9 @@ export class MySnake {
       });
     }
 
-    setInterval(() => this.decreaseLength(), 2000);
+    setInterval(() => this.decreaseLength(), SNAKE_REDUCTION_TIME);
 
-    this.canvasSegment = makeSnakeSegment(this.r, this.color);
+    this.canvasSegment = makeSnakeSegment(this.r, this.color, 1);
   }
 
   increaseLength() {
@@ -122,95 +117,18 @@ export class MySnake {
     }
   }
 
-  drawSegment(x: number, y: number) {
-    const startX = x - this.r;
-    const startY = y - this.r;
-    const width = this.r * 2;
-    const height = this.r * 2;
-    this.ctx.drawImage(this.canvasSegment, startX, startY, width, height);
-  }
-
-  drawCoordinateLogs(index: number, x: number, y: number) {
-    if (!this.showLogs) {
-      return;
-    }
-
-    this.ctx.font = '20px serif';
-    this.ctx.fillStyle = this.color;
-    this.ctx.fillText(`[${index}] x: ${Math.ceil(x)} ; y: ${Math.ceil(y)}`, 10, 100 + index * 20);
-  }
-
-  drawEyesLogs(x: number, y: number) {
-    if (!this.showLogs) {
-      return;
-    }
-
-    this.ctx.font = '20px serif';
-    this.ctx.fillStyle = this.color;
-    this.ctx.fillText(`eye_x: ${x}`, 300, 100);
-    this.ctx.fillText(`eye_y: ${y}`, 300, 120);
-  }
-
-  drawEyes() {
-    const deltaAngle = Math.atan2(this.y - this.segments[1].y, this.x - this.segments[1].x);
-
-    const EYE_SIZE = 0.3; // размер глаза
-    const PUPIL_SIZE = EYE_SIZE * 0.7; // размер зрачка
-    const DISTANCE_BETWEEN_YEYS = this.r / 4;
-
-    const eye_x = Math.cos(deltaAngle) * this.r * EYE_SIZE;
-    const eye_y = Math.sin(deltaAngle) * this.r * EYE_SIZE;
-    this.drawEyesLogs(eye_x, eye_y);
-
-    this.ctx.save();
-    this.ctx.translate(this.x + eye_x, this.y + eye_y);
-
-    this.ctx.beginPath();
-    this.ctx.arc(eye_x - DISTANCE_BETWEEN_YEYS, eye_y, this.r * EYE_SIZE, 0, Math.PI * 2);
-    this.ctx.closePath();
-    this.ctx.fillStyle = '#ffffff';
-    this.ctx.fill();
-
-    this.ctx.lineWidth = 1;
-    this.ctx.strokeStyle = 'black';
-    this.ctx.stroke();
-
-    this.ctx.beginPath();
-    this.ctx.arc(eye_x + DISTANCE_BETWEEN_YEYS, eye_y, this.r * EYE_SIZE, 0, Math.PI * 2);
-    this.ctx.closePath();
-    this.ctx.fill();
-
-    this.ctx.lineWidth = 1;
-    this.ctx.strokeStyle = 'black';
-    this.ctx.stroke();
-
-    this.ctx.beginPath();
-    this.ctx.arc(eye_x - DISTANCE_BETWEEN_YEYS, eye_y, this.r * PUPIL_SIZE, 0, Math.PI * 2);
-    this.ctx.closePath();
-    this.ctx.fillStyle = '#000000';
-    this.ctx.fill();
-
-    this.ctx.beginPath();
-    this.ctx.arc(eye_x + DISTANCE_BETWEEN_YEYS, eye_y, this.r * PUPIL_SIZE, 0, Math.PI * 2);
-    this.ctx.closePath();
-    this.ctx.fill();
-
-    this.ctx.restore();
-  }
-
   draw() {
-    // Отрисовываем элементы хвоста, начиная с конца
-    for (let i = this.segments.length - 1; i > 0; i--) {
-      const segment = this.segments[i - 1];
-      const { x, y } = segment;
-      this.drawSegment(Math.ceil(x), Math.ceil(y));
-      this.drawCoordinateLogs(i, x, y);
-    }
+    drawPlayerSnake(
+      {
+        segments: this.segments,
+        headCoords: {
+          x: this.x,
+          y: this.y,
+        },
+        color: this.color,
+      },
 
-    // Отрисовываем голову
-    this.drawSegment(this.x, this.y);
-    this.drawCoordinateLogs(0, this.x, this.y);
-
-    this.drawEyes();
+      this.ctx
+    );
   }
 }

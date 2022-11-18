@@ -8,7 +8,7 @@
     "dev:sw": "tsc --watch --project sw/tsconfig.sw.json",
     "build:sw": "tsc --project sw/tsconfig.sw.json",
     "build": "yarn run build:sw && tsc && vite build",
-    "preview": "vite preview",
+    "preview": "vite preview --host",
     "lint": "eslint .",
     "stylelint": "stylelint ./src/**/*.pcss",
     "format": "prettier --write .",
@@ -29,13 +29,15 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.4",
-    "react-router-dom": "^6.4.1"
+    "react-router-dom": "^6.4.1",
+    "socket.io-client": "^4.5.2"
   },
   "devDependencies": {
     "@testing-library/react": "^13.3.0",
     "@types/jest": "^29.0.0",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "@types/react-router-dom": "^5.3.3",
     "@types/serviceworker": "^0.0.53",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",

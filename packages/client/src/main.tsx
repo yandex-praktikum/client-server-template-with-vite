@@ -14,20 +14,20 @@ import { useCustomTheme } from './useCustomTheme';
 
 import { addServiceWorker } from '../sw/addServiceWorker';
 
-addServiceWorker();
+if (import.meta.env.MODE === 'production') {
+  addServiceWorker();
+}
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <Router>
-      <ThemeProvider theme={useCustomTheme}>
-        <StyledEngineProvider injectFirst>
-          <Provider store={store}>
-            <ErrorBoundary>
-              <App />
-            </ErrorBoundary>
-          </Provider>
-        </StyledEngineProvider>
-      </ThemeProvider>
-    </Router>
-  </React.StrictMode>
+  <Router>
+    <ThemeProvider theme={useCustomTheme}>
+      <StyledEngineProvider injectFirst>
+        <Provider store={store}>
+          <ErrorBoundary>
+            <App />
+          </ErrorBoundary>
+        </Provider>
+      </StyledEngineProvider>
+    </ThemeProvider>
+  </Router>
 );

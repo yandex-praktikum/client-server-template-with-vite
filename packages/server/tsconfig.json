@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "composite": true,
     "target": "es2019",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -25,5 +24,6 @@
       "*": ["types/*"]
     },
     "outDir": "dist"
-  }
+  },
+  "references": [{ "path": "../shared" }]
 }

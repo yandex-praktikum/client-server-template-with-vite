@@ -1,15 +1,15 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import React, { useCallback, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, type To } from 'react-router-dom';
 
 import { useStyles } from './useStyles';
 
-import { PreviewAnimationCanvas } from '../../game/preview/PreviewAnimationCanvas';
+import { PreviewAnimationCanvas } from '../../canvas/components/PreviewAnimationCanvas/PreviewAnimationCanvas';
 import Layout from '../Layout/Layout';
 
 type TMenuItem = {
   itemName: string;
-} & ({ to: string; type: 'link' } | { onClick: () => void; type: 'button' });
+} & ({ to: To; type: 'link' } | { onClick: () => void; type: 'button' });
 
 export const StartPage = () => {
   const classes = useStyles();
@@ -47,7 +47,7 @@ export const StartPage = () => {
       },
       {
         itemName: 'MULTIPLAYER',
-        to: '/game-online',
+        to: '/create-or-join-game',
         type: 'link',
       },
       {
