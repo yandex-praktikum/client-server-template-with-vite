@@ -40,7 +40,7 @@ const port = Number(process.env.PORT) || Number(process.env.SERVER_PORT) || 3001
 const games: TGames = {};
 
 app.get('/', (_, res) => {
-  res.json('👋 Howdy from the server :)');
+  res.json(`👋 Howdy from the server! VERSION: ${process.env.SERVER_VERSION}`);
 });
 
 io.on('connection', socket => {
