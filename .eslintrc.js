@@ -126,7 +126,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['packages/client/sw/sw.ts'],
+      files: ['packages/client/src/services/sw/sw.ts'],
       rules: {
         '@typescript-eslint/triple-slash-reference': 0,
       },

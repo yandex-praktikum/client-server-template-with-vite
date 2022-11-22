@@ -1,4 +1,4 @@
-import { red, green, yellow } from '@material-ui/core/colors';
+import { red, green, yellow } from '@mui/material/colors';
 
 import { GAME_DURATION_MS } from '../../../../shared/consts';
 import { convertHexToRGBA } from '../../utils/convertHexToRGBA';

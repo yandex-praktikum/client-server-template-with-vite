@@ -16,6 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "sw/common.d.ts"],
+  "exclude": ["src/services/sw/sw.ts"],
+  "include": ["src", "src/services/sw/common.d.ts"],
   "references": [{ "path": "../shared" }, { "path": "./tsconfig.node.json" }]
 }

@@ -10,8 +10,9 @@ import {
 } from '../../../../../shared/consts';
 import type { TGame, TPlayer, TPosition } from '../../../../../shared/types';
 import { SNAKE_REDUCTION_TIME } from '../../../consts/settings';
+import { useGetUserQuery } from '../../../services/redux/queries/user.api';
+import { useAppSelector } from '../../../services/redux/store';
 import { socket } from '../../../services/socket/socket';
-import { useAppSelector } from '../../../store/hooks';
 import { fixPositionForMap } from '../../../utils/fixPositionForMap';
 import { drawMap } from '../../drawers/drawMap';
 import { drawPlayerSnake } from '../../drawers/drawPlayerSnake';
@@ -19,10 +20,11 @@ import { makeCountDownClock } from '../../makers/makeCountDownClock';
 import { makeFoodItem } from '../../makers/makeFoodItem';
 
 export const MultiGameCanvas = () => {
+  const { data: currentUser } = useGetUserQuery();
+
   const cursorPosition = useRef<TPosition>({ ...INITIAL_CURSOR_POSITION });
 
   let { currentGame } = useAppSelector(state => state.common);
-  const { currentUser } = useAppSelector(state => state.common);
 
   const ref = useRef<HTMLCanvasElement>(null);
   let loopId: number | null = null;
@@ -39,7 +41,7 @@ export const MultiGameCanvas = () => {
     }
 
     mouseIntervalId = setInterval(() => {
-      if (currentGame) {
+      if (currentGame && currentUser) {
         socket.emit('decreaseSnake', currentGame.roomId, currentUser);
       }
     }, SNAKE_REDUCTION_TIME);
@@ -123,7 +125,7 @@ export const MultiGameCanvas = () => {
   }, [currentGame]);
 
   const sendCoordsLoop = () => {
-    if (currentGame) {
+    if (currentGame && currentUser) {
       socket.emit('changeCursorPosition', {
         roomId: currentGame.roomId,
         playerId: currentUser.id,

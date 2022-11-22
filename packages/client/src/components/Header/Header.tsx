@@ -4,9 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { useStyles } from './useStyles';
 
-import { useNavigatorOnLine } from '../../hooks/useNavigatorOnLine';
-import { toggleAuthModalState } from '../../store/commonSlice';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useIsUserAuthorized } from '../../hooks/useIsUserAuthorized';
+import { toggleAuthModalState } from '../../services/redux/reducers/common.reducer';
+import { useAppDispatch, useAppSelector } from '../../services/redux/store';
+import { useNavigatorOnLine } from '../../services/sw/useNavigatorOnLine';
 import EntranceModal from '../EntranceModal/EntranceModal';
 
 const OnOffIndicator = styled('div')(({ isOnline }: { isOnline: boolean }) => ({
@@ -24,8 +25,9 @@ const Header = () => {
 
   const classes = useStyles();
   const navigate = useNavigate();
-  const { isAuthModalOpen, currentUser } = useAppSelector(state => state.common);
-  const { id } = currentUser;
+  const { isAuthModalOpen } = useAppSelector(state => state.common);
+  const { isUserAuthorized } = useIsUserAuthorized();
+
   const dispatch = useAppDispatch();
 
   const openEntranceModalHandler = () => {
@@ -51,7 +53,7 @@ const Header = () => {
         </div>
         <div className={classes.menu}>
           <Link to={'/'} className={classes.button}>
-            about
+            main
           </Link>
           <Link to={'/forum'} className={classes.button}>
             forum
@@ -59,12 +61,15 @@ const Header = () => {
           <Link to={'/leaderboard'} className={classes.button}>
             leaderboard
           </Link>
+          <Link to={'/settings'} className={classes.button}>
+            settings
+          </Link>
           <Button
             size={'medium'}
             variant={'outlined'}
-            onClick={id ? openProfilePageHandler : openEntranceModalHandler}
+            onClick={isUserAuthorized ? openProfilePageHandler : openEntranceModalHandler}
             className={classes.signButton}>
-            {id ? 'Profile' : 'Sign in'}
+            {isUserAuthorized ? 'Profile' : 'Sign in'}
           </Button>
         </div>
       </div>

@@ -1,6 +1,7 @@
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import { type Theme } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles((theme: Theme) => ({
   wrapper: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -17,9 +18,8 @@ export const useStyles = makeStyles(theme => ({
   logo: {
     margin: 0,
     padding: 0,
-    fontFamily: 'Karantina, cursive',
     fontSize: theme.spacing(7.5),
-    color: theme.palette.text.primary,
+    color: theme.palette.secondary.main,
     whiteSpace: 'nowrap',
   },
   logoSubtitle: {

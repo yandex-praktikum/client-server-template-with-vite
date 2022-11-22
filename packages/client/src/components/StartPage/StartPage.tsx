@@ -1,18 +1,23 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import React, { useCallback, useMemo, useState } from 'react';
-import { Link, type To } from 'react-router-dom';
+import { Link, type LinkProps } from 'react-router-dom';
 
 import { useStyles } from './useStyles';
 
 import { PreviewAnimationCanvas } from '../../canvas/components/PreviewAnimationCanvas/PreviewAnimationCanvas';
+import { useSnackbarError } from '../../hooks/useSnackbarError';
+import { useGetUserQuery } from '../../services/redux/queries/user.api';
 import Layout from '../Layout/Layout';
 
 type TMenuItem = {
   itemName: string;
-} & ({ to: To; type: 'link' } | { onClick: () => void; type: 'button' });
+} & (({ type: 'link' } & LinkProps) | { onClick: () => void; type: 'button' });
 
 export const StartPage = () => {
   const classes = useStyles();
+  const { data: currentUser } = useGetUserQuery();
+  const { setError, SnackbarErrorComp } = useSnackbarError();
+
   const [isRulesOpen, setIsRulesOpen] = useState(false);
   const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
 
@@ -21,6 +26,10 @@ export const StartPage = () => {
   }, [setIsRulesOpen, isRulesOpen]);
 
   const toggleStartMenu = useCallback(() => {
+    if (!currentUser?.id) {
+      setError('You will not be included in the ranking of top players while you are not authorized');
+    }
+
     setIsStartMenuOpen(!isStartMenuOpen);
   }, [setIsStartMenuOpen, isStartMenuOpen]);
 
@@ -32,8 +41,6 @@ export const StartPage = () => {
         type: 'button',
       },
       { itemName: 'RULES', onClick: toggleOpenRules, type: 'button' },
-      { itemName: 'SETTINGS', to: '/settings', type: 'link' },
-      { itemName: 'LEADER BOARD', to: '/leaderboard', type: 'link' },
     ],
     [toggleStartMenu]
   );
@@ -47,8 +54,13 @@ export const StartPage = () => {
       },
       {
         itemName: 'MULTIPLAYER',
-        to: '/create-or-join-game',
+        to: currentUser?.id ? '/create-or-join-game' : '#',
         type: 'link',
+        onClick: () => {
+          if (!currentUser?.id) {
+            setError('Multiplayer is available only for authorized users');
+          }
+        },
       },
       {
         itemName: 'BACK',
@@ -59,19 +71,14 @@ export const StartPage = () => {
     [toggleStartMenu]
   );
 
-  const gameResult = window.location.hash;
-  const isVictory = gameResult === '#victory';
-  const isGameOver = gameResult === '#gameover';
-  const title = isVictory ? 'VICTORY!' : isGameOver ? 'GAME OVER' : 'SNAKE GAME';
-
   return (
     <Layout>
       <div className={classes.wrapper}>
-        <div className={classes.title}>{title}</div>
+        <div className={classes.title}>SNAKE GAME</div>
         <div className={classes.menu}>
           {(isStartMenuOpen ? START_MENU_ITEMS : MENU_ITEMS).map(menuItem =>
             menuItem.type === 'link' ? (
-              <Link key={menuItem.itemName} to={menuItem.to} className={classes.menuItem}>
+              <Link key={menuItem.itemName} to={menuItem.to} className={classes.menuItem} onClick={menuItem.onClick}>
                 {menuItem.itemName}
               </Link>
             ) : (
@@ -101,6 +108,7 @@ export const StartPage = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      <SnackbarErrorComp />
     </Layout>
   );
 };
