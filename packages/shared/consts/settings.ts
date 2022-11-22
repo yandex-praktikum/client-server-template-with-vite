@@ -12,7 +12,7 @@ export const ROOM_CODE_LENGTH = 4;
 export const ROOM_CODE_CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 export const SERVER_SOCKET_DELAY = 30;
-export const CLIENT_SOCKET_DELAY = 0;
+export const CLIENT_SOCKET_DELAY = 10;
 
 const OFFSET = 20;
 

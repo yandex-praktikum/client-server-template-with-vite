@@ -1,3 +1,8 @@
+### Демонстрация игры
+[Heroku front](https://chicago-client.herokuapp.com/)
+
+[Heroku back](https://chicago-server-api.herokuapp.com/)
+
 ### Как запускать?
 
 1. Убедитесь что у вас установлен `node` и `docker`
