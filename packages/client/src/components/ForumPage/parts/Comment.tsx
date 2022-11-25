@@ -1,6 +1,5 @@
-import { Typography } from '@material-ui/core';
-import { TreeItem } from '@material-ui/lab';
-import { Avatar, Button, TextField } from '@mui/material';
+import { TreeItem } from '@mui/lab';
+import { Avatar, Button, TextField, Typography } from '@mui/material';
 import React, { useState, memo } from 'react';
 
 import { getAuthorInitials } from '../../../utils/getAuthorInitials';
@@ -8,9 +7,9 @@ import { getCreatedAtValue } from '../../../utils/getCreatedAtValue';
 import { TComment } from '../ForumPage.types';
 import { useStyles } from '../useStyles';
 
-type TProps = { data: TComment };
+type TProps = { data: TComment; isUserAuthorized: boolean };
 
-const Comment = ({ data }: TProps) => {
+const Comment = ({ data, isUserAuthorized }: TProps) => {
   const { author, content, createdAt, answers, id } = data;
   const [showTextareaComment, setShowTextareaComment] = useState<boolean>(false);
   const [commentValue, setCommentValue] = useState<string>('');
@@ -36,7 +35,7 @@ const Comment = ({ data }: TProps) => {
       <Typography variant={'body1'} className={classes.commentContent}>
         {content}
       </Typography>
-      {!showTextareaComment && (
+      {!showTextareaComment && isUserAuthorized && (
         <Button
           variant={'text'}
           color={'info'}
@@ -84,7 +83,7 @@ const Comment = ({ data }: TProps) => {
         <div className={classes.answers}>
           <TreeItem nodeId={id.toString()} label={`Ответы: ${answers.length}`}>
             {answers?.map(answer => (
-              <MemoizedComment data={answer} />
+              <MemoizedComment key={answer.id} data={answer} isUserAuthorized={isUserAuthorized} />
             ))}
           </TreeItem>
         </div>

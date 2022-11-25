@@ -9,10 +9,9 @@ import { App } from './App';
 import 'normalize.css';
 import './index.css';
 import ErrorBoundary from './components/ErrorBoundaries/ErrorBoundaries';
-import { store } from './store/store';
+import { store } from './services/redux/store';
+import { addServiceWorker } from './services/sw/addServiceWorker';
 import { useCustomTheme } from './useCustomTheme';
-
-import { addServiceWorker } from '../sw/addServiceWorker';
 
 if (import.meta.env.MODE === 'production') {
   addServiceWorker();

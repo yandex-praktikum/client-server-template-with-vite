@@ -6,14 +6,17 @@ import { ColorIndicator } from './parts/ColorIndicator';
 import { useStyles } from './useStyles';
 
 import type { TPlayer } from '../../../../shared/types';
+import { useGetUserQuery } from '../../services/redux/queries/user.api';
+import { setGame } from '../../services/redux/reducers/common.reducer';
+import { useAppDispatch, useAppSelector } from '../../services/redux/store';
 import { socket } from '../../services/socket/socket';
-import { setGame } from '../../store/commonSlice';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getAuthorInitials } from '../../utils/getAuthorInitials';
 import Layout from '../Layout/Layout';
 
 export const WaitingRoomPage = () => {
-  const { currentGame, currentUser } = useAppSelector(state => state.common);
+  const { data: currentUser } = useGetUserQuery();
+
+  const { currentGame } = useAppSelector(state => state.common);
   const { roomId, players } = currentGame || {};
 
   const isStarted = useRef<boolean>(false);
@@ -37,7 +40,7 @@ export const WaitingRoomPage = () => {
     }
 
     return () => {
-      if (!isStarted.current && !!currentGame) {
+      if (!isStarted.current && !!currentGame && !!currentUser) {
         socket.emit('userDisconnected', currentGame.roomId, currentUser);
       }
 
@@ -54,7 +57,7 @@ export const WaitingRoomPage = () => {
   const isRoomNotFull = players.length > 1 && players.length < 4;
   const isRoomFull = players.length === 4;
 
-  const isHost = players.find((u: TPlayer) => u.user.id === currentUser.id)?.isHost;
+  const isHost = players.find((u: TPlayer) => u.user.id === currentUser?.id)?.isHost;
 
   const handleStartGame = () => {
     socket.emit('start', currentGame.roomId);
@@ -77,7 +80,7 @@ export const WaitingRoomPage = () => {
                   </TableCell>
                   <TableCell>{[row.user.first_name, row.user.second_name].join('\u00a0')}</TableCell>
                   <TableCell width="100%" align="center">
-                    {currentUser.id === row.user.id ? <span className={classes.you}>you</span> : ''}
+                    {currentUser?.id === row.user.id ? <span className={classes.you}>you</span> : ''}
                   </TableCell>
                   <TableCell>{row.isHost ? <span className={classes.host}>host</span> : ''}</TableCell>
                   <TableCell>

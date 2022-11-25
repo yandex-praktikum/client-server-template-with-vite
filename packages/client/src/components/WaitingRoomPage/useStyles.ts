@@ -1,6 +1,7 @@
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import { type Theme } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles((theme: Theme) => ({
   wrapper: {
     maxWidth: '80%',
     margin: '0 auto',
@@ -23,7 +24,7 @@ export const useStyles = makeStyles(theme => ({
     width: '50%',
   },
   tableContainer: {
-    margin: `0 auto ${theme.spacing(2)}px`,
+    margin: `0 auto ${theme.spacing(2)}`,
     width: '800px',
     maxWidth: '100%',
   },

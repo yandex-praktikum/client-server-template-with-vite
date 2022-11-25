@@ -1,6 +1,12 @@
+@import './animations/pulse.css';
+
 html {
   box-sizing: border-box;
   font-size: 18px;
+}
+
+* {
+  font-family: Pangolin, Inter, sans-serif;
 }
 
 *,
@@ -23,41 +29,23 @@ table {
 
 body {
   margin: 0;
-  font-family: Inter, sans-serif;
 }
 
-@keyframes textOpacityPulse {
-  0% { opacity: 0.05; }
-  50% { opacity: 1; }
-  100% { opacity: 0.05; }
-}
-@keyframes pulse_0 {
-  0% { transform: scale(0); opacity: 0; }
-  20% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(0); opacity: 0; }
-}
-@keyframes pulse_1 {
-  0% { transform: scale(0); opacity: 0; }
-  30% { transform: scale(1); opacity: 1; }
-  60% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(0); opacity: 0; }
-}
-@keyframes pulse_2 {
-  0% { transform: scale(0); opacity: 0; }
-  40% { transform: scale(1); opacity: 1; }
-  70% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(0); opacity: 0; }
-}
-@keyframes pulse_3 {
-  0% { transform: scale(0); opacity: 0; }
-  50% { transform: scale(1); opacity: 1; }
-  80% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(0); opacity: 0; }
-}
-@keyframes pulse_4 {
-  0% { transform: scale(0); opacity: 0; }
-  60% { transform: scale(1); opacity: 1; }
-  90% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(0); opacity: 0; }
+@media (max-width: 1000px) {
+  body::after {
+    content: 'Unfortunately, the mobile version of the site is not supported.';
+    z-index: 100000000000;
+    height: 100%;
+    width: 100%;
+    padding: 0 20%;
+    text-align: center;
+    background: #414141;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

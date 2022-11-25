@@ -1,4 +1,4 @@
-import { blue, green, yellow, red } from '@material-ui/core/colors';
+import { blue, green, yellow, red } from '@mui/material/colors';
 
 import { TFoodColor } from '../../../shared/types';
 

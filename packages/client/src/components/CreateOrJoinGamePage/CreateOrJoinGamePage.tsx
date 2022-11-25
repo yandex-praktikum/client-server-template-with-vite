@@ -5,15 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import { useStyles } from './useStyles';
 
 import type { TGame } from '../../../../shared/types';
+import { useGetUserQuery } from '../../services/redux/queries/user.api';
+import { setGame } from '../../services/redux/reducers/common.reducer';
+import { useAppDispatch } from '../../services/redux/store';
 import { socket } from '../../services/socket/socket';
-import { setGame } from '../../store/commonSlice';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import Layout from '../Layout/Layout';
 
 export const CreateOrJoinGamePage = () => {
   const classes = useStyles();
   const [roomValue, setRoomValue] = useState('');
-  const { currentUser } = useAppSelector(state => state.common);
+  const { data: currentUser } = useGetUserQuery();
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -38,11 +39,15 @@ export const CreateOrJoinGamePage = () => {
   }, []);
 
   const handleCreateRoomClick = () => {
-    socket.emit('createRoom', currentUser);
+    if (currentUser) {
+      socket.emit('createRoom', currentUser);
+    }
   };
 
   const handleJoinRoomClick = () => {
-    socket.emit('joinRoom', roomValue, currentUser);
+    if (currentUser) {
+      socket.emit('joinRoom', roomValue, currentUser);
+    }
   };
 
   return (

@@ -6,8 +6,8 @@ import LoginForm from './LoginForm/LoginForm';
 import RegistrationForm from './RegistrationForm/RegistrationForm';
 import { useStyles } from './useStyles';
 
-import { toggleAuthModalState } from '../../store/commonSlice';
-import { useAppDispatch } from '../../store/hooks';
+import { toggleAuthModalState } from '../../services/redux/reducers/common.reducer';
+import { useAppDispatch } from '../../services/redux/store';
 
 const EntranceModal = () => {
   const dispatch = useAppDispatch();

@@ -1,6 +1,14 @@
 import { createTheme } from '@mui/material/styles';
 
 export const useCustomTheme = createTheme({
+  typography: {
+    h1: {
+      fontWeight: 'bold',
+    },
+    allVariants: {
+      fontFamily: ['Pangolin', 'Inter, sans-serif'].join(','),
+    },
+  },
   palette: {
     primary: {
       main: '#ff0000',
@@ -13,8 +21,3 @@ export const useCustomTheme = createTheme({
     },
   },
 });
-
-useCustomTheme.typography.h1 = {
-  fontWeight: 'bold',
-  fontFamily: 'Karantina, cursive',
-};

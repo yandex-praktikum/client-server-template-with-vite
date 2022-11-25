@@ -2,7 +2,8 @@
 
 const CHECK_ONLINE_STATUS_PARAM: TCheckOnlineParam = 'check-online';
 
-const VERSION = '0.0.3';
+const VERSION = '0.0.4';
+console.info(`[SW]: VERSION ${VERSION}`);
 
 const STATIC_CACHE_NAME = 'static-chicago-app-v-' + VERSION;
 const DYNAMIC_CACHE_NAME = 'dynamic-chicago-app-v-' + VERSION;

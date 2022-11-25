@@ -1,8 +1,9 @@
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import { type Theme } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 import { APP_Z_INDEXES } from '../../utils/enums';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles((theme: Theme) => ({
   wrapper: {
     position: 'fixed',
     top: 0,
