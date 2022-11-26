@@ -5,7 +5,6 @@ export interface IClientToServerEvents {
   createRoom: (creator: TUser) => void;
   joinRoom: (roomId: TGame['roomId'], player: TUser) => void;
   start: (roomId: TGame['roomId']) => void;
-  finish: (roomId: TGame['roomId']) => void;
   changeCursorPosition: (data: {
     roomId: TGame['roomId'];
     playerId: TUser['id'];

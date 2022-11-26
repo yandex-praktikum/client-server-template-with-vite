@@ -13,14 +13,22 @@ import { MemoizedComment } from './parts/Comment';
 import { TEMP_DATA } from './tempData';
 import { useStyles } from './useStyles';
 
-import { useIsUserAuthorized } from '../../hooks/useIsUserAuthorized';
+import { getUserIdSelector } from '../../services/redux/selectors/getUserSelector';
+import { useAppSelector } from '../../services/redux/store';
+import { useNavigatorOnLine } from '../../services/sw/useNavigatorOnLine';
 import { getAuthorInitials } from '../../utils/getAuthorInitials';
 import { getCreatedAtValue } from '../../utils/getCreatedAtValue';
 import Layout from '../Layout/Layout';
 
 export const ForumPage = () => {
   const classes = useStyles();
-  const { isUserAuthorized } = useIsUserAuthorized();
+
+  const isUserAuthorized = !!useAppSelector(getUserIdSelector);
+
+  const isOnline = useNavigatorOnLine();
+
+  const canUserWrite = isUserAuthorized && isOnline;
+
   const [selectedTheme, setSelectedTheme] = useState<TTheme | null>(null);
   const [commentValue, setCommentValue] = useState<string>('');
 
@@ -37,9 +45,9 @@ export const ForumPage = () => {
               key={item.id}
               onClick={setSelectedTheme.bind(null, item)}>
               <div className={classes.themeItem}>
-                {item.title}
+                <div> {item.title}</div>
                 <div className={classes.commentCount}>
-                  <CommentIcon color={'info'} /> {item.discussions?.length || 0}
+                  <CommentIcon fontSize="small" color="secondary" /> {item.discussions?.length || 0}
                 </div>
               </div>
             </ListItemButton>
@@ -74,8 +82,9 @@ export const ForumPage = () => {
               </Typography>
               <div className={classes.comments}>
                 <Typography variant={'h6'}>Comments: {selectedTheme.discussions?.length || 0}</Typography>
-                {isUserAuthorized && (
+                {canUserWrite && (
                   <TextField
+                    color="secondary"
                     label="Write a comment"
                     multiline
                     rows={3}
@@ -86,7 +95,7 @@ export const ForumPage = () => {
                     }}
                   />
                 )}
-                {isUserAuthorized && (
+                {canUserWrite && (
                   <Button
                     variant={'text'}
                     color={'info'}
@@ -98,7 +107,7 @@ export const ForumPage = () => {
                 )}
                 <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
                   {selectedTheme.discussions?.map(comment => (
-                    <MemoizedComment key={comment.id} data={comment} isUserAuthorized={isUserAuthorized} />
+                    <MemoizedComment key={comment.id} data={comment} canUserWrite={canUserWrite} />
                   ))}
                 </TreeView>
               </div>

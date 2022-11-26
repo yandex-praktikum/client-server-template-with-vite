@@ -4,8 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { useStyles } from './useStyles';
 
-import { useIsUserAuthorized } from '../../hooks/useIsUserAuthorized';
 import { toggleAuthModalState } from '../../services/redux/reducers/common.reducer';
+import { getUserIdSelector } from '../../services/redux/selectors/getUserSelector';
 import { useAppDispatch, useAppSelector } from '../../services/redux/store';
 import { useNavigatorOnLine } from '../../services/sw/useNavigatorOnLine';
 import EntranceModal from '../EntranceModal/EntranceModal';
@@ -26,7 +26,7 @@ const Header = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const { isAuthModalOpen } = useAppSelector(state => state.common);
-  const { isUserAuthorized } = useIsUserAuthorized();
+  const isUserAuthorized = !!useAppSelector(getUserIdSelector);
 
   const dispatch = useAppDispatch();
 

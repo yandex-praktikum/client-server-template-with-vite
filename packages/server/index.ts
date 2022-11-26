@@ -5,7 +5,6 @@ import socketIo from 'socket.io';
 
 import { addCreateRoomEvent, addChangeCursorPositionEvent, addJoinRoomEvent, addStartEvent } from './socket';
 import { addDecreaseSnakeEvent } from './socket/addDecreaseSnakeEvent';
-import { addFinishEvent } from './socket/addFinishEvent';
 import { addUserDisconnectedEvent } from './socket/addUserDisconnectedEvent';
 
 import type { IClientToServerEvents, IServerToClientEvents, TGames } from '../shared/types';
@@ -34,9 +33,6 @@ app.use(cors());
 
 const port = Number(process.env.PORT) || Number(process.env.SERVER_PORT) || 3001;
 
-// todo:
-// сейчас все данные об играх хранятся в мутирующейся переменной games
-// возможно нужно хранить в базе данных это
 const games: TGames = {};
 
 app.get('/', (_, res) => {
@@ -67,9 +63,6 @@ io.on('connection', socket => {
 
   // для уменьшения длины змеи
   addDecreaseSnakeEvent(socket, games);
-
-  // для указания, что игра завершена
-  addFinishEvent(socket, games);
 });
 
 server.listen(port, () => {

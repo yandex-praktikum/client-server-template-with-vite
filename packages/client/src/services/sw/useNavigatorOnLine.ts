@@ -19,7 +19,7 @@ async function isOnline() {
   // random value to prevent cached responses
   url.searchParams.set(CHECK_ONLINE_STATUS_PARAM, getRandomString());
 
-  return await fetch(url.toString(), { method: 'HEAD' });
+  return fetch(url.toString(), { method: 'HEAD' });
 }
 
 export const useNavigatorOnLine = () => {
@@ -36,10 +36,14 @@ export const useNavigatorOnLine = () => {
   useEffect(() => {
     window.addEventListener('online', setOnline);
     window.addEventListener('offline', setOffline);
-
     isOnline().then(setOnline).catch(setOffline);
 
+    const intervalId = setInterval(() => {
+      isOnline().then(setOnline).catch(setOffline);
+    }, 5000);
+
     return () => {
+      clearInterval(intervalId);
       window.removeEventListener('online', setOnline);
       window.removeEventListener('offline', setOffline);
     };

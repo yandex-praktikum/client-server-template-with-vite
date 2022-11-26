@@ -2,24 +2,29 @@ import PersonIcon from '@mui/icons-material/Person';
 import { Avatar, Button, Dialog, DialogContent, DialogTitle } from '@mui/material';
 import React, { useState } from 'react';
 
-import { ChangePasswordForm } from './parts/changePasswordForm';
-import { EditProfileForm } from './parts/editProfileForm';
+import { ChangePasswordForm } from './parts/ChangePasswordForm';
+import { EditProfileForm } from './parts/EditProfileForm';
 import { useStyles } from './useStyles';
 
-import { RESOURSES_URL } from '../../../../shared/consts/common';
+import { RESOURCES_URL } from '../../../../shared/consts/common';
 import { isErrorWithReason } from '../../../../shared/types/typeGuards/isErrorWithReason';
 import { useSnackbarError } from '../../hooks/useSnackbarError';
 import { useLogoutMutation } from '../../services/redux/queries/auth.api';
-import { useGetUserQuery, useUpdateAvatarMutation } from '../../services/redux/queries/user.api';
+import { useUpdateAvatarMutation } from '../../services/redux/queries/user.api';
+import { getUserSelector } from '../../services/redux/selectors/getUserSelector';
+import { useAppSelector } from '../../services/redux/store';
+import { useNavigatorOnLine } from '../../services/sw/useNavigatorOnLine';
 import Layout from '../Layout/Layout';
 
 const ProfilePage = () => {
   const classes = useStyles();
+  const isOnline = useNavigatorOnLine();
+
   const { SnackbarErrorComp, setError } = useSnackbarError();
 
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
-  const { data } = useGetUserQuery();
+  const { data } = useAppSelector(getUserSelector);
 
   const [logout] = useLogoutMutation();
   const [updateAvatar] = useUpdateAvatarMutation();
@@ -57,11 +62,10 @@ const ProfilePage = () => {
         <div className={classes.userName}>{first_name}</div>
         <div className={classes.userName}>{second_name}</div>
       </div>
-
-      <Avatar className={classes.avatar} src={RESOURSES_URL + avatar}>
+      <Avatar className={classes.avatar} src={RESOURCES_URL + avatar}>
         <PersonIcon className={classes.personIcon} />
       </Avatar>
-      <Button className={classes.uploadBtn} color="info" variant="contained" component="label">
+      <Button className={classes.uploadBtn} color="info" variant="contained" component="label" disabled={!isOnline}>
         Upload
         <input hidden accept="image/*" type="file" onChange={handleChangeAvatar} />
       </Button>
@@ -75,6 +79,7 @@ const ProfilePage = () => {
           className={classes.btnChangeProfile}
           variant="contained"
           color="secondary"
+          disabled={!isOnline}
           onClick={() => {
             setIsEditProfileOpen(true);
           }}>
@@ -84,6 +89,7 @@ const ProfilePage = () => {
           className={classes.btnChangePassword}
           variant="contained"
           color="secondary"
+          disabled={!isOnline}
           onClick={() => {
             setIsChangePasswordOpen(true);
           }}>
@@ -91,7 +97,7 @@ const ProfilePage = () => {
         </Button>
       </div>
       <div className={classes.roundLogout}>
-        <Button className={classes.btnLogout} variant="contained" onClick={logoutHandler}>
+        <Button className={classes.btnLogout} variant="contained" onClick={logoutHandler} disabled={!isOnline}>
           Logout
         </Button>
       </div>

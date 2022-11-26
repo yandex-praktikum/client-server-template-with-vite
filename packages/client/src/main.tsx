@@ -18,7 +18,7 @@ if (import.meta.env.MODE === 'production') {
 }
 
 const versionStrStyle: React.CSSProperties = {
-  position: 'absolute',
+  position: 'fixed',
   margin: 'auto 0 10px 10px',
   bottom: 0,
   left: 0,

@@ -3,14 +3,13 @@ import { api, commonFetchArgs } from './api';
 import { TUser } from '../../../../../shared/types';
 import { TChangePasswordData } from '../../../../../shared/types/apiTypes/changePassword';
 
-const userApi = api.injectEndpoints({
+export const userApi = api.injectEndpoints({
   endpoints: build => ({
     getUser: build.query<TUser, void>({
       query: () => ({
         url: 'auth/user',
         ...commonFetchArgs,
       }),
-      forceRefetch: () => true,
       providesTags: ['getUser'],
     }),
     updateAvatar: build.mutation<TUser, FormData>({

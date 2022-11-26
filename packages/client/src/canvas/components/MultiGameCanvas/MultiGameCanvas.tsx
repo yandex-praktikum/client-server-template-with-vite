@@ -1,17 +1,20 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
   CLIENT_SOCKET_DELAY,
   FOOD_SIZE,
+  GAME_DURATION_MS,
   INITIAL_CURSOR_POSITION,
   MAP_HEIGHT,
   MAP_WIDTH,
 } from '../../../../../shared/consts';
 import type { TGame, TPlayer, TPosition } from '../../../../../shared/types';
+import CursorPng from '../../../assets/cursor.png';
 import { SNAKE_REDUCTION_TIME } from '../../../consts/settings';
-import { useGetUserQuery } from '../../../services/redux/queries/user.api';
-import { useAppSelector } from '../../../services/redux/store';
+import { setGame } from '../../../services/redux/reducers/common.reducer';
+import { getUserSelector } from '../../../services/redux/selectors/getUserSelector';
+import { useAppDispatch, useAppSelector } from '../../../services/redux/store';
 import { socket } from '../../../services/socket/socket';
 import { fixPositionForMap } from '../../../utils/fixPositionForMap';
 import { drawMap } from '../../drawers/drawMap';
@@ -20,37 +23,43 @@ import { makeCountDownClock } from '../../makers/makeCountDownClock';
 import { makeFoodItem } from '../../makers/makeFoodItem';
 
 export const MultiGameCanvas = () => {
-  const { data: currentUser } = useGetUserQuery();
+  const { data: currentUser } = useAppSelector(getUserSelector);
+
+  const dispatch = useAppDispatch();
 
   const cursorPosition = useRef<TPosition>({ ...INITIAL_CURSOR_POSITION });
 
-  let { currentGame } = useAppSelector(state => state.common);
+  const { currentGame: initialGame } = useAppSelector(state => state.common);
+
+  const currentGame = useRef<TGame | null>(initialGame);
 
   const ref = useRef<HTMLCanvasElement>(null);
-  let loopId: number | null = null;
+  const loopId = useRef<number | null>(null);
+  const mouseIntervalId = useRef<NodeJS.Timer | null>(null);
+  const intervalId = useRef<NodeJS.Timer | null>(null);
 
   const navigate = useNavigate();
 
-  let boost = false;
-
-  let mouseIntervalId: NodeJS.Timer | null = null;
+  const boost = useRef<boolean>(false);
 
   function onMouseMove(e: MouseEvent) {
-    if (mouseIntervalId) {
-      clearInterval(mouseIntervalId);
+    if (mouseIntervalId.current) {
+      clearInterval(mouseIntervalId.current);
     }
 
-    mouseIntervalId = setInterval(() => {
-      if (currentGame && currentUser) {
-        socket.emit('decreaseSnake', currentGame.roomId, currentUser);
+    mouseIntervalId.current = setInterval(() => {
+      if (currentGame.current && currentUser) {
+        socket.emit('decreaseSnake', currentGame.current.roomId, currentUser);
       }
     }, SNAKE_REDUCTION_TIME);
 
-    if (!currentGame) {
+    if (!currentGame.current) {
       return;
     }
 
     if (!ref.current) {
+      onEnd();
+
       throw Error('Not found canvas');
     }
 
@@ -61,30 +70,73 @@ export const MultiGameCanvas = () => {
   }
 
   function onMouseDown() {
-    boost = true;
+    boost.current = true;
   }
 
   function onMouseUp() {
-    boost = false;
+    boost.current = false;
   }
 
-  const { canvas: countDownClock, cancelTimer: cancelCountDownClockTimer } = makeCountDownClock(
-    MAP_WIDTH,
-    MAP_HEIGHT,
-    () => {
-      onEnd();
+  const { canvas: countDownClock, cancelTimer: cancelCountDownClockTimer } = useMemo(() => {
+    return makeCountDownClock(MAP_WIDTH, MAP_HEIGHT);
+  }, [currentGame.current?.roomId]);
 
-      if (currentGame) {
-        socket.emit('finish', currentGame.roomId);
-      }
-
-      alert(`Finished. Scores: ${currentGame?.players.map(p => p.segments.length).join(' ')}`);
-      navigate('/', { replace: true });
+  const sendCoordsLoop = () => {
+    if (currentGame.current && currentUser) {
+      socket.emit('changeCursorPosition', {
+        roomId: currentGame.current.roomId,
+        playerId: currentUser.id,
+        coords: cursorPosition.current,
+        isBoost: boost.current,
+      });
     }
-  );
+  };
 
   useEffect(() => {
-    if (!currentGame) {
+    socket.on('changedRoom', (game: TGame) => {
+      currentGame.current = game;
+    });
+    socket.on('error', () => {
+      onEnd();
+    });
+
+    socket.on('finished', () => {
+      onEnd();
+      console.info(`Finished. Scores: ${currentGame.current?.players.map(p => p.segments.length).join(' ')}`);
+      navigate('/', { replace: true });
+    });
+
+    if (!currentGame.current) {
+      navigate('/create-or-join-game', { replace: true });
+    }
+
+    return onEnd;
+  }, []);
+
+  function onEnd() {
+    socket.off('changedRoom');
+    socket.off('finished');
+
+    document.removeEventListener('mousemove', onMouseMove);
+    cancelCountDownClockTimer();
+
+    if (loopId.current) {
+      cancelAnimationFrame(loopId.current);
+    }
+
+    if (intervalId.current) {
+      clearInterval(intervalId.current);
+    }
+
+    if (mouseIntervalId.current) {
+      clearInterval(mouseIntervalId.current);
+    }
+
+    dispatch(setGame(null));
+  }
+
+  useEffect(() => {
+    if (!currentGame.current) {
       return;
     }
 
@@ -101,74 +153,45 @@ export const MultiGameCanvas = () => {
     canvas.height = MAP_HEIGHT;
 
     const drawMapLoop = () => {
-      loopId = requestAnimationFrame(drawMapLoop);
+      loopId.current = requestAnimationFrame(drawMapLoop);
 
       // очищаем все и рисуем карту заново
       drawMap(ctx);
       ctx.drawImage(countDownClock, 0, 0);
 
-      if (currentGame) {
+      if (currentGame.current) {
         ctx.drawImage(
-          makeFoodItem(currentGame.food.color),
-          currentGame.food.position.x - FOOD_SIZE / 2,
-          currentGame.food.position.y - FOOD_SIZE / 2
+          makeFoodItem(currentGame.current.food.color),
+          currentGame.current.food.position.x - FOOD_SIZE / 2,
+          currentGame.current.food.position.y - FOOD_SIZE / 2
         );
-        currentGame.players.forEach((player: TPlayer) => {
+
+        currentGame.current.players.forEach((player: TPlayer) => {
           drawPlayerSnake(player, ctx);
         });
       }
     };
 
     drawMapLoop();
+  }, [currentGame.current]);
 
-    return onEnd;
-  }, [currentGame]);
-
-  const sendCoordsLoop = () => {
-    if (currentGame && currentUser) {
-      socket.emit('changeCursorPosition', {
-        roomId: currentGame.roomId,
-        playerId: currentUser.id,
-        coords: cursorPosition.current,
-        isBoost: boost,
-      });
+  intervalId.current = setInterval(sendCoordsLoop, CLIENT_SOCKET_DELAY);
+  setTimeout(() => {
+    if (intervalId.current) {
+      clearInterval(intervalId.current);
     }
-  };
-
-  const intervalId = setInterval(sendCoordsLoop, CLIENT_SOCKET_DELAY);
-
-  useEffect(() => {
-    socket.on('changedRoom', (game: TGame) => {
-      currentGame = game;
-    });
-
-    if (!currentGame) {
-      navigate('/create-or-join-game', { replace: true });
-    }
-
-    return onEnd;
-  }, []);
-
-  function onEnd() {
-    socket.off('changedRoom');
-
-    if (loopId) {
-      cancelAnimationFrame(loopId);
-    }
-
-    cancelCountDownClockTimer();
-
-    document.removeEventListener('mousemove', onMouseMove);
-    clearInterval(intervalId);
-
-    if (mouseIntervalId) {
-      clearInterval(mouseIntervalId);
-    }
-  }
+  }, GAME_DURATION_MS);
 
   return (
     <>
-      <canvas ref={ref} onMouseDown={onMouseDown} onMouseUp={onMouseUp} />
+      <canvas
+        ref={ref}
+        style={{
+          cursor: `url(${CursorPng}) 24 24, default`,
+        }}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+      />
     </>
   );
 };

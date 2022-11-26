@@ -2,71 +2,70 @@
 
 const CHECK_ONLINE_STATUS_PARAM: TCheckOnlineParam = 'check-online';
 
-const VERSION = '0.0.4';
+const VERSION = '0.0.45';
 console.info(`[SW]: VERSION ${VERSION}`);
 
-const STATIC_CACHE_NAME = 'static-chicago-app-v-' + VERSION;
-const DYNAMIC_CACHE_NAME = 'dynamic-chicago-app-v-' + VERSION;
+const CACHE_NAME = 'chicago-app-v-' + VERSION;
 
 const INDEX_HTML_PATH = 'index.html';
 
-const ASSET_URLS = [INDEX_HTML_PATH];
+const cacheFiles = [INDEX_HTML_PATH];
 
 const SW = self;
 
-SW.addEventListener('install', async event => {
+SW.addEventListener('install', event => {
   console.log('[SW]: install');
 
   event.waitUntil(
-    caches.open(STATIC_CACHE_NAME).then(cache => {
-      cache.addAll(ASSET_URLS);
+    caches.open(CACHE_NAME).then(cache => {
+      cache.addAll(cacheFiles);
     })
   );
 });
 
-SW.addEventListener('activate', async () => {
+SW.addEventListener('activate', event => {
   console.log('[SW]: activate');
 
-  const cacheNames = await caches.keys();
-  await Promise.all(
-    cacheNames
-      .filter(cacheName => cacheName !== STATIC_CACHE_NAME && cacheName !== DYNAMIC_CACHE_NAME)
-      .map(cacheName => caches.delete(cacheName))
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
   );
 });
 
-SW.addEventListener('fetch', async event => {
-  const { request } = event;
-
-  const url = new URL(request.clone().url);
+SW.addEventListener('fetch', event => {
+  const url = new URL(event.request.clone().url);
 
   const isCheckOnlineParam = url.searchParams.get(CHECK_ONLINE_STATUS_PARAM);
 
   if (isCheckOnlineParam) {
-    event.respondWith(fetch(request));
+    event.respondWith(fetch(event.request));
   } else {
-    event.respondWith(networkFirst(request));
+    event.respondWith(networkFirst(event.request, 10000).catch(() => fromCache(event.request)));
+    event.waitUntil(update(event.request));
   }
 });
 
-async function networkFirst(request: Request) {
-  const fetchRequest = await request.clone();
-  const cache = await caches.open(DYNAMIC_CACHE_NAME);
+const update = request =>
+  caches.open(CACHE_NAME).then(cache => fetch(request).then(response => cache.put(request, response)));
 
-  try {
-    const response = await fetch(fetchRequest);
-    await cache.put(request, response.clone());
+const fromCache = request =>
+  caches
+    .open(CACHE_NAME)
+    .then(cache => cache.match(request).then(matching => matching || cache.match(INDEX_HTML_PATH)));
 
-    return response;
-  } catch (e) {
-    const cached = await caches.match(request);
-
-    if (cached) {
-      return cached;
-    }
-
-    const cache = await caches.open(STATIC_CACHE_NAME);
-
-    return await cache.match(INDEX_HTML_PATH);
-  }
-}
+const networkFirst = (request: Request, timeout: number) =>
+  new Promise((fulfill, reject) => {
+    const timeoutId = setTimeout(reject, timeout);
+    fetch(request).then(response => {
+      clearTimeout(timeoutId);
+      fulfill(response);
+      update(request);
+    }, reject);
+  });

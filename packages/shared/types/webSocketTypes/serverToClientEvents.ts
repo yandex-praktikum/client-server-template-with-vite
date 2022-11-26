@@ -12,5 +12,6 @@ export interface IServerToClientEvents {
   joinedRoom: (game: TGame) => void;
   changedRoom: (game: TGame) => void;
   started: (game: TGame) => void;
+  finished: (roomId: TGame['roomId']) => void;
   error: (message: TSocketErrorMessage) => void;
 }

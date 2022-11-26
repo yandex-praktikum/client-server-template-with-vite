@@ -10,11 +10,15 @@ import NotFoundPage from './components/NotFoundPage/NotFoundPage';
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import { StartPage } from './components/StartPage/StartPage';
 import { WaitingRoomPage } from './components/WaitingRoomPage/WaitingRoomPage';
-import { useIsUserAuthorized } from './hooks/useIsUserAuthorized';
 import { useSnackbarError } from './hooks/useSnackbarError';
+import { useGetUserQuery } from './services/redux/queries/user.api';
+import { getUserIdSelector } from './services/redux/selectors/getUserSelector';
+import { useAppSelector } from './services/redux/store';
 
 export function App(): JSX.Element {
-  const { isUserAuthorized } = useIsUserAuthorized();
+  useGetUserQuery();
+
+  const isUserAuthorized = !!useAppSelector(getUserIdSelector);
 
   const { SnackbarErrorComp } = useSnackbarError();
 

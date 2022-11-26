@@ -23,7 +23,7 @@ export const counterSlice = createSlice({
     setLanguage: (state, action) => {
       state.language = action.payload;
     },
-    setGame: (state, action: PayloadAction<TGame>) => {
+    setGame: (state, action: PayloadAction<TGame | null>) => {
       state.currentGame = action.payload;
     },
   },

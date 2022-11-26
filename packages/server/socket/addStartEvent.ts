@@ -25,7 +25,7 @@ export const addStartEvent = (
       io.in(game.roomId).emit('started', game);
 
       // запускает отправку текущих данных об игре каждый интервал времени
-      runEmitCoordsLoop(io, game);
+      runEmitCoordsLoop(io, game, games);
     }
   });
 };

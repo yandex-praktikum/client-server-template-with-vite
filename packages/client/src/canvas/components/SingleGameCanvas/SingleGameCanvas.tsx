@@ -3,7 +3,9 @@ import React, { useEffect, useRef } from 'react';
 import { FOOD_COLORS, FOOD_SIZE, MAP_HEIGHT, MAP_WIDTH } from '../../../../../shared/consts';
 import { getDistanceBetweenTwoPoints } from '../../../../../shared/utils';
 import { getRandomItem } from '../../../../../shared/utils/getRandomItem';
+import CursorPng from '../../../assets/cursor.png';
 import { Snake } from '../../../game/Snake';
+import { fixPositionForMap } from '../../../utils/fixPositionForMap';
 import { randomIntFromInterval } from '../../../utils/randomIntFromInterfal';
 import { drawMap } from '../../drawers/drawMap';
 import { makeCountDownClock } from '../../makers/makeCountDownClock';
@@ -15,7 +17,7 @@ export function SingleGameCanvas() {
 
   let mousePositionX = MAP_WIDTH / 2;
   let mousePositionY = MAP_HEIGHT / 2;
-  let boost = false;
+  const boost = useRef<boolean>(false);
 
   let foodX = randomIntFromInterval(50, MAP_WIDTH - 50);
   let foodY = randomIntFromInterval(50, MAP_HEIGHT - 50);
@@ -32,16 +34,21 @@ export function SingleGameCanvas() {
       throw Error('Not found canvas');
     }
 
-    mousePositionX = Math.ceil(e.clientX - ref.current.getBoundingClientRect().left);
-    mousePositionY = Math.ceil(e.clientY - ref.current.getBoundingClientRect().top);
+    const { x, y } = fixPositionForMap({
+      x: Math.ceil(e.clientX - ref.current.getBoundingClientRect().left),
+      y: Math.ceil(e.clientY - ref.current.getBoundingClientRect().top),
+    });
+
+    mousePositionX = x;
+    mousePositionY = y;
   }
 
   function onMouseDown() {
-    boost = true;
+    boost.current = true;
   }
 
   function onMouseUp() {
-    boost = false;
+    boost.current = false;
   }
 
   useEffect(() => {
@@ -64,13 +71,13 @@ export function SingleGameCanvas() {
       MAP_HEIGHT,
       () => {
         onEnd();
-        alert(`END. SCORE: ${snake.segments.length}`);
+        console.info(`END. SCORE: ${snake.segments.length}`);
       }
     );
 
     const sendCoordsLoop = () => {
       // передаем змейке координаты мыши и флаг ускорения
-      snake.move(mousePositionX, mousePositionY, boost);
+      snake.move(mousePositionX, mousePositionY, boost.current);
     };
 
     const increaseSnakeIfNeed = () => {
@@ -112,8 +119,11 @@ export function SingleGameCanvas() {
   }, []);
 
   return (
-    <>
+    <div
+      style={{
+        cursor: `url(${CursorPng}) 24 24, default`,
+      }}>
       <canvas ref={ref} onMouseDown={onMouseDown} onMouseUp={onMouseUp} />
-    </>
+    </div>
   );
 }

@@ -5,16 +5,17 @@ import { useNavigate } from 'react-router-dom';
 import { ColorIndicator } from './parts/ColorIndicator';
 import { useStyles } from './useStyles';
 
+import { RESOURCES_URL } from '../../../../shared/consts/common';
 import type { TPlayer } from '../../../../shared/types';
-import { useGetUserQuery } from '../../services/redux/queries/user.api';
 import { setGame } from '../../services/redux/reducers/common.reducer';
+import { getUserSelector } from '../../services/redux/selectors/getUserSelector';
 import { useAppDispatch, useAppSelector } from '../../services/redux/store';
 import { socket } from '../../services/socket/socket';
 import { getAuthorInitials } from '../../utils/getAuthorInitials';
 import Layout from '../Layout/Layout';
 
 export const WaitingRoomPage = () => {
-  const { data: currentUser } = useGetUserQuery();
+  const { data: currentUser } = useAppSelector(getUserSelector);
 
   const { currentGame } = useAppSelector(state => state.common);
   const { roomId, players } = currentGame || {};
@@ -42,6 +43,7 @@ export const WaitingRoomPage = () => {
     return () => {
       if (!isStarted.current && !!currentGame && !!currentUser) {
         socket.emit('userDisconnected', currentGame.roomId, currentUser);
+        dispatch(setGame(null));
       }
 
       socket.off('changedRoom');
@@ -76,7 +78,7 @@ export const WaitingRoomPage = () => {
               {players.map((row: TPlayer) => (
                 <TableRow key={row.user.login} className={classes.login}>
                   <TableCell>
-                    <Avatar src={row.user.avatar}>{getAuthorInitials({ ...row.user })}</Avatar>
+                    <Avatar src={RESOURCES_URL + row.user.avatar}>{getAuthorInitials({ ...row.user })}</Avatar>
                   </TableCell>
                   <TableCell>{[row.user.first_name, row.user.second_name].join('\u00a0')}</TableCell>
                   <TableCell width="100%" align="center">

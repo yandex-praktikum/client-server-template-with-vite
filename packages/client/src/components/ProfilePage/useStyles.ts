@@ -28,7 +28,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   uploadBtn: {
     display: 'block',
-    margin: '0 auto',
+    margin: '10px auto',
     maxWidth: '100px',
   },
   roundChangeProfile: {

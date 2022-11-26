@@ -6,13 +6,16 @@ import { useStyles } from './useStyles';
 import { TSignupData } from '../../../../../shared/types';
 import { isErrorWithReason } from '../../../../../shared/types/typeGuards/isErrorWithReason';
 import { useSnackbarError } from '../../../hooks/useSnackbarError';
-import { useGetUserQuery, useUpdateProfileMutation } from '../../../services/redux/queries/user.api';
+import { useUpdateProfileMutation } from '../../../services/redux/queries/user.api';
+import { getUserSelector } from '../../../services/redux/selectors/getUserSelector';
+import { useAppSelector } from '../../../services/redux/store';
 import { disableAutoFillFormProps } from '../../EntranceModal/helpers/disableAutoFillForm';
 import { DEFAULT_FORM_DATA } from '../../EntranceModal/RegistrationForm/constants';
 
 export const EditProfileForm = ({ onCloseModal }: { onCloseModal: () => void }) => {
   const classes = useStyles();
-  const { data } = useGetUserQuery();
+  const { data } = useAppSelector(getUserSelector);
+
   const { SnackbarErrorComp, setError } = useSnackbarError();
   const [updateProfile] = useUpdateProfileMutation();
 

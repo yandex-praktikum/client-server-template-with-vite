@@ -5,7 +5,7 @@ export const useStyles = makeStyles(() => ({
   wrapper: {
     border: `1px solid ${grey['900']}`,
     display: 'flex',
-    height: 'calc(100vh - 200px)',
+    height: 'calc(100vh - 202px)',
     borderRadius: '4px',
     width: '100%',
   },
@@ -23,6 +23,7 @@ export const useStyles = makeStyles(() => ({
   commentCount: {
     display: 'flex',
     width: '50px',
+    minWidth: '50px',
     marginLeft: '10px',
   },
   themeContainer: {

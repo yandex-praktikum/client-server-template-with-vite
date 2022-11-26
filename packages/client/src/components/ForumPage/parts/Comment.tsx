@@ -7,9 +7,9 @@ import { getCreatedAtValue } from '../../../utils/getCreatedAtValue';
 import { TComment } from '../ForumPage.types';
 import { useStyles } from '../useStyles';
 
-type TProps = { data: TComment; isUserAuthorized: boolean };
+type TProps = { data: TComment; canUserWrite: boolean };
 
-const Comment = ({ data, isUserAuthorized }: TProps) => {
+const Comment = ({ data, canUserWrite }: TProps) => {
   const { author, content, createdAt, answers, id } = data;
   const [showTextareaComment, setShowTextareaComment] = useState<boolean>(false);
   const [commentValue, setCommentValue] = useState<string>('');
@@ -35,7 +35,7 @@ const Comment = ({ data, isUserAuthorized }: TProps) => {
       <Typography variant={'body1'} className={classes.commentContent}>
         {content}
       </Typography>
-      {!showTextareaComment && isUserAuthorized && (
+      {!showTextareaComment && canUserWrite && (
         <Button
           variant={'text'}
           color={'info'}
@@ -52,6 +52,7 @@ const Comment = ({ data, isUserAuthorized }: TProps) => {
           <div className={classes.textareaAnswer}>
             <TextField
               fullWidth
+              color='secondary'
               label="Write an answer"
               multiline
               rows={3}
@@ -83,7 +84,7 @@ const Comment = ({ data, isUserAuthorized }: TProps) => {
         <div className={classes.answers}>
           <TreeItem nodeId={id.toString()} label={`Ответы: ${answers.length}`}>
             {answers?.map(answer => (
-              <MemoizedComment key={answer.id} data={answer} isUserAuthorized={isUserAuthorized} />
+              <MemoizedComment key={answer.id} data={answer} canUserWrite={canUserWrite} />
             ))}
           </TreeItem>
         </div>

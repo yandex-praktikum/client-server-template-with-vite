@@ -31,7 +31,7 @@ body {
   margin: 0;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
   body::after {
     content: 'Unfortunately, the mobile version of the site is not supported.';
     z-index: 100000000000;

@@ -1,6 +1,6 @@
 import type { TPosition, TSnakeColor } from '../types';
 
-export const MAP_WIDTH = 1200;
+export const MAP_WIDTH = 1000;
 export const MAP_HEIGHT = 800;
 
 export const MAX_PLAYERS_IN_ROOM = 4;

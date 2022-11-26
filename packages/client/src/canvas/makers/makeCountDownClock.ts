@@ -4,7 +4,7 @@ import { GAME_DURATION_MS } from '../../../../shared/consts';
 import { convertHexToRGBA } from '../../utils/convertHexToRGBA';
 
 /** Создает рисунок с линией таймера и кол-вом оставшихся секунд */
-export const makeCountDownClock = (mapWidth: number, mapHeight: number, onTimeOut: () => void) => {
+export const makeCountDownClock = (mapWidth: number, mapHeight: number, onTimeOut?: () => void) => {
   let timerId: NodeJS.Timeout | null;
   const canvas = document.createElement('canvas');
   canvas.width = mapWidth;
@@ -50,7 +50,10 @@ export const makeCountDownClock = (mapWidth: number, mapHeight: number, onTimeOu
 
       if (remainingMs <= 0) {
         cancelTimer();
-        onTimeOut();
+
+        if (onTimeOut) {
+          onTimeOut();
+        }
       } else {
         changeCountDown();
       }

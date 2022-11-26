@@ -5,16 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import { useStyles } from './useStyles';
 
 import type { TGame } from '../../../../shared/types';
-import { useGetUserQuery } from '../../services/redux/queries/user.api';
 import { setGame } from '../../services/redux/reducers/common.reducer';
-import { useAppDispatch } from '../../services/redux/store';
+import { getUserSelector } from '../../services/redux/selectors/getUserSelector';
+import { useAppDispatch, useAppSelector } from '../../services/redux/store';
 import { socket } from '../../services/socket/socket';
 import Layout from '../Layout/Layout';
 
 export const CreateOrJoinGamePage = () => {
   const classes = useStyles();
   const [roomValue, setRoomValue] = useState('');
-  const { data: currentUser } = useGetUserQuery();
+  const { data: currentUser } = useAppSelector(getUserSelector);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
