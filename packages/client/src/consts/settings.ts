@@ -1,0 +1,3 @@
+export const AUTO_HIDE_SNACKBAR_DURATION = 5 * 1000;
+
+export const SNAKE_REDUCTION_TIME = 2 * 1000;

@@ -1,6 +1,12 @@
+@import './animations/pulse.css';
+
 html {
   box-sizing: border-box;
   font-size: 18px;
+}
+
+* {
+  font-family: Pangolin, Inter, sans-serif;
 }
 
 *,
@@ -21,12 +27,25 @@ table {
   border-collapse: collapse;
 }
 
-select,
-label {
-  cursor: pointer;
-}
-
 body {
   margin: 0;
-  font-family: Inter, sans-serif;
+}
+
+@media (max-width: 1024px) {
+  body::after {
+    content: 'Unfortunately, the mobile version of the site is not supported.';
+    z-index: 100000000000;
+    height: 100%;
+    width: 100%;
+    padding: 0 20%;
+    text-align: center;
+    background: #414141;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

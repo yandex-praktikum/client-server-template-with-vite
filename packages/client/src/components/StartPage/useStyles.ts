@@ -1,7 +1,8 @@
-import { grey, red } from '@material-ui/core/colors';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import { type Theme } from '@mui/material';
+import { grey, red } from '@mui/material/colors';
+import { makeStyles } from '@mui/styles';
 
-export const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles((theme: Theme) => ({
   wrapper: {
     display: 'flex',
     flexDirection: 'column',
@@ -11,9 +12,9 @@ export const useStyles = makeStyles(() => ({
     fontSize: '70px',
     margin: '32px 0',
     color: grey['50'],
-    backgroundColor: grey['900'],
+    backgroundColor: theme.palette.secondary.main,
     fontWeight: 'bold',
-    padding: '0 10px',
+    padding: '4px 20px',
   },
   menu: {
     display: 'flex',
@@ -25,8 +26,8 @@ export const useStyles = makeStyles(() => ({
     margin: '10px 0',
     fontSize: '30px',
     color: 'black',
-    cursor: 'pointer',
     textDecoration: 'none',
+    cursor: 'pointer',
 
     '&:hover': {
       color: `${red.A400}`,

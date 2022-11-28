@@ -8,5 +8,8 @@ export default defineConfig({
   server: {
     port: Number(process.env.CLIENT_PORT) || 3000,
   },
+  preview: {
+    port: Number(process.env.PORT) || Number(process.env.CLIENT_PORT) || 3000,
+  },
   plugins: [react()],
 });

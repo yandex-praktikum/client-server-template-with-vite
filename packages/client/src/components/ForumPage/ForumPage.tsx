@@ -1,12 +1,11 @@
-import { List, Typography } from '@material-ui/core';
-import { TreeView } from '@material-ui/lab';
 import {
   ExpandMore as ExpandMoreIcon,
   Comment as CommentIcon,
   ChevronRight as ChevronRightIcon,
   ArrowBack as ArrowBackIcon,
 } from '@mui/icons-material';
-import { Avatar, Button, ListItemButton, TextField } from '@mui/material';
+import { TreeView } from '@mui/lab';
+import { Avatar, Button, List, ListItemButton, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 
 import { TTheme } from './ForumPage.types';
@@ -14,12 +13,22 @@ import { MemoizedComment } from './parts/Comment';
 import { TEMP_DATA } from './tempData';
 import { useStyles } from './useStyles';
 
+import { getUserIdSelector } from '../../services/redux/selectors/getUserSelector';
+import { useAppSelector } from '../../services/redux/store';
+import { useNavigatorOnLine } from '../../services/sw/useNavigatorOnLine';
 import { getAuthorInitials } from '../../utils/getAuthorInitials';
 import { getCreatedAtValue } from '../../utils/getCreatedAtValue';
 import Layout from '../Layout/Layout';
 
 export const ForumPage = () => {
   const classes = useStyles();
+
+  const isUserAuthorized = !!useAppSelector(getUserIdSelector);
+
+  const isOnline = useNavigatorOnLine();
+
+  const canUserWrite = isUserAuthorized && isOnline;
+
   const [selectedTheme, setSelectedTheme] = useState<TTheme | null>(null);
   const [commentValue, setCommentValue] = useState<string>('');
 
@@ -36,9 +45,9 @@ export const ForumPage = () => {
               key={item.id}
               onClick={setSelectedTheme.bind(null, item)}>
               <div className={classes.themeItem}>
-                {item.title}
+                <div> {item.title}</div>
                 <div className={classes.commentCount}>
-                  <CommentIcon color={'info'} /> {item.discussions?.length || 0}
+                  <CommentIcon fontSize="small" color="secondary" /> {item.discussions?.length || 0}
                 </div>
               </div>
             </ListItemButton>
@@ -52,16 +61,19 @@ export const ForumPage = () => {
         ) : (
           <>
             <div className={classes.themeContainer}>
-              <Typography color={'textSecondary'} variant="body2" align={'right'}>
-                Created at: <Typography variant="inherit">{createdAtValue}</Typography>
+              <Typography component={'div'} color={'textSecondary'} variant="body2" align={'right'}>
+                Created at:{' '}
+                <Typography component={'span'} variant="inherit">
+                  {createdAtValue}
+                </Typography>
               </Typography>
               <div className={classes.themeTitle}>
                 <div className={classes.themeAuthor}>
                   <Avatar src={selectedTheme.author.avatar} sx={{ width: 100, height: 100 }}>
                     {authorInitials}
                   </Avatar>
-                  <Typography variant="body1">{selectedTheme.author.lastName}</Typography>
-                  <Typography variant="body1">{selectedTheme.author.firstName}</Typography>
+                  <Typography variant="body1">{selectedTheme.author.second_name}</Typography>
+                  <Typography variant="body1">{selectedTheme.author.first_name}</Typography>
                 </div>
                 <Typography variant="h3">{selectedTheme.title}</Typography>
               </div>
@@ -70,22 +82,32 @@ export const ForumPage = () => {
               </Typography>
               <div className={classes.comments}>
                 <Typography variant={'h6'}>Comments: {selectedTheme.discussions?.length || 0}</Typography>
-                <TextField
-                  label="Write a comment"
-                  multiline
-                  rows={3}
-                  size={'small'}
-                  value={commentValue}
-                  onChange={e => {
-                    setCommentValue(e.target.value);
-                  }}
-                />
-                <Button variant={'text'} color={'info'} size={'small'} disabled={!commentValue} className={classes.btn}>
-                  Send
-                </Button>
+                {canUserWrite && (
+                  <TextField
+                    color="secondary"
+                    label="Write a comment"
+                    multiline
+                    rows={3}
+                    size={'small'}
+                    value={commentValue}
+                    onChange={e => {
+                      setCommentValue(e.target.value);
+                    }}
+                  />
+                )}
+                {canUserWrite && (
+                  <Button
+                    variant={'text'}
+                    color={'info'}
+                    size={'small'}
+                    disabled={!commentValue}
+                    className={classes.btn}>
+                    Send
+                  </Button>
+                )}
                 <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
                   {selectedTheme.discussions?.map(comment => (
-                    <MemoizedComment key={comment.id} data={comment} />
+                    <MemoizedComment key={comment.id} data={comment} canUserWrite={canUserWrite} />
                   ))}
                 </TreeView>
               </div>

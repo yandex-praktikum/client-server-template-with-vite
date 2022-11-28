@@ -1,15 +1,11 @@
-export type TUser = {
-  avatar: string;
-  firstName: string;
-  lastName: string;
-};
+import { TUser } from '../../../../shared/types';
 
 export type TComment = {
   id: number;
   // текст комментария
   content: string;
   // автор комментария
-  author: TUser;
+  author: Pick<TUser, 'first_name' | 'second_name' | 'avatar'>;
   // дата создания комментария
   createdAt: string;
   // ответы на комментарий
@@ -23,7 +19,7 @@ export type TTheme = {
   // содержание
   content: string;
   // автор темы
-  author: TUser;
+  author: Pick<TUser, 'first_name' | 'second_name' | 'avatar'>;
   // дата создания темы
   createdAt: string;
   // обсуждения темы

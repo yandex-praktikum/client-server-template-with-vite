@@ -1,8 +1,8 @@
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import { type Theme } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 const SPACE_BETWEEN = 'space-between';
-const FONT_FAMILY = 'Karantina, cursive';
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles((theme: Theme) => ({
   leaderBoard: {
     padding: theme.spacing(2),
   },
@@ -29,22 +29,18 @@ export const useStyles = makeStyles(theme => ({
   },
   position: {
     textTransform: 'uppercase',
-    fontFamily: FONT_FAMILY,
     fontSize: theme.spacing(7),
   },
   nickName: {
     textTransform: 'uppercase',
-    fontFamily: FONT_FAMILY,
     fontSize: theme.spacing(4),
   },
   score: {
     textTransform: 'uppercase',
-    fontFamily: FONT_FAMILY,
     fontSize: theme.spacing(3.5),
   },
   top5: {
     textTransform: 'uppercase',
-    fontFamily: FONT_FAMILY,
     fontSize: theme.spacing(7.5),
     color: theme.palette.text.primary,
     '& span': {
@@ -54,7 +50,6 @@ export const useStyles = makeStyles(theme => ({
   },
   title: {
     textTransform: 'uppercase',
-    fontFamily: FONT_FAMILY,
     fontSize: theme.spacing(7.5),
     color: theme.palette.text.primary,
   },
