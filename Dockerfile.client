@@ -13,7 +13,7 @@ RUN yarn install --frozen-lockfile
 COPY . .
 
 RUN yarn lerna bootstrap
-RUN rm -rf /app/packages/server/dist/ && yarn build --scope=client
+RUN rm -rf /app/packages/client/dist/ && yarn build --scope=client
 
 
 FROM nginx:latest as production
