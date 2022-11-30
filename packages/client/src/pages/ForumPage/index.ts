@@ -1,0 +1,1 @@
+export { ForumPage } from './ForumPage';
