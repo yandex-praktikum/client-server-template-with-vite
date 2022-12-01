@@ -3,6 +3,7 @@ import { Form, Button, Input } from "antd";
 import { useFormik } from "formik";
 
 import { ChangeEvent } from "react";
+import { signin } from "../../../services/authorization";
 import "./LoginForm.scss";
 import { LOGIN_FORM_VALIDATION_SCHEMA } from "./loginFormValidationSchema";
 
@@ -11,14 +12,20 @@ export type LoginFormValuesType = {
   password: string;
 };
 
+const initialFormValues = {
+  login: "",
+  password: "",
+};
+
 export const LoginForm = () => {
   const formik = useFormik({
-    initialValues: {
-      login: "",
-      password: "",
-    },
-    onSubmit: (values: LoginFormValuesType) => {
-      console.log("values: ", values);
+    initialValues: initialFormValues,
+    onSubmit: async (values: LoginFormValuesType) => {
+      const isLoggedIn = await signin(values);
+
+      if (isLoggedIn) {
+        console.log("reset");
+      }
     },
     validationSchema: LOGIN_FORM_VALIDATION_SCHEMA,
   });
