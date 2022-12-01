@@ -1,9 +1,10 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Form, Button, Input } from "antd";
 import { useFormik } from "formik";
-import * as Yup from "yup";
+
 import { ChangeEvent } from "react";
 import "./LoginForm.scss";
+import { LOGIN_FORM_VALIDATION_SCHEMA } from "./loginFormValidationSchema";
 
 export type LoginFormValuesType = {
   login: string;
@@ -11,11 +12,6 @@ export type LoginFormValuesType = {
 };
 
 export const LoginForm = () => {
-  const validationSchema = Yup.object({
-    login: Yup.string().required("This field can not be empty"),
-    password: Yup.string().required("This field can not be empty"),
-  });
-
   const formik = useFormik({
     initialValues: {
       login: "",
@@ -24,7 +20,7 @@ export const LoginForm = () => {
     onSubmit: (values: LoginFormValuesType) => {
       console.log("values: ", values);
     },
-    validationSchema: validationSchema,
+    validationSchema: LOGIN_FORM_VALIDATION_SCHEMA,
   });
 
   const onInputChange = (
