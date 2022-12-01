@@ -1,6 +1,7 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Col, Form, Input, Layout, Row, Image } from "antd";
 import { ValidateErrorEntity } from "rc-field-form/lib/interface";
+import { COLORED_LOGO, PRESENTATION_IMAGE } from "../../constants/imagesPaths";
 
 import "./Login.scss";
 
@@ -13,7 +14,7 @@ export const Login = () => {
     console.log("Failed:", errorInfo);
   };
 
-  const background = "./presentation-image.jpg";
+  const background = PRESENTATION_IMAGE;
 
   const sectionStyle = {
     backgroundImage: `url(${background})`,
@@ -41,23 +42,23 @@ export const Login = () => {
             justifyContent: "center",
             rowGap: "2rem",
           }}>
+          <Image width={200} src={COLORED_LOGO} />
           <Form
             className="login-form"
             name="login-form"
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off">
-            <Image width={200} src="./Flappy_Logo.png" />
             <Form.Item
               className="form-item"
-              label="Username"
-              name="username"
+              label="Login"
+              name="login"
               rules={[
                 { required: true, message: "Please input your username!" },
               ]}>
               <Input
                 prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="Username"
+                placeholder="Login"
               />
             </Form.Item>
 
@@ -85,7 +86,7 @@ export const Login = () => {
                 htmlType="button"
                 onClick={() => console.log("signup")}
                 block>
-                Sign up
+                Create account
               </Button>
             </Form.Item>
           </Form>

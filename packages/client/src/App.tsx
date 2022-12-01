@@ -1,5 +1,7 @@
+import ConfigProvider from "antd/es/config-provider";
 import { useEffect } from "react";
 import "./App.css";
+import { appTheme } from "./constants/appTheme";
 import { Login } from "./pages/login/Login";
 
 const App = () => {
@@ -14,9 +16,11 @@ const App = () => {
   //   fetchServerData();
   // }, []);
   return (
-    <div className="App">
-      <Login />
-    </div>
+    <ConfigProvider theme={appTheme}>
+      <div className="App">
+        <Login />
+      </div>
+    </ConfigProvider>
   );
 };
 
