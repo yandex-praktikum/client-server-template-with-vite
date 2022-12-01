@@ -2,7 +2,7 @@ import ConfigProvider from "antd/es/config-provider";
 import { useEffect } from "react";
 import "./App.css";
 import { appTheme } from "./constants/appTheme";
-import { Login } from "./pages/login/Login";
+import { LoginPage } from "./pages/login/LoginPage";
 
 const App = () => {
   // useEffect(() => {
@@ -18,7 +18,7 @@ const App = () => {
   return (
     <ConfigProvider theme={appTheme}>
       <div className="App">
-        <Login />
+        <LoginPage />
       </div>
     </ConfigProvider>
   );
