@@ -41,7 +41,7 @@ export const LoginForm = () => {
       onFinish={formik.handleSubmit}
       autoComplete="off">
       <Form.Item
-        className="form-item"
+        className="login-form__item"
         label="Login"
         name="login"
         validateStatus={formik.errors.login ? "error" : "success"}
@@ -55,7 +55,7 @@ export const LoginForm = () => {
       </Form.Item>
 
       <Form.Item
-        className="form-item"
+        className="login-form__item"
         label="Password"
         name="password"
         validateStatus={formik.errors.password ? "error" : "success"}
@@ -68,14 +68,13 @@ export const LoginForm = () => {
         />
       </Form.Item>
 
-      <Form.Item className="form-item">
+      <div className="login-form__footer">
         <Button type="primary" htmlType="submit" block>
           Log in
         </Button>
-      </Form.Item>
 
-      {/* TODO: добавить переход на страницу регистрации через роутер*/}
-      <div className="form-item">
+        {/* TODO: добавить переход на страницу регистрации через роутер*/}
+
         <Button
           type="link"
           htmlType="button"
