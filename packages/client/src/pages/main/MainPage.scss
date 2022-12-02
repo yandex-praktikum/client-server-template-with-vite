@@ -1,0 +1,13 @@
+.main {
+  &__menu {
+    width: 30%;
+    padding: 2.5rem;
+    // background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    row-gap: 2.5rem;
+  }
+}

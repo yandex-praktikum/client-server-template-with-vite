@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import "./App.css";
 import { appTheme } from "./constants/appTheme";
 import { LoginPage } from "./pages/login/LoginPage";
+import { MainPage } from "./pages/main/MainPage";
 
 const App = () => {
   // useEffect(() => {
@@ -18,7 +19,8 @@ const App = () => {
   return (
     <ConfigProvider theme={appTheme}>
       <div className="App">
-        <LoginPage />
+        <MainPage />
+        {/* <LoginPage /> */}
       </div>
     </ConfigProvider>
   );
