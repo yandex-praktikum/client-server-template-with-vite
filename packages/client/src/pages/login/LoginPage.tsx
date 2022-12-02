@@ -1,31 +1,36 @@
 import { Col, Layout, Row, Image } from "antd";
 import { COLORED_LOGO, PRESENTATION_IMAGE } from "../../constants/imagesPaths";
-import { Formik, useFormik } from "formik";
 import "./LoginPage.scss";
-import {
-  LoginForm,
-  LoginFormValuesType,
-} from "../../components/forms/LoginForm/LoginForm";
+import { LoginForm } from "../../components/forms/LoginForm/LoginForm";
 
 const background = PRESENTATION_IMAGE;
 
-const sectionStyle = {
+const leftSectionStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
+
+const screenStyle = {
   backgroundImage: `url(${background})`,
   backgroundPosition: "center",
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
+  backgroundColor: "white",
+  height: "100vh",
 };
 
 export const LoginPage = () => {
   return (
-    <Layout
-      className="layout"
-      style={{
-        backgroundColor: "white",
-        height: "100vh",
-      }}>
-      <Row style={{ height: "100vh" }}>
-        <Col flex={5} style={sectionStyle}></Col>
+    <Layout className="layout" style={screenStyle}>
+      <Row style={{ height: "100vh", justifyContent: "center" }}>
+        <Col flex={5} style={leftSectionStyle}>
+          <div className="video-container">
+            <video width="500" height="300" controls>
+              <source src="/videos/FlappyBird-HowToPlay.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </Col>
         <Col
           flex={2}
           style={{
@@ -36,9 +41,11 @@ export const LoginPage = () => {
             justifyContent: "center",
             rowGap: "2rem",
           }}>
-          <Image width={200} src={COLORED_LOGO} />
+          <div className="form-container">
+            <Image width={200} src={COLORED_LOGO} />
 
-          <LoginForm />
+            <LoginForm />
+          </div>
         </Col>
       </Row>
     </Layout>
