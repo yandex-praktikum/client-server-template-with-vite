@@ -26,7 +26,8 @@ function getItem(
 const items: MenuItem[] = [
   getItem("View profile", "1", <UserOutlined />),
   getItem("View leaderboard", "2", <TrophyOutlined />),
-  getItem("Log out", "3", <LogoutOutlined />),
+  getItem("View forum", "4", <TrophyOutlined />),
+  getItem("Log out", "4", <LogoutOutlined />),
 ];
 
 export const NavigationMenu = () => {
