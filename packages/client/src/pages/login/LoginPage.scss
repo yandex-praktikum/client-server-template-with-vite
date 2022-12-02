@@ -1,11 +1,18 @@
 .form-container {
-  width: 80%;
+  width: 70%;
   padding: 2.5rem;
   background-color: #fff;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   row-gap: 2.5rem;
+
+  .logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 }

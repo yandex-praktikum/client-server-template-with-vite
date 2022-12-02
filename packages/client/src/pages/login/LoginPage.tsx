@@ -2,6 +2,7 @@ import { Col, Layout, Row, Image } from "antd";
 import { COLORED_LOGO, PRESENTATION_IMAGE } from "../../constants/imagesPaths";
 import "./LoginPage.scss";
 import { LoginForm } from "../../components/forms/LoginForm/LoginForm";
+import Title from "antd/es/typography/Title";
 
 const background = PRESENTATION_IMAGE;
 
@@ -24,7 +25,7 @@ export const LoginPage = () => {
   return (
     <Layout className="layout" style={screenStyle}>
       <Row style={{ height: "100vh", justifyContent: "center" }}>
-        <Col flex={5} style={leftSectionStyle}>
+        <Col flex={1} style={leftSectionStyle}>
           <div className="video-container">
             <video width="500" height="300" controls>
               <source src="/videos/FlappyBird-HowToPlay.mp4" type="video/mp4" />
@@ -32,7 +33,7 @@ export const LoginPage = () => {
           </div>
         </Col>
         <Col
-          flex={2}
+          flex={1}
           style={{
             padding: "2rem",
             display: "flex",
@@ -42,7 +43,10 @@ export const LoginPage = () => {
             rowGap: "2rem",
           }}>
           <div className="form-container">
-            <Image width={200} src={COLORED_LOGO} />
+            <div className="logo">
+              <Image width={200} src={COLORED_LOGO} />
+              <Title level={4}>Pachka-i-tocka edition</Title>
+            </div>
 
             <LoginForm />
           </div>

@@ -72,7 +72,7 @@ export const LoginForm = () => {
       </Form.Item>
 
       <div className="login-form__footer">
-        <Button type="primary" htmlType="submit" block>
+        <Button type="primary" htmlType="submit" block size="large">
           Log in
         </Button>
 
@@ -82,7 +82,8 @@ export const LoginForm = () => {
           type="link"
           htmlType="button"
           onClick={() => console.log("signup")}
-          block>
+          block
+          size="large">
           Create account
         </Button>
       </div>
