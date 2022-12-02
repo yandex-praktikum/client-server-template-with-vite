@@ -1,0 +1,15 @@
+.navigation {
+  width: 100%;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  row-gap: 1.5rem;
+
+  &__item {
+    background-color: #ece8ae;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+}

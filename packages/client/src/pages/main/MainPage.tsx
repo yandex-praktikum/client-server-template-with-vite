@@ -1,6 +1,9 @@
-import { Col, Layout, Row, Image, Button } from "antd";
-import { COLORED_LOGO, PRESENTATION_IMAGE } from "../../constants/imagesPaths";
+import { Col, Layout, Row, Button } from "antd";
+import Title from "antd/es/typography/Title";
+import { NavigationMenu } from "../../components/navigation/Navigation";
+import { PRESENTATION_IMAGE } from "../../constants/imagesPaths";
 import "./MainPage.scss";
+import { SoundButton } from "../../components/buttons/SoundButton/SoundButton";
 
 const background = PRESENTATION_IMAGE;
 
@@ -19,28 +22,31 @@ export const MainPage = () => {
       <Row
         style={{ height: "100vh", justifyContent: "center" }}
         className="main">
+        <SoundButton />
+
         <Col
           flex={2}
           style={{
-            padding: "2rem",
+            padding: "4rem 2rem",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "flex-start",
             rowGap: "2rem",
           }}>
+          {/* TODO: брать имя из стора и лучший результат из локал сторедж? */}
+          <Title level={2}>Hello, USER</Title>
+          <Title level={3}>Your best score: 999</Title>
+
           <div className="main__menu">
-            <Button type="primary" size="large" htmlType="submit" block>
-              View profile
-            </Button>
-            <Button type="primary" size="large" htmlType="submit" block>
-              View leaderboard
-            </Button>
-            <Button type="primary" size="large" htmlType="submit" block>
-              Sign out
-            </Button>
-            <Button type="primary" size="large" htmlType="submit" block>
-              Start playing
+            <NavigationMenu />
+
+            <Button
+              size="large"
+              htmlType="button"
+              type="primary"
+              className="btn-start">
+              Start game
             </Button>
           </div>
         </Col>
