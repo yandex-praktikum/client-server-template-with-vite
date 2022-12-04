@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import LadderPage from "./pages/LadderPage/LadderPage";
 import "./App.css";
 import ForumPage from "./pages/ForumPage/ForumPage";
+import GamePage from "./pages/GamePage/GamePage";
 
 const App = () => {
     return (
@@ -17,7 +18,7 @@ const App = () => {
                     path="/profile-change"
                     element={<div>profile-change</div>}
                 />
-                <Route path="/game" element={<div>game</div>} />
+                <Route path="/game" element={<GamePage />} />
                 <Route path="/*" element={<div>error404</div>} />
             </Routes>
         </div>

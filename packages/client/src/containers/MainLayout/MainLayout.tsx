@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FunctionComponent } from "react";
 import { Layout, Menu } from "antd";
 import { NavLink } from "react-router-dom";
 import "./MainLayout.sass";
@@ -9,7 +9,7 @@ type MainLayoutProps = {
     children: any;
 };
 
-const MainLayout: FC<MainLayoutProps> = ({ children }) => {
+const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
     const routes = [
         { url: "/", label: "Главная" },
         { url: "/game", label: "Игра" },
