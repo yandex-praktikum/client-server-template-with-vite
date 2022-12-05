@@ -1,29 +1,25 @@
-import ConfigProvider from "antd/es/config-provider";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import { appTheme } from "./constants/appTheme";
 import { LoginPage } from "./pages/login/LoginPage";
 
 const App = () => {
     return (
-        <ConfigProvider theme={appTheme}>
-            <div className="App">
-                <Routes>
-                    <Route path="/" element={<div>Main menu</div>} />
-                    <Route path="/sign-in" element={<LoginPage />} />
-                    <Route path="/sign-up" element={<div>sign-up</div>} />
-                    <Route path="/forum" element={<div>forum</div>} />
-                    <Route path="/ladder" element={<div>ladder</div>} />
-                    <Route path="/profile" element={<div>profile</div>} />
-                    <Route
-                        path="/profile-change"
-                        element={<div>profile-change</div>}
-                    />
-                    <Route path="/game" element={<div>game</div>} />
-                    <Route path="/*" element={<div>error404</div>} />
-                </Routes>
-            </div>
-        </ConfigProvider>
+        <div className="App">
+            <Routes>
+                <Route path="/" element={<div>Main menu</div>} />
+                <Route path="/sign-in" element={<LoginPage />} />
+                <Route path="/sign-up" element={<div>sign-up</div>} />
+                <Route path="/forum" element={<div>forum</div>} />
+                <Route path="/ladder" element={<div>ladder</div>} />
+                <Route path="/profile" element={<div>profile</div>} />
+                <Route
+                    path="/profile-change"
+                    element={<div>profile-change</div>}
+                />
+                <Route path="/game" element={<div>game</div>} />
+                <Route path="/*" element={<div>error404</div>} />
+            </Routes>
+        </div>
     );
 };
 
