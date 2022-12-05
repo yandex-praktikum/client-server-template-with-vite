@@ -27,3 +27,16 @@ export type UserFromServer = ChangeProfileRequestData & {
     id: number;
     avatar: string;
 };
+
+export interface signupRequestData {
+  email: string
+  first_name: string
+  login: string
+  password: string
+  phone: string
+  second_name: string
+}
+
+export interface signupResponseData extends Response {
+  id: number
+}

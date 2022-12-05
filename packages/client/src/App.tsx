@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import LadderPage from "./pages/LadderPage/LadderPage";
 import "./App.css";
 import { LoginPage } from "./pages/login/LoginPage";
+import { SignUpPage } from "./pages/signUp/SignUpPage";
 import { MainPage } from "./pages/main/MainPage";
 import ForumPage from "./pages/ForumPage/ForumPage";
 
@@ -11,7 +12,7 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/sign-in" element={<LoginPage />} />
-                <Route path="/sign-up" element={<div>sign-up</div>} />
+                <Route path="/sign-up" element={<SignUpPage />} />
                 <Route path="/forum" element={<ForumPage />} />
                 <Route path="/ladder" element={<LadderPage />} />
                 <Route path="/profile" element={<div>profile</div>} />
