@@ -1,23 +1,38 @@
 .login-form {
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  row-gap: 1rem;
-
-  &__item {
     width: 100%;
-    min-height: 54px;
-    margin-bottom: 0;
-  }
-
-  &__footer {
-    width: 100%;
-    padding-top: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    row-gap: 1rem;
-  }
+    justify-content: center;
+    row-gap: 1.5rem;
+    max-width: 500px;
+
+    &__item {
+        width: 100%;
+        min-height: 64px;
+        margin-bottom: 0;
+    }
+
+    &__footer {
+        width: 80%;
+        padding-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 1rem;
+
+        & > button {
+            width: 50%;
+        }
+    }
+
+    .ant-form-item-explain-error {
+        font-size: 12px;
+    }
+
+    @media (max-width: 450px) {
+        .form-container {
+            padding: 30px 20px 0;
+        }
+    }
 }

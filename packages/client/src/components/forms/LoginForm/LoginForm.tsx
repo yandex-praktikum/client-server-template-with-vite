@@ -36,26 +36,42 @@ export const LoginForm = () => {
         name: string,
         event: ChangeEvent<HTMLInputElement>
     ) => {
+        formik.setFieldTouched(name);
         formik.setFieldValue(name, event.target.value);
+    };
+
+    const onFocus = (name: string) => {
+        formik.setFieldTouched(name);
     };
 
     return (
         <Form
+            labelCol={{ flex: "86px" }}
             className="login-form"
             name="login-form"
             onFinish={formik.handleSubmit}
-            autoComplete="off">
+            autoComplete="off"
+            size="large">
             <Form.Item
                 className="login-form__item"
                 label="Login"
                 name="login"
-                validateStatus={formik.errors.login ? "error" : "success"}
-                help={formik.errors.login}>
+                validateStatus={
+                    formik.touched.login && formik.errors.login
+                        ? "error"
+                        : "success"
+                }
+                help={
+                    formik.touched.login && formik.errors.login
+                        ? formik.errors.login
+                        : ""
+                }>
                 <Input
                     prefix={<UserOutlined className="site-form-item-icon" />}
                     placeholder="Login"
                     value={formik.values.login}
                     onChange={e => onInputChange("login", e)}
+                    onFocus={() => onFocus("login")}
                 />
             </Form.Item>
 
@@ -63,8 +79,12 @@ export const LoginForm = () => {
                 className="login-form__item"
                 label="Password"
                 name="password"
-                validateStatus={formik.errors.password ? "error" : "success"}
-                help={formik.errors.password}>
+                validateStatus={
+                    formik.touched.password && formik.errors.password
+                        ? "error"
+                        : "success"
+                }
+                help={formik.touched.password && formik.errors.password}>
                 <Input.Password
                     prefix={<LockOutlined className="site-form-item-icon" />}
                     placeholder="Password"
@@ -74,8 +94,8 @@ export const LoginForm = () => {
             </Form.Item>
 
             <div className="login-form__footer">
-                <Button type="primary" htmlType="submit" block size="large">
-                    Log in
+                <Button type="primary" htmlType="submit" size="large">
+                    Sign in
                 </Button>
 
                 {/* TODO: добавить переход на страницу регистрации через роутер*/}
@@ -83,8 +103,7 @@ export const LoginForm = () => {
                 <Button
                     type="link"
                     htmlType="button"
-                    onClick={() => console.log("signup")}
-                    block
+                    onClick={() => navigate("/sign-up")}
                     size="large">
                     Create account
                 </Button>
