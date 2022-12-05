@@ -1,18 +1,29 @@
 .form-container {
-  width: 70%;
-  padding: 2.5rem;
-  background-color: #fff;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  row-gap: 2.5rem;
-
-  .logo {
+    width: 70%;
+    height: 100vh;
+    padding: 2.5rem;
+    background-color: #fff;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  }
+    row-gap: 2.5rem;
+    background-image: url("./images/bkg-long.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    .left-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .logo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 }
