@@ -3,7 +3,7 @@ import { Form, Button, Input } from "antd";
 import { useFormik } from "formik";
 import { ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { signin } from "../../../services/authorization";
+import { getUserInfo, signin } from "../../../services/authorization";
 import "./LoginForm.scss";
 import { LOGIN_FORM_VALIDATION_SCHEMA } from "./loginFormValidationSchema";
 
@@ -26,6 +26,9 @@ export const LoginForm = () => {
             const isLoggedIn = await signin(values);
 
             if (isLoggedIn) {
+                const user = await getUserInfo();
+                console.log(user);
+
                 navigate("/");
             }
         },
