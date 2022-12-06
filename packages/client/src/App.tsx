@@ -1,7 +1,9 @@
 import { Routes, Route } from "react-router-dom";
+import LadderPage from "./pages/LadderPage/LadderPage";
 import "./App.css";
 import { LoginPage } from "./pages/login/LoginPage";
 import { MainPage } from "./pages/main/MainPage";
+import ForumPage from "./pages/ForumPage/ForumPage";
 
 const App = () => {
     return (
@@ -10,8 +12,8 @@ const App = () => {
                 <Route path="/" element={<MainPage />} />
                 <Route path="/sign-in" element={<LoginPage />} />
                 <Route path="/sign-up" element={<div>sign-up</div>} />
-                <Route path="/forum" element={<div>forum</div>} />
-                <Route path="/ladder" element={<div>ladder</div>} />
+                <Route path="/forum" element={<ForumPage />} />
+                <Route path="/ladder" element={<LadderPage />} />
                 <Route path="/profile" element={<div>profile</div>} />
                 <Route
                     path="/profile-change"
