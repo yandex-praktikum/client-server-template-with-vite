@@ -1,17 +1,23 @@
-import { signinRequest } from "../api/Auth";
+import { getUserDataRequest, signinRequest } from "../api/Auth";
+import { Nullable, UserFromServer } from "../api/typesApi";
 import { LoginFormValuesType } from "../components/forms/LoginForm/LoginForm";
 
 export const signin = async (values: LoginFormValuesType) => {
-    // showPreloader();
-
     try {
         await signinRequest(values);
 
         return true;
     } catch (error) {
-        console.log(error);
         return false;
-    } finally {
-        // hidePreloader();
+    }
+};
+
+export const getUserInfo = async (): Promise<Nullable<UserFromServer>> => {
+    try {
+        const response = await getUserDataRequest();
+
+        return response as UserFromServer;
+    } catch (error) {
+        return null;
     }
 };
