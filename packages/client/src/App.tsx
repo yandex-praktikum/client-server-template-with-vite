@@ -1,14 +1,16 @@
 import { Routes, Route } from "react-router-dom";
 import LadderPage from "./pages/LadderPage/LadderPage";
 import "./App.css";
+import { LoginPage } from "./pages/login/LoginPage";
+import { MainPage } from "./pages/main/MainPage";
 import ForumPage from "./pages/ForumPage/ForumPage";
 
 const App = () => {
     return (
         <div className="App">
             <Routes>
-                <Route path="/" element={<div>Main menu</div>} />
-                <Route path="/sign-in" element={<div>sign-in</div>} />
+                <Route path="/" element={<MainPage />} />
+                <Route path="/sign-in" element={<LoginPage />} />
                 <Route path="/sign-up" element={<div>sign-up</div>} />
                 <Route path="/forum" element={<ForumPage />} />
                 <Route path="/ladder" element={<LadderPage />} />
