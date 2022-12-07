@@ -1,1 +1,0 @@
-export { ForumPage } from './ForumPage';
