@@ -1,6 +1,7 @@
 export const appTheme = {
   token: {
     colorPrimary: "#73bf43",
+    colorLight: "#ece8ae",
     colorLink: "#02bbd7",
     colorSuccess: "#73bf43",
     colorWarning: "#fca048",
