@@ -1,6 +1,8 @@
 import { FC } from 'react'
-import Unauthorized from './Unauthorized'
+
 import Authorized from './Authorized'
+import Unauthorized from './Unauthorized'
+
 import { usePageContext } from '../../../../../../hooks/usePageContext'
 
 const UserControls: FC = () => {

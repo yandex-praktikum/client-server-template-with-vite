@@ -1,6 +1,7 @@
-import { FC, useCallback } from 'react'
 import { Button } from '@mui/material'
+import { FC, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import { ROUTE_PATHS } from '../../../../../../../utils/routes'
 
 const Unauthorized: FC = () => {

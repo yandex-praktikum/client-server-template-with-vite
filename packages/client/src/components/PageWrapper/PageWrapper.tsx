@@ -1,11 +1,13 @@
-import styles from './PageWrapper.module.scss'
-import { useNavigate, useMatch } from 'react-router-dom'
 import { FC, ReactNode, useEffect } from 'react'
-import { ROUTE_PATHS } from '../../utils/routes'
 import { useLocation } from 'react-router'
-import { getIsAuthorizedToAccessPage } from '../../utils/getIsAuthorizedToAccessPage'
+import { useNavigate, useMatch } from 'react-router-dom'
+
+import styles from './PageWrapper.module.scss'
+
 import { PageContext } from '../../hooks/usePageContext'
 import { useRootLoaderData } from '../../hooks/useRootLoaderData'
+import { getIsAuthorizedToAccessPage } from '../../utils/getIsAuthorizedToAccessPage'
+import { ROUTE_PATHS } from '../../utils/routes'
 
 type TPAgeWrapperProps = { children: ReactNode }
 

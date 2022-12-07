@@ -1,9 +1,10 @@
 import { createBrowserRouter, NonIndexRouteObject } from 'react-router-dom'
-import Login from '../pages/Login'
-import Signup from '../pages/Signup'
-import Root from '../pages/Root'
-import Game from '../pages/Game'
+
 import { getUserData } from '../api/auth'
+import Game from '../pages/Game'
+import Login from '../pages/Login'
+import Root from '../pages/Root'
+import Signup from '../pages/Signup'
 import { IUserInfo } from '../types/pageContext'
 
 export enum ROUTE_PATHS {
@@ -52,6 +53,7 @@ export const rootLoader: TRootLoader = async () => {
     return { userInfo: data, userRoutes: AUTHORIZED_ROUTES }
   } catch (err) {
     console.error(err)
+
     return { userInfo: null, userRoutes: UNAUTHORIZED_ROUTES }
   }
 }

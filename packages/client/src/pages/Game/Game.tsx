@@ -1,5 +1,6 @@
 import { FC, useEffect } from 'react'
 import { useOutletContext } from 'react-router'
+
 import { IOutletContext } from '../../utils/OutletContext'
 
 const Game: FC = () => {

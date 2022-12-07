@@ -1,8 +1,10 @@
-import { FC, useState } from 'react'
-import styles from './Root.module.scss'
 import { Card } from '@mui/material'
-import MainCardHeader from './components/MainCardHeader'
+import { FC, useState } from 'react'
 import { Outlet } from 'react-router'
+
+import MainCardHeader from './components/MainCardHeader'
+import styles from './Root.module.scss'
+
 import PageWrapper from '../../components/PageWrapper'
 
 const Root: FC = () => {

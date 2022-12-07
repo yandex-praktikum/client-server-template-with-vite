@@ -1,6 +1,7 @@
 import axios, { AxiosPromise } from 'axios'
-import { AUTH_API } from '../utils/constants'
+
 import { IUserInfo } from '../types/pageContext'
+import { AUTH_API } from '../utils/constants'
 
 /**
  * Получение данных пользователя

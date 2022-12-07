@@ -1,7 +1,8 @@
 import { useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import { IUserSigninReq, requestLogOut, requestLogIn } from '../api/auth'
 import { ROUTE_PATHS } from '../utils/routes'
-import { useNavigate } from 'react-router-dom'
 
 export interface IUseAuthReturn {
   login: (data: IUserSigninReq) => void
