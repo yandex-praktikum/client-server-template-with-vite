@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { PATH } from "../constants/apiPaths";
+import { apiErrorHandler } from "./apiErrorHandler";
 
 axios.interceptors.request.use(function (config: AxiosRequestConfig) {
     config.withCredentials = true;
@@ -11,23 +12,27 @@ axios.interceptors.request.use(function (config: AxiosRequestConfig) {
 
 axios.interceptors.response.use(
     function (response) {
-        // Any function to work with success query, for example, success notification
+        // TODO: add notification
         return response;
     },
 
-    // TODO: add error message to the global store? add notification?
     function (error) {
-        if (error.response.data.statusCode === 400) {
-            window.location.replace("/");
+        if (!axios.isAxiosError(error)) {
+            console.log(error);
+            throw new Error(error.message);
         }
 
-        if (error.response.data.statusCode === 401) {
-            window.location.replace("/sign-in");
+        const responseStatus = error.response?.status;
+
+        if (responseStatus) {
+            apiErrorHandler(responseStatus);
         }
 
-        if (error.response.data.statusCode === 404) {
-            window.location.replace("/error404");
-        }
+        // TODO: add notification
+
+        const message = error.message || error.toString();
+
+        return { status: responseStatus, reason: message };
     }
 );
 
