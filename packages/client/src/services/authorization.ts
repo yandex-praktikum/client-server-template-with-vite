@@ -2,18 +2,16 @@ import { signinRequest } from "../api/Auth";
 import { LoginFormValuesType } from "../components/forms/LoginForm/LoginForm";
 
 export const signin = async (values: LoginFormValuesType) => {
-  // showPreloader();
+    // showPreloader();
 
-  try {
-    const response = await signinRequest(values);
-    console.log(response);
+    try {
+        await signinRequest(values);
 
-    window.history.pushState({}, "", "/main");
-    return true;
-  } catch (error) {
-    console.log(error);
-    return false;
-  } finally {
-    // hidePreloader();
-  }
+        return true;
+    } catch (error) {
+        console.log(error);
+        return false;
+    } finally {
+        // hidePreloader();
+    }
 };
