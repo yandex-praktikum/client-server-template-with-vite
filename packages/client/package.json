@@ -4,10 +4,11 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "vite",
-    "dev:sw": "tsc --watch --project src/services/sw/tsconfig.sw.json",
-    "build:sw": "tsc --project src/services/sw/tsconfig.sw.json",
-    "build": "yarn run build:sw && tsc && vite build",
+    "vite:dev": "vite",
+    "build:client": "tsc && vite build",
+    "build:server": "tsc && vite build --outDir=dist-ssr --ssr ./src/entry-server.tsx",
+    "build": "yarn run build:client & yarn build:server",
+    "dev": "yarn run build:client -- --watch --mode development & yarn run build:server -- --watch --mode development",
     "preview": "vite preview --host",
     "lint": "eslint .",
     "stylelint": "stylelint ./src/**/*.pcss",
@@ -15,7 +16,9 @@
     "test": "jest"
   },
   "dependencies": {
+    "@emotion/cache": "^11.10.5",
     "@emotion/react": "^11.10.4",
+    "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.4",
     "@mui/icons-material": "^5.10.6",
     "@mui/lab": "^5.0.0-alpha.108",

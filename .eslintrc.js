@@ -1,7 +1,12 @@
 const MULTI_LINE = 'always-multiline';
 const ONLY_MULTILINE = 'only-multiline';
 
-const IGNORE_FILES = ['packages/client/public/**', 'packages/client/dist/**'];
+const IGNORE_FILES = [
+  'packages/client/public/**',
+  'packages/client/dist/**',
+  'packages/client/dist-ssr/**',
+  'packages/server/dist/**',
+];
 
 module.exports = {
   env: {
@@ -126,7 +131,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['packages/client/src/services/sw/sw.ts'],
+      files: ['packages/client/src/services/sw/sw.worker.ts'],
       rules: {
         '@typescript-eslint/triple-slash-reference': 0,
       },

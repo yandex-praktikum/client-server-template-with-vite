@@ -46,9 +46,6 @@ export function PreviewAnimationCanvas() {
       throw Error('No canvas or context');
     }
 
-    canvas.width = MAP_WIDTH;
-    canvas.height = MAP_HEIGHT;
-
     const redSnake = new Snake(
       redOptions.size + redOptions.margin,
       redOptions.size + redOptions.margin,
@@ -127,5 +124,5 @@ export function PreviewAnimationCanvas() {
     };
   }, []);
 
-  return <canvas ref={ref} />;
+  return <canvas ref={ref} width={MAP_WIDTH} height={MAP_HEIGHT} style={{ background: 'black' }} />;
 }

@@ -1,43 +1,84 @@
-import { StyledEngineProvider } from '@mui/material';
+import { CacheProvider } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
-import React from 'react';
+import { configureStore } from '@reduxjs/toolkit';
+import { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { io, Socket } from 'socket.io-client';
+
+import 'normalize.css';
 
 import { App } from './App';
-import 'normalize.css';
-import './index.css';
-import ErrorBoundary from './components/ErrorBoundaries/ErrorBoundaries';
-import { store } from './services/redux/store';
+import { api } from './services/redux/queries/api';
+import commonReducer from './services/redux/reducers/common.reducer';
+import { SocketContext } from './services/socket/socket';
 import { addServiceWorker } from './services/sw/addServiceWorker';
 import { useCustomTheme } from './useCustomTheme';
+
+import createEmotionCache from '../../shared/createEmotionCache';
+import { IClientToServerEvents, IServerToClientEvents } from '../../shared/types';
 
 if (import.meta.env.MODE === 'production') {
   addServiceWorker();
 }
 
-const versionStrStyle: React.CSSProperties = {
-  position: 'fixed',
-  margin: 'auto 0 10px 10px',
-  bottom: 0,
-  left: 0,
-  color: 'black',
-  opacity: 0.5,
-  fontSize: '12px',
+declare global {
+  interface Window {
+    // @ts-ignore
+    __PRELOADED_STATE__: any;
+  }
+}
+
+const store = configureStore({
+  preloadedState: window.__PRELOADED_STATE__,
+  reducer: {
+    common: commonReducer,
+    [api.reducerPath]: api.reducer,
+  },
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(api.middleware),
+});
+
+const cache = createEmotionCache();
+
+const Main = () => {
+  const socket: Socket<IServerToClientEvents, IClientToServerEvents> = io({
+    transports: ['websocket'],
+  });
+
+  socket.on('connect', () => {
+    console.info('Socket connected');
+  });
+
+  socket.on('disconnect', () => {
+    console.info('Socket disconnected');
+  });
+
+  useEffect(() => {
+    delete window.__PRELOADED_STATE__;
+  }, []);
+
+  return (
+    <BrowserRouter>
+      <CacheProvider value={cache}>
+        <ThemeProvider theme={useCustomTheme}>
+          <Provider store={store}>
+            <SocketContext.Provider value={socket}>
+              <App />
+            </SocketContext.Provider>
+          </Provider>
+        </ThemeProvider>
+      </CacheProvider>
+    </BrowserRouter>
+  );
 };
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <Router>
-    <ThemeProvider theme={useCustomTheme}>
-      <StyledEngineProvider injectFirst>
-        <Provider store={store}>
-          <ErrorBoundary>
-            <App />
-            <div style={versionStrStyle}>Version: {import.meta.env.VITE_CLIENT_VERSION}</div>
-          </ErrorBoundary>
-        </Provider>
-      </StyledEngineProvider>
-    </ThemeProvider>
-  </Router>
-);
+const isFromSSR = document.querySelector('#root')?.children.length !== 0;
+
+if (isFromSSR) {
+  ReactDOM.hydrateRoot(document.getElementById('root') as HTMLElement, <Main />);
+  console.log('hydrated root');
+} else {
+  ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<Main />);
+  console.log('created root');
+}

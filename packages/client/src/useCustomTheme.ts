@@ -6,7 +6,7 @@ export const useCustomTheme = createTheme({
       fontWeight: 'bold',
     },
     allVariants: {
-      fontFamily: ['Pangolin', 'Inter, sans-serif'].join(','),
+      fontFamily: ['Pangolin', 'sans-serif'].join(','),
     },
   },
   palette: {

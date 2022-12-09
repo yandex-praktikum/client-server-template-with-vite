@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useContext, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -10,12 +10,12 @@ import {
   MAP_WIDTH,
 } from '../../../../../shared/consts';
 import type { TGame, TPlayer, TPosition } from '../../../../../shared/types';
-import CursorPng from '../../../assets/cursor.png';
+import CursorPng from '../../../assets/image/cursor.png';
 import { SNAKE_REDUCTION_TIME } from '../../../consts/settings';
 import { setGame, setLastScore } from '../../../services/redux/reducers/common.reducer';
 import { getUserSelector } from '../../../services/redux/selectors/getUserSelector';
 import { useAppDispatch, useAppSelector } from '../../../services/redux/store';
-import { socket } from '../../../services/socket/socket';
+import { SocketContext } from '../../../services/socket/socket';
 import { fixPositionForMap } from '../../../utils/fixPositionForMap';
 import { drawMap } from '../../drawers/drawMap';
 import { drawPlayerSnake } from '../../drawers/drawPlayerSnake';
@@ -23,6 +23,7 @@ import { makeCountDownClock } from '../../makers/makeCountDownClock';
 import { makeFoodItem } from '../../makers/makeFoodItem';
 
 export const MultiGameCanvas = () => {
+  const socket = useContext(SocketContext);
   const { data: currentUser } = useAppSelector(getUserSelector);
 
   const dispatch = useAppDispatch();
@@ -96,6 +97,7 @@ export const MultiGameCanvas = () => {
     socket.on('changedRoom', (game: TGame) => {
       currentGame.current = game;
     });
+
     socket.on('error', () => {
       onEnd();
     });
@@ -124,6 +126,7 @@ export const MultiGameCanvas = () => {
 
   function onEnd() {
     socket.off('changedRoom');
+
     socket.off('finished');
 
     document.removeEventListener('mousemove', onMouseMove);

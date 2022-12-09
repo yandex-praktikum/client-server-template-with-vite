@@ -2,28 +2,30 @@ import { useEffect, useState } from 'react';
 
 const CHECK_ONLINE_STATUS_PARAM: TCheckOnlineParam = 'check-online';
 
-const getOnLineStatus = () => (typeof navigator !== 'undefined' ? navigator.onLine : true);
-
 function getRandomString() {
   return Math.random().toString(36).substring(2, 15);
 }
 
-async function isOnline() {
-  if (!window.navigator.onLine) {
-    return false;
-  }
-
+function runCheckIsOnline(setOnline: () => void, setOffline: () => void) {
   // avoid CORS errors with a request to your own origin
   const url = new URL(window.location.origin);
 
   // random value to prevent cached responses
   url.searchParams.set(CHECK_ONLINE_STATUS_PARAM, getRandomString());
 
-  return fetch(url.toString(), { method: 'HEAD' });
+  fetch(url.toString(), { method: 'HEAD' }).then(setOnline).catch(setOffline);
+
+  setTimeout(() => {
+    runCheckIsOnline(setOnline, setOffline);
+  }, 10000);
 }
 
 export const useNavigatorOnLine = () => {
-  const [status, setStatus] = useState(getOnLineStatus());
+  if (import.meta.env.SSR) {
+    return false;
+  }
+
+  const [status, setStatus] = useState(window?.navigator?.onLine ?? false);
 
   const setOnline = () => {
     setStatus(true);
@@ -34,19 +36,7 @@ export const useNavigatorOnLine = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('online', setOnline);
-    window.addEventListener('offline', setOffline);
-    isOnline().then(setOnline).catch(setOffline);
-
-    const intervalId = setInterval(() => {
-      isOnline().then(setOnline).catch(setOffline);
-    }, 5000);
-
-    return () => {
-      clearInterval(intervalId);
-      window.removeEventListener('online', setOnline);
-      window.removeEventListener('offline', setOffline);
-    };
+    runCheckIsOnline(setOnline, setOffline);
   }, []);
 
   return status;

@@ -6,5 +6,3 @@ dist
 .firebaserc
 firebase.json
 .firebase/*
-yarn-error.log
-client/yarn-error.log
