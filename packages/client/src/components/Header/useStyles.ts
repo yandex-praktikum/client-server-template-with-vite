@@ -22,6 +22,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
     color: theme.palette.secondary.main,
     whiteSpace: 'nowrap',
   },
+  logoLink: {
+    textDecoration: 'none',
+
+    '&:hover > p': {
+      color: 'red',
+    },
+  },
   logoSubtitle: {
     margin: 0,
     padding: 0,

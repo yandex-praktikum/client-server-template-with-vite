@@ -11,7 +11,7 @@ import { useSnackbarError } from '../../../hooks/useSnackbarError';
 import { useLoginMutation } from '../../../services/redux/queries/auth.api';
 import { toggleAuthModalState } from '../../../services/redux/reducers/common.reducer';
 import { useAppDispatch } from '../../../services/redux/store';
-import Loader from '../../Loader/Loader';
+import { Loader } from '../../Loader/Loader';
 import { disableAutoFillFormProps } from '../helpers/disableAutoFillForm';
 
 const LoginForm = () => {

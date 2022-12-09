@@ -1,13 +1,14 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 import type { TGame } from '../../../../../shared/types';
-import { ICommonState } from '../types/commonState';
+import { ICommonState, IMultiPLayerScore } from '../types/commonState';
 
 export const INITIAL_STATE: ICommonState = {
   theme: 'default',
   isAuthModalOpen: false,
   language: 'RU',
   currentGame: null,
+  lastScore: null,
 };
 
 export const counterSlice = createSlice({
@@ -26,9 +27,12 @@ export const counterSlice = createSlice({
     setGame: (state, action: PayloadAction<TGame | null>) => {
       state.currentGame = action.payload;
     },
+    setLastScore: (state, action: PayloadAction<IMultiPLayerScore[] | null>) => {
+      state.lastScore = action.payload;
+    },
   },
 });
 
-export const { toggleAuthModalState, setGame, setTheme, setLanguage } = counterSlice.actions;
+export const { toggleAuthModalState, setGame, setTheme, setLanguage, setLastScore } = counterSlice.actions;
 
 export default counterSlice.reducer;

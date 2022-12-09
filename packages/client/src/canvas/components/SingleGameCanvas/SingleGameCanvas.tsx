@@ -1,10 +1,13 @@
 import React, { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { FOOD_COLORS, FOOD_SIZE, MAP_HEIGHT, MAP_WIDTH } from '../../../../../shared/consts';
 import { getDistanceBetweenTwoPoints } from '../../../../../shared/utils';
 import { getRandomItem } from '../../../../../shared/utils/getRandomItem';
 import CursorPng from '../../../assets/cursor.png';
 import { Snake } from '../../../game/Snake';
+import { setLastScore } from '../../../services/redux/reducers/common.reducer';
+import { useAppDispatch } from '../../../services/redux/store';
 import { fixPositionForMap } from '../../../utils/fixPositionForMap';
 import { randomIntFromInterval } from '../../../utils/randomIntFromInterfal';
 import { drawMap } from '../../drawers/drawMap';
@@ -13,6 +16,8 @@ import { makeFoodItem } from '../../makers/makeFoodItem';
 
 export function SingleGameCanvas() {
   const ref = useRef<HTMLCanvasElement>(null);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   let loopId: number | null = null;
 
   let mousePositionX = MAP_WIDTH / 2;
@@ -70,8 +75,18 @@ export function SingleGameCanvas() {
       MAP_WIDTH,
       MAP_HEIGHT,
       () => {
+        dispatch(
+          setLastScore([
+            {
+              id: null,
+              login: null,
+              points: snake.segments.length,
+              color: null,
+            },
+          ])
+        );
+        navigate('/leaderboard');
         onEnd();
-        console.info(`END. SCORE: ${snake.segments.length}`);
       }
     );
 

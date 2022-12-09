@@ -9,7 +9,7 @@ import { useSnackbarError } from '../../hooks/useSnackbarError';
 import { getUserIdSelector } from '../../services/redux/selectors/getUserSelector';
 import { useAppSelector } from '../../services/redux/store';
 import { useNavigatorOnLine } from '../../services/sw/useNavigatorOnLine';
-import Layout from '../Layout/Layout';
+import { Layout } from '../Layout/Layout';
 
 type TMenuItem = {
   itemName: string;

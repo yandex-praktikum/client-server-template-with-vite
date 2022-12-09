@@ -12,7 +12,7 @@ import {
 import type { TGame, TPlayer, TPosition } from '../../../../../shared/types';
 import CursorPng from '../../../assets/cursor.png';
 import { SNAKE_REDUCTION_TIME } from '../../../consts/settings';
-import { setGame } from '../../../services/redux/reducers/common.reducer';
+import { setGame, setLastScore } from '../../../services/redux/reducers/common.reducer';
 import { getUserSelector } from '../../../services/redux/selectors/getUserSelector';
 import { useAppDispatch, useAppSelector } from '../../../services/redux/store';
 import { socket } from '../../../services/socket/socket';
@@ -101,9 +101,18 @@ export const MultiGameCanvas = () => {
     });
 
     socket.on('finished', () => {
+      dispatch(
+        setLastScore(
+          currentGame.current?.players.map(({ segments, user, color }) => ({
+            id: user.id,
+            login: user.login || user.display_name || user.first_name,
+            points: segments.length,
+            color,
+          })) || null
+        )
+      );
+      navigate('/leaderboard');
       onEnd();
-      console.info(`Finished. Scores: ${currentGame.current?.players.map(p => p.segments.length).join(' ')}`);
-      navigate('/', { replace: true });
     });
 
     if (!currentGame.current) {

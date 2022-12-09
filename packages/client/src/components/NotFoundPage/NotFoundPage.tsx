@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 import { useStyles } from './useStyles';
 
-import Layout from '../Layout/Layout';
+import { Layout } from '../Layout/Layout';
 
-const NotFoundPage = () => {
+export const NotFoundPage = () => {
   const classes = useStyles();
 
   return (
@@ -23,5 +23,3 @@ const NotFoundPage = () => {
     </Layout>
   );
 };
-
-export default NotFoundPage;

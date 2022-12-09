@@ -8,7 +8,7 @@ type Props = {
   children?: ReactNode;
 };
 
-const Layout = ({ children }: Props): JSX.Element => {
+export const Layout = ({ children }: Props): JSX.Element => {
   const classes = useStyles();
 
   return (
@@ -18,5 +18,3 @@ const Layout = ({ children }: Props): JSX.Element => {
     </div>
   );
 };
-
-export default Layout;

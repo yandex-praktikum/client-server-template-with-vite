@@ -1,51 +1,50 @@
-import { FC, useEffect, useState } from 'react';
-
-import { leaderDataType, leadersType } from './types';
+import { GameFinalScreen } from './GameFinalScreen/GameFinalScreen';
+import { LeaderRow } from './LeaderRow/LeaderRow';
+import { TLeaderData } from './types';
 import { useStyles } from './useStyles';
 
-import { leaderBoardsleaders } from '../../mocks';
-import Layout from '../Layout/Layout';
+import { useGetAllQuery } from '../../services/redux/queries/leaderboard.api';
+import { useAppSelector } from '../../services/redux/store';
+import { Layout } from '../Layout/Layout';
+import { Loader } from '../Loader/Loader';
 
-type leaderRowType = FC<leaderDataType>;
-
-const LeaderRow: leaderRowType = ({ scores, nickname, position }) => {
+export const LeaderboardPage = () => {
+  const { data: leaders, isLoading } = useGetAllQuery('');
   const styles = useStyles();
+  const { lastScore } = useAppSelector(state => state.common);
+  const isFinalScreen = lastScore && lastScore.length;
 
-  return (
-    <div className={styles.leaderRow}>
-      <div className={styles.nickNameWrapper}>
-        <div className={styles.position}>{position}</div>
-        <div className={styles.nickName}>{nickname}</div>
-      </div>
-      <div className={styles.score}>{scores}</div>
-    </div>
-  );
-};
-
-const LeaderboardPage = () => {
-  const styles = useStyles();
-  const [leaders, setLeaders] = useState<leadersType>();
-  useEffect(() => {
-    //  Допустим тут будем обращаться к апи.
-    setLeaders(leaderBoardsleaders);
-  }, []);
-
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <Layout>
+      {isFinalScreen && <GameFinalScreen playersResult={lastScore} />}
       <div className={styles.leaderBoard}>
         <div className={styles.header}>
           <div className={styles.top5}>
-            top<span>5</span>
+            top<span>10</span>
           </div>
           <div className={styles.title}>leader board</div>
         </div>
-        {leaders &&
-          leaders.map(l => {
-            return <LeaderRow key={l.id} id={l.id} nickname={l.nickname} scores={l.scores} position={l.position} />;
-          })}
+        {leaders.length ? (
+          leaders.map((gamer: TLeaderData, index: number) => {
+            const { username, login = 'Unnamed user', points } = gamer.data;
+
+            return (
+              <LeaderRow
+                key={`${username}-${login}`}
+                username={username || login}
+                points={points}
+                position={index + 1}
+              />
+            );
+          })
+        ) : (
+          <p className={styles.plug}>
+            There is no any leader yet.<span>So,</span> you can be the first one!
+          </p>
+        )}
       </div>
     </Layout>
   );
 };
-
-export default LeaderboardPage;

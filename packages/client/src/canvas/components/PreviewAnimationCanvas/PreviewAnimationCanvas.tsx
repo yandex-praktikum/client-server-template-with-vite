@@ -90,7 +90,7 @@ export function PreviewAnimationCanvas() {
 
     const drawMapLoop = () => {
       ctx.clearRect(0, 0, MAP_WIDTH, MAP_HEIGHT);
-      ctx.fillStyle = '#1c1c1c';
+      ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, MAP_WIDTH, MAP_HEIGHT);
 
       const { x: redSnakeX, y: redSnakeY } = redSnake.segments[0];

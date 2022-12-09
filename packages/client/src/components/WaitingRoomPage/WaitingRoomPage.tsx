@@ -12,7 +12,7 @@ import { getUserSelector } from '../../services/redux/selectors/getUserSelector'
 import { useAppDispatch, useAppSelector } from '../../services/redux/store';
 import { socket } from '../../services/socket/socket';
 import { getAuthorInitials } from '../../utils/getAuthorInitials';
-import Layout from '../Layout/Layout';
+import { Layout } from '../Layout/Layout';
 
 export const WaitingRoomPage = () => {
   const { data: currentUser } = useAppSelector(getUserSelector);

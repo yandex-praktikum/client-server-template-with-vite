@@ -9,7 +9,7 @@ import { setGame } from '../../services/redux/reducers/common.reducer';
 import { getUserSelector } from '../../services/redux/selectors/getUserSelector';
 import { useAppDispatch, useAppSelector } from '../../services/redux/store';
 import { socket } from '../../services/socket/socket';
-import Layout from '../Layout/Layout';
+import { Layout } from '../Layout/Layout';
 
 export const CreateOrJoinGamePage = () => {
   const classes = useStyles();

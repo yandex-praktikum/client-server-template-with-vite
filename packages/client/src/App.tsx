@@ -4,10 +4,11 @@ import { Route, Routes } from 'react-router-dom';
 import { CreateOrJoinGamePage } from './components/CreateOrJoinGamePage/CreateOrJoinGamePage';
 import { ForumPage } from './components/ForumPage/ForumPage';
 import { GamePage } from './components/GamePage/GamePage';
+import { LeaderboardPage } from './components/LeaderboardPage/LeaderboardPage';
 import { MultiGamePage } from './components/MultiGamePage/MultiGamePage';
-import NoAuthPage from './components/NoAuthPage/NoAuthPage';
-import NotFoundPage from './components/NotFoundPage/NotFoundPage';
-import ProfilePage from './components/ProfilePage/ProfilePage';
+import { NoAuthPage } from './components/NoAuthPage/NoAuthPage';
+import { NotFoundPage } from './components/NotFoundPage/NotFoundPage';
+import { ProfilePage } from './components/ProfilePage/ProfilePage';
 import { StartPage } from './components/StartPage/StartPage';
 import { WaitingRoomPage } from './components/WaitingRoomPage/WaitingRoomPage';
 import { useSnackbarError } from './hooks/useSnackbarError';
@@ -31,6 +32,7 @@ export function App(): JSX.Element {
         <Route path={'/waiting-room'} element={isUserAuthorized ? <WaitingRoomPage /> : <NoAuthPage />} />
         <Route path={'/multi-game'} element={isUserAuthorized ? <MultiGamePage /> : <NoAuthPage />} />
         <Route path={'/profile'} element={isUserAuthorized ? <ProfilePage /> : <NoAuthPage />} />
+        <Route path={'/leaderboard'} element={isUserAuthorized ? <LeaderboardPage /> : <NoAuthPage />} />
         <Route path={'/forum'} element={<ForumPage />} />
         <Route path={'*'} element={<NotFoundPage />} />
       </Routes>

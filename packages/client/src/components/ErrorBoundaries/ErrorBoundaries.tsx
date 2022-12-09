@@ -32,7 +32,7 @@ class ErrorBoundary extends Component<Props, State> {
           justifyContent:'center',
           marginTop:'20%',
         }}>
-          <h1>Упс...что-то пошло не так. Попробуйте зайти в игру позже</h1>;
+          <h1>Упс...что-то пошло не так. Попробуйте зайти в игру позже</h1>
         </div>
       );
     }

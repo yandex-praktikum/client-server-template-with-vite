@@ -14,9 +14,9 @@ import { useUpdateAvatarMutation } from '../../services/redux/queries/user.api';
 import { getUserSelector } from '../../services/redux/selectors/getUserSelector';
 import { useAppSelector } from '../../services/redux/store';
 import { useNavigatorOnLine } from '../../services/sw/useNavigatorOnLine';
-import Layout from '../Layout/Layout';
+import { Layout } from '../Layout/Layout';
 
-const ProfilePage = () => {
+export const ProfilePage = () => {
   const classes = useStyles();
   const isOnline = useNavigatorOnLine();
 
@@ -118,5 +118,3 @@ const ProfilePage = () => {
     </Layout>
   );
 };
-
-export default ProfilePage;

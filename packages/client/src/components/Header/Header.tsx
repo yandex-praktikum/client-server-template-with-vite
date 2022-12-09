@@ -42,7 +42,7 @@ const Header = () => {
     <>
       {isAuthModalOpen && <EntranceModal />}
       <div className={classes.wrapper}>
-        <div>
+        <Link to={'/'} className={classes.logoLink}>
           <h1 className={classes.logo}>
             <span style={{ color: 'red' }}>Chicago</span>Snake
             <Tooltip title={isOnline ? 'Online' : 'Offline'}>
@@ -50,7 +50,7 @@ const Header = () => {
             </Tooltip>
           </h1>
           <p className={classes.logoSubtitle}>Yandex Practicum Web Gaming</p>
-        </div>
+        </Link>
         <div className={classes.menu}>
           <Link to={'/'} className={classes.button}>
             main

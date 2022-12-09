@@ -18,7 +18,7 @@ import { useAppSelector } from '../../services/redux/store';
 import { useNavigatorOnLine } from '../../services/sw/useNavigatorOnLine';
 import { getAuthorInitials } from '../../utils/getAuthorInitials';
 import { getCreatedAtValue } from '../../utils/getCreatedAtValue';
-import Layout from '../Layout/Layout';
+import { Layout } from '../Layout/Layout';
 
 export const ForumPage = () => {
   const classes = useStyles();
