@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 
 import { changeCoords } from './helpers/changeCoords';
+import { useStyles } from './useStyles';
 
+import PreviewBGImg from '../../../assets/preview_bg.jpg';
 import { Snake } from '../../../game/Snake';
 
 const blueOptions = {
@@ -36,6 +38,7 @@ const MAP_WIDTH = 1300;
 const MAP_HEIGHT = 400;
 
 export function PreviewAnimationCanvas() {
+  const classes = useStyles();
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -87,8 +90,6 @@ export function PreviewAnimationCanvas() {
 
     const drawMapLoop = () => {
       ctx.clearRect(0, 0, MAP_WIDTH, MAP_HEIGHT);
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0, 0, MAP_WIDTH, MAP_HEIGHT);
 
       const { x: redSnakeX, y: redSnakeY } = redSnake.segments[0];
       changeCoords(redSnakeX, redSnakeY, MAP_WIDTH, MAP_HEIGHT, redOptions);
@@ -124,5 +125,10 @@ export function PreviewAnimationCanvas() {
     };
   }, []);
 
-  return <canvas ref={ref} width={MAP_WIDTH} height={MAP_HEIGHT} style={{ background: 'black' }} />;
+  return (
+    <div className={classes.wrapper}>
+      <img src={PreviewBGImg} />
+      <canvas ref={ref} width={MAP_WIDTH} height={MAP_HEIGHT} className={classes.mainCanvas} />
+    </div>
+  );
 }

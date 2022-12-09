@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useStyles } from './useStyles';
+
 import {
   CLIENT_SOCKET_DELAY,
   FOOD_SIZE,
@@ -10,19 +12,19 @@ import {
   MAP_WIDTH,
 } from '../../../../../shared/consts';
 import type { TGame, TPlayer, TPosition } from '../../../../../shared/types';
-import CursorPng from '../../../assets/image/cursor.png';
+import GameBGImg from '../../../assets/game_bg.jpg';
 import { SNAKE_REDUCTION_TIME } from '../../../consts/settings';
 import { setGame, setLastScore } from '../../../services/redux/reducers/common.reducer';
 import { getUserSelector } from '../../../services/redux/selectors/getUserSelector';
 import { useAppDispatch, useAppSelector } from '../../../services/redux/store';
 import { SocketContext } from '../../../services/socket/socket';
 import { fixPositionForMap } from '../../../utils/fixPositionForMap';
-import { drawMap } from '../../drawers/drawMap';
 import { drawPlayerSnake } from '../../drawers/drawPlayerSnake';
 import { makeCountDownClock } from '../../makers/makeCountDownClock';
 import { makeFoodItem } from '../../makers/makeFoodItem';
 
 export const MultiGameCanvas = () => {
+  const classes = useStyles();
   const socket = useContext(SocketContext);
   const { data: currentUser } = useAppSelector(getUserSelector);
 
@@ -168,7 +170,7 @@ export const MultiGameCanvas = () => {
       loopId.current = requestAnimationFrame(drawMapLoop);
 
       // очищаем все и рисуем карту заново
-      drawMap(ctx);
+      ctx.clearRect(0, 0, MAP_WIDTH, MAP_HEIGHT);
       ctx.drawImage(countDownClock, 0, 0);
 
       if (currentGame.current) {
@@ -195,15 +197,16 @@ export const MultiGameCanvas = () => {
   }, GAME_DURATION_MS);
 
   return (
-    <>
+    <div className={classes.wrapper}>
+      <img src={GameBGImg} width={MAP_WIDTH} height={MAP_HEIGHT} />
       <canvas
         ref={ref}
-        style={{
-          cursor: `url(${CursorPng}) 24 24, default`,
-        }}
+        className={classes.mainCanvas}
+        width={MAP_WIDTH}
+        height={MAP_HEIGHT}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
       />
-    </>
+    </div>
   );
 };
