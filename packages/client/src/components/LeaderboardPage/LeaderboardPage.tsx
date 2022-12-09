@@ -5,7 +5,6 @@ import { useStyles } from './useStyles';
 
 import { useGetAllQuery } from '../../services/redux/queries/leaderboard.api';
 import { useAppSelector } from '../../services/redux/store';
-import { Layout } from '../Layout/Layout';
 import { Loader } from '../Loader/Loader';
 
 export const LeaderboardPage = () => {
@@ -17,7 +16,7 @@ export const LeaderboardPage = () => {
   return isLoading ? (
     <Loader />
   ) : (
-    <Layout>
+    <div>
       {isFinalScreen && <GameFinalScreen playersResult={lastScore} />}
       <div className={styles.leaderBoard}>
         <div className={styles.header}>
@@ -45,6 +44,6 @@ export const LeaderboardPage = () => {
           </p>
         )}
       </div>
-    </Layout>
+    </div>
   );
 };
