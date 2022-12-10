@@ -34,10 +34,10 @@ export const LoginPage = () => {
                             <Title level={4}>Pachka-i-tocka edition</Title>
                         </div>
 
-                        <LoginForm />
-                    </div>
-                </Col>
-            </Row>
-        </Layout>
-    );
+            <LoginForm />
+          </div>
+        </Col>
+      </Row>
+    </Layout>
+  );
 };
