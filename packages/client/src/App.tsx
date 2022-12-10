@@ -4,6 +4,8 @@ import "./App.css";
 import { LoginPage } from "./pages/login/LoginPage";
 import { MainPage } from "./pages/main/MainPage";
 import ForumPage from "./pages/ForumPage/ForumPage";
+import { ProfilePage } from "./pages/profile/ProfilePage";
+import { ProfileChangePage } from "./pages/profile-change/ProfileChangePage";
 
 const App = () => {
     return (
@@ -14,11 +16,8 @@ const App = () => {
                 <Route path="/sign-up" element={<div>sign-up</div>} />
                 <Route path="/forum" element={<ForumPage />} />
                 <Route path="/ladder" element={<LadderPage />} />
-                <Route path="/profile" element={<div>profile</div>} />
-                <Route
-                    path="/profile-change"
-                    element={<div>profile-change</div>}
-                />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/profile-change" element={<ProfileChangePage />} />
                 <Route path="/game" element={<div>game</div>} />
                 <Route path="/*" element={<div>error404</div>} />
             </Routes>

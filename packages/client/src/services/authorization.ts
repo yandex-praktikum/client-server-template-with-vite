@@ -1,5 +1,4 @@
 import { getUserDataRequest, signinRequest } from "../api/Auth";
-import { Nullable, UserFromServer } from "../api/typesApi";
 import { LoginFormValuesType } from "../components/forms/LoginForm/LoginForm";
 
 export const signin = async (values: LoginFormValuesType) => {
@@ -12,11 +11,12 @@ export const signin = async (values: LoginFormValuesType) => {
     }
 };
 
-export const getUserInfo = async (): Promise<Nullable<UserFromServer>> => {
+// TODO: Добавить типизацию ответов
+export const getUserInfo = async (): Promise<any> => {
     try {
         const response = await getUserDataRequest();
 
-        return response as UserFromServer;
+        return response;
     } catch (error) {
         return null;
     }
