@@ -32,6 +32,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-sonarjs": "^0.16.0",
     "jest": "^28",
+    "jest-fix-undefined": "^0.1.2",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
     "ts-jest": "^28.0.8",

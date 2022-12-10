@@ -38,7 +38,7 @@ module.exports = {
     'eol-last': ['error', 'always'],
     'import/default': 2,
     'import/export': 2,
-    'import/named': 2,
+    'import/named': 1,
     'import/namespace': [
       2,
       {
@@ -46,7 +46,7 @@ module.exports = {
       },
     ],
     'import/no-restricted-paths': 2,
-    'import/no-default-export': 'error',
+    'import/no-default-export': 1,
     'import/order': [
       'error',
       {
@@ -128,4 +128,4 @@ module.exports = {
       },
     },
   ],
-};
+}

@@ -1,5 +1,7 @@
 import { render } from '@testing-library/react';
 
+import 'jest-fix-undefined';
+
 import App from './App';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
