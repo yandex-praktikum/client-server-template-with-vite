@@ -6,6 +6,8 @@ import { MainPage } from "./pages/main/MainPage";
 import ForumPage from "./pages/ForumPage/ForumPage";
 
 const App = () => {
+    localStorage.removeItem("soundIsEnabled");
+    localStorage.removeItem("volumeLevel");
     return (
         <div className="App">
             <Routes>

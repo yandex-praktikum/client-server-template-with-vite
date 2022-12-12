@@ -2,7 +2,7 @@ import { Col, Layout, Row, Button } from "antd";
 import Title from "antd/es/typography/Title";
 import { NavigationMenu } from "../../components/navigation/Navigation";
 import "./MainPage.scss";
-import { SoundSettings } from "../../components/SoundSettings/SoundSettings";
+import { SoundPanel } from "../../components/SoundPanel/SoundPanel";
 
 export const MainPage = () => {
     return (
@@ -10,7 +10,7 @@ export const MainPage = () => {
             <Row
                 style={{ height: "100vh", justifyContent: "center" }}
                 className="main">
-                <SoundSettings />
+                <SoundPanel />
 
                 <Col
                     flex={2}

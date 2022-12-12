@@ -1,0 +1,49 @@
+.ant-popover {
+    left: 20px;
+}
+
+.ant-popover-content {
+    width: 200px;
+}
+
+.ant-popover-open {
+    background-image: url(../icons/sound.png);
+    background-size: 60%;
+    color: transparent;
+}
+
+.sound-btn-on {
+    background-image: url(../icons/sound.png);
+    background-size: 60%;
+}
+
+.sound-btn-off {
+    background-image: url(../icons/no-sound.png);
+    background-size: 70%;
+}
+
+.sound-switch {
+    width: 60px;
+    height: 30px;
+    position: absolute;
+    top: 40px;
+    left: 60px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ant-switch .ant-switch-handle {
+    top: 5px;
+    inset-inline-start: calc(100% - 50px);
+
+    &::before {
+        inset-inline-end: 4px;
+        inset-inline-start: -4px;
+    }
+}
+
+.ant-switch .ant-switch-inner .ant-switch-inner-unchecked {
+    margin-inline-start: 36px;
+}
