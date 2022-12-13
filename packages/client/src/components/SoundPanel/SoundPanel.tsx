@@ -2,24 +2,26 @@ import { Switch } from "antd";
 import Slider, { SliderMarks } from "antd/es/slider";
 import { Nullable } from "../../api/typesApi";
 import "./SoundPanel.scss";
-import soundfile from "../../assets/presentation.mp3";
 import SoundOnIcon from "../customIcons/SoundOnIcon";
 import SoundOffIcon from "../customIcons/SoundOffIcon";
 import { DEFAULT_VOLUME_LEVEL } from "../../constants/defaultSoundSettings";
 import { useState } from "react";
+import { ChangeEvent } from "react";
 
-export const SoundPanel = () => {
-    // let isSoundEnabled: boolean;
+export type SoundPanelProps = {
+    audioContext: AudioContext;
+};
 
-    // try {
-    //     isSoundEnabled = JSON.parse(
-    //         localStorage.getItem("soundIsEnabled") || ""
-    //     );
-    // } catch (error) {
-    //     isSoundEnabled = false;
-    // }
+export const SoundPanel = ({ audioContext }: SoundPanelProps) => {
+    let isSoundEnabled: boolean;
 
-    // const [isSoundEnabled, setIsSoundEnabled] = useState(soundState || false);
+    try {
+        isSoundEnabled = JSON.parse(
+            localStorage.getItem("soundIsEnabled") || ""
+        );
+    } catch (error) {
+        isSoundEnabled = false;
+    }
 
     const marks: SliderMarks = {
         0: "0",
@@ -27,14 +29,7 @@ export const SoundPanel = () => {
     };
 
     // // let volumeLevel = DEFAULT_VOLUME_LEVEL;
-
-    const audioElement = new Audio(soundfile);
-    audioElement.loop = true;
-
-    const AudioContext = window.AudioContext;
-    const context = new AudioContext();
-    const mediaSourceNode = context.createMediaElementSource(audioElement);
-    const gainNode = context.createGain();
+    // const gainNode = context.createGain();
 
     // const changeVolumeHandler = (newValue: number) => {
     //     gainNode.gain.value = newValue;
@@ -44,40 +39,30 @@ export const SoundPanel = () => {
     //     localStorage.setItem("volumeLevel", JSON.stringify(newValue));
     // };
 
-    mediaSourceNode.connect(gainNode).connect(context.destination);
+    // mediaSourceNode.connect(gainNode).connect(context.destination);
 
     const togglePlay = (checked: boolean) => {
         localStorage.setItem("soundIsEnabled", JSON.stringify(checked));
+        (document.activeElement as HTMLInputElement).blur();
 
-        if (context.state === "suspended") {
-            context.resume();
+        if (audioContext.state === "suspended") {
+            audioContext.resume();
+
+            return;
         }
 
-        if (!checked) {
-            audioElement.pause();
-        } else {
-            gainNode.gain.value = DEFAULT_VOLUME_LEVEL;
-            // volumeLevel.value = gainNode.gain.value;
-            audioElement.play();
-            audioElement.currentTime = 0;
+        if (audioContext.state === "running") {
+            audioContext.suspend();
         }
 
-        const roundButton: Nullable<HTMLButtonElement> =
-            document.querySelector(".round-btn");
-
-        if (roundButton) {
-            if (checked) {
-                roundButton.textContent = "ON";
-                roundButton.classList.remove("sound-btn-off");
-                roundButton.classList.add("sound-btn-on");
-
-                return;
-            }
-
-            roundButton.textContent = "OFF";
-            roundButton.classList.remove("sound-btn-on");
-            roundButton.classList.add("sound-btn-off");
-        }
+        // if (!checked) {
+        //     // audioElement.pause();
+        // } else {
+        //     gainNode.gain.value = DEFAULT_VOLUME_LEVEL;
+        //     // volumeLevel.value = gainNode.gain.value;
+        //     // audioElement.play();
+        //     // audioElement.currentTime = 0;
+        // }
     };
 
     // const volumeSettingsContent = (
@@ -99,6 +84,7 @@ export const SoundPanel = () => {
                 checkedChildren={<SoundOnIcon style={{ color: "#fff" }} />}
                 unCheckedChildren={<SoundOffIcon style={{ color: "#fff" }} />}
                 onChange={togglePlay}
+                defaultChecked={isSoundEnabled}
             />
         </>
     );

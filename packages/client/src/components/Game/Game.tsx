@@ -2,6 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import useEventListener from "@use-it/event-listener";
 import * as constants from "./helpers";
 import { Modal } from "antd";
+import { createSounds } from "../SoundPanel/createSounds";
+import { SoundPanel } from "../SoundPanel/SoundPanel";
+
+const { soundElements, audioContext } = createSounds();
 
 interface Shape {
     x: number;
@@ -105,6 +109,7 @@ const Game = () => {
             hasStarted = true;
         }
         birdYSpeed = constants.JUMP_SPEED;
+        soundElements.wing.play();
     };
 
     // enable space button
@@ -166,8 +171,27 @@ const Game = () => {
     };
 
     useEffect(() => {
+        try {
+            const isSoundEnabled: boolean = JSON.parse(
+                localStorage.getItem("soundIsEnabled") || String(false)
+            );
+
+            if (isSoundEnabled && audioContext.state === "suspended") {
+                audioContext.resume();
+            }
+
+            if (!isSoundEnabled && audioContext.state === "running") {
+                audioContext.suspend();
+            }
+        } catch (e) {
+            // TODO: add notification
+        }
+    }, []);
+
+    useEffect(() => {
         if (canvas.current) {
             const context = canvas.current.getContext("2d");
+
             if (context) {
                 const interval = setInterval(() => {
                     // dying
@@ -176,6 +200,12 @@ const Game = () => {
                             bestScore = score;
                             localStorage.setItem("bestScore", score.toString());
                         }
+
+                        if (touchedPipe()) {
+                            soundElements.hit.play();
+                        }
+                        soundElements.die.play();
+
                         setShowModal(true);
                         info();
                         clearInterval(interval);
@@ -236,13 +266,16 @@ const Game = () => {
     };
 
     return (
-        <div onClick={jump} onKeyPress={jump}>
-            <canvas
-                ref={canvas}
-                width={constants.CANVAS_WIDTH}
-                height={constants.CANVAS_HEIGHT}
-            />
-        </div>
+        <>
+            <SoundPanel audioContext={audioContext} />
+            <div onClick={jump} onKeyPress={jump}>
+                <canvas
+                    ref={canvas}
+                    width={constants.CANVAS_WIDTH}
+                    height={constants.CANVAS_HEIGHT}
+                />
+            </div>
+        </>
     );
 };
 
