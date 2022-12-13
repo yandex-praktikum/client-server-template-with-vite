@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import axios from "./axiosSetup";
-import { LoginRequestData, ResponseStatus, UserFromServer } from "./typesApi";
+import { LoginRequestData, ResponseStatus, UserFromServer, signupRequestData, signupResponseData } from "./typesApi";
 
 export const signinRequest = async (
     data: LoginRequestData
@@ -15,3 +15,9 @@ export const getUserDataRequest = async (): Promise<
 > => {
     return await axios.get(`auth/user`);
 };
+
+export const signupRequest = async (data: signupRequestData): Promise<signupResponseData | AxiosError> => {
+  return await axios.post(`auth/signup`, {
+    ...data,
+  });
+}
