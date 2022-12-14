@@ -8,8 +8,6 @@ import ForumPage from "./pages/ForumPage/ForumPage";
 import GamePage from "./pages/GamePage/GamePage";
 
 const App = () => {
-    // localStorage.setItem("soundIsEnabled", JSON.stringify(false));
-    // localStorage.removeItem("volumeLevel");
     return (
         <div className="App">
             <Routes>
