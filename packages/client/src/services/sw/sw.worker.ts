@@ -2,7 +2,7 @@
 
 const CHECK_ONLINE_STATUS_PARAM: TCheckOnlineParam = 'check-online';
 
-const VERSION = '0.0.45';
+const VERSION = '0.0.6';
 console.info(`[SW]: VERSION ${VERSION}`);
 
 const CACHE_NAME = 'chicago-app-v-' + VERSION;
@@ -11,10 +11,10 @@ const INDEX_HTML_PATH = 'index.html';
 
 const cacheFiles = [INDEX_HTML_PATH];
 
-const SW = self;
+const SwWorker = self;
 
-SW.addEventListener('install', event => {
-  console.log('[SW]: install');
+SwWorker.addEventListener('install', event => {
+  console.log('[SwWorker]: install');
 
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
@@ -23,8 +23,8 @@ SW.addEventListener('install', event => {
   );
 });
 
-SW.addEventListener('activate', event => {
-  console.log('[SW]: activate');
+SwWorker.addEventListener('activate', event => {
+  console.log('[SwWorker]: activate');
 
   event.waitUntil(
     caches.keys().then(cacheNames => {
@@ -39,7 +39,7 @@ SW.addEventListener('activate', event => {
   );
 });
 
-SW.addEventListener('fetch', event => {
+SwWorker.addEventListener('fetch', event => {
   const url = new URL(event.request.clone().url);
 
   const isCheckOnlineParam = url.searchParams.get(CHECK_ONLINE_STATUS_PARAM);

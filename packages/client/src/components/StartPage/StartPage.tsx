@@ -9,7 +9,6 @@ import { useSnackbarError } from '../../hooks/useSnackbarError';
 import { getUserIdSelector } from '../../services/redux/selectors/getUserSelector';
 import { useAppSelector } from '../../services/redux/store';
 import { useNavigatorOnLine } from '../../services/sw/useNavigatorOnLine';
-import Layout from '../Layout/Layout';
 
 type TMenuItem = {
   itemName: string;
@@ -87,7 +86,7 @@ export const StartPage = () => {
   );
 
   return (
-    <Layout>
+    <div>
       <div className={classes.wrapper}>
         <div className={classes.title}>SNAKE GAME</div>
         <div className={classes.menu}>
@@ -124,6 +123,6 @@ export const StartPage = () => {
         </DialogActions>
       </Dialog>
       <SnackbarErrorComp />
-    </Layout>
+    </div>
   );
 };

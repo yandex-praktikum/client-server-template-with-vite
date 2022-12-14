@@ -14,9 +14,8 @@ import { useUpdateAvatarMutation } from '../../services/redux/queries/user.api';
 import { getUserSelector } from '../../services/redux/selectors/getUserSelector';
 import { useAppSelector } from '../../services/redux/store';
 import { useNavigatorOnLine } from '../../services/sw/useNavigatorOnLine';
-import Layout from '../Layout/Layout';
 
-const ProfilePage = () => {
+export const ProfilePage = () => {
   const classes = useStyles();
   const isOnline = useNavigatorOnLine();
 
@@ -57,7 +56,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <Layout>
+    <div>
       <div className={classes.wrapper}>
         <div className={classes.userName}>{first_name}</div>
         <div className={classes.userName}>{second_name}</div>
@@ -115,8 +114,6 @@ const ProfilePage = () => {
         </DialogContent>
       </Dialog>
       <SnackbarErrorComp />
-    </Layout>
+    </div>
   );
 };
-
-export default ProfilePage;

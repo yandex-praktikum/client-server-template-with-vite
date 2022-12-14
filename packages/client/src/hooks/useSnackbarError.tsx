@@ -1,8 +1,8 @@
 import { Alert, Snackbar } from '@mui/material';
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
 
 import { AUTO_HIDE_SNACKBAR_DURATION } from '../consts/settings';
-import { socket } from '../services/socket/socket';
+import { SocketContext } from '../services/socket/socket';
 
 type TError = string | null | undefined;
 
@@ -11,6 +11,7 @@ export const useSnackbarError = (): {
   setError: React.Dispatch<React.SetStateAction<TError>>;
   SnackbarErrorComp: FunctionComponent;
 } => {
+  const socket = useContext(SocketContext);
   const [error, setError] = useState<TError>(null);
 
   useEffect(() => {

@@ -22,6 +22,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
     color: theme.palette.secondary.main,
     whiteSpace: 'nowrap',
   },
+  logoLink: {
+    textDecoration: 'none',
+
+    '&:hover > p': {
+      color: 'red',
+    },
+  },
   logoSubtitle: {
     margin: 0,
     padding: 0,
@@ -48,7 +55,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   signButton: {
     padding: theme.spacing(0.5, 3),
-    marginLeft: theme.spacing(2),
     textTransform: 'capitalize',
+    width: '100px',
   },
 }));

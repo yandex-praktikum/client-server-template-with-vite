@@ -1,5 +1,5 @@
 import { Button, Paper, TextField } from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useStyles } from './useStyles';
@@ -8,10 +8,10 @@ import type { TGame } from '../../../../shared/types';
 import { setGame } from '../../services/redux/reducers/common.reducer';
 import { getUserSelector } from '../../services/redux/selectors/getUserSelector';
 import { useAppDispatch, useAppSelector } from '../../services/redux/store';
-import { socket } from '../../services/socket/socket';
-import Layout from '../Layout/Layout';
+import { SocketContext } from '../../services/socket/socket';
 
 export const CreateOrJoinGamePage = () => {
+  const socket = useContext(SocketContext);
   const classes = useStyles();
   const [roomValue, setRoomValue] = useState('');
   const { data: currentUser } = useAppSelector(getUserSelector);
@@ -51,7 +51,7 @@ export const CreateOrJoinGamePage = () => {
   };
 
   return (
-    <Layout>
+    <div>
       <Paper elevation={3} className={classes.wrapper}>
         <h1 className={classes.head}>MULTIPLAYER</h1>
 
@@ -78,6 +78,6 @@ export const CreateOrJoinGamePage = () => {
           </div>
         </Paper>
       </Paper>
-    </Layout>
+    </div>
   );
 };

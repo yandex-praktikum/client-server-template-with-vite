@@ -7,3 +7,6 @@ export const getUserSelector = userApi.endpoints.getUser.select();
 export const getUserIdSelector = createSelector(getUserSelector, result =>
   result.isSuccess ? result.data?.id : undefined
 );
+export const getUserLoginSelector = createSelector(getUserSelector, result =>
+  result.isSuccess ? result.data?.login : undefined
+);

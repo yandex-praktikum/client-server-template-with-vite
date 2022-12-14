@@ -2,7 +2,7 @@ import { blue, green, yellow, red } from '@mui/material/colors';
 
 import { TSnakeColor } from '../../../shared/types';
 
-type TPrettyColors = {
+export type TPrettyColors = {
   [key in TSnakeColor]: string;
 };
 export const PRETTY_SNAKE_COLORS: TPrettyColors = {

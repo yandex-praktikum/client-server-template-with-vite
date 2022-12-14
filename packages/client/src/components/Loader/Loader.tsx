@@ -3,7 +3,7 @@ import React from 'react';
 
 import { useStyles } from './useStyles';
 
-const Loader = () => {
+export const Loader = () => {
   const classes = useStyles();
 
   return (
@@ -17,7 +17,7 @@ const Loader = () => {
           .map((_, index) => {
             return (
               <div
-              key={index}
+                key={index}
                 className={classes.snakePart}
                 style={{ animation: `pulse_${index} 2s infinite ease-in-out`, left: 95 + index * 40 }}
               />
@@ -27,5 +27,3 @@ const Loader = () => {
     </div>
   );
 };
-
-export default Loader;

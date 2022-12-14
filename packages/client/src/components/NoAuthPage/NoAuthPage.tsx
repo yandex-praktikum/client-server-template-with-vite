@@ -5,9 +5,8 @@ import { useStyles } from './useStyles';
 
 import { toggleAuthModalState } from '../../services/redux/reducers/common.reducer';
 import { useAppDispatch } from '../../services/redux/store';
-import Layout from '../Layout/Layout';
 
-const NoAuthPage = () => {
+export const NoAuthPage = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
 
@@ -16,7 +15,7 @@ const NoAuthPage = () => {
   };
 
   return (
-    <Layout>
+    <div>
       <div className={classes.wrapper}>
         <p className={classes.subTitle}>Oops..</p>
         <p className={classes.title}>You are not authorized</p>
@@ -27,8 +26,6 @@ const NoAuthPage = () => {
           over here!
         </Button>
       </p>
-    </Layout>
+    </div>
   );
 };
-
-export default NoAuthPage;

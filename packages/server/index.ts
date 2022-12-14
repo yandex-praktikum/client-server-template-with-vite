@@ -3,13 +3,19 @@ import dotenv from 'dotenv';
 import express from 'express';
 import socketIo from 'socket.io';
 
-import { addCreateRoomEvent, addChangeCursorPositionEvent, addJoinRoomEvent, addStartEvent } from './socket';
-import { addDecreaseSnakeEvent } from './socket/addDecreaseSnakeEvent';
-import { addUserDisconnectedEvent } from './socket/addUserDisconnectedEvent';
+import { version } from './package.json';
+import { addSocket } from './socket';
 
-import type { IClientToServerEvents, IServerToClientEvents, TGames } from '../shared/types';
+import type { IClientToServerEvents, IServerToClientEvents } from '../shared/types';
+
+import * as fs from 'fs';
+import * as path from 'path';
 
 dotenv.config();
+
+const PATH_TO_CLIENT_DIR = process.env.NODE_ENV === 'development' ? '../client' : '../../../client';
+
+const render = require(PATH_TO_CLIENT_DIR + '/dist-ssr/entry-server.cjs').render;
 
 const app = express();
 
@@ -22,7 +28,7 @@ const server = http.createServer(app);
 const io = new Server<IClientToServerEvents, IServerToClientEvents>(server, {
   transports: ['websocket', 'polling'],
   cors: {
-    origin: ['http://localhost:3000', 'https://chicago-client.herokuapp.com/'],
+    origin: ['http://localhost:3000'],
     credentials: true,
     methods: ['GET', 'POST'],
     allowedHeaders: ['Access-Control-Allow-Origin'],
@@ -33,37 +39,30 @@ app.use(cors());
 
 const port = Number(process.env.PORT) || Number(process.env.SERVER_PORT) || 3001;
 
-const games: TGames = {};
+app.use(express.static(path.join(__dirname, PATH_TO_CLIENT_DIR + '/dist'), { index: false }));
 
-app.get('/', (_, res) => {
-  res.json(`👋 Howdy from the server! VERSION: ${process.env.SERVER_VERSION}`);
+app.use((req, res) => {
+  const { html, cssString, store, emotionCss } = render(req.url);
+
+  const template = path.resolve(__dirname, PATH_TO_CLIENT_DIR + '/dist/index.html');
+  const htmlString = fs.readFileSync(template, 'utf-8');
+  const newString = htmlString
+    .replace('<!--SSR_EMOTION_STYLES-->', emotionCss)
+    .replace('<!--SSR_JSS-->',  `<style id="jss-server-side">${cssString}</style>`)
+    .replace('<!--SSR_OUTLET-->', html)
+    .replace(
+      '<!--__PRELOADED_STATE__-->',
+      `window.__PRELOADED_STATE__ = ${JSON.stringify(store).replace(/</g, '\\u003c')}`
+    );
+
+  res.send(newString);
 });
 
-io.on('connection', socket => {
-  console.log('user connected');
-
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-
-  // для создания комнаты хостом
-  addCreateRoomEvent(socket, games, io);
-
-  // для подключения к созданной комнате
-  addJoinRoomEvent(socket, games, io);
-
-  // для вызова начала игры (когда все игроки поключились к комнате и хост нажимает кнопку Старт)
-  addStartEvent(socket, games, io);
-
-  // для вызова игроком, чтобы передать текущие координаты мыши
-  addChangeCursorPositionEvent(socket, games);
-
-  // для исключения пользователя из игры, когда он подключился к комнате, а затем вышел из нее
-  addUserDisconnectedEvent(socket, games, io);
-
-  // для уменьшения длины змеи
-  addDecreaseSnakeEvent(socket, games);
+app.get('/api', (_, res) => {
+  res.send(`👋 Howdy from the server! VERSION: ${version}`);
 });
+
+addSocket(io);
 
 server.listen(port, () => {
   console.log(`  ➜ 🎸 Server is listening on port: ${port}`);

@@ -7,7 +7,7 @@
   "name": "ChicagoSnake",
   "icons": [
     {
-      "src": "snake-icon.svg",
+      "src": "./snake-icon.svg",
       "sizes": "any"
     }
   ]

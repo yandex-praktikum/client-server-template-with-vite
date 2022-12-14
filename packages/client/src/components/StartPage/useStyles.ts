@@ -20,7 +20,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: '100px',
+    height: '200px',
   },
   menuItem: {
     margin: '10px 0',

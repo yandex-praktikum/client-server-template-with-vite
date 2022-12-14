@@ -1,33 +1,30 @@
 import React, { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { useStyles } from './useStyles';
 
 import { FOOD_COLORS, FOOD_SIZE, MAP_HEIGHT, MAP_WIDTH } from '../../../../../shared/consts';
 import { getDistanceBetweenTwoPoints } from '../../../../../shared/utils';
 import { getRandomItem } from '../../../../../shared/utils/getRandomItem';
-import CursorPng from '../../../assets/cursor.png';
+import GameBGImg from '../../../assets/game_bg.jpg';
 import { Snake } from '../../../game/Snake';
+import { setLastScore } from '../../../services/redux/reducers/common.reducer';
+import { useAppDispatch } from '../../../services/redux/store';
 import { fixPositionForMap } from '../../../utils/fixPositionForMap';
 import { randomIntFromInterval } from '../../../utils/randomIntFromInterfal';
-import { drawMap } from '../../drawers/drawMap';
 import { makeCountDownClock } from '../../makers/makeCountDownClock';
 import { makeFoodItem } from '../../makers/makeFoodItem';
 
 export function SingleGameCanvas() {
+  const classes = useStyles();
   const ref = useRef<HTMLCanvasElement>(null);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   let loopId: number | null = null;
 
   let mousePositionX = MAP_WIDTH / 2;
   let mousePositionY = MAP_HEIGHT / 2;
   const boost = useRef<boolean>(false);
-
-  let foodX = randomIntFromInterval(50, MAP_WIDTH - 50);
-  let foodY = randomIntFromInterval(50, MAP_HEIGHT - 50);
-  let foodImg = makeFoodItem(getRandomItem(FOOD_COLORS));
-
-  const changeFoodItem = () => {
-    foodX = randomIntFromInterval(50, MAP_WIDTH - 50);
-    foodY = randomIntFromInterval(50, MAP_HEIGHT - 50);
-    foodImg = makeFoodItem(getRandomItem(FOOD_COLORS));
-  };
 
   function onMouseMove(e: MouseEvent) {
     if (!ref.current) {
@@ -52,6 +49,16 @@ export function SingleGameCanvas() {
   }
 
   useEffect(() => {
+    let foodX = randomIntFromInterval(50, MAP_WIDTH - 50);
+    let foodY = randomIntFromInterval(50, MAP_HEIGHT - 50);
+    let foodImg = makeFoodItem(getRandomItem(FOOD_COLORS));
+
+    const changeFoodItem = () => {
+      foodX = randomIntFromInterval(50, MAP_WIDTH - 50);
+      foodY = randomIntFromInterval(50, MAP_HEIGHT - 50);
+      foodImg = makeFoodItem(getRandomItem(FOOD_COLORS));
+    };
+
     const canvas = ref.current;
     const ctx = canvas?.getContext('2d');
 
@@ -61,17 +68,24 @@ export function SingleGameCanvas() {
 
     document.addEventListener('mousemove', onMouseMove);
 
-    canvas.width = MAP_WIDTH;
-    canvas.height = MAP_HEIGHT;
-
     const snake = new Snake(mousePositionX, mousePositionY, ctx, 'red', 2);
 
     const { canvas: countDownClock, cancelTimer: cancelCountDownClockTimer } = makeCountDownClock(
       MAP_WIDTH,
       MAP_HEIGHT,
       () => {
+        dispatch(
+          setLastScore([
+            {
+              id: null,
+              login: null,
+              points: snake.segments.length,
+              color: null,
+            },
+          ])
+        );
+        navigate('/leaderboard');
         onEnd();
-        console.info(`END. SCORE: ${snake.segments.length}`);
       }
     );
 
@@ -93,7 +107,7 @@ export function SingleGameCanvas() {
       increaseSnakeIfNeed();
 
       // очищаем все и рисуем карту заново
-      drawMap(ctx);
+      ctx.clearRect(0, 0, MAP_WIDTH, MAP_HEIGHT);
       ctx.drawImage(foodImg, foodX - FOOD_SIZE / 2, foodY - FOOD_SIZE / 2);
       ctx.drawImage(countDownClock, 0, 0);
       snake.draw();
@@ -119,11 +133,16 @@ export function SingleGameCanvas() {
   }, []);
 
   return (
-    <div
-      style={{
-        cursor: `url(${CursorPng}) 24 24, default`,
-      }}>
-      <canvas ref={ref} onMouseDown={onMouseDown} onMouseUp={onMouseUp} />
+    <div className={classes.wrapper}>
+      <img src={GameBGImg} width={MAP_WIDTH} height={MAP_HEIGHT} />
+      <canvas
+        ref={ref}
+        className={classes.mainCanvas}
+        width={MAP_WIDTH}
+        height={MAP_HEIGHT}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+      />
     </div>
   );
 }

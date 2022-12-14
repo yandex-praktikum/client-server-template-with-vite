@@ -8,7 +8,7 @@ interface State {
   hasError: boolean;
 }
 
-class ErrorBoundary extends Component<Props, State> {
+export class ErrorBoundary extends Component<Props, State> {
   public state: State = {
     hasError: false,
   };
@@ -32,7 +32,7 @@ class ErrorBoundary extends Component<Props, State> {
           justifyContent:'center',
           marginTop:'20%',
         }}>
-          <h1>Упс...что-то пошло не так. Попробуйте зайти в игру позже</h1>;
+          <h1>Упс...что-то пошло не так. Попробуйте зайти в игру позже</h1>
         </div>
       );
     }
@@ -40,5 +40,3 @@ class ErrorBoundary extends Component<Props, State> {
     return this.props.children;
   }
 }
-
-export default ErrorBoundary;

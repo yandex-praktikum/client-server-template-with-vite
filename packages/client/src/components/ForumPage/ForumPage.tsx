@@ -18,7 +18,6 @@ import { useAppSelector } from '../../services/redux/store';
 import { useNavigatorOnLine } from '../../services/sw/useNavigatorOnLine';
 import { getAuthorInitials } from '../../utils/getAuthorInitials';
 import { getCreatedAtValue } from '../../utils/getCreatedAtValue';
-import Layout from '../Layout/Layout';
 
 export const ForumPage = () => {
   const classes = useStyles();
@@ -36,7 +35,7 @@ export const ForumPage = () => {
   const authorInitials = selectedTheme?.author ? getAuthorInitials(selectedTheme.author) : '';
 
   return (
-    <Layout>
+    <div>
       <div className={classes.wrapper}>
         <List className={classes.themeList}>
           {TEMP_DATA.map(item => (
@@ -56,7 +55,7 @@ export const ForumPage = () => {
         {!selectedTheme ? (
           <div className={classes.emptyBlock}>
             <ArrowBackIcon fontSize="large" fontVariant={'outlined'} />
-            <Typography variant="h4">Сhoose a topic</Typography>
+            <Typography variant="h4">Choose a topic</Typography>
           </div>
         ) : (
           <>
@@ -115,6 +114,6 @@ export const ForumPage = () => {
           </>
         )}
       </div>
-    </Layout>
+    </div>
   );
 };

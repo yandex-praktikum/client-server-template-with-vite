@@ -1,5 +1,5 @@
 import { Alert, Avatar, Button, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ColorIndicator } from './parts/ColorIndicator';
@@ -10,11 +10,11 @@ import type { TPlayer } from '../../../../shared/types';
 import { setGame } from '../../services/redux/reducers/common.reducer';
 import { getUserSelector } from '../../services/redux/selectors/getUserSelector';
 import { useAppDispatch, useAppSelector } from '../../services/redux/store';
-import { socket } from '../../services/socket/socket';
+import { SocketContext } from '../../services/socket/socket';
 import { getAuthorInitials } from '../../utils/getAuthorInitials';
-import Layout from '../Layout/Layout';
 
 export const WaitingRoomPage = () => {
+  const socket = useContext(SocketContext);
   const { data: currentUser } = useAppSelector(getUserSelector);
 
   const { currentGame } = useAppSelector(state => state.common);
@@ -47,6 +47,7 @@ export const WaitingRoomPage = () => {
       }
 
       socket.off('changedRoom');
+
       socket.off('started');
     };
   }, []);
@@ -66,7 +67,7 @@ export const WaitingRoomPage = () => {
   };
 
   return (
-    <Layout>
+    <div>
       <Paper elevation={3} className={classes.wrapper}>
         <h1 className={classes.head}>
           ROOM CODE: <span className={classes.code}>{roomId}</span>
@@ -123,6 +124,6 @@ export const WaitingRoomPage = () => {
           </Alert>
         )}
       </Paper>
-    </Layout>
+    </div>
   );
 };

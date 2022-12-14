@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom';
 
 import { useStyles } from './useStyles';
 
-import Layout from '../Layout/Layout';
-
-const NotFoundPage = () => {
+export const NotFoundPage = () => {
   const classes = useStyles();
 
   return (
-    <Layout>
+    <div>
       <div className={classes.wrapper}>
         <p className={classes.subTitle}>Oops..</p>
         <p className={classes.title}>404</p>
@@ -20,8 +18,6 @@ const NotFoundPage = () => {
           over here!
         </Link>
       </p>
-    </Layout>
+    </div>
   );
 };
-
-export default NotFoundPage;

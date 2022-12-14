@@ -1,15 +1,9 @@
-### Демонстрация игры
-[Heroku front](https://chicago-client.herokuapp.com/)
-
-[Heroku back](https://chicago-server-api.herokuapp.com/)
-
 ### Как запускать?
 
 1. Убедитесь что у вас установлен `node` и `docker`
 2. Выполните команду `yarn bootstrap` - это обязательный шаг, без него ничего работать не будет :)
-3. Выполните команду `yarn dev`
-4. Выполните команду `yarn dev --scope=client` чтобы запустить только клиент
-5. Выполните команду `yarn dev --scope=server` чтобы запустить только server
+3. Выполните команду `yarn dev:client`
+4. Выполните команду `yarn dev:server`
 
 ### Как добавить зависимости?
 
@@ -50,54 +44,8 @@
 
 И чтобы посмотреть что получилось
 
-`yarn preview --scope client`
-`yarn preview --scope server`
-
-
-### Deploy heroku
-
-#### CLIENT
-```
-heroku git:remote -a chicago-client
-
-
-heroku login
-heroku container:login
-heroku container:push web --arg SCOPE=client
-heroku container:release web
-```
-
-Доп. информацию по деплою можно найти здесь https://dashboard.heroku.com/apps/chicago-client/deploy/heroku-container
-
-#### SERVER
-
-```
-heroku git:remote -a chicago-server-api
-```
-
-```
-heroku login
-heroku container:login
-heroku container:push web --arg SCOPE=server
-heroku container:release web
-```
-
-Доп. информацию по деплою можно найти здесь https://dashboard.heroku.com/apps/chicago-server-api/deploy/heroku-container
-
-### Restart heroku app
-
-Для сервера
-
-```
-heroku restart -a chicago-server-api
-```
-
-Для клиента
-
-```
-heroku restart -a chicago-client
-```
-
+`yarn preview`
+`yarn preview`
 
 ## Хуки
 
