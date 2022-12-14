@@ -5,6 +5,7 @@ import { Modal } from "antd";
 import { createSounds } from "../SoundPanel/createSounds";
 import { SoundPanel } from "../SoundPanel/SoundPanel";
 
+//TODO: положить саунды и аудиоконтекст в стор при загрузке приложения. Иначе долго грузится.
 const { soundElements, audioContext } = createSounds();
 
 interface Shape {
@@ -102,12 +103,22 @@ const Game = () => {
 
     // bird jump
     const jump = () => {
+        const isSoundEnabled = JSON.parse(
+            localStorage.getItem("soundIsEnabled") || String(false)
+        );
+
+        if (isSoundEnabled && audioContext.state === "suspended") {
+            audioContext.resume();
+        }
+
         if (hasFinished) {
             return;
         }
+
         if (!hasStarted) {
             hasStarted = true;
         }
+
         birdYSpeed = constants.JUMP_SPEED;
         soundElements.wing.play();
     };
@@ -172,7 +183,7 @@ const Game = () => {
 
     useEffect(() => {
         try {
-            const isSoundEnabled: boolean = JSON.parse(
+            const isSoundEnabled = JSON.parse(
                 localStorage.getItem("soundIsEnabled") || String(false)
             );
 
@@ -185,6 +196,8 @@ const Game = () => {
             }
         } catch (e) {
             // TODO: add notification
+            audioContext.suspend();
+            localStorage.setItem("soundIsEnabled", JSON.stringify(false));
         }
     }, []);
 
@@ -204,6 +217,7 @@ const Game = () => {
                         if (touchedPipe()) {
                             soundElements.hit.play();
                         }
+
                         soundElements.die.play();
 
                         setShowModal(true);

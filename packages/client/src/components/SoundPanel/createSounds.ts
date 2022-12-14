@@ -17,10 +17,14 @@ export const createSounds = () => {
 
     const AudioContext = window.AudioContext;
     const context = new AudioContext();
+    const gainNode = context.createGain();
 
     Object.values(soundElements).forEach(element => {
-        context.createMediaElementSource(element).connect(context.destination);
+        context
+            .createMediaElementSource(element)
+            .connect(gainNode)
+            .connect(context.destination);
     });
 
-    return { soundElements, audioContext: context };
+    return { soundElements, audioContext: context, gainNode };
 };
