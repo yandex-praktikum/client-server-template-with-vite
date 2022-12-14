@@ -1,0 +1,24 @@
+.wrapper {
+  display: grid;
+  height: calc(100% - 64px);
+  grid-template-rows: 1fr min-content;
+}
+
+.game {
+  &__body {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__footer {
+    width: 100%;
+    padding: 5px 15px;
+    box-sizing: border-box;
+  }
+
+  &__control {
+    width: 24px;
+    margin-left: auto;
+  }
+}
