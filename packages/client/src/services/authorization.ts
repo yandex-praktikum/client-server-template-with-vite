@@ -1,5 +1,5 @@
 import { getUserDataRequest, signinRequest, signupRequest } from "../api/Auth";
-import { Nullable, signupRequestData, UserFromServer } from "../api/typesApi";
+import { signupRequestData } from "../api/typesApi";
 import { LoginFormValuesType } from "../components/forms/LoginForm/LoginForm";
 import { NavigateFunction } from "react-router-dom";
 
@@ -13,11 +13,12 @@ export const signin = async (values: LoginFormValuesType) => {
     }
 };
 
-export const getUserInfo = async (): Promise<Nullable<UserFromServer>> => {
+// TODO: Добавить типизацию ответов
+export const getUserInfo = async (): Promise<any> => {
     try {
         const response = await getUserDataRequest();
 
-        return response as UserFromServer;
+        return response;
     } catch (error) {
         return null;
     }

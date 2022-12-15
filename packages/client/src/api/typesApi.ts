@@ -40,3 +40,14 @@ export interface signupRequestData {
 export interface signupResponseData extends Response {
   id: number
 }
+
+export type UserInfoRequestData = {
+    id: number;
+    first_name: string;
+    second_name: string;
+    display_name: string;
+    login: string;
+    email: string;
+    phone: string;
+    avatar: string;
+};
