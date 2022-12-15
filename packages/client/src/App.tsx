@@ -6,6 +6,8 @@ import { SignUpPage } from "./pages/signUp/SignUpPage";
 import { MainPage } from "./pages/main/MainPage";
 import ForumPage from "./pages/ForumPage/ForumPage";
 import GamePage from "./pages/GamePage/GamePage";
+import { ProfilePage } from "./pages/profile/ProfilePage";
+import { ProfileChangePage } from "./pages/profile-change/ProfileChangePage";
 
 const App = () => {
     return (
@@ -16,12 +18,9 @@ const App = () => {
                 <Route path="/sign-up" element={<SignUpPage />} />
                 <Route path="/forum" element={<ForumPage />} />
                 <Route path="/ladder" element={<LadderPage />} />
-                <Route path="/profile" element={<div>profile</div>} />
-                <Route
-                    path="/profile-change"
-                    element={<div>profile-change</div>}
-                />
                 <Route path="/game" element={<GamePage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/profile-change" element={<ProfileChangePage />} />
                 <Route path="/*" element={<div>error404</div>} />
             </Routes>
         </div>
