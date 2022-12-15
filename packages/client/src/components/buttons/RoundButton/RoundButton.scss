@@ -1,10 +1,19 @@
 .round-btn {
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  &:hover {
-    cursor: pointer;
-    scale: 1.1;
-  }
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 40px;
+    left: 100px;
+    z-index: 10;
+    &:hover {
+        cursor: pointer;
+        scale: 1.1;
+    }
 }

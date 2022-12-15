@@ -1,29 +1,15 @@
 import { Col, Layout, Row, Button } from "antd";
 import Title from "antd/es/typography/Title";
 import { NavigationMenu } from "../../components/navigation/Navigation";
-import { PRESENTATION_IMAGE } from "../../constants/imagesPaths";
 import "./MainPage.scss";
-import { SoundButton } from "../../components/buttons/SoundButton/SoundButton";
-
-const background = PRESENTATION_IMAGE;
-
-const screenStyle = {
-    backgroundImage: `url(${background})`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    backgroundColor: "white",
-    height: "100vh",
-};
+import { NavLink } from "react-router-dom";
 
 export const MainPage = () => {
     return (
-        <Layout className="layout" style={screenStyle}>
+        <Layout className="layout">
             <Row
                 style={{ height: "100vh", justifyContent: "center" }}
                 className="main">
-                <SoundButton />
-
                 <Col
                     flex={2}
                     style={{
@@ -41,13 +27,15 @@ export const MainPage = () => {
                     <div className="main__menu">
                         <NavigationMenu />
 
-                        <Button
-                            size="large"
-                            htmlType="button"
-                            type="primary"
-                            className="btn-start">
-                            Start game
-                        </Button>
+                        <NavLink to={"/game"}>
+                            <Button
+                                size="large"
+                                htmlType="button"
+                                type="primary"
+                                className="btn-start">
+                                Start game
+                            </Button>
+                        </NavLink>
                     </div>
                 </Col>
             </Row>
