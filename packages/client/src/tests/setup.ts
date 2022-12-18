@@ -1,0 +1,1 @@
+import "jest-fix-undefined";

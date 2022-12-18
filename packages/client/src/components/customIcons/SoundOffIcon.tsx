@@ -17,7 +17,7 @@ const soundOffSVG = () => (
 );
 
 const SoundOffIcon = (props: Partial<CustomIconComponentProps>) => (
-    <Icon component={soundOffSVG} {...props} />
+    <Icon component={soundOffSVG} {...props} data-testid="sound-off" />
 );
 
 export default SoundOffIcon;

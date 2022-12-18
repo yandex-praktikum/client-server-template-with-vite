@@ -1,0 +1,16 @@
+0 silly argv {
+0 silly argv   _: [ 'add' ],
+0 silly argv   dev: true,
+0 silly argv   D: true,
+0 silly argv   scope: 'client',
+0 silly argv   globs: [],
+0 silly argv   lernaVersion: '5.4.3',
+0 silly argv   '$0': 'node_modules\\lerna\\cli.js',
+0 silly argv   pkg: '@testing-library/identity-obj-proxy'
+0 silly argv }
+1 notice cli v5.4.3
+2 verbose rootPath D:\_disc_D\_frontend_development\_Yandex_Praktikum\flappy-bird-1
+3 error HttpErrorGeneral: 404 Not Found - GET https://registry.yarnpkg.com/@testing-library%2fidentity-obj-proxy - Not found
+3 error     at D:\_disc_D\_frontend_development\_Yandex_Praktikum\flappy-bird-1\node_modules\npm-registry-fetch\lib\check-response.js:95:15
+3 error     at processTicksAndRejections (node:internal/process/task_queues:96:5)
+3 error     at async RegistryFetcher.packument (D:\_disc_D\_frontend_development\_Yandex_Praktikum\flappy-bird-1\node_modules\pacote\lib\registry.js:92:19)
