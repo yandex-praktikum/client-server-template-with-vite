@@ -9,7 +9,7 @@ import { useRootLoaderData } from '../../hooks/useRootLoaderData';
 import { getIsAuthorizedToAccessPage } from '../../utils/getIsAuthorizedToAccessPage';
 import { ROUTE_PATHS } from '../../utils/routes';
 
-type TPAgeWrapperProps = { children: ReactNode }
+type TPAgeWrapperProps = { children: ReactNode };
 
 const PageWrapper: FC<TPAgeWrapperProps> = ({ children }) => {
   const navigate = useNavigate();

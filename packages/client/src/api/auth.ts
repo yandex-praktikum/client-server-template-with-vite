@@ -13,8 +13,8 @@ export const getUserData = (): AxiosPromise<IUserInfo> =>
  * Логин
  */
 export interface IUserSigninReq {
-  login: string
-  password: string
+  login: string;
+  password: string;
 }
 
 export const requestLogIn = (data: IUserSigninReq): AxiosPromise =>
@@ -25,3 +25,18 @@ export const requestLogIn = (data: IUserSigninReq): AxiosPromise =>
  */
 export const requestLogOut = (): AxiosPromise =>
   axios.post(`${AUTH_API}/logout`, {}, { withCredentials: true });
+
+/**
+ * Регистрация
+ */
+export interface IUserSignUpReq {
+  first_name: string;
+  second_name: string;
+  login: string;
+  email: string;
+  password: string;
+  phone: string;
+}
+
+export const requestSignUp = (data: IUserSignUpReq) =>
+  axios.post(`${AUTH_API}/signup`, data, { withCredentials: true });

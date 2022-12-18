@@ -1,0 +1,17 @@
+.wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+
+  &__row {
+    :nth-child(1) {
+      margin-right: 5px;
+    }
+  }
+}

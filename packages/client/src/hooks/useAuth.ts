@@ -1,12 +1,19 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { IUserSigninReq, requestLogOut, requestLogIn } from '../api/auth';
+import {
+  IUserSigninReq,
+  requestLogOut,
+  requestLogIn,
+  IUserSignUpReq,
+  requestSignUp,
+} from '../api/auth';
 import { ROUTE_PATHS } from '../utils/routes';
 
 export interface IUseAuthReturn {
-  login: (data: IUserSigninReq) => void
-  logout: VoidFunction
+  login: (data: IUserSigninReq) => void;
+  logout: VoidFunction;
+  signup: (data: IUserSignUpReq) => void;
 }
 
 export const useAuth = (): IUseAuthReturn => {
@@ -30,8 +37,18 @@ export const useAuth = (): IUseAuthReturn => {
     }
   }, []);
 
+  const signup = useCallback(async (data: IUserSignUpReq) => {
+    try {
+      await requestSignUp(data);
+      navigate(0);
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
   return {
     login,
     logout,
+    signup,
   };
 };
