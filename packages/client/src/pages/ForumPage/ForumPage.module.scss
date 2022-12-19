@@ -1,0 +1,13 @@
+.wrapper {
+  height: calc(100% - 64px);
+  padding: 10px;
+  display: grid;
+  grid-template-rows: 1fr min-content;
+}
+
+.forumPage {
+  &__body {
+    height: 100%;
+    overflow-y: scroll;
+  }
+}

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
-import { Game } from '../../../../game_modules/game';
+import { Game } from '../../../../game_modules';
 import { Scene } from '../../../../game_modules/Scene';
 
 export const GameCanvas: React.FC = () => {

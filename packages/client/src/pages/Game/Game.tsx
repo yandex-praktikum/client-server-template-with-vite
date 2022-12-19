@@ -3,7 +3,6 @@ import { Button, CircularProgress, Tooltip } from '@mui/material';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router';
 
-import { GameCanvas } from './components/Canvas';
 import GameControl from './components/GameControl';
 import styles from './Game.module.scss';
 
@@ -18,29 +17,26 @@ const Game: FC = () => {
     setPageName('Играть');
   }, []);
 
-  const handleStartGame = useCallback(() => {
-    setState(gameStateEnum.GAME);
-  }, []);
+  const handleStartGame = useCallback(
+    () => {
+      setState(gameStateEnum.LOADING);
+    },
+    []
+  );
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.game__body}>
-        {
-          {
-            [gameStateEnum.START]: (
-              <Button onClick={handleStartGame} variant="outlined">
-                Играть
-              </Button>
-            ),
-            [gameStateEnum.LOADING]: <CircularProgress />,
-            [gameStateEnum.GAME]: <GameCanvas />,
-          }[state]
-        }
+        {{
+          [gameStateEnum.START]: <Button onClick={handleStartGame} variant="outlined">Играть</Button>,
+          [gameStateEnum.LOADING]: <CircularProgress />,
+          [gameStateEnum.GAME]: <div>Игра</div>,
+        }[state]}
       </div>
       <div className={styles.game__footer}>
         <div className={styles.game__control}>
-          <Tooltip title={<GameControl />}>
-            <Gamepad color={'primary'} />
+          <Tooltip title={<GameControl/>}>
+            <Gamepad color={'primary'}/>
           </Tooltip>
         </div>
       </div>
