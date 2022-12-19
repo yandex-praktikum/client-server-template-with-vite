@@ -1,8 +1,7 @@
-import { Col, Layout, Row, Image } from "antd";
+import { Col, Layout, Row, Image, Typography } from "antd";
+import { LoginForm } from "../../components/forms/LoginForm/LoginForm";
 import { COLORED_LOGO } from "../../constants/imagesPaths";
 import "./LoginPage.scss";
-import { LoginForm } from "../../components/forms/LoginForm/LoginForm";
-import Title from "antd/es/typography/Title";
 
 const LoginPage = () => (
     <Layout className="layout" data-testid="login-page">
@@ -38,9 +37,11 @@ const LoginPage = () => (
                             src={COLORED_LOGO}
                             data-testid="logo"
                         />
-                        <Title level={4} data-testid="logo-underline">
+                        <Typography.Title
+                            level={4}
+                            data-testid="logo-underline">
                             Pachka-i-tocka edition
-                        </Title>
+                        </Typography.Title>
                     </div>
 
                     <LoginForm />
