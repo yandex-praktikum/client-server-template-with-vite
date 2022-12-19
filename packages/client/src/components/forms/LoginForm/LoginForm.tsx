@@ -53,7 +53,8 @@ export const LoginForm = () => {
             name="login-form"
             onFinish={formik.handleSubmit}
             autoComplete="off"
-            size="large">
+            size="large"
+            data-testid="login-form">
             <Form.Item
                 className="login-form__item"
                 label="Login"

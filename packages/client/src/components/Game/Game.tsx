@@ -282,7 +282,7 @@ const Game = () => {
     return (
         <>
             <SoundPanel audioContext={audioContext} />
-            <div onClick={jump} onKeyPress={jump}>
+            <div onClick={jump} onKeyPress={jump} data-testid="game">
                 <canvas
                     ref={canvas}
                     width={constants.CANVAS_WIDTH}

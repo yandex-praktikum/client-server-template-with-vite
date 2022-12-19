@@ -16,5 +16,5 @@ export default {
     transformIgnorePatterns: [
         "/node_modules/(?!antd|rc-.+?|@babel/runtime|@ant-design).+(js|jsx)$",
     ],
-    setupFiles: ["<rootDir>/src/tests/setup.ts"],
+    setupFiles: ["<rootDir>/src/tests/setup.js"],
 };

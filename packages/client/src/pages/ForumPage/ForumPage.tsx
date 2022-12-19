@@ -4,7 +4,7 @@ import MainLayout from "../../containers/MainLayout/MainLayout";
 
 const ForumPage = () => {
     return (
-        <MainLayout>
+        <MainLayout data-testid="forum-page">
             <div className="site-card-border-less-wrapper">
                 <Card
                     title="НОВОСТИ"
