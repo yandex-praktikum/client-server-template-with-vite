@@ -1,0 +1,1 @@
+export { GameCanvas } from './GameCanvas';

@@ -1,4 +1,4 @@
-import { KeyboardArrowRight, KeyboardArrowLeft, SpaceBar } from '@mui/icons-material';
+import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 import { FC } from 'react';
 
 import styles from './GameControl.module.scss';
@@ -6,9 +6,8 @@ import styles from './GameControl.module.scss';
 const GameControl: FC = () => {
   return (
     <div className={styles.GameControl}>
-      <KeyboardArrowLeft/> Лево
-      <KeyboardArrowRight/> Право
-      <SpaceBar/> Прыжок
+      <KeyboardArrowUp /> Прыжок
+      <KeyboardArrowDown /> Пригнуться
     </div>
   );
 };

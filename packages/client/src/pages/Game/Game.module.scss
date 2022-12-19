@@ -12,7 +12,8 @@
   }
 
   &__footer {
-    width: 100%;
+    // width: 100%;
+    position: absolute;
     padding: 5px 15px;
     box-sizing: border-box;
   }
