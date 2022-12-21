@@ -33,7 +33,7 @@ export const ProfilePage = () => {
     }, []);
 
     return (
-        <Layout className="layout">
+        <Layout className="layout" data-testid="profile-page">
             <Row justify={"center"} style={{ height: "100vh" }}>
                 <Col className={"col"} xl={12}>
                     <Card

@@ -1,7 +1,7 @@
-import React, { ErrorInfo } from "react";
+import { Component, ErrorInfo } from "react";
 import PageError404 from "./Error404/PageError404";
 
-export class ErrorBoundary extends React.Component {
+export class ErrorBoundary extends Component {
     state = { hasError: null };
 
     static getDerivedStateFromError(error: Error) {

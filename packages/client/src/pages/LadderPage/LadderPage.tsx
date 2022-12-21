@@ -50,7 +50,7 @@ const LadderPage = () => {
         },
     ];
     return (
-        <MainLayout>
+        <MainLayout data-testid="leader-board">
             <Table columns={columns} dataSource={data} pagination={false} />
         </MainLayout>
     );

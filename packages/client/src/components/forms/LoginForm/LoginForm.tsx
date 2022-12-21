@@ -2,7 +2,7 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Form, Button, Input } from "antd";
 import { useFormik } from "formik";
 import { ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { getUserInfo, signin } from "../../../services/authorization";
 import "./LoginForm.scss";
 import { LOGIN_FORM_VALIDATION_SCHEMA } from "./loginFormValidationSchema";
@@ -19,18 +19,19 @@ const initialFormValues = {
 
 export const LoginForm = () => {
     const navigate = useNavigate();
+    const submitHandler = async (values: LoginFormValuesType) => {
+        const isLoggedIn = await signin(values);
+
+        if (isLoggedIn) {
+            await getUserInfo();
+
+            navigate("/");
+        }
+    };
 
     const formik = useFormik({
         initialValues: initialFormValues,
-        onSubmit: async (values: LoginFormValuesType) => {
-            const isLoggedIn = await signin(values);
-
-            if (isLoggedIn) {
-                await getUserInfo();
-
-                navigate("/");
-            }
-        },
+        onSubmit: submitHandler,
         validationSchema: LOGIN_FORM_VALIDATION_SCHEMA,
     });
 
@@ -53,7 +54,8 @@ export const LoginForm = () => {
             name="login-form"
             onFinish={formik.handleSubmit}
             autoComplete="off"
-            size="large">
+            size="large"
+            data-testid="login-form">
             <Form.Item
                 className="login-form__item"
                 label="Login"
@@ -74,6 +76,7 @@ export const LoginForm = () => {
                     value={formik.values.login}
                     onChange={e => onInputChange("login", e)}
                     onFocus={() => onFocus("login")}
+                    data-testid="login-input"
                 />
             </Form.Item>
 
@@ -92,23 +95,28 @@ export const LoginForm = () => {
                     placeholder="Password"
                     value={formik.values.password}
                     onChange={e => onInputChange("password", e)}
+                    data-testid="password-input"
                 />
             </Form.Item>
 
             <div className="login-form__footer">
-                <Button type="primary" htmlType="submit" size="large">
+                <Button
+                    type="primary"
+                    htmlType="submit"
+                    size="large"
+                    data-testid="signin-button">
                     Sign in
                 </Button>
 
-                {/* TODO: добавить переход на страницу регистрации через роутер*/}
-
-                <Button
-                    type="link"
-                    htmlType="button"
-                    onClick={() => navigate("/sign-up")}
-                    size="large">
-                    Create account
-                </Button>
+                <NavLink to={"/sign-up"}>
+                    <Button
+                        type="link"
+                        htmlType="button"
+                        size="large"
+                        data-testid="signup-button">
+                        Create account
+                    </Button>
+                </NavLink>
             </div>
         </Form>
     );

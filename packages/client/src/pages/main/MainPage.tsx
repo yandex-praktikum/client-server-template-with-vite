@@ -1,15 +1,14 @@
 import { Col, Layout, Row, Button } from "antd";
-import Title from "antd/es/typography/Title";
 import { NavigationMenu } from "../../components/navigation/Navigation";
 import "./MainPage.scss";
 import { NavLink } from "react-router-dom";
 
 export const MainPage = () => {
     return (
-        <Layout className="layout">
+        <Layout className="layout" data-testid="main-page">
             <Row
                 style={{ height: "100vh", justifyContent: "center" }}
-                className="main">
+                className="main-page">
                 <Col
                     flex={2}
                     style={{
@@ -21,8 +20,8 @@ export const MainPage = () => {
                         rowGap: "2rem",
                     }}>
                     {/* TODO: брать имя из стора и лучший результат из локал сторедж? */}
-                    <Title level={2}>Hello, USER</Title>
-                    <Title level={3}>Your best score: 999</Title>
+                    <h2 data-testid="main-title">Hello, USER</h2>
+                    <h3 data-testid="main-score">Your best score: 999</h3>
 
                     <div className="main__menu">
                         <NavigationMenu />
@@ -32,7 +31,8 @@ export const MainPage = () => {
                                 size="large"
                                 htmlType="button"
                                 type="primary"
-                                className="btn-start">
+                                className="btn-start"
+                                data-testid="start-game-button">
                                 Start game
                             </Button>
                         </NavLink>
