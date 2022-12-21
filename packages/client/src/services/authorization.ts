@@ -24,13 +24,17 @@ export const getUserInfo = async (): Promise<any> => {
     }
 };
 
-export const signup = async (data: signupRequestData, navigate: NavigateFunction) => {
-  try {
-    const response = await signupRequest(data)
-    if (response.status === 200) {
-      navigate("/")
+export const signup = async (
+    data: signupRequestData,
+    navigate: NavigateFunction
+) => {
+    try {
+        const response = await signupRequest(data);
+        if (response.status === 200) {
+            navigate("/");
+        }
+        return response;
+    } catch (error) {
+        console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-  }
-}
+};

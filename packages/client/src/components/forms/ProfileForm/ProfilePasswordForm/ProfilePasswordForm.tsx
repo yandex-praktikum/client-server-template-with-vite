@@ -4,6 +4,8 @@ import "../ProfileForm.scss";
 import { updatePassword } from "../../../../services/profile";
 import { useForm } from "antd/es/form/Form";
 import { getValidator } from "../validation";
+import { useNotification } from "../../../../hooks/useNorification";
+import { useState } from "react";
 
 export type ProfilePasswordFormValuesType = {
     oldPassword: string;
@@ -19,18 +21,23 @@ const validator = getValidator("password");
 
 export const ProfilePasswordForm = () => {
     const [form] = useForm();
+    const [openNotification, contextHolder] = useNotification();
+    const [isLoading, setIsLoading] = useState(false);
 
-    const onFinish = async (values: ProfilePasswordFormValuesType) => {
-        const isUpdated = await updatePassword(values);
-        // TODO: добавить нотификацию
-
-        if (isUpdated) {
-            form.resetFields();
-            console.log("OK");
-        }
+    const onFinish = (values: ProfilePasswordFormValuesType) => {
+        setIsLoading(true);
+        updatePassword(values).then(response => {
+            if (response) {
+                openNotification({
+                    status: response.status,
+                });
+            }
+            setIsLoading(false);
+        });
     };
     return (
         <div>
+            {contextHolder}
             <Form
                 form={form}
                 className="profile-form"
@@ -55,7 +62,11 @@ export const ProfilePasswordForm = () => {
                     <Input.Password />
                 </Form.Item>
                 <div className="profile-form__footer">
-                    <Button type="primary" htmlType="submit" block>
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        block
+                        disabled={isLoading}>
                         Save
                     </Button>
                 </div>

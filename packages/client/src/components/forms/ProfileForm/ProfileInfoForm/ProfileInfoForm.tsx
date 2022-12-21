@@ -9,6 +9,7 @@ import { getValidator } from "../validation";
 import { UserOutlined } from "@ant-design/icons";
 import { PATH } from "../../../../constants/apiPaths";
 import { AvatarApi } from "../../../../api/AvatarApi";
+import { useNotification } from "../../../../hooks/useNorification";
 
 export type ProfileFormValuesType = {
     first_name: string;
@@ -34,6 +35,9 @@ export const ProfileInfoForm = () => {
     const [avatar, setAvatar] = useState<string | null>(null);
     const [form] = useForm();
 
+    const [openNotification, contextHolder] = useNotification();
+    const [isLoading, setIsLoading] = useState(false);
+
     const fetchData = async () => {
         const response = await getUserInfo();
 
@@ -47,19 +51,24 @@ export const ProfileInfoForm = () => {
         fetchData();
     }, []);
 
-    const onFinish = async (values: ProfileFormValuesType) => {
-        const isUpdated = await updateInfo(values);
-
-        // TODO: добавить нотификацию
-        if (isUpdated) {
-            console.log("OK");
-        }
+    const onFinish = (values: ProfileFormValuesType) => {
+        setIsLoading(true);
+        updateInfo(values).then(response => {
+            setIsLoading(false);
+            openNotification({
+                status: response?.status,
+            });
+        });
     };
     return (
         <div>
+            {contextHolder}
             <Upload
                 customRequest={async options => {
-                    await AvatarApi(options);
+                    const avatarResult = await AvatarApi(options);
+                    openNotification({
+                        status: avatarResult?.status,
+                    });
                     fetchData();
                 }}
                 showUploadList={false}
@@ -131,7 +140,11 @@ export const ProfileInfoForm = () => {
                 </Form.Item>
 
                 <div className="profile-form__footer">
-                    <Button type="primary" htmlType="submit" block>
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        block
+                        disabled={isLoading}>
                         Save
                     </Button>
                 </div>

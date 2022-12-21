@@ -22,6 +22,7 @@ export const AvatarApi = async (options: UploadRequestOption) => {
 
         onSuccess && onSuccess("Ok");
         console.log("server res: ", res);
+        return res;
     } catch (err) {
         console.log("Error: ", err);
         onError && onError(err as UploadRequestError);
