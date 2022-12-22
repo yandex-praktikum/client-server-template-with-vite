@@ -2,6 +2,7 @@ import React from "react";
 import MainLayout from "../../containers/MainLayout/MainLayout";
 import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
+import ContentContainer from "../../containers/ContentContainer/ContentContainer";
 
 interface DataType {
     key: string;
@@ -51,7 +52,9 @@ const LadderPage = () => {
     ];
     return (
         <MainLayout data-testid="leader-board">
-            <Table columns={columns} dataSource={data} pagination={false} />
+            <ContentContainer title="Доска лидеров">
+                <Table columns={columns} dataSource={data} pagination={false} />
+            </ContentContainer>
         </MainLayout>
     );
 };

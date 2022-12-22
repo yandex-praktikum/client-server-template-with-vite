@@ -4,6 +4,7 @@ import "../ProfileForm.scss";
 import { updatePassword } from "../../../../services/profile";
 import { useForm } from "antd/es/form/Form";
 import { getValidator } from "../validation";
+import { useNavigate } from "react-router-dom";
 
 export type ProfilePasswordFormValuesType = {
     oldPassword: string;
@@ -19,13 +20,14 @@ const validator = getValidator("password");
 
 export const ProfilePasswordForm = () => {
     const [form] = useForm();
-
+    const navigate = useNavigate();
     const onFinish = async (values: ProfilePasswordFormValuesType) => {
         const isUpdated = await updatePassword(values);
         // TODO: добавить нотификацию
 
         if (isUpdated) {
             form.resetFields();
+            navigate("/profile");
             console.log("OK");
         }
     };

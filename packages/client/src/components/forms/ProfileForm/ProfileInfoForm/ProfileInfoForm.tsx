@@ -1,5 +1,4 @@
 import { Form, Button, Input, Avatar, Divider, Upload } from "antd";
-
 import { useEffect, useState } from "react";
 import "../ProfileForm.scss";
 import { updateInfo } from "../../../../services/profile";
@@ -9,6 +8,7 @@ import { getValidator } from "../validation";
 import { UserOutlined } from "@ant-design/icons";
 import { PATH } from "../../../../constants/apiPaths";
 import { AvatarApi } from "../../../../api/AvatarApi";
+import { useNavigate } from "react-router-dom";
 
 export type ProfileFormValuesType = {
     first_name: string;
@@ -33,6 +33,7 @@ const validator = getValidator("profile");
 export const ProfileInfoForm = () => {
     const [avatar, setAvatar] = useState<string | null>(null);
     const [form] = useForm();
+    const navigate = useNavigate();
 
     const fetchData = async () => {
         const response = await getUserInfo();
@@ -52,6 +53,7 @@ export const ProfileInfoForm = () => {
 
         // TODO: добавить нотификацию
         if (isUpdated) {
+            navigate("/profile");
             console.log("OK");
         }
     };
