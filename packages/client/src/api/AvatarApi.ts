@@ -1,5 +1,5 @@
 import axios from "./axiosSetup";
-import { PATH } from "../constants/apiPaths";
+import { PATH } from "@/constants/apiPaths";
 import type {
     UploadRequestOption,
     UploadRequestError,

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Button, Form, Image, Input } from "antd";
 import { useNavigate } from "react-router-dom";
-import { COLORED_LOGO } from "../../../constants/imagesPaths";
+import { COLORED_LOGO } from "@/constants/imagesPaths";
 import Title from "antd/es/typography/Title";
 import { validator, matchPasswords, EMAIL_MESSAGE_ERROR } from "./validation";
-import { signup } from "../../../services/authorization";
+import { signup } from "@/services/authorization";
 import "./SignUpForm.scss";
-import { useNotification } from "../../../hooks/useNorification";
+import { useNotification } from "@/hooks/useNorification";
 
 export type SignUpFormValues = {
     email: string;

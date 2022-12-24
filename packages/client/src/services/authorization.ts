@@ -1,6 +1,6 @@
-import { getUserDataRequest, signinRequest, signupRequest } from "../api/Auth";
-import { signupRequestData } from "../api/typesApi";
-import { LoginFormValuesType } from "../components/forms/LoginForm/LoginForm";
+import { getUserDataRequest, signinRequest, signupRequest } from "@/api/Auth";
+import { signupRequestData } from "@/api/typesApi";
+import { LoginFormValuesType } from "@/components/forms/LoginForm/LoginForm";
 import { NavigateFunction } from "react-router-dom";
 
 export const signin = async (values: LoginFormValuesType) => {

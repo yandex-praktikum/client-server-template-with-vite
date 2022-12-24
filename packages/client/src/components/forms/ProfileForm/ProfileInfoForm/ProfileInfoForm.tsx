@@ -2,14 +2,14 @@ import { Form, Button, Input, Avatar, Divider, Upload } from "antd";
 
 import { useEffect, useState } from "react";
 import "../ProfileForm.scss";
-import { updateInfo } from "../../../../services/profile";
-import { getUserInfo } from "../../../../services/authorization";
+import { updateInfo } from "@/services/profile";
+import { getUserInfo } from "@/services/authorization";
 import { useForm } from "antd/es/form/Form";
 import { getValidator } from "../validation";
 import { UserOutlined } from "@ant-design/icons";
-import { PATH } from "../../../../constants/apiPaths";
-import { AvatarApi } from "../../../../api/AvatarApi";
-import { useNotification } from "../../../../hooks/useNorification";
+import { PATH } from "@/constants/apiPaths";
+import { AvatarApi } from "@/api/AvatarApi";
+import { useNotification } from "@/hooks/useNorification";
 
 export type ProfileFormValuesType = {
     first_name: string;

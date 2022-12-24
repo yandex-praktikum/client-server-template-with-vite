@@ -1,10 +1,10 @@
 import { Form, Button, Input } from "antd";
 
 import "../ProfileForm.scss";
-import { updatePassword } from "../../../../services/profile";
+import { updatePassword } from "@/services/profile";
 import { useForm } from "antd/es/form/Form";
 import { getValidator } from "../validation";
-import { useNotification } from "../../../../hooks/useNorification";
+import { useNotification } from "@/hooks/useNorification";
 import { useState } from "react";
 
 export type ProfilePasswordFormValuesType = {
