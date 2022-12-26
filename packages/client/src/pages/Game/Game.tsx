@@ -3,6 +3,7 @@ import { Button, CircularProgress, Tooltip } from '@mui/material';
 import { FC, useCallback, useEffect } from 'react';
 import { useOutletContext } from 'react-router';
 
+import { GameCanvas } from './components/Canvas';
 import GameControl from './components/GameControl';
 import styles from './Game.module.scss';
 
@@ -24,7 +25,7 @@ const Game: FC = () => {
 
   const handleStartGame = useCallback(
     () => {
-      dispatch(setStatus(EGameStatus.LOADING));
+      dispatch(setStatus(EGameStatus.PLAY));
     },
     []
   );
@@ -35,7 +36,7 @@ const Game: FC = () => {
         {{
           [EGameStatus.START]: <Button onClick={handleStartGame} variant="outlined">Играть</Button>,
           [EGameStatus.LOADING]: <CircularProgress />,
-          [EGameStatus.PLAY]: <div>Игра</div>,
+          [EGameStatus.PLAY]: <GameCanvas />,
         }[status]}
       </div>
       <div className={styles.game__footer}>
