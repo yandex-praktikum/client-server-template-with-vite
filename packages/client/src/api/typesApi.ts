@@ -2,6 +2,7 @@ export type Nullable<T> = T | null;
 
 export type ResponseStatus = {
     ok: string;
+    status: number;
 };
 
 export type LoginRequestData = {
@@ -29,16 +30,16 @@ export type UserFromServer = ChangeProfileRequestData & {
 };
 
 export interface signupRequestData {
-  email: string
-  first_name: string
-  login: string
-  password: string
-  phone: string
-  second_name: string
+    email: string;
+    first_name: string;
+    login: string;
+    password: string;
+    phone: string;
+    second_name: string;
 }
 
 export interface signupResponseData extends Response {
-  id: number
+    id: number;
 }
 
 export type UserInfoRequestData = {
