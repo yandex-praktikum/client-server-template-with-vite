@@ -1,5 +1,5 @@
 import { TextField } from '@mui/material';
-import { TextFieldProps } from '@mui/material/TextField/TextField';
+import { type TextFieldProps } from '@mui/material/TextField/TextField';
 import { useField } from 'formik';
 import { ChangeEvent, FC, useCallback } from 'react';
 

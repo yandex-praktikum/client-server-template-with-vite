@@ -1,11 +1,10 @@
 import { AppBar, Toolbar, Typography } from '@mui/material';
+import UserControls from '@src/pages/Root/components/MainCardHeader/components/UserControls';
+import UserMenu from '@src/pages/Root/components/MainCardHeader/components/UserMenu';
 import { FC } from 'react';
 
-import UserControls from './components/UserControls';
-import UserMenu from './components/UserMenu';
-
 interface IMainCardHeaderProps {
-  pageName: string
+  pageName: string;
 }
 
 const MainCardHeader: FC<IMainCardHeaderProps> = ({ pageName }) => {

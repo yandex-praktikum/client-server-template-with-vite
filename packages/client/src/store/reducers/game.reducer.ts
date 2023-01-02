@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 import { EGameStatus } from '../../enums/gameStatus.enum';
 import { IGame } from '../../types/game.interface';

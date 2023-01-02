@@ -1,4 +1,4 @@
-import { createBrowserRouter, NonIndexRouteObject } from 'react-router-dom';
+import { createBrowserRouter, type NonIndexRouteObject } from 'react-router-dom';
 
 import { getUserData } from '../api/auth';
 import Forum from '../pages/Forum';
@@ -10,64 +10,45 @@ import Root from '../pages/Root';
 import Signup from '../pages/Signup';
 import { IUserInfo } from '../types/pageContext';
 
-export enum ROUTE_PATHS {
+export enum RoutePaths {
   root = '/',
   login = '/login',
   signup = '/signup',
   game = '/game',
   leaderboard = '/leaderboard',
   forum = '/forum',
-  forum_page = 'forum/:postId',
+  forumPage = 'forum/:postId',
 }
 
-/**
- * Login page
- */
-const LOGIN: NonIndexRouteObject = {
-  path: ROUTE_PATHS.login,
-  element: <Login />,
-};
-
-/**
- * Signup page
- */
-const SIGNUP: NonIndexRouteObject = {
-  path: ROUTE_PATHS.signup,
-  element: <Signup />,
-};
-
-/**
- * Game page
- */
-const GAME: NonIndexRouteObject = {
-  path: ROUTE_PATHS.game,
-  element: <Game />,
-};
-
-/**
- * Forum page
- */
-const FORUM_PAGE: NonIndexRouteObject = {
-  path: ROUTE_PATHS.forum_page,
+const forumPage: NonIndexRouteObject = {
+  path: RoutePaths.forumPage,
   element: <ForumPage />,
 };
 
-/**
- * Forum
- */
-const FORUM: NonIndexRouteObject = {
-  path: ROUTE_PATHS.forum,
-  element: <Forum />,
-  children: [FORUM_PAGE],
-};
-
-/**
- * Leaderboard page
- */
-const LEADERBOARD: NonIndexRouteObject = {
-  path: ROUTE_PATHS.leaderboard,
-  element: <Leaderboard />,
-};
+const children: NonIndexRouteObject[] = [
+  {
+    path: RoutePaths.login,
+    element: <Login />,
+  },
+  {
+    path: RoutePaths.signup,
+    element: <Signup />,
+  },
+  {
+    path: RoutePaths.game,
+    element: <Game />,
+  },
+  {
+    path: RoutePaths.forum,
+    element: <Forum />,
+    children: [forumPage],
+  },
+  {
+    path: RoutePaths.leaderboard,
+    element: <Leaderboard />,
+  },
+  forumPage,
+];
 
 /**
  * Root page
@@ -90,9 +71,9 @@ export const rootLoader: TRootLoader = async () => {
 };
 
 const ROOT: NonIndexRouteObject = {
-  path: ROUTE_PATHS.root,
+  path: RoutePaths.root,
   element: <Root />,
-  children: [LOGIN, SIGNUP, GAME, FORUM, FORUM_PAGE, LEADERBOARD],
+  children,
   id: 'root',
   loader: rootLoader,
 };
@@ -101,22 +82,19 @@ const ROOT: NonIndexRouteObject = {
  * Route maps
  */
 export const AUTHORIZED_ROUTES = {
-  basePath: ROUTE_PATHS.game,
+  basePath: RoutePaths.game,
   list: [
-    ROUTE_PATHS.game,
-    ROUTE_PATHS.forum,
-    ROUTE_PATHS.leaderboard,
+    RoutePaths.game,
+    RoutePaths.forum,
+    RoutePaths.leaderboard,
   ],
 };
 
 export const UNAUTHORIZED_ROUTES = {
-  basePath: ROUTE_PATHS.login,
+  basePath: RoutePaths.login,
   list: [
-    ROUTE_PATHS.login,
-    ROUTE_PATHS.signup,
-    ROUTE_PATHS.game,
-    ROUTE_PATHS.forum,
-    ROUTE_PATHS.leaderboard,
+    RoutePaths.login,
+    RoutePaths.signup,
   ],
 };
 

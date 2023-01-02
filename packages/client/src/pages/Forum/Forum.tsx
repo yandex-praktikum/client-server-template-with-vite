@@ -1,11 +1,10 @@
 import { List } from '@mui/material';
+import { IOutletContext } from '@src/utils/OutletContext';
 import { FC, useEffect, useMemo } from 'react';
 import { useOutletContext } from 'react-router';
 
 import Post from './components/Post';
 import styles from './Forum.module.scss';
-
-import { IOutletContext } from '../../utils/OutletContext';
 
 const Forum: FC = () => {
   const { setPageName } = useOutletContext<IOutletContext>();

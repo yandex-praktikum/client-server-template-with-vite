@@ -6,19 +6,18 @@ import {
   ListItemAvatar, ListItemText,
   Typography,
 } from '@mui/material';
+import { forumPageProps } from '@src/types/forumPageProps';
+import { RoutePaths } from '@src/utils/routes';
 import { FC, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './Post.module.scss';
 
-import { forumPageProps } from '../../../../types/forumPageProps';
-import { ROUTE_PATHS } from '../../../../utils/routes';
-
 const Post: FC<forumPageProps> = ({ id, author, subject, text }) => {
   const navigate = useNavigate();
 
   const handlePostClick = useCallback(() => {
-    navigate(`${ROUTE_PATHS.forum}/${id}`);
+    navigate(`${RoutePaths.forum}/${id}`);
   }, []);
 
   return (

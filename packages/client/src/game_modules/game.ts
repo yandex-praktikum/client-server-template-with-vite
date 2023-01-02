@@ -4,25 +4,25 @@ import { BaseObject } from './MovableObject';
 import { Obstacle } from './Obstacle';
 import { Player } from './Player';
 import { Scene } from './Scene';
+import { CustomWindow } from './types';
 
-declare global {
-  interface Window {
-    keys: any;
-  }
-}
+declare let window: CustomWindow;
+
 document.addEventListener('DOMContentLoaded', () => {
   window.keys = {};
 });
+
 document.addEventListener('keydown', function (evt) {
   window.keys[evt.code] = true;
 });
+
 document.addEventListener('keyup', function (evt) {
   window.keys[evt.code] = false;
 });
 
 export class Game {
-  private scene: Scene;
-  private context: CanvasRenderingContext2D;
+  private readonly scene: Scene;
+  private readonly context: CanvasRenderingContext2D;
   private player!: Player;
   private obstacles: Obstacle[] = [];
 

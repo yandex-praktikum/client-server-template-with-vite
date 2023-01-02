@@ -3,7 +3,7 @@ import { Position } from './GameTypes';
 export class Legend {
   private _position: Position;
   private _text: string;
-  private _fontSize: number;
+  private readonly _fontSize: number;
 
   constructor(
     position: Position,

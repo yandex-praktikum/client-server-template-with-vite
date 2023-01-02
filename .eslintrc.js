@@ -46,7 +46,7 @@ module.exports = {
       },
     ],
     'import/no-restricted-paths': 2,
-    'import/no-default-export': 1,
+    'import/no-default-export': 'off',
     'import/order': [
       'error',
       {
@@ -119,6 +119,7 @@ module.exports = {
         varsIgnorePattern: '^_',
       },
     ],
+    'import/no-unresolved': 0,
   },
   overrides: [
     {
@@ -128,4 +129,4 @@ module.exports = {
       },
     },
   ],
-}
+};
