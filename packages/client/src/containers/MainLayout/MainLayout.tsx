@@ -1,10 +1,12 @@
-import React, { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, ReactElement, useEffect, useState } from "react";
 import { Layout, Row, Col, Button } from "antd";
 import "./MainLayout.sass";
 import { NavigationMenu } from "../../components/navigation/Navigation";
 import Title from "antd/es/typography/Title";
 import { NavLink, useLocation } from "react-router-dom";
 import "./MainPage.scss";
+import { Nullable, UserFromServer } from "../../api/typesApi";
+import { getUserInfo } from "../../services/authorization";
 const { Content, Footer, Header } = Layout;
 
 type MainLayoutProps = {
@@ -13,6 +15,25 @@ type MainLayoutProps = {
 
 const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
     const { pathname } = useLocation();
+
+    const [user, setUser] = useState<Nullable<UserFromServer>>(null);
+
+    useEffect(() => {
+        const userFromStorage = localStorage.getItem("user");
+
+        if (userFromStorage) {
+            setUser(JSON.parse(userFromStorage));
+
+            return;
+        }
+
+        getUserInfo()
+            .then(userFormServer => setUser(userFormServer.data))
+            .catch(error => console.log(error));
+    }, []);
+
+    console.log(user);
+
     return (
         <Layout className="layout">
             <Header className="layout_header">
@@ -32,7 +53,9 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
                             alignItems: "center",
                             justifyContent: "flex-start",
                         }}>
-                        <Title level={2}>Привет, USER!</Title>
+                        <Title level={2}>
+                            Привет, {user ? user.login : "User"}!
+                        </Title>
                         <Title level={3}>Твой лучший результат: 777</Title>
                         <NavigationMenu />
                         {pathname === "/" ? null : (

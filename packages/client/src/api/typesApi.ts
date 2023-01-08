@@ -4,6 +4,10 @@ export type ResponseStatus = {
     ok: string;
 };
 
+export interface YandexServiceIdResponse extends Response {
+    data: { service_id: string };
+}
+
 export type LoginRequestData = {
     login: string;
     password: string;
@@ -29,16 +33,16 @@ export type UserFromServer = ChangeProfileRequestData & {
 };
 
 export interface signupRequestData {
-  email: string
-  first_name: string
-  login: string
-  password: string
-  phone: string
-  second_name: string
+    email: string;
+    first_name: string;
+    login: string;
+    password: string;
+    phone: string;
+    second_name: string;
 }
 
 export interface signupResponseData extends Response {
-  id: number
+    id: number;
 }
 
 export type UserInfoRequestData = {

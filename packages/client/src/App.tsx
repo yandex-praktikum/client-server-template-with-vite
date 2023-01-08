@@ -8,8 +8,34 @@ import { ProfilePage } from "./pages/profile/ProfilePage";
 import { ProfileChangePage } from "./pages/profile-change/ProfileChangePage";
 
 import "./App.css";
+import { useEffect } from "react";
+import axios from "axios";
+import { getUserInfo } from "./services/authorization";
 
 const App = () => {
+    useEffect(() => {
+        const code = new URLSearchParams(window.location.search).get("code");
+
+        if (code) {
+            axios
+                .post(`oauth/yandex`, {
+                    code: code,
+                    redirect_uri: "http://localhost:3000",
+                })
+                .then(async () => {
+                    const userFormServer = await getUserInfo();
+
+                    localStorage.setItem(
+                        "user",
+                        JSON.stringify(userFormServer)
+                    );
+                })
+                .catch(error => {
+                    console.log("error " + error);
+                });
+        }
+    }, []);
+
     return (
         <div className="App">
             <Routes>

@@ -3,7 +3,11 @@ import { Form, Button, Input } from "antd";
 import { useFormik } from "formik";
 import { ChangeEvent } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { getUserInfo, signin } from "../../../services/authorization";
+import {
+    getUserInfo,
+    signin,
+    signinWithYandex,
+} from "../../../services/authorization";
 import "./LoginForm.scss";
 import { LOGIN_FORM_VALIDATION_SCHEMA } from "./loginFormValidationSchema";
 
@@ -45,6 +49,12 @@ export const LoginForm = () => {
 
     const onFocus = (name: string) => {
         formik.setFieldTouched(name);
+    };
+
+    const handleYandexOauth = async () => {
+        const isLoggedIn = await signinWithYandex();
+
+        console.log(isLoggedIn);
     };
 
     return (
@@ -107,6 +117,14 @@ export const LoginForm = () => {
                     data-testid="signin-button">
                     Sign in
                 </Button>
+
+                <p>or login with</p>
+                <Button
+                    type="ghost"
+                    htmlType="button"
+                    data-testid="yandex-button"
+                    className="yandex-button"
+                    onClick={handleYandexOauth}></Button>
 
                 <NavLink to={"/sign-up"}>
                     <Button
