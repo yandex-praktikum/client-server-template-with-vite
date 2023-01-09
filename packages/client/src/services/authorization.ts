@@ -4,6 +4,7 @@ import {
     signinRequest,
     signupRequest,
 } from "../api/Auth";
+import axios from "axios";
 import { signupRequestData, YandexServiceIdResponse } from "../api/typesApi";
 import { LoginFormValuesType } from "../components/forms/LoginForm/LoginForm";
 import { NavigateFunction } from "react-router-dom";
@@ -37,11 +38,15 @@ export const signinWithYandex = async () => {
 };
 
 // TODO: Добавить типизацию ответов
-export const getUserInfo = async (): Promise<any> => {
+export const getUserInfo = async () => {
     try {
         const response = await getUserDataRequest();
 
-        return response;
+        if (!axios.isAxiosError(response)) {
+            return response;
+        } else {
+            return null;
+        }
     } catch (error) {
         return null;
     }

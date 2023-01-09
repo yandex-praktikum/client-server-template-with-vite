@@ -1,12 +1,13 @@
-import { FunctionComponent, ReactElement, useEffect, useState } from "react";
+import { FunctionComponent, ReactElement, useEffect } from "react";
 import { Layout, Row, Col, Button } from "antd";
 import "./MainLayout.sass";
 import { NavigationMenu } from "../../components/navigation/Navigation";
 import Title from "antd/es/typography/Title";
 import { NavLink, useLocation } from "react-router-dom";
 import "./MainPage.scss";
-import { Nullable, UserFromServer } from "../../api/typesApi";
 import { getUserInfo } from "../../services/authorization";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { userActions, userSelectors } from "../../store/slices/user/userSlice";
 const { Content, Footer, Header } = Layout;
 
 type MainLayoutProps = {
@@ -15,20 +16,21 @@ type MainLayoutProps = {
 
 const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
     const { pathname } = useLocation();
+    const dispatch = useAppDispatch();
 
-    const [user, setUser] = useState<Nullable<UserFromServer>>(null);
+    const user = useAppSelector(userSelectors.all);
 
     useEffect(() => {
         const userFromStorage = localStorage.getItem("user");
 
         if (userFromStorage) {
-            setUser(JSON.parse(userFromStorage));
-
-            return;
+            dispatch(userActions.setUser(JSON.parse(userFromStorage)));
         }
 
         getUserInfo()
-            .then(userFormServer => setUser(userFormServer.data))
+            .then(userFormServer =>
+                dispatch(userActions.setUser(userFormServer))
+            )
             .catch(error => console.log(error));
     }, []);
 

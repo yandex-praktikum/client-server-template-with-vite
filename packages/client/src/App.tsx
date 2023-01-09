@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { getUserInfo } from "./services/authorization";
 
-const App = () => {
+export const App = () => {
     useEffect(() => {
         const code = new URLSearchParams(window.location.search).get("code");
 

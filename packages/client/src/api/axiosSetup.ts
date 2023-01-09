@@ -12,8 +12,9 @@ axios.interceptors.request.use(function (config: AxiosRequestConfig) {
 
 axios.interceptors.response.use(
     function (response) {
-        // TODO: add notification
         return response;
+
+        // TODO: add notification
     },
 
     function (error) {
