@@ -6,9 +6,11 @@ const storedUser = localStorage.getItem("user");
 
 export const userSlice = createSlice({
     name: "user",
-    initialState: storedUser
-        ? JSON.parse(storedUser)
-        : (null as Nullable<UserFromServer>),
+    initialState: {
+        user: (storedUser
+            ? JSON.parse(storedUser)
+            : null) as Nullable<UserFromServer>,
+    },
     reducers: {
         setUser: (
             state,
@@ -21,7 +23,6 @@ export const userSlice = createSlice({
 
 export const userSelectors = {
     all: (state: RootState) => state.user,
-    login: (state: RootState) => state.user.login,
 };
 
 export const userActions = userSlice.actions;

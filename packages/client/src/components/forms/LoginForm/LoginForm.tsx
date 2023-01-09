@@ -8,6 +8,8 @@ import {
     signin,
     signinWithYandex,
 } from "../../../services/authorization";
+import { useAppDispatch } from "../../../store/hooks";
+import { userActions } from "../../../store/slices/user/userSlice";
 import "./LoginForm.scss";
 import { LOGIN_FORM_VALIDATION_SCHEMA } from "./loginFormValidationSchema";
 
@@ -23,6 +25,7 @@ const initialFormValues = {
 
 export const LoginForm = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const submitHandler = async (values: LoginFormValuesType) => {
         const isLoggedIn = await signin(values);
@@ -30,9 +33,12 @@ export const LoginForm = () => {
         if (isLoggedIn) {
             const userFormServer = await getUserInfo();
 
-            localStorage.setItem("user", JSON.stringify(userFormServer.data));
+            if (userFormServer) {
+                localStorage.setItem("user", JSON.stringify(userFormServer));
+                dispatch(userActions.setUser(userFormServer));
 
-            navigate("/");
+                navigate("/");
+            }
         }
     };
 

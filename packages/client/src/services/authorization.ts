@@ -13,11 +13,9 @@ import { MouseEventHandler } from "react";
 
 export const signin = async (values: LoginFormValuesType) => {
     try {
-        const response = await signinRequest(values);
+        await signinRequest(values);
 
-        if (response.status === 200 || response.status === 400) {
-            return true;
-        }
+        return true;
     } catch (error) {
         return false;
     }
@@ -80,6 +78,7 @@ export const signout: MouseEventHandler = async event => {
         if (response.status === 200) {
             localStorage.removeItem("user");
             window.location.replace(`/sign-in`);
+
             return true;
         }
     } catch (error) {

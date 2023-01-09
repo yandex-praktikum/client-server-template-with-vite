@@ -12,6 +12,10 @@ axios.interceptors.request.use(function (config: AxiosRequestConfig) {
 
 axios.interceptors.response.use(
     function (response) {
+        if (response.status !== 200) {
+            apiErrorHandler(response.status);
+        }
+
         return response;
 
         // TODO: add notification

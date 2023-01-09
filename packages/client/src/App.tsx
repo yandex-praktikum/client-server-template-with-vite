@@ -11,9 +11,12 @@ import "./App.css";
 import { useEffect } from "react";
 import axios from "axios";
 import { getUserInfo } from "./services/authorization";
+import { userActions } from "./store/slices/user/userSlice";
+import { useAppDispatch } from "./store/hooks";
 
 export const App = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         const code = new URLSearchParams(window.location.search).get("code");
@@ -32,6 +35,8 @@ export const App = () => {
                             "user",
                             JSON.stringify(userFormServer)
                         );
+
+                        dispatch(userActions.setUser(userFormServer));
                     }
                 })
                 .then(() => navigate("/"))

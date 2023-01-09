@@ -11,26 +11,14 @@ import {
 import "./ProfilePage.scss";
 import { UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getUserInfo } from "../../services/authorization";
-import { UserInfoRequestData } from "../../api/typesApi";
 import { PATH } from "../../constants/apiPaths";
 import MainLayout from "../../containers/MainLayout/MainLayout";
+import { userSelectors } from "../../store/slices/user/userSlice";
+import { useAppSelector } from "../../store/hooks";
 
 export const ProfilePage = () => {
-    const [userInfo, setUserInfo] = useState<UserInfoRequestData | null>(null);
-
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await getUserInfo();
-            if (response.data) {
-                setUserInfo(response.data);
-            }
-        };
-        fetchData();
-    }, []);
+    const { user } = useAppSelector(userSelectors.all);
 
     return (
         <MainLayout>
@@ -46,20 +34,18 @@ export const ProfilePage = () => {
                         justifyContent: "center",
                         alignItems: "center",
                     }}>
-                    {userInfo?.avatar ? (
+                    {user?.avatar ? (
                         <Avatar
                             size={64}
                             icon={<UserOutlined />}
-                            src={`${PATH.BASE}${PATH.RESOURCES}/${userInfo.avatar}`}
+                            src={`${PATH.BASE}${PATH.RESOURCES}/${user.avatar}`}
                         />
                     ) : (
                         <Avatar size={64} icon={<UserOutlined />} />
                     )}
 
-                    <Typography.Title level={3}>
-                        {userInfo?.login}
-                    </Typography.Title>
-                    <Typography>{userInfo?.email}</Typography>
+                    <Typography.Title level={3}>{user?.login}</Typography.Title>
+                    <Typography>{user?.email}</Typography>
                     <Row>
                         <Col>
                             <Statistic

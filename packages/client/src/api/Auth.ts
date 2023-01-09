@@ -25,10 +25,10 @@ export const getClientIdRequest = async (): Promise<
     );
 };
 
-export const getUserDataRequest = async (): Promise<
-    UserFromServer | AxiosError
-> => {
-    return await axios.get(`auth/user`);
+export const getUserDataRequest = async (): Promise<UserFromServer> => {
+    const res = await axios.get(`auth/user`);
+
+    return res.data as UserFromServer;
 };
 
 export const signoutRequest = async (): Promise<Response | AxiosError> =>
