@@ -23,11 +23,14 @@ const initialFormValues = {
 
 export const LoginForm = () => {
     const navigate = useNavigate();
+
     const submitHandler = async (values: LoginFormValuesType) => {
         const isLoggedIn = await signin(values);
 
         if (isLoggedIn) {
-            await getUserInfo();
+            const userFormServer = await getUserInfo();
+
+            localStorage.setItem("user", JSON.stringify(userFormServer.data));
 
             navigate("/");
         }
@@ -52,9 +55,7 @@ export const LoginForm = () => {
     };
 
     const handleYandexOauth = async () => {
-        const isLoggedIn = await signinWithYandex();
-
-        console.log(isLoggedIn);
+        await signinWithYandex();
     };
 
     return (

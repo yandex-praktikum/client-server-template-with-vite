@@ -6,7 +6,6 @@ import Title from "antd/es/typography/Title";
 import { NavLink, useLocation } from "react-router-dom";
 import "./MainPage.scss";
 import { Nullable, UserFromServer } from "../../api/typesApi";
-import { getUserInfo } from "../../services/authorization";
 const { Content, Footer, Header } = Layout;
 
 type MainLayoutProps = {
@@ -15,24 +14,18 @@ type MainLayoutProps = {
 
 const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
     const { pathname } = useLocation();
-
+    const userFromStorage = localStorage.getItem("user");
     const [user, setUser] = useState<Nullable<UserFromServer>>(null);
 
     useEffect(() => {
-        const userFromStorage = localStorage.getItem("user");
-
-        if (userFromStorage) {
-            setUser(JSON.parse(userFromStorage));
-
-            return;
+        try {
+            if (userFromStorage) {
+                setUser(JSON.parse(userFromStorage));
+            }
+        } catch (error) {
+            console.log(error);
         }
-
-        getUserInfo()
-            .then(userFormServer => setUser(userFormServer.data))
-            .catch(error => console.log(error));
-    }, []);
-
-    console.log(user);
+    }, [userFromStorage]);
 
     return (
         <Layout className="layout">
@@ -43,6 +36,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
                     className="layout_header_img"
                 />
             </Header>
+
             <Content className="layout_content">
                 <Row gutter={150} justify="center">
                     <Col
@@ -54,10 +48,15 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
                             justifyContent: "flex-start",
                         }}>
                         <Title level={2}>
-                            Привет, {user ? user.login : "User"}!
+                            Привет, {user ? user.login : "Юзер"}!
                         </Title>
-                        <Title level={3}>Твой лучший результат: 777</Title>
+
+                        {user ? (
+                            <Title level={3}>Твой лучший результат: 777</Title>
+                        ) : null}
+
                         <NavigationMenu />
+
                         {pathname === "/" ? null : (
                             <NavLink to={"/"}>
                                 <Button
@@ -70,11 +69,13 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
                             </NavLink>
                         )}
                     </Col>
+
                     <Col span={17} className="layout_content-child">
                         {children}
                     </Col>
                 </Row>
             </Content>
+
             <Footer className="layout_footer">By Пачка и Точка</Footer>
         </Layout>
     );
