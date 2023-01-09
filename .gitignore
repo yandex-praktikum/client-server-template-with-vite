@@ -8,4 +8,5 @@ tmp
 .yarnrc.yml
 .DS_Store
 **/.DS_Store
-
+/packages/client/src/public/
+/packages/client/public/sw.js

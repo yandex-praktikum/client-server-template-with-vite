@@ -1,5 +1,5 @@
 export const getIsShallowEqual = (
-  object: Record<any, any> | null,
+  object: Record<never, never> | null,
   secondObject: Record<any, any> | null
 ): boolean => {
   if (!object || !secondObject) return false;

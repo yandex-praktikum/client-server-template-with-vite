@@ -1,6 +1,8 @@
 import react from '@vitejs/plugin-react';
 import dotenv from 'dotenv';
 import { defineConfig } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 import path from 'path';
 
@@ -20,5 +22,16 @@ export default defineConfig({
       '@src': path.resolve(__dirname, './src'),
     },
   },
-  plugins: [react()],
+  plugins: [
+    react(),
+    VitePWA({ injectRegister: 'auto' }),
+    viteStaticCopy({
+      targets: [
+        {
+          src: './src/sw/sw.js',
+          dest: '/',
+        },
+      ],
+    }),
+  ],
 });

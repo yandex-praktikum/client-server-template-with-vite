@@ -1,4 +1,6 @@
 import { Card } from '@mui/material';
+import PageWrapper from '@src/components/PageWrapper';
+import { withAccessRights } from '@src/HOCs';
 import { FC, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Outlet } from 'react-router';

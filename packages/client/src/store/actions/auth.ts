@@ -1,5 +1,4 @@
-import { AnyAction, ThunkAction } from '@reduxjs/toolkit';
-
+import { type AnyAction, type ThunkAction } from '@reduxjs/toolkit';
 import {
   getUserData,
   IUserSigninReq,
@@ -7,8 +6,9 @@ import {
   requestLogIn,
   requestLogOut,
   requestSignUp,
-} from '../../api/auth';
-import { getIsShallowEqual } from '../../utils/getIsShallowEqual';
+} from '@src/api/auth';
+import { getIsShallowEqual } from '@src/utils/getIsShallowEqual';
+
 import { setUserInfo } from '../reducers';
 import { selectUserInfo } from '../selectors';
 import { RootState } from '../store';
