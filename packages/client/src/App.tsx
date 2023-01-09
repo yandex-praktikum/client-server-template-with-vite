@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import LadderPage from "./pages/LadderPage/LadderPage";
 import LoginPage from "./pages/login/LoginPage";
 import { SignUpPage } from "./pages/signUp/SignUpPage";
@@ -13,6 +13,8 @@ import axios from "axios";
 import { getUserInfo } from "./services/authorization";
 
 export const App = () => {
+    const navigate = useNavigate();
+
     useEffect(() => {
         const code = new URLSearchParams(window.location.search).get("code");
 
@@ -25,11 +27,14 @@ export const App = () => {
                 .then(async () => {
                     const userFormServer = await getUserInfo();
 
-                    localStorage.setItem(
-                        "user",
-                        JSON.stringify(userFormServer)
-                    );
+                    if (userFormServer) {
+                        localStorage.setItem(
+                            "user",
+                            JSON.stringify(userFormServer)
+                        );
+                    }
                 })
+                .then(() => navigate("/"))
                 .catch(error => {
                     console.log("error " + error);
                 });

@@ -2,7 +2,6 @@ import { AxiosError } from "axios";
 import axios from "./axiosSetup";
 import {
     LoginRequestData,
-    ResponseStatus,
     UserFromServer,
     signupRequestData,
     signupResponseData,
@@ -11,7 +10,7 @@ import {
 
 export const signinRequest = async (
     data: LoginRequestData
-): Promise<ResponseStatus | AxiosError> => {
+): Promise<Response | AxiosError> => {
     return await axios.post(`auth/signin`, {
         ...data,
     });
@@ -31,6 +30,9 @@ export const getUserDataRequest = async (): Promise<
 > => {
     return await axios.get(`auth/user`);
 };
+
+export const signoutRequest = async (): Promise<Response | AxiosError> =>
+    await axios.post(`auth/logout`);
 
 export const signupRequest = async (
     data: signupRequestData

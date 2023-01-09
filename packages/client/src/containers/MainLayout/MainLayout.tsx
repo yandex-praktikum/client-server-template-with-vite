@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement, useEffect } from "react";
+import { FunctionComponent, ReactElement, useEffect, useState } from "react";
 import { Layout, Row, Col, Button } from "antd";
 import "./MainLayout.sass";
 import { NavigationMenu } from "../../components/navigation/Navigation";
@@ -8,6 +8,7 @@ import "./MainPage.scss";
 import { getUserInfo } from "../../services/authorization";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { userActions, userSelectors } from "../../store/slices/user/userSlice";
+import { Nullable, UserFromServer } from "../../api/typesApi";
 const { Content, Footer, Header } = Layout;
 
 type MainLayoutProps = {
@@ -16,25 +17,18 @@ type MainLayoutProps = {
 
 const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
     const { pathname } = useLocation();
-    const dispatch = useAppDispatch();
-
-    const user = useAppSelector(userSelectors.all);
+    const userFromStorage = localStorage.getItem("user");
+    const [user, setUser] = useState<Nullable<UserFromServer>>(null);
 
     useEffect(() => {
-        const userFromStorage = localStorage.getItem("user");
-
-        if (userFromStorage) {
-            dispatch(userActions.setUser(JSON.parse(userFromStorage)));
+        try {
+            if (userFromStorage) {
+                setUser(JSON.parse(userFromStorage));
+            }
+        } catch (error) {
+            console.log(error);
         }
-
-        getUserInfo()
-            .then(userFormServer =>
-                dispatch(userActions.setUser(userFormServer))
-            )
-            .catch(error => console.log(error));
-    }, []);
-
-    console.log(user);
+    }, [userFromStorage]);
 
     return (
         <Layout className="layout">
@@ -45,6 +39,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
                     className="layout_header_img"
                 />
             </Header>
+
             <Content className="layout_content">
                 <Row gutter={150} justify="center">
                     <Col
@@ -56,10 +51,15 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
                             justifyContent: "flex-start",
                         }}>
                         <Title level={2}>
-                            Привет, {user ? user.login : "User"}!
+                            Привет, {user ? user.login : "Юзер"}!
                         </Title>
-                        <Title level={3}>Твой лучший результат: 777</Title>
+
+                        {user ? (
+                            <Title level={3}>Твой лучший результат: 777</Title>
+                        ) : null}
+
                         <NavigationMenu />
+
                         {pathname === "/" ? null : (
                             <NavLink to={"/"}>
                                 <Button
@@ -72,11 +72,13 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
                             </NavLink>
                         )}
                     </Col>
+
                     <Col span={17} className="layout_content-child">
                         {children}
                     </Col>
                 </Row>
             </Content>
+
             <Footer className="layout_footer">By Пачка и Точка</Footer>
         </Layout>
     );

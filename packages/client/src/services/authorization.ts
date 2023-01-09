@@ -2,18 +2,22 @@ import {
     getClientIdRequest,
     getUserDataRequest,
     signinRequest,
+    signoutRequest,
     signupRequest,
 } from "../api/Auth";
 import axios from "axios";
 import { signupRequestData, YandexServiceIdResponse } from "../api/typesApi";
 import { LoginFormValuesType } from "../components/forms/LoginForm/LoginForm";
 import { NavigateFunction } from "react-router-dom";
+import { MouseEventHandler } from "react";
 
 export const signin = async (values: LoginFormValuesType) => {
     try {
-        await signinRequest(values);
+        const response = await signinRequest(values);
 
-        return true;
+        if (response.status === 200 || response.status === 400) {
+            return true;
+        }
     } catch (error) {
         return false;
     }
@@ -64,5 +68,22 @@ export const signup = async (
         }
     } catch (error) {
         console.log(error);
+    }
+};
+
+export const signout: MouseEventHandler = async event => {
+    console.log(event, "signout");
+
+    try {
+        const response = await signoutRequest();
+
+        if (response.status === 200) {
+            localStorage.removeItem("user");
+            window.location.replace(`/sign-in`);
+            return true;
+        }
+    } catch (error) {
+        console.log(error);
+        return false;
     }
 };
