@@ -2,12 +2,35 @@
   display: flex
   flex-direction: column
   min-height: 100vh
-  &_header
-    position: fixed
-    left: 0
-    top: 0
-    right: 0
+  overflow: hidden
+  &_header.ant-layout-header
     z-index: 100
+    background: transparent
+    display: flex
+    justify-content: center
+    height: 100px
+    margin-top: 30px
+  &_header_img
+    height: 100%
+    object-fit: contain
   &_content
     flex: 1
     align-self: center
+    padding: 104px 50px 50px
+    width: 100%
+    &-child
+      display: flex
+      justify-content: center
+      align-items: center
+    &-start.ant-btn
+      border-radius: 50%
+      width: 180px
+      height: 180px
+      margin-top: 100px
+      background: red
+      font-size: 36px
+      font-weight: 700
+  &_footer.ant-layout-footer
+    background: transparent
+    text-align: center
+    user-select: none

@@ -27,28 +27,28 @@ function getItem(
 
 const items: MenuItem[] = [
     getItem(
-        "View profile",
+        "Профиль",
         "1",
         <NavLink to={"/profile"} data-testid="goto-profile-btn">
             <UserOutlined />
         </NavLink>
     ),
     getItem(
-        "View leaderboard",
+        "Доска лидеров",
         "2",
         <NavLink to={"/ladder"} data-testid="goto-ladder-btn">
             <TrophyOutlined />
         </NavLink>
     ),
     getItem(
-        "View forum",
+        "Форум",
         "3",
         <NavLink to={"/forum"} data-testid="goto-forum-btn">
             <TeamOutlined />
         </NavLink>
     ),
     getItem(
-        "Log out",
+        "Выйти",
         "4",
         <NavLink to={"/sign-in"} data-testid="goto-login-btn">
             <LogoutOutlined />

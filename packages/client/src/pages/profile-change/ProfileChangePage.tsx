@@ -1,6 +1,7 @@
-import { Card, Col, Layout, Row, Tabs, Typography } from "antd";
+import { Card, Tabs, Typography } from "antd";
 import { ProfileInfoForm } from "../../components/forms/ProfileForm/ProfileInfoForm/ProfileInfoForm";
 import { ProfilePasswordForm } from "../../components/forms/ProfileForm/ProfilePasswordForm/ProfilePasswordForm";
+import MainLayout from "../../containers/MainLayout/MainLayout";
 
 export const ProfileChangePage = () => {
     const items = [
@@ -13,21 +14,15 @@ export const ProfileChangePage = () => {
     ];
 
     return (
-        <Layout className="layout">
-            <Row justify={"center"} style={{ height: "100vh" }}>
-                <Col className={"col"} xl={12}>
-                    <Card
-                        style={{
-                            width: 500,
-                            minHeight: 600,
-                        }}>
-                        <Typography.Title level={2}>
-                            Profile settings
-                        </Typography.Title>
-                        <Tabs items={items} />
-                    </Card>
-                </Col>
-            </Row>
-        </Layout>
+        <MainLayout>
+            <Card
+                style={{
+                    width: 500,
+                    height: 750,
+                }}>
+                <Typography.Title level={2}>Profile settings</Typography.Title>
+                <Tabs items={items} />
+            </Card>
+        </MainLayout>
     );
 };

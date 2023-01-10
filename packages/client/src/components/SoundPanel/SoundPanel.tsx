@@ -2,6 +2,7 @@ import { Switch } from "antd";
 import "./SoundPanel.scss";
 import SoundOnIcon from "../customIcons/SoundOnIcon";
 import SoundOffIcon from "../customIcons/SoundOffIcon";
+import { SwitchChangeEventHandler } from "antd/lib/switch";
 
 export type SoundPanelProps = {
     audioContext: AudioContext;
@@ -19,7 +20,8 @@ export const SoundPanel = ({ audioContext }: SoundPanelProps) => {
         isSoundEnabled = false;
     }
 
-    const togglePlay = (checked: boolean) => {
+    const togglePlay: SwitchChangeEventHandler = (checked, e) => {
+        e.stopPropagation();
         localStorage.setItem("soundIsEnabled", JSON.stringify(checked));
 
         (document.activeElement as HTMLInputElement).blur();
@@ -36,14 +38,12 @@ export const SoundPanel = ({ audioContext }: SoundPanelProps) => {
     };
 
     return (
-        <>
-            <Switch
-                className="sound-switch"
-                checkedChildren={<SoundOnIcon style={{ color: "#fff" }} />}
-                unCheckedChildren={<SoundOffIcon style={{ color: "#fff" }} />}
-                onChange={togglePlay}
-                defaultChecked={isSoundEnabled}
-            />
-        </>
+        <Switch
+            className="sound-switch"
+            checkedChildren={<SoundOnIcon style={{ color: "#fff" }} />}
+            unCheckedChildren={<SoundOffIcon style={{ color: "#fff" }} />}
+            onChange={togglePlay}
+            defaultChecked={isSoundEnabled}
+        />
     );
 };
