@@ -6,11 +6,10 @@ import ForumPage from "./pages/ForumPage/ForumPage";
 import GamePage from "./pages/GamePage/GamePage";
 import { ProfilePage } from "./pages/profile/ProfilePage";
 import { ProfileChangePage } from "./pages/profile-change/ProfileChangePage";
-
 import "./App.css";
 import { useEffect } from "react";
-import axios from "axios";
 import { getUserInfo } from "./services/authorization";
+import { getYandexToken } from "./services/oAuthYandex";
 
 const App = () => {
     const navigate = useNavigate();
@@ -19,11 +18,7 @@ const App = () => {
         const code = new URLSearchParams(window.location.search).get("code");
 
         if (code) {
-            axios
-                .post(`oauth/yandex`, {
-                    code: code,
-                    redirect_uri: "http://localhost:3000",
-                })
+            getYandexToken(code)
                 .then(async () => {
                     const userFormServer = await getUserInfo();
 
