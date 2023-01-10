@@ -1,4 +1,5 @@
 import { AxiosError } from "axios";
+import { apiErrorHandler } from "./apiErrorHandler";
 import axios from "./axiosSetup";
 import {
     LoginRequestData,
@@ -28,7 +29,12 @@ export const getClientIdRequest = async (): Promise<
 export const getUserDataRequest = async (): Promise<
     UserFromServer | AxiosError
 > => {
-    return await axios.get(`auth/user`);
+    const response = await axios.get(`auth/user`);
+
+    if (response.status !== 200) {
+        apiErrorHandler(response.status);
+    }
+    return response.data;
 };
 
 export const signoutRequest = async (): Promise<Response | AxiosError> =>

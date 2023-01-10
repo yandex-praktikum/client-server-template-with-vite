@@ -1,3 +1,4 @@
+import axios from "@/api/axiosSetup";
 import {
     getUserDataRequest,
     signinRequest,
@@ -21,12 +22,15 @@ export const signin = async (values: LoginFormValuesType) => {
     }
 };
 
-// TODO: Добавить типизацию ответов
 export const getUserInfo = async () => {
     try {
         const response = await getUserDataRequest();
 
-        return response;
+        if (!axios.isAxiosError(response)) {
+            return response;
+        } else {
+            return null;
+        }
     } catch (error) {
         return null;
     }

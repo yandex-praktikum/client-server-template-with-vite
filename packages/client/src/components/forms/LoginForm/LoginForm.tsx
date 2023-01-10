@@ -27,7 +27,7 @@ export const LoginForm = () => {
         if (isLoggedIn) {
             const userFormServer = await getUserInfo();
 
-            localStorage.setItem("user", JSON.stringify(userFormServer.data));
+            localStorage.setItem("user", JSON.stringify(userFormServer));
 
             navigate("/");
         }

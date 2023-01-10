@@ -22,10 +22,12 @@ const App = () => {
                 .then(async () => {
                     const userFormServer = await getUserInfo();
 
-                    localStorage.setItem(
-                        "user",
-                        JSON.stringify(userFormServer.data)
-                    );
+                    if (userFormServer) {
+                        localStorage.setItem(
+                            "user",
+                            JSON.stringify(userFormServer)
+                        );
+                    }
                 })
                 .then(() => navigate("/"))
                 .catch(error => {
