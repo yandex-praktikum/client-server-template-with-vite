@@ -1,10 +1,11 @@
 import { Form, Button, Input } from "antd";
 
 import "../ProfileForm.scss";
-import { updatePassword } from "../../../../services/profile";
+import { updatePassword } from "@/services/profile";
 import { useForm } from "antd/es/form/Form";
 import { getValidator } from "../validation";
-import { useNavigate } from "react-router-dom";
+import { useNotification } from "@/hooks/useNorification";
+import { useState } from "react";
 
 export type ProfilePasswordFormValuesType = {
     oldPassword: string;
@@ -20,19 +21,23 @@ const validator = getValidator("password");
 
 export const ProfilePasswordForm = () => {
     const [form] = useForm();
-    const navigate = useNavigate();
-    const onFinish = async (values: ProfilePasswordFormValuesType) => {
-        const isUpdated = await updatePassword(values);
-        // TODO: добавить нотификацию
+    const [openNotification, contextHolder] = useNotification();
+    const [isLoading, setIsLoading] = useState(false);
 
-        if (isUpdated) {
-            form.resetFields();
-            navigate("/profile");
-            console.log("OK");
-        }
+    const onFinish = (values: ProfilePasswordFormValuesType) => {
+        setIsLoading(true);
+        updatePassword(values).then(response => {
+            if (response) {
+                openNotification({
+                    status: response.status,
+                });
+            }
+            setIsLoading(false);
+        });
     };
     return (
         <div>
+            {contextHolder}
             <Form
                 form={form}
                 className="profile-form"
@@ -57,7 +62,11 @@ export const ProfilePasswordForm = () => {
                     <Input.Password />
                 </Form.Item>
                 <div className="profile-form__footer">
-                    <Button type="primary" htmlType="submit" block>
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        block
+                        disabled={isLoading}>
                         Save
                     </Button>
                 </div>

@@ -4,9 +4,9 @@ import {
     signinRequest,
     signoutRequest,
     signupRequest,
-} from "../api/Auth";
-import { signupRequestData, YandexServiceIdResponse } from "../api/typesApi";
-import { LoginFormValuesType } from "../components/forms/LoginForm/LoginForm";
+} from "@/api/Auth";
+import { signupRequestData, YandexServiceIdResponse } from "@/api/typesApi";
+import { LoginFormValuesType } from "@/components/forms/LoginForm/LoginForm";
 import { NavigateFunction } from "react-router-dom";
 import { MouseEventHandler } from "react";
 
@@ -57,10 +57,10 @@ export const signup = async (
 ) => {
     try {
         const response = await signupRequest(data);
-
         if (response.status === 200) {
             navigate("/");
         }
+        return response;
     } catch (error) {
         console.log(error);
     }

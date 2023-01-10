@@ -1,5 +1,5 @@
 import axios from "./axiosSetup";
-import { PATH } from "../constants/apiPaths";
+import { PATH } from "@/constants/apiPaths";
 import type {
     UploadRequestOption,
     UploadRequestError,
@@ -22,6 +22,7 @@ export const AvatarApi = async (options: UploadRequestOption) => {
 
         onSuccess && onSuccess("Ok");
         console.log("server res: ", res);
+        return res;
     } catch (err) {
         console.log("Error: ", err);
         onError && onError(err as UploadRequestError);
