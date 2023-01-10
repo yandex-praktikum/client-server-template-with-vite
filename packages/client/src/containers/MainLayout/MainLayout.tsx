@@ -1,12 +1,12 @@
 import { FunctionComponent, ReactElement } from "react";
 import { Layout, Row, Col, Button } from "antd";
 import "./MainLayout.sass";
-import { NavigationMenu } from "../../components/navigation/Navigation";
+import { NavigationMenu } from "@/components/navigation/Navigation";
 import Title from "antd/es/typography/Title";
 import { NavLink, useLocation } from "react-router-dom";
 import "./MainPage.scss";
-import { useAppSelector } from "../../store/hooks";
-import { userSelectors } from "../../store/slices/user/userSlice";
+import { useAppSelector } from "@/store/hooks";
+import { userSelectors } from "@/store/slices/user/userSlice";
 const { Content, Footer, Header } = Layout;
 
 type MainLayoutProps = {

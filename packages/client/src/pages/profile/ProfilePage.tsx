@@ -11,10 +11,10 @@ import {
 import "./ProfilePage.scss";
 import { UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { PATH } from "../../constants/apiPaths";
-import MainLayout from "../../containers/MainLayout/MainLayout";
 import { userSelectors } from "../../store/slices/user/userSlice";
 import { useAppSelector } from "../../store/hooks";
+import { PATH } from "@/constants/apiPaths";
+import MainLayout from "@/containers/MainLayout/MainLayout";
 
 export const ProfilePage = () => {
     const navigate = useNavigate();

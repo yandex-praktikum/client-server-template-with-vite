@@ -3,15 +3,12 @@ import { Form, Button, Input } from "antd";
 import { useFormik } from "formik";
 import { ChangeEvent } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import {
-    getUserInfo,
-    signin,
-    signinWithYandex,
-} from "../../../services/authorization";
 import { useAppDispatch } from "../../../store/hooks";
 import { userActions } from "../../../store/slices/user/userSlice";
+import { getUserInfo, signin } from "@/services/authorization";
 import "./LoginForm.scss";
 import { LOGIN_FORM_VALIDATION_SCHEMA } from "./loginFormValidationSchema";
+import { signinWithYandex } from "@/services/oAuthYandex";
 
 export type LoginFormValuesType = {
     login: string;

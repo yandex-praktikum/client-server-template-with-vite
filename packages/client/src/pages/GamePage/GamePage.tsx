@@ -1,6 +1,5 @@
-import React from "react";
-import MainLayout from "../../containers/MainLayout/MainLayout";
-import Game from "../../components/Game/Game";
+import MainLayout from "@/containers/MainLayout/MainLayout";
+import Game from "@/components/Game/Game";
 import "./GamePage.scss";
 
 const GamePage = () => {
