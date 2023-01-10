@@ -1,4 +1,4 @@
-import * as soundfFiles from "../../assets/sounds";
+import * as soundfFiles from "@/assets/sounds";
 import { mapSrcToName } from "./soundHelpers";
 
 export const createSounds = () => {

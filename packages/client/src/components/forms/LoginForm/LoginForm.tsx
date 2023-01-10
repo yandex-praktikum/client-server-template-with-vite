@@ -7,7 +7,7 @@ import {
     getUserInfo,
     signin,
     signinWithYandex,
-} from "../../../services/authorization";
+} from "@/services/authorization";
 import "./LoginForm.scss";
 import { LOGIN_FORM_VALIDATION_SCHEMA } from "./loginFormValidationSchema";
 

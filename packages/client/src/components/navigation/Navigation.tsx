@@ -8,7 +8,7 @@ import { Menu } from "antd";
 import type { MenuProps } from "antd/es/menu";
 import { MouseEventHandler } from "react";
 import { NavLink } from "react-router-dom";
-import { signout } from "../../services/authorization";
+import { signout } from "@/services/authorization";
 import "./Navigation.scss";
 
 type MenuItem = Required<MenuProps>["items"][number];

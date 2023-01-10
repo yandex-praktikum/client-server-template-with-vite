@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { PATH } from "../constants/apiPaths";
+import { PATH } from "@/constants/apiPaths";
 import { apiErrorHandler } from "./apiErrorHandler";
 
 axios.interceptors.request.use(function (config: AxiosRequestConfig) {

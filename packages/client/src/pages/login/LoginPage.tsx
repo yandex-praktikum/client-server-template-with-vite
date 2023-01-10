@@ -1,6 +1,6 @@
 import { Col, Layout, Row, Image, Typography } from "antd";
-import { LoginForm } from "../../components/forms/LoginForm/LoginForm";
-import { COLORED_LOGO } from "../../constants/imagesPaths";
+import { LoginForm } from "@/components/forms/LoginForm/LoginForm";
+import { COLORED_LOGO } from "@/constants/imagesPaths";
 import "./LoginPage.scss";
 
 const LoginPage = () => (
