@@ -21,7 +21,7 @@ export const signinWithYandex = async () => {
 };
 
 export const getYandexToken = async (code: string) => {
-    axios.post(`oauth/yandex`, {
+    return axios.post(`oauth/yandex`, {
         code: code,
         redirect_uri: "http://localhost:3000",
     });
