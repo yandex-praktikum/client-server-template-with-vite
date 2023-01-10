@@ -8,7 +8,6 @@ import { ProfilePage } from "./pages/profile/ProfilePage";
 import { ProfileChangePage } from "./pages/profile-change/ProfileChangePage";
 import "./App.css";
 import { useEffect } from "react";
-import { getUserInfo } from "./services/authorization";
 import { getYandexToken } from "./services/oAuthYandex";
 
 const App = () => {
@@ -18,21 +17,7 @@ const App = () => {
         const code = new URLSearchParams(window.location.search).get("code");
 
         if (code) {
-            getYandexToken(code)
-                .then(async () => {
-                    const userFormServer = await getUserInfo();
-
-                    if (userFormServer) {
-                        localStorage.setItem(
-                            "user",
-                            JSON.stringify(userFormServer)
-                        );
-                    }
-                })
-                .then(() => navigate("/"))
-                .catch(error => {
-                    console.log("error " + error);
-                });
+            getYandexToken(code, navigate);
         }
     }, []);
 
