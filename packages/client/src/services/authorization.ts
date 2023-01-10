@@ -9,7 +9,6 @@ import { signupRequestData } from "@/api/typesApi";
 import { LoginFormValuesType } from "@/components/forms/LoginForm/LoginForm";
 import { NavigateFunction } from "react-router-dom";
 import { MouseEventHandler } from "react";
-import axios from "axios";
 
 export const signin = async (values: LoginFormValuesType) => {
     try {

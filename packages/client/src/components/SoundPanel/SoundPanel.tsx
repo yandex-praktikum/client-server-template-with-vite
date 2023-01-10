@@ -1,7 +1,7 @@
 import { Switch } from "antd";
 import "./SoundPanel.scss";
-import SoundOnIcon from "../customIcons/SoundOnIcon";
-import SoundOffIcon from "../customIcons/SoundOffIcon";
+import SoundOnIcon from "@/components/customIcons/SoundOnIcon";
+import SoundOffIcon from "@/components/customIcons/SoundOffIcon";
 import { SwitchChangeEventHandler } from "antd/lib/switch";
 
 export type SoundPanelProps = {
