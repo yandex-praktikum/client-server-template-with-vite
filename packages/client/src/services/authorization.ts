@@ -1,6 +1,6 @@
-import { getUserDataRequest, signinRequest, signupRequest } from "../api/Auth";
-import { signupRequestData } from "../api/typesApi";
-import { LoginFormValuesType } from "../components/forms/LoginForm/LoginForm";
+import { getUserDataRequest, signinRequest, signupRequest } from "@/api/Auth";
+import { signupRequestData } from "@/api/typesApi";
+import { LoginFormValuesType } from "@/components/forms/LoginForm/LoginForm";
 import { NavigateFunction } from "react-router-dom";
 
 export const signin = async (values: LoginFormValuesType) => {
@@ -24,13 +24,17 @@ export const getUserInfo = async (): Promise<any> => {
     }
 };
 
-export const signup = async (data: signupRequestData, navigate: NavigateFunction) => {
-  try {
-    const response = await signupRequest(data)
-    if (response.status === 200) {
-      navigate("/")
+export const signup = async (
+    data: signupRequestData,
+    navigate: NavigateFunction
+) => {
+    try {
+        const response = await signupRequest(data);
+        if (response.status === 200) {
+            navigate("/");
+        }
+        return response;
+    } catch (error) {
+        console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-  }
-}
+};
