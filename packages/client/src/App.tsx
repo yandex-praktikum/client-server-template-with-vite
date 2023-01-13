@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import LadderPage from "./pages/LadderPage/LadderPage";
 import LoginPage from "./pages/login/LoginPage";
 import { SignUpPage } from "./pages/signUp/SignUpPage";
@@ -6,10 +6,21 @@ import ForumPage from "./pages/ForumPage/ForumPage";
 import GamePage from "./pages/GamePage/GamePage";
 import { ProfilePage } from "./pages/profile/ProfilePage";
 import { ProfileChangePage } from "./pages/profile-change/ProfileChangePage";
-
 import "./App.css";
+import { useEffect } from "react";
+import { getYandexToken } from "./services/oAuthYandex";
 
 const App = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const code = new URLSearchParams(window.location.search).get("code");
+
+        if (code) {
+            getYandexToken(code, navigate);
+        }
+    }, []);
+
     return (
         <div className="App">
             <Routes>

@@ -1,24 +1,36 @@
-import { getUserDataRequest, signinRequest, signupRequest } from "@/api/Auth";
+import axios from "@/api/axiosSetup";
+import {
+    getUserDataRequest,
+    signinRequest,
+    signoutRequest,
+    signupRequest,
+} from "@/api/Auth";
 import { signupRequestData } from "@/api/typesApi";
 import { LoginFormValuesType } from "@/components/forms/LoginForm/LoginForm";
 import { NavigateFunction } from "react-router-dom";
+import { MouseEventHandler } from "react";
 
 export const signin = async (values: LoginFormValuesType) => {
     try {
-        await signinRequest(values);
+        const response = await signinRequest(values);
 
-        return true;
+        if (response.status === 200 || response.status === 400) {
+            return true;
+        }
     } catch (error) {
         return false;
     }
 };
 
-// TODO: Добавить типизацию ответов
-export const getUserInfo = async (): Promise<any> => {
+export const getUserInfo = async () => {
     try {
         const response = await getUserDataRequest();
 
-        return response;
+        if (!axios.isAxiosError(response)) {
+            return response;
+        } else {
+            return null;
+        }
     } catch (error) {
         return null;
     }
@@ -36,5 +48,22 @@ export const signup = async (
         return response;
     } catch (error) {
         console.log(error);
+    }
+};
+
+export const signout: MouseEventHandler = async event => {
+    console.log(event, "signout");
+
+    try {
+        const response = await signoutRequest();
+
+        if (response.status === 200) {
+            localStorage.removeItem("user");
+            window.location.replace(`/sign-in`);
+            return true;
+        }
+    } catch (error) {
+        console.log(error);
+        return false;
     }
 };

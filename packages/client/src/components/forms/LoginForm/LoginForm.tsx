@@ -3,9 +3,10 @@ import { Form, Button, Input } from "antd";
 import { useFormik } from "formik";
 import { ChangeEvent } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { getUserInfo, signin } from "../../../services/authorization";
+import { getUserInfo, signin } from "@/services/authorization";
 import "./LoginForm.scss";
 import { LOGIN_FORM_VALIDATION_SCHEMA } from "./loginFormValidationSchema";
+import { signinWithYandex } from "@/services/oAuthYandex";
 
 export type LoginFormValuesType = {
     login: string;
@@ -19,11 +20,14 @@ const initialFormValues = {
 
 export const LoginForm = () => {
     const navigate = useNavigate();
+
     const submitHandler = async (values: LoginFormValuesType) => {
         const isLoggedIn = await signin(values);
 
         if (isLoggedIn) {
-            await getUserInfo();
+            const userFormServer = await getUserInfo();
+
+            localStorage.setItem("user", JSON.stringify(userFormServer));
 
             navigate("/");
         }
@@ -45,6 +49,10 @@ export const LoginForm = () => {
 
     const onFocus = (name: string) => {
         formik.setFieldTouched(name);
+    };
+
+    const handleYandexOauth = async () => {
+        await signinWithYandex();
     };
 
     return (
@@ -107,6 +115,14 @@ export const LoginForm = () => {
                     data-testid="signin-button">
                     Sign in
                 </Button>
+
+                <p>or login with</p>
+                <Button
+                    type="ghost"
+                    htmlType="button"
+                    data-testid="yandex-button"
+                    className="yandex-button"
+                    onClick={handleYandexOauth}></Button>
 
                 <NavLink to={"/sign-up"}>
                     <Button

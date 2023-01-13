@@ -5,6 +5,10 @@ export type ResponseStatus = {
     status: number;
 };
 
+export interface YandexServiceIdResponse extends Response {
+    data: { service_id: string };
+}
+
 export type LoginRequestData = {
     login: string;
     password: string;

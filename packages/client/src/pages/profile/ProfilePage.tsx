@@ -12,10 +12,10 @@ import "./ProfilePage.scss";
 import { UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getUserInfo } from "../../services/authorization";
-import { UserInfoRequestData } from "../../api/typesApi";
-import { PATH } from "../../constants/apiPaths";
-import MainLayout from "../../containers/MainLayout/MainLayout";
+import { getUserInfo } from "@/services/authorization";
+import { UserInfoRequestData } from "@/api/typesApi";
+import { PATH } from "@/constants/apiPaths";
+import MainLayout from "@/containers/MainLayout/MainLayout";
 
 export const ProfilePage = () => {
     const [userInfo, setUserInfo] = useState<UserInfoRequestData | null>(null);

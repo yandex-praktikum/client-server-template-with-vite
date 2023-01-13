@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { PATH } from "../constants/apiPaths";
+import { PATH } from "@/constants/apiPaths";
 import { apiErrorHandler } from "./apiErrorHandler";
 
 axios.interceptors.request.use(function (config: AxiosRequestConfig) {
@@ -13,6 +13,10 @@ axios.interceptors.request.use(function (config: AxiosRequestConfig) {
 axios.interceptors.response.use(
     function (response) {
         // TODO: add notification
+        if (response.status !== 200) {
+            apiErrorHandler(response.status);
+        }
+
         return response;
     },
 

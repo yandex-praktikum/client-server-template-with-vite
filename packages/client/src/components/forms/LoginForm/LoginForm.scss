@@ -22,7 +22,13 @@
         row-gap: 1rem;
 
         & > button {
-            width: 50%;
+            width: 60%;
+            min-height: 44px;
+        }
+
+        .yandex-button {
+            background: url("./images/yandex-btn.svg") center no-repeat;
+            background-size: cover;
         }
     }
 
