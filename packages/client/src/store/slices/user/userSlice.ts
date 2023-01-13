@@ -1,6 +1,6 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Nullable, UserFromServer } from "../../../api/typesApi";
-import { RootState } from "../../store";
+import { Nullable, UserFromServer } from "@/api/typesApi";
+import { RootState } from "@/store/store";
 
 const storedUser = localStorage.getItem("user");
 
