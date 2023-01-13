@@ -8,8 +8,6 @@ import { ProfilePage } from "./pages/profile/ProfilePage";
 import { ProfileChangePage } from "./pages/profile-change/ProfileChangePage";
 import "./App.css";
 import { useEffect } from "react";
-import { getUserInfo } from "./services/authorization";
-import { userActions } from "./store/slices/user/userSlice";
 import { useAppDispatch } from "./store/hooks";
 import { getYandexToken } from "./services/oAuthYandex";
 
@@ -21,23 +19,7 @@ export const App = () => {
         const code = new URLSearchParams(window.location.search).get("code");
 
         if (code) {
-            getYandexToken(code)
-                .then(async () => {
-                    const userFormServer = await getUserInfo();
-
-                    if (userFormServer) {
-                        localStorage.setItem(
-                            "user",
-                            JSON.stringify(userFormServer)
-                        );
-
-                        dispatch(userActions.setUser(userFormServer));
-                    }
-                })
-                .then(() => navigate("/"))
-                .catch(error => {
-                    console.log("error " + error);
-                });
+            getYandexToken(code, navigate, dispatch);
         }
     }, []);
 
