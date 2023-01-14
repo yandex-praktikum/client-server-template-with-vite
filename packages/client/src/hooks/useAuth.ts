@@ -8,7 +8,7 @@ import {
   IUserSignUpReq,
   requestSignUp,
 } from '../api/auth';
-import { ROUTE_PATHS } from '../utils/routes';
+import { RoutePaths } from '../utils/routes';
 
 export interface IUseAuthReturn {
   login: (data: IUserSigninReq) => void;
@@ -22,7 +22,7 @@ export const useAuth = (): IUseAuthReturn => {
   const login = useCallback(async (data: IUserSigninReq) => {
     try {
       await requestLogIn(data);
-      navigate(ROUTE_PATHS.login);
+      navigate(RoutePaths.login);
     } catch (err) {
       return err;
     }
@@ -31,7 +31,7 @@ export const useAuth = (): IUseAuthReturn => {
   const logout = useCallback(async () => {
     try {
       await requestLogOut();
-      navigate(ROUTE_PATHS.game);
+      navigate(RoutePaths.game);
     } catch (err) {
       console.error(err);
     }

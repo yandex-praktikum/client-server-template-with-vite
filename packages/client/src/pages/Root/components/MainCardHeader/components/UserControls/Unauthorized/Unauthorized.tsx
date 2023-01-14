@@ -2,17 +2,17 @@ import { Button } from '@mui/material';
 import { FC, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ROUTE_PATHS } from '../../../../../../../utils/routes';
+import { RoutePaths } from '../../../../../../../utils/routes';
 
 const Unauthorized: FC = () => {
   const navigate = useNavigate();
 
   const handleSignupClick = useCallback(() => {
-    navigate(ROUTE_PATHS.signup);
+    navigate(RoutePaths.signup);
   }, []);
 
   const handleLoginClick = useCallback(() => {
-    navigate(ROUTE_PATHS.login);
+    navigate(RoutePaths.login);
   }, []);
 
   return (

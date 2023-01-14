@@ -5,10 +5,10 @@ import Tree from '../assets/pine.png';
 import SnowMan from '../assets/snowman.png';
 
 export class Obstacle extends BaseObject {
-  private speed: number;
+  private readonly speed: number;
   private horSpeed: number;
-  private image: HTMLImageElement;
-  private type: number;
+  private readonly image: HTMLImageElement;
+  private readonly type: number;
 
   constructor(
     position: Position,

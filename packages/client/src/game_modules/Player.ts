@@ -1,23 +1,26 @@
 import { Size, Position } from './GameTypes';
 import { BaseObject } from './MovableObject';
 import { Scene } from './Scene';
+import { CustomWindow } from './types';
 
 import JumpSprite from '../assets/jump.png';
 import RunSprite from '../assets/run.png';
 import SlideSprite from '../assets/slide.png';
 
+declare let window: CustomWindow;
+
 export class Player extends BaseObject {
-  private gravity: number;
+  private readonly gravity: number;
   private verDelta: number;
-  private jumpForce: number;
+  private readonly jumpForce: number;
   public originalHeight: number;
-  private originalWidth: number;
-  private minHeight: number;
-  private minWidth: number;
+  private readonly originalWidth: number;
+  private readonly minHeight: number;
+  private readonly minWidth: number;
   private grounded: boolean;
   private jumpTimer: number;
 
-  private image: HTMLImageElement;
+  private readonly image: HTMLImageElement;
 
   constructor(position: Position, size: Size) {
     super(position, size);

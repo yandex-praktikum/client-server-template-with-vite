@@ -1,18 +1,17 @@
 import { Gamepad } from '@mui/icons-material';
 import { Button, CircularProgress, Tooltip } from '@mui/material';
+import { EGameStatus } from '@src/enums/gameStatus.enum';
+import { useAppDispatch } from '@src/hooks/useAppDispatch';
+import { useAppSelector } from '@src/hooks/useAppSelector';
+import { setStatus } from '@src/store/reducers/game.reducer';
+import { gameStatusSelect } from '@src/store/selectors';
+import { IOutletContext } from '@src/utils/OutletContext';
 import { FC, useCallback, useEffect } from 'react';
 import { useOutletContext } from 'react-router';
 
 import { GameCanvas } from './components/Canvas';
 import GameControl from './components/GameControl';
 import styles from './Game.module.scss';
-
-import { EGameStatus } from '../../enums/gameStatus.enum';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { useAppSelector } from '../../hooks/useAppSelector';
-import { setStatus } from '../../store/reducers/game.reducer';
-import { gameStatusSelect } from '../../store/selectors';
-import { IOutletContext } from '../../utils/OutletContext';
 
 const Game: FC = () => {
   const { setPageName } = useOutletContext<IOutletContext>();

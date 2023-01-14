@@ -1,7 +1,6 @@
-import axios, { AxiosPromise } from 'axios';
-
-import { IUserInfo } from '../types/pageContext';
-import { AUTH_API } from '../utils/constants';
+import { IUserInfo } from '@src/types/pageContext';
+import { AUTH_API } from '@src/utils/constants';
+import axios, { type AxiosPromise } from 'axios';
 
 /**
  * Получение данных пользователя

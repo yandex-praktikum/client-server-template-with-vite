@@ -1,9 +1,9 @@
 import Background from '../assets/bg.png';
 
 export class Scene {
-  private _width: number;
-  private _height: number;
-  private image: HTMLImageElement;
+  private readonly _width: number;
+  private readonly _height: number;
+  private readonly image: HTMLImageElement;
   private x: number;
 
   constructor(width: number, height: number) {

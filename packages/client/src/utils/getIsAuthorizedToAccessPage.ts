@@ -1,4 +1,4 @@
-import { Location } from '@remix-run/router';
+import { type Location } from '@remix-run/router';
 
 export const getIsAuthorizedToAccessPage = (
   location: Location,
