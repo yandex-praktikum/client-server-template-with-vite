@@ -1,8 +1,7 @@
-import React from "react";
-import MainLayout from "../../containers/MainLayout/MainLayout";
+import MainLayout from "@/containers/MainLayout/MainLayout";
 import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
-import ContentContainer from "../../containers/ContentContainer/ContentContainer";
+import ContentContainer from "@/containers/ContentContainer/ContentContainer";
 
 interface DataType {
     key: string;

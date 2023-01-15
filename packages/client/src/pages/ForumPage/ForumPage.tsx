@@ -1,7 +1,6 @@
-import React from "react";
 import { Card } from "antd";
-import MainLayout from "../../containers/MainLayout/MainLayout";
-import ContentContainer from "../../containers/ContentContainer/ContentContainer";
+import MainLayout from "@/containers/MainLayout/MainLayout";
+import ContentContainer from "@/containers/ContentContainer/ContentContainer";
 
 const ForumPage = () => {
     return (

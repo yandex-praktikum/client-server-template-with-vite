@@ -1,11 +1,12 @@
-import { FunctionComponent, ReactElement, useEffect, useState } from "react";
+import { FunctionComponent, ReactElement } from "react";
 import { Layout, Row, Col, Button } from "antd";
 import "./MainLayout.sass";
 import { NavigationMenu } from "@/components/navigation/Navigation";
 import Title from "antd/es/typography/Title";
 import { NavLink, useLocation } from "react-router-dom";
 import "./MainPage.scss";
-import { Nullable, UserFromServer } from "@/api/typesApi";
+import { useAppSelector } from "@/store/hooks";
+import { userSelectors } from "@/store/slices/user/userSlice";
 const { Content, Footer, Header } = Layout;
 
 type MainLayoutProps = {
@@ -14,18 +15,7 @@ type MainLayoutProps = {
 
 const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
     const { pathname } = useLocation();
-    const userFromStorage = localStorage.getItem("user");
-    const [user, setUser] = useState<Nullable<UserFromServer>>(null);
-
-    useEffect(() => {
-        try {
-            if (userFromStorage) {
-                setUser(JSON.parse(userFromStorage));
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }, [userFromStorage]);
+    const { user } = useAppSelector(userSelectors.all);
 
     return (
         <Layout className="layout">

@@ -1,9 +1,15 @@
 import { getClientIdRequest } from "@/api/Auth";
-import { YandexServiceIdResponse } from "@/api/typesApi";
+import {
+    Nullable,
+    UserFromServer,
+    YandexServiceIdResponse,
+} from "@/api/typesApi";
 import axios from "axios";
 import { getUserInfo } from "./authorization";
 import { NavigateFunction } from "react-router-dom";
 import { apiErrorHandler } from "@/api/apiErrorHandler";
+import { userActions } from "@/store/slices/user/userSlice";
+import { AnyAction, Dispatch, ThunkDispatch } from "@reduxjs/toolkit";
 
 export const signinWithYandex = async () => {
     try {
@@ -25,7 +31,17 @@ export const signinWithYandex = async () => {
 
 export const getYandexToken = async (
     code: string,
-    navigate: NavigateFunction
+    navigate: NavigateFunction,
+    dispatch: ThunkDispatch<
+        {
+            user: {
+                user: Nullable<UserFromServer>;
+            };
+        },
+        undefined,
+        AnyAction
+    > &
+        Dispatch<AnyAction>
 ) => {
     try {
         const response = await axios.post(`oauth/yandex`, {
@@ -43,6 +59,7 @@ export const getYandexToken = async (
 
         if (userFormServer) {
             localStorage.setItem("user", JSON.stringify(userFormServer));
+            dispatch(userActions.setUser(userFormServer));
         }
 
         navigate("/");

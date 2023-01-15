@@ -3,6 +3,8 @@ import { Form, Button, Input } from "antd";
 import { useFormik } from "formik";
 import { ChangeEvent } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "@/store/hooks";
+import { userActions } from "@/store/slices/user/userSlice";
 import { getUserInfo, signin } from "@/services/authorization";
 import "./LoginForm.scss";
 import { LOGIN_FORM_VALIDATION_SCHEMA } from "./loginFormValidationSchema";
@@ -20,6 +22,7 @@ const initialFormValues = {
 
 export const LoginForm = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const submitHandler = async (values: LoginFormValuesType) => {
         const isLoggedIn = await signin(values);
@@ -27,9 +30,12 @@ export const LoginForm = () => {
         if (isLoggedIn) {
             const userFormServer = await getUserInfo();
 
-            localStorage.setItem("user", JSON.stringify(userFormServer));
+            if (userFormServer) {
+                localStorage.setItem("user", JSON.stringify(userFormServer));
+                dispatch(userActions.setUser(userFormServer));
 
-            navigate("/");
+                navigate("/");
+            }
         }
     };
 

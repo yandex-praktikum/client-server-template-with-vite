@@ -41,9 +41,9 @@ export const ProfileInfoForm = () => {
     const fetchData = async () => {
         const response = await getUserInfo();
 
-        if (response.data) {
-            setAvatar(response.data.avatar);
-            form.setFieldsValue(response.data);
+        if (response) {
+            setAvatar(response.avatar);
+            form.setFieldsValue(response);
         }
     };
 

@@ -8,16 +8,18 @@ import { ProfilePage } from "./pages/profile/ProfilePage";
 import { ProfileChangePage } from "./pages/profile-change/ProfileChangePage";
 import "./App.css";
 import { useEffect } from "react";
+import { useAppDispatch } from "./store/hooks";
 import { getYandexToken } from "./services/oAuthYandex";
 
-const App = () => {
+export const App = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         const code = new URLSearchParams(window.location.search).get("code");
 
         if (code) {
-            getYandexToken(code, navigate);
+            getYandexToken(code, navigate, dispatch);
         }
     }, []);
 

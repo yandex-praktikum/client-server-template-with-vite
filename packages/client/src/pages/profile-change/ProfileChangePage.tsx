@@ -1,7 +1,7 @@
 import { Card, Tabs, Typography } from "antd";
-import { ProfileInfoForm } from "../../components/forms/ProfileForm/ProfileInfoForm/ProfileInfoForm";
-import { ProfilePasswordForm } from "../../components/forms/ProfileForm/ProfilePasswordForm/ProfilePasswordForm";
-import MainLayout from "../../containers/MainLayout/MainLayout";
+import { ProfileInfoForm } from "@/components/forms/ProfileForm/ProfileInfoForm/ProfileInfoForm";
+import { ProfilePasswordForm } from "@/components/forms/ProfileForm/ProfilePasswordForm/ProfilePasswordForm";
+import MainLayout from "@/containers/MainLayout/MainLayout";
 
 export const ProfileChangePage = () => {
     const items = [
