@@ -39,6 +39,48 @@ export class Game {
   constructor(canvas: Scene, context: CanvasRenderingContext2D) {
     this.scene = canvas;
     this.context = context;
+    this.init();
+  }
+
+  addResizeListeners = () => {
+    document.addEventListener('fullscreenchange', () => {
+      this.toggleFullScreen();
+    });
+  };
+
+  initCanvas = () => {
+    const { canvas } = this.context;
+
+    const canvasParent = canvas.parentElement;
+
+    if (!canvasParent) {
+      throw new Error('No parentElement found for canvas');
+    }
+
+    const visualWidth = canvasParent?.offsetWidth;
+    const visualHeight = canvasParent?.offsetHeight;
+
+    this.updateCanvasDimensions(visualWidth, visualHeight);
+  };
+
+  toggleFullScreen() {
+    if (document.fullscreenElement) {
+      const visualWidth = window.visualViewport?.width ?? window.innerWidth;
+      const visualHeight = window.visualViewport?.height ?? window.innerHeight;
+      this.updateCanvasDimensions(visualWidth, visualHeight);
+    } else {
+      this.updateCanvasDimensions(...this.scene.initialDimensions);
+    }
+  }
+
+  updateCanvasDimensions(width: number, height: number) {
+    const ratio = window.devicePixelRatio;
+    const { canvas } = this.context;
+
+    canvas.width = Math.floor(width * ratio);
+    canvas.height = Math.floor(height * ratio);
+
+    this.scene.updateDimensions([width, height]);
   }
 
   generateObstacle = () => {
@@ -177,4 +219,9 @@ export class Game {
 
     this.highscoreText.draw(this.context);
   };
+
+  private init() {
+    this.initCanvas();
+    this.addResizeListeners();
+  }
 }

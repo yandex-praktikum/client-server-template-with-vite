@@ -1,15 +1,17 @@
 import Background from '../assets/bg.png';
 
 export class Scene {
-  private readonly _width: number;
-  private readonly _height: number;
   private readonly image: HTMLImageElement;
   private x: number;
+  private _initialDimensions: [number, number];
+  private _width: number;
+  private _height: number;
 
   constructor(width: number, height: number) {
     this._width = width;
     this._height = height;
     this.x = 0;
+    this._initialDimensions = [width, height];
 
     this.image = new Image();
     this.image.src = Background;
@@ -21,6 +23,14 @@ export class Scene {
 
   get height(): number {
     return this._height;
+  }
+
+  get initialDimensions(): [number, number] {
+    return this._initialDimensions;
+  }
+
+  updateDimensions(dimensions: [number, number]) {
+    [this._width, this._height] = dimensions;
   }
 
   draw(ctx: CanvasRenderingContext2D) {

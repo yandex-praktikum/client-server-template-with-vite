@@ -6,13 +6,12 @@
 
 .game {
   &__body {
-    display: grid;
+    display: flex;
     align-items: center;
     justify-content: center;
   }
 
   &__footer {
-    // width: 100%;
     position: absolute;
     padding: 5px 15px;
     box-sizing: border-box;
