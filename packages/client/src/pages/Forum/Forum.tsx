@@ -1,4 +1,5 @@
 import { List } from '@mui/material';
+import { withAccessRights } from '@src/HOCs';
 import { IOutletContext } from '@src/utils/OutletContext';
 import { FC, useEffect, useMemo } from 'react';
 import { useOutletContext } from 'react-router';
@@ -15,8 +16,10 @@ const Forum: FC = () => {
       { id: 3, author: 'Автор', subject: 'Тема', text: 'Текст' },
     ],
   };
-  const postList = useMemo(() => MOCK.posts?.map(post =>
-    <Post key={post.id} {...post}/>), [MOCK.posts]);
+  const postList = useMemo(
+    () => MOCK.posts?.map(post => <Post key={post.id} {...post} />),
+    [MOCK.posts]
+  );
 
   useEffect(() => {
     setPageName('Форум');
@@ -29,4 +32,4 @@ const Forum: FC = () => {
   );
 };
 
-export default Forum;
+export default withAccessRights(Forum);

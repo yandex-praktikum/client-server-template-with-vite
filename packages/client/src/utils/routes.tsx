@@ -1,14 +1,12 @@
 import { createBrowserRouter, type NonIndexRouteObject } from 'react-router-dom';
 
-import { getUserData } from '../api/auth';
 import Forum from '../pages/Forum';
 import ForumPage from '../pages/ForumPage';
 import Game from '../pages/Game';
-import { Leaderboard } from '../pages/Leaderboard';
+import Leaderboard from '../pages/Leaderboard';
 import Login from '../pages/Login';
 import Root from '../pages/Root';
 import Signup from '../pages/Signup';
-import { IUserInfo } from '../types/pageContext';
 
 export enum RoutePaths {
   root = '/',
@@ -53,29 +51,11 @@ const children: NonIndexRouteObject[] = [
 /**
  * Root page
  */
-export type TRootLoader = () => Promise<{
-  userInfo: IUserInfo | null
-  userRoutes: typeof AUTHORIZED_ROUTES
-}>
-
-export const rootLoader: TRootLoader = async () => {
-  try {
-    const { data } = await getUserData();
-
-    return { userInfo: data, userRoutes: AUTHORIZED_ROUTES };
-  } catch (err) {
-    console.error(err);
-
-    return { userInfo: null, userRoutes: UNAUTHORIZED_ROUTES };
-  }
-};
-
 const ROOT: NonIndexRouteObject = {
   path: RoutePaths.root,
   element: <Root />,
   children,
   id: 'root',
-  loader: rootLoader,
 };
 
 /**

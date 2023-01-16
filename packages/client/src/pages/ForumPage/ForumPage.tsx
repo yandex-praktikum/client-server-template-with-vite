@@ -1,4 +1,5 @@
 import { List } from '@mui/material';
+import { withAccessRights } from '@src/HOCs';
 import { IOutletContext } from '@src/utils/OutletContext';
 import { FC, useEffect, useMemo } from 'react';
 import { useOutletContext } from 'react-router';
@@ -17,8 +18,11 @@ const ForumPage: FC = () => {
       { id: 3, author: 'Автор', text: 'Текст' },
     ],
   };
-  const messageList = useMemo(() => MOCK.messages?.map(message =>
-    <Message key={message.id} {...message}/>), [MOCK.messages]);
+  const messageList = useMemo(
+    () =>
+      MOCK.messages?.map(message => <Message key={message.id} {...message} />),
+    [MOCK.messages]
+  );
 
   useEffect(() => {
     setPageName('Форум');
@@ -30,10 +34,10 @@ const ForumPage: FC = () => {
         <List sx={{ width: '100%' }}>{messageList}</List>
       </div>
       <div className={styles.forumPage__footer}>
-        <MessageField/>
+        <MessageField />
       </div>
     </div>
   );
 };
 
-export default ForumPage;
+export default withAccessRights(ForumPage);

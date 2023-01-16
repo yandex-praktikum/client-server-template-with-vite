@@ -1,6 +1,7 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import { IconButton, Menu, MenuItem } from '@mui/material';
-import { usePageContext } from '@src/hooks/usePageContext';
+import { useAppSelector } from '@src/hooks/useAppSelector';
+import { selectUserInfo } from '@src/store/selectors';
 import { RoutePaths } from '@src/utils/routes';
 import { FC, useState, MouseEvent, useCallback } from 'react';
 import { Link } from 'react-router-dom';
@@ -8,7 +9,7 @@ import { Link } from 'react-router-dom';
 import styles from './UserMenu.module.scss';
 
 const UserMenu: FC = () => {
-  const { userInfo } = usePageContext();
+  const userInfo = useAppSelector(selectUserInfo);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -36,16 +37,21 @@ const UserMenu: FC = () => {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        MenuListProps={{ 'aria-labelledby': 'basic-button' }}
-      >
+        MenuListProps={{ 'aria-labelledby': 'basic-button' }}>
         <MenuItem onClick={handleClose}>
-          <Link className={styles.link} to={RoutePaths.game}>Игра</Link>
+          <Link className={styles.link} to={RoutePaths.game}>
+            Игра
+          </Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <Link className={styles.link} to={RoutePaths.leaderboard}>Лидерборд</Link>
+          <Link className={styles.link} to={RoutePaths.leaderboard}>
+            Лидерборд
+          </Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <Link className={styles.link} to={RoutePaths.forum}>Форум</Link>
+          <Link className={styles.link} to={RoutePaths.forum}>
+            Форум
+          </Link>
         </MenuItem>
       </Menu>
     </>

@@ -1,5 +1,6 @@
 import { Button } from '@mui/material';
 import { IUserSignUpReq } from '@src/api/auth';
+import { withAccessRights } from '@src/HOCs';
 import { useAuth } from '@src/hooks/useAuth';
 import { IOutletContext } from '@src/utils/OutletContext';
 import { Form, Formik } from 'formik';
@@ -62,4 +63,4 @@ const Signup: FC = () => {
   );
 };
 
-export default Signup;
+export default withAccessRights(Signup);

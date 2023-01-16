@@ -1,13 +1,13 @@
 import { Avatar, Button, IconButton, Typography } from '@mui/material';
 import { FC, useMemo } from 'react';
 
+import { useAppSelector } from '../../../../../../../hooks/useAppSelector';
 import { useAuth } from '../../../../../../../hooks/useAuth';
-import { usePageContext } from '../../../../../../../hooks/usePageContext';
+import { selectUserInfo } from '../../../../../../../store/selectors';
 
 const Authorized: FC = () => {
-  const { userInfo } = usePageContext();
+  const userInfo = useAppSelector(selectUserInfo);
   const { logout } = useAuth();
-
   const { first_name, second_name, display_name } = userInfo ?? {};
 
   const nameString = useMemo(

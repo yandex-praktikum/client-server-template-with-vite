@@ -1,4 +1,5 @@
 import { Button } from '@mui/material';
+import { withAccessRights } from '@src/HOCs';
 import { useAuth } from '@src/hooks/useAuth';
 import { IOutletContext } from '@src/utils/OutletContext';
 import { Form, Formik } from 'formik';
@@ -42,4 +43,4 @@ const Login: FC = () => {
   );
 };
 
-export default Login;
+export default withAccessRights(Login);

@@ -1,4 +1,4 @@
-import { IUserInfo } from '@src/types/pageContext';
+import { IUserInfo } from '@src/types/userInfo';
 import { AUTH_API } from '@src/utils/constants';
 import axios, { type AxiosPromise } from 'axios';
 

@@ -6,6 +6,7 @@ import MainCardHeader from './components/MainCardHeader';
 import styles from './Root.module.scss';
 
 import PageWrapper from '../../components/PageWrapper';
+import { withAccessRights } from '../../HOCs';
 
 const Root: FC = () => {
   const [pageName, setPageName] = useState('');
@@ -20,4 +21,4 @@ const Root: FC = () => {
   );
 };
 
-export default Root;
+export default withAccessRights(Root);

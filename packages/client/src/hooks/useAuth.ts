@@ -1,14 +1,7 @@
-import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from './useAppDispatch';
 
-import {
-  IUserSigninReq,
-  requestLogOut,
-  requestLogIn,
-  IUserSignUpReq,
-  requestSignUp,
-} from '../api/auth';
-import { RoutePaths } from '../utils/routes';
+import { IUserSigninReq, IUserSignUpReq } from '../api/auth';
+import { logIn, logOut, signUp } from '../store/actions/auth';
 
 export interface IUseAuthReturn {
   login: (data: IUserSigninReq) => void;
@@ -17,38 +10,11 @@ export interface IUseAuthReturn {
 }
 
 export const useAuth = (): IUseAuthReturn => {
-  const navigate = useNavigate();
-
-  const login = useCallback(async (data: IUserSigninReq) => {
-    try {
-      await requestLogIn(data);
-      navigate(RoutePaths.login);
-    } catch (err) {
-      return err;
-    }
-  }, []);
-
-  const logout = useCallback(async () => {
-    try {
-      await requestLogOut();
-      navigate(RoutePaths.game);
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
-
-  const signup = useCallback(async (data: IUserSignUpReq) => {
-    try {
-      await requestSignUp(data);
-      navigate(0);
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
+  const dispatch = useAppDispatch();
 
   return {
-    login,
-    logout,
-    signup,
+    login: data => dispatch(logIn(data)),
+    logout: () => dispatch(logOut()),
+    signup: data => dispatch(signUp(data)),
   };
 };
