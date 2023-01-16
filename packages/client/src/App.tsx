@@ -12,20 +12,32 @@ import { useAppDispatch } from "./store/hooks";
 import { getYandexToken } from "./services/oAuthYandex";
 
 export const App = () => {
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
+    // const navigate = useNavigate();
+    // const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        const code = new URLSearchParams(window.location.search).get("code");
+    // useEffect(() => {
+    //     const fetchServerData = async () => {
+    //         const url = `http://localhost:${__SERVER_PORT__}/api`;
+    //         const response = await fetch(url);
+    //         const data = await response.json();
+    //         console.log(data);
+    //     };
 
-        if (code) {
-            getYandexToken(code, navigate, dispatch);
-        }
-    }, []);
+    //     fetchServerData();
+    // }, []);
+
+    // useEffect(() => {
+    //     const code = new URLSearchParams(window.location.search).get("code");
+
+    //     if (code) {
+    //         getYandexToken(code, navigate, dispatch);
+    //     }
+    // }, []);
 
     return (
         <div className="App">
-            <Routes>
+            Hello
+            {/* <Routes>
                 <Route path="/" element={<GamePage />} />
                 <Route path="/sign-in" element={<LoginPage />} />
                 <Route path="/sign-up" element={<SignUpPage />} />
@@ -34,7 +46,7 @@ export const App = () => {
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/profile-change" element={<ProfileChangePage />} />
                 <Route path="/*" element={<div>error404</div>} />
-            </Routes>
+            </Routes> */}
         </div>
     );
 };
