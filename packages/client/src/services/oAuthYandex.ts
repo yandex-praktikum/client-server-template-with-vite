@@ -1,9 +1,5 @@
 import { getClientIdRequest } from "@/api/Auth";
-import {
-    Nullable,
-    UserFromServer,
-    YandexServiceIdResponse,
-} from "@/api/typesApi";
+import { UserFromServer, YandexServiceIdResponse } from "@/api/typesApi";
 import axios from "axios";
 import { getUserInfo } from "./authorization";
 import { NavigateFunction } from "react-router-dom";

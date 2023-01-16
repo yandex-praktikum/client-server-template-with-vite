@@ -59,7 +59,10 @@ const startServer = async () => {
                 );
             }
 
-            let render: () => Promise<string>;
+            let render: (url: string) => Promise<string>;
+            const preloadedState = {
+                user: null,
+            };
 
             if (isDev()) {
                 render = (
@@ -69,9 +72,15 @@ const startServer = async () => {
                 render = (await import(ssrClientPath)).render;
             }
 
-            const appHtml = await render();
+            const appHtml = await render(req.url);
 
-            const html = template.replace(`<!--ssr-insertion-->`, appHtml);
+            const stateHtml = `<script>window.__PRELOADED_STATE__=${JSON.stringify(
+                preloadedState
+            ).replace(/</g, "\\u003c")}</script>`;
+            const html = template.replace(
+                `<!--ssr-outlet-->`,
+                appHtml + stateHtml
+            );
 
             res.status(200).set({ "Content-Type": "text/html" }).end(html);
         } catch (error) {

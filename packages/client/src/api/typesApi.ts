@@ -1,5 +1,3 @@
-export type Nullable<T> = T | null;
-
 export type ResponseStatus = {
     ok: string;
     status: number;
