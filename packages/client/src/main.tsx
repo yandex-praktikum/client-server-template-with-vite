@@ -6,19 +6,20 @@ import { App } from "./App";
 import { appTheme } from "./constants/appTheme";
 import "./index.css";
 import { ErrorBoundary } from "./pages/errorPages/ErrorBoundary";
-import store from "./store/store";
-import { Provider } from "react-redux";
+// import store from "./store/store";
+// import { Provider } from "react-redux";
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+ReactDOM.hydrateRoot(
+    document.getElementById("root") as HTMLElement,
     <React.StrictMode>
-        <Provider store={store}>
-            <BrowserRouter>
-                <ConfigProvider theme={appTheme}>
-                    <ErrorBoundary>
-                        <App />
-                    </ErrorBoundary>
-                </ConfigProvider>
-            </BrowserRouter>
-        </Provider>
+        {/* <Provider store={store}> */}
+        {/* <BrowserRouter> */}
+        <ConfigProvider theme={appTheme}>
+            <ErrorBoundary>
+                <App />
+            </ErrorBoundary>
+        </ConfigProvider>
+        {/* </BrowserRouter> */}
+        {/* </Provider> */}
     </React.StrictMode>
 );
