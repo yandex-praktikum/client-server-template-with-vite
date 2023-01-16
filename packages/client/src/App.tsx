@@ -15,16 +15,24 @@ export const App = () => {
     // const navigate = useNavigate();
     // const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        const fetchServerData = async () => {
-            const url = `http://localhost:${__SERVER_PORT__}/api`;
-            const response = await fetch(url);
-            const data = await response.json();
-            console.log(data);
-        };
+    // useEffect(() => {
+    //     const fetchServerData = async () => {
+    //         const url = `http://localhost:${__SERVER_PORT__}/api`;
+    //         const response = await fetch(url);
+    //         const data = await response.json();
+    //         console.log(data);
+    //     };
 
-        fetchServerData();
-    }, []);
+    //     fetchServerData();
+    // }, []);
+
+    // useEffect(() => {
+    //     const code = new URLSearchParams(window.location.search).get("code");
+
+    //     if (code) {
+    //         getYandexToken(code, navigate, dispatch);
+    //     }
+    // }, []);
 
     // useEffect(() => {
     //     const code = new URLSearchParams(window.location.search).get("code");
@@ -36,7 +44,7 @@ export const App = () => {
 
     return (
         <div className="App">
-            Hello.....
+            Hello
             {/* <Routes>
                 <Route path="/" element={<GamePage />} />
                 <Route path="/sign-in" element={<LoginPage />} />
