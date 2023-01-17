@@ -1,8 +1,8 @@
-import { Form, Button, Input } from "antd";
-
+import { Button, Input } from "antd";
+import Form from "antd/lib/form";
 import "../ProfileForm.scss";
 import { updatePassword } from "@/services/profile";
-import { useForm } from "antd/es/form/Form";
+import { useForm } from "antd/lib/form/Form";
 import { getValidator } from "../validation";
 import { useNotification } from "@/hooks/useNorification";
 import { useState } from "react";

@@ -4,14 +4,18 @@ import { userReducer } from "./slices/user/userSlice";
 const preloadedState =
     typeof window !== "undefined" ? window.__PRELOADED_STATE__ : undefined;
 
-const store = configureStore({
-    reducer: {
-        user: userReducer,
-    },
-    preloadedState,
-});
+export const createStore = (
+    preloadedState: Record<string, unknown> | undefined
+) => {
+    return configureStore({
+        reducer: {
+            user: userReducer,
+        },
+        preloadedState,
+    });
+};
 
-delete window.__PRELOADED_STATE__;
+const store = createStore(preloadedState);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

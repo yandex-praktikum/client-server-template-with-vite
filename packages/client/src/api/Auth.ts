@@ -21,7 +21,7 @@ export const getClientIdRequest = async (): Promise<
     YandexServiceIdResponse | AxiosError
 > => {
     return await axios.get(
-        `oauth/yandex/service-id?redirect_uri=http%3A%2F%2Flocalhost%3A3000`,
+        `oauth/yandex/service-id?redirect_uri=http%3A%2F%2Flocalhost%3A5000`,
         {}
     );
 };

@@ -3,11 +3,10 @@ import Game from "@/components/Game/Game";
 import "./GamePage.scss";
 
 const GamePage = () => {
-    return (
-        <MainLayout>
-            <Game />
-        </MainLayout>
-    );
+    const isBrowser = typeof window !== "undefined";
+
+    // Рендерим Game только в браузере
+    return <MainLayout>{<div>Game</div>}</MainLayout>;
 };
 
 export default GamePage;

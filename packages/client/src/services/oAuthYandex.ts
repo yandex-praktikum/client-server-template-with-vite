@@ -11,11 +11,13 @@ export const signinWithYandex = async () => {
     try {
         const response = await getClientIdRequest();
 
+        console.log(response);
+
         if (response.status === 200) {
             const { service_id } = (response as YandexServiceIdResponse).data;
 
             window.location.replace(
-                `https://oauth.yandex.ru/authorize?response_type=code&client_id=${service_id}&redirect_uri=http%3A%2F%2Flocalhost%3A3000`
+                `https://oauth.yandex.ru/authorize?response_type=code&client_id=${service_id}&redirect_uri=http%3A%2F%2Flocalhost%3A5000`
             );
         }
 
@@ -42,7 +44,7 @@ export const getYandexToken = async (
     try {
         const response = await axios.post(`oauth/yandex`, {
             code: code,
-            redirect_uri: "http://localhost:3000",
+            redirect_uri: "http://localhost:5000",
         });
 
         if (response.status !== 200) {
@@ -58,7 +60,7 @@ export const getYandexToken = async (
             dispatch(userActions.setUser(userFormServer));
         }
 
-        navigate("/");
+        window.history.pushState({}, "", "http://localhost:5000");
     } catch (error) {
         console.log(error);
     }

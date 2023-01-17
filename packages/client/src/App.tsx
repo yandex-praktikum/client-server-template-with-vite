@@ -26,19 +26,17 @@ export const App = () => {
     //     fetchServerData();
     // }, []);
 
-    // useEffect(() => {
-    //     const code = new URLSearchParams(window.location.search).get("code");
-
-    //     if (code) {
-    //         getYandexToken(code, navigate, dispatch);
-    //     }
-    // }, []);
-
     useEffect(() => {
-        const code = new URLSearchParams(window.location.search).get("code");
+        if (typeof window !== "undefined") {
+            console.log("browser");
 
-        if (code) {
-            getYandexToken(code, navigate, dispatch);
+            const code = new URLSearchParams(window.location.search).get(
+                "code"
+            );
+
+            if (code) {
+                getYandexToken(code, navigate, dispatch);
+            }
         }
     }, []);
 
@@ -47,11 +45,11 @@ export const App = () => {
             <Routes>
                 <Route path="/" element={<GamePage />} />
                 <Route path="/sign-in" element={<LoginPage />} />
-                {/* <Route path="/sign-up" element={<SignUpPage />} />
+                <Route path="/sign-up" element={<SignUpPage />} />
                 <Route path="/forum" element={<ForumPage />} />
                 <Route path="/ladder" element={<LadderPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/profile-change" element={<ProfileChangePage />} /> */}
+                <Route path="/profile-change" element={<ProfileChangePage />} />
                 <Route path="/*" element={<div>error404</div>} />
             </Routes>
         </div>

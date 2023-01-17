@@ -2,12 +2,11 @@ import { FunctionComponent, ReactElement } from "react";
 import { Layout, Row, Col, Button } from "antd";
 import "./MainLayout.sass";
 import { NavigationMenu } from "@/components/navigation/Navigation";
-
 import { NavLink, useLocation } from "react-router-dom";
 import "./MainPage.scss";
 import { useAppSelector } from "@/store/hooks";
 import { userSelectors } from "@/store/slices/user/userSlice";
-import Title from "antd/es/typography/Title";
+import Title from "antd/lib/typography/Title";
 
 const { Content, Footer, Header } = Layout;
 

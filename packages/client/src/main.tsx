@@ -9,6 +9,8 @@ import { ErrorBoundary } from "./pages/errorPages/ErrorBoundary";
 import store from "./store/store";
 import { Provider } from "react-redux";
 
+delete window.__PRELOADED_STATE__;
+
 ReactDOM.hydrateRoot(
     document.getElementById("root") as HTMLElement,
     <React.StrictMode>

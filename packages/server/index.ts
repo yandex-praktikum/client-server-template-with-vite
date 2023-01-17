@@ -11,7 +11,7 @@ const isDev = () => process.env.NODE_ENV === "development";
 
 const startServer = async () => {
     const app = express();
-    const port = Number(process.env.SERVER_PORT) || 3001;
+    const port = Number(process.env.SERVER_PORT) || 5000;
 
     let vite: ViteDevServer | undefined;
 
@@ -59,23 +59,27 @@ const startServer = async () => {
                 );
             }
 
-            let render: (url: string) => Promise<string>;
-            const preloadedState = {
-                user: null,
-            };
+            let render: (store: any, url: string) => Promise<string>;
+            let createStore: (
+                preloadedState: Record<string, unknown> | undefined
+            ) => any;
 
             if (isDev()) {
                 render = (
                     await vite!.ssrLoadModule(path.resolve(srcPath, "ssr.tsx"))
                 ).render;
+                createStore = (await import(ssrClientPath)).createStore;
             } else {
                 render = (await import(ssrClientPath)).render;
+                createStore = (await import(ssrClientPath)).createStore;
             }
+            const store = createStore(undefined);
+            const state = store.getState();
 
-            const appHtml = await render(req.url);
+            const appHtml = await render(store, req.url);
 
             const stateHtml = `<script>window.__PRELOADED_STATE__=${JSON.stringify(
-                preloadedState
+                state
             ).replace(/</g, "\\u003c")}</script>`;
             const html = template.replace(
                 `<!--ssr-outlet-->`,

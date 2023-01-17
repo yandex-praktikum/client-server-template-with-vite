@@ -1,5 +1,5 @@
-@use "src/assets/mixins";
+@use "@/assets/mixins";
 
 .col {
-  @include mixins.col;
+    @include mixins.col;
 }
