@@ -85,7 +85,7 @@ const startServer = async () => {
             ).replace(/</g, "\\u003c")}</script>`;
 
             const html = template.replace(
-                `<!--ssr-outlet-->`,
+                `<!--ssr-insertion-->`,
                 appHtml + stateHtml
             );
 

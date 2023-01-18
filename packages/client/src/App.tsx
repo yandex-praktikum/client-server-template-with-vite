@@ -1,3 +1,4 @@
+import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import LadderPage from "./pages/LadderPage/LadderPage";
 import LoginPage from "./pages/login/LoginPage";

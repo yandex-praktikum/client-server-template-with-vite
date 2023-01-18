@@ -37,9 +37,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
                             alignItems: "center",
                             justifyContent: "flex-start",
                         }}>
-                        <Title level={2}>
-                            Привет, {user ? user.login : "Юзер"}!
-                        </Title>
+                        <h2>Привет, {user ? user.login : "Юзер"}!</h2>
 
                         {user ? (
                             <Title level={3}>Твой лучший результат: 777</Title>
