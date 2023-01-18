@@ -44,35 +44,37 @@ const startServer = async () => {
 
         try {
             let template: string;
-
-            if (isDev()) {
-                template = fs.readFileSync(
-                    path.resolve(srcPath, "index.html"),
-                    "utf-8"
-                );
-
-                template = await vite!.transformIndexHtml(url, template);
-            } else {
-                template = fs.readFileSync(
-                    path.resolve(distPath, "index.html"),
-                    "utf-8"
-                );
-            }
-
             let render: (store: any, url: string) => Promise<string>;
             let createStore: (
                 preloadedState: Record<string, unknown> | undefined
             ) => any;
 
-            if (isDev()) {
+            if (isDev() && vite) {
+                template = fs.readFileSync(
+                    path.resolve(srcPath, "index.html"),
+                    "utf-8"
+                );
+
+                template = await vite.transformIndexHtml(url, template);
+
                 render = (
-                    await vite!.ssrLoadModule(path.resolve(srcPath, "ssr.tsx"))
+                    await vite.ssrLoadModule(path.resolve(srcPath, "ssr.tsx"))
                 ).render;
-                createStore = (await import(ssrClientPath)).createStore;
+
+                createStore = (
+                    await vite.ssrLoadModule(path.resolve(srcPath, "ssr.tsx"))
+                ).createStore;
             } else {
+                template = fs.readFileSync(
+                    path.resolve(distPath, "index.html"),
+                    "utf-8"
+                );
+
                 render = (await import(ssrClientPath)).render;
+
                 createStore = (await import(ssrClientPath)).createStore;
             }
+
             const store = createStore(undefined);
             const state = store.getState();
 
@@ -81,6 +83,7 @@ const startServer = async () => {
             const stateHtml = `<script>window.__PRELOADED_STATE__=${JSON.stringify(
                 state
             ).replace(/</g, "\\u003c")}</script>`;
+
             const html = template.replace(
                 `<!--ssr-outlet-->`,
                 appHtml + stateHtml

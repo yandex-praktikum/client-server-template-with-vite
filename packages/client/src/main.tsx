@@ -11,17 +11,21 @@ import { Provider } from "react-redux";
 
 delete window.__PRELOADED_STATE__;
 
-ReactDOM.hydrateRoot(
-    document.getElementById("root") as HTMLElement,
-    <React.StrictMode>
-        <Provider store={store}>
-            <BrowserRouter>
-                <ConfigProvider theme={appTheme}>
-                    <ErrorBoundary>
-                        <App />
-                    </ErrorBoundary>
-                </ConfigProvider>
-            </BrowserRouter>
-        </Provider>
-    </React.StrictMode>
+const rootElement = document.getElementById("root") as HTMLElement;
+const app = (
+    <Provider store={store}>
+        <BrowserRouter>
+            <ConfigProvider theme={appTheme}>
+                <ErrorBoundary>
+                    <App />
+                </ErrorBoundary>
+            </ConfigProvider>
+        </BrowserRouter>
+    </Provider>
 );
+
+if (rootElement.innerHTML === "<!--ssr-insertion-->") {
+    ReactDOM.createRoot(rootElement).render(app);
+} else {
+    ReactDOM.hydrateRoot(rootElement, app);
+}

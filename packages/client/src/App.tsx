@@ -3,17 +3,23 @@ import LadderPage from "./pages/LadderPage/LadderPage";
 import LoginPage from "./pages/login/LoginPage";
 import { SignUpPage } from "./pages/signUp/SignUpPage";
 import ForumPage from "./pages/ForumPage/ForumPage";
-import GamePage from "./pages/GamePage/GamePage";
 import { ProfilePage } from "./pages/profile/ProfilePage";
 import { ProfileChangePage } from "./pages/profile-change/ProfileChangePage";
 import "./App.css";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useAppDispatch } from "./store/hooks";
 import { getYandexToken } from "./services/oAuthYandex";
+import StartPage from "./pages/StartPage/StartPage";
 
 export const App = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+
+    const GamePage = lazy(() =>
+        import("./pages/GamePage/GamePage").then(module => ({
+            default: module.default,
+        }))
+    );
 
     // useEffect(() => {
     //     const fetchServerData = async () => {
@@ -28,8 +34,6 @@ export const App = () => {
 
     useEffect(() => {
         if (typeof window !== "undefined") {
-            console.log("browser");
-
             const code = new URLSearchParams(window.location.search).get(
                 "code"
             );
@@ -43,7 +47,15 @@ export const App = () => {
     return (
         <div className="App">
             <Routes>
-                <Route path="/" element={<GamePage />} />
+                <Route path="/" element={<StartPage />} />
+                <Route
+                    path="/game"
+                    element={
+                        <Suspense fallback={<>Загрузка...</>}>
+                            <GamePage />
+                        </Suspense>
+                    }
+                />
                 <Route path="/sign-in" element={<LoginPage />} />
                 <Route path="/sign-up" element={<SignUpPage />} />
                 <Route path="/forum" element={<ForumPage />} />
