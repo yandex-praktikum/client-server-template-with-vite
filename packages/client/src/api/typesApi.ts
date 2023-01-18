@@ -56,3 +56,15 @@ export type UserInfoRequestData = {
     phone: string;
     avatar: string;
 };
+
+export interface LeaderBoardUser {
+    date: string;
+    name: string;
+    score: number;
+}
+
+export interface LeaderBoardRequestData {
+    data: {
+        result: LeaderBoardUser;
+    };
+}

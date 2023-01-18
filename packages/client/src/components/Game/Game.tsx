@@ -4,6 +4,9 @@ import * as constants from "./helpers";
 import { Modal } from "antd";
 import { createSounds } from "../SoundPanel/createSounds";
 import { SoundPanel } from "../SoundPanel/SoundPanel";
+import { addScore } from "@/services/leaderboard";
+import { useAppSelector } from "@/store/hooks";
+import { userSelectors } from "@/store/slices/user/userSlice";
 
 //TODO: положить саунды и аудиоконтекст в стор при загрузке приложения. Иначе долго грузится.
 const { soundElements, audioContext } = createSounds();
@@ -143,6 +146,8 @@ const Game = () => {
     const [isShowModal, setIsShowModal] = useState<boolean>(false);
     const [isReady, setIsReady] = useState<boolean>(true);
     const canvas = useRef<HTMLCanvasElement>(null);
+
+    const { user } = useAppSelector(userSelectors.all);
 
     // bird jump
     const jump = () => {
@@ -325,6 +330,10 @@ const Game = () => {
                 const interval = setInterval(() => {
                     // dying
                     if (touchedPipe() || fallOut()) {
+                        if (user) {
+                            addScore(user, score.toString());
+                        }
+
                         if (score > bestScore) {
                             bestScore = score;
                             localStorage.setItem("bestScore", score.toString());
