@@ -3,6 +3,4 @@ node_modules/
 .idea
 .vscode
 dist
-.firebaserc
-firebase.json
-.firebase/*
+tmp

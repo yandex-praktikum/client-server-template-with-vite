@@ -3,13 +3,15 @@ import dotenv from 'dotenv';
 import express from 'express';
 import socketIo from 'socket.io';
 
-import { version } from './package.json';
-import { addSocket } from './socket';
 
 import type { IClientToServerEvents, IServerToClientEvents } from '../shared/types';
 
-import * as fs from 'fs';
-import * as path from 'path';
+ 
+createClientAndConnect()
+
+app.get('/', (_, res) => {
+  res.json('👋 Howdy from the server :)')
+})
 
 dotenv.config();
 
