@@ -25,6 +25,12 @@ export function SingleGameCanvas() {
   let mousePositionX = MAP_WIDTH / 2;
   let mousePositionY = MAP_HEIGHT / 2;
   const boost = useRef<boolean>(false);
+  /**
+   * Audio web api
+   */
+  const audioCtx = new window.AudioContext();
+  const myAudio = new Audio('./audio/neon-gaming-128925.mp3');
+  const source = audioCtx.createMediaElementSource(myAudio);
 
   function onMouseMove(e: MouseEvent) {
     if (!ref.current) {
@@ -49,6 +55,9 @@ export function SingleGameCanvas() {
   }
 
   useEffect(() => {
+    source.connect(audioCtx.destination);
+    myAudio.play();
+
     let foodX = randomIntFromInterval(50, MAP_WIDTH - 50);
     let foodY = randomIntFromInterval(50, MAP_HEIGHT - 50);
     let foodImg = makeFoodItem(getRandomItem(FOOD_COLORS));
