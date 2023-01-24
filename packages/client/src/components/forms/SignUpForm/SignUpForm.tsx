@@ -3,7 +3,7 @@ import { Button, Form, Image, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { COLORED_LOGO } from "@/constants/imagesPaths";
 import Title from "antd/lib/typography/Title";
-import { matchPasswords, EMAIL_MESSAGE_ERROR } from "./validation";
+import { matchPasswords, EMAIL_MESSAGE_ERROR, validator } from "./validation";
 import { signup } from "@/services/authorization";
 import "./SignUpForm.scss";
 import { useNotification } from "@/hooks/useNorification";
@@ -53,10 +53,10 @@ const SignUpForm: React.FC = () => {
                 <Form.Item
                     name="email"
                     label="E-mail"
-                    // rules={[
-                    //     { type: "email", message: EMAIL_MESSAGE_ERROR },
-                    //     { validator },
-                    // ]}
+                    rules={[
+                        { type: "email", message: EMAIL_MESSAGE_ERROR },
+                        { validator },
+                    ]}
                     hasFeedback>
                     <Input />
                 </Form.Item>
@@ -64,7 +64,7 @@ const SignUpForm: React.FC = () => {
                 <Form.Item
                     name="first_name"
                     label="Name"
-                    // rules={[{ validator }]}
+                    rules={[{ validator }]}
                     hasFeedback>
                     <Input />
                 </Form.Item>
@@ -72,7 +72,7 @@ const SignUpForm: React.FC = () => {
                 <Form.Item
                     name="second_name"
                     label="Surname"
-                    // rules={[{ validator }]}
+                    rules={[{ validator }]}
                     hasFeedback>
                     <Input />
                 </Form.Item>
@@ -80,7 +80,7 @@ const SignUpForm: React.FC = () => {
                 <Form.Item
                     name="login"
                     label="Login"
-                    // rules={[{ validator }]}
+                    rules={[{ validator }]}
                     hasFeedback>
                     <Input />
                 </Form.Item>
@@ -88,7 +88,7 @@ const SignUpForm: React.FC = () => {
                 <Form.Item
                     name="password"
                     label="Password"
-                    // rules={[{ validator }]}
+                    rules={[{ validator }]}
                     hasFeedback>
                     <Input.Password />
                 </Form.Item>
@@ -105,7 +105,7 @@ const SignUpForm: React.FC = () => {
                 <Form.Item
                     name="phone"
                     label="Phone"
-                    // rules={[{ validator }]}
+                    rules={[{ validator }]}
                     hasFeedback>
                     <Input />
                 </Form.Item>
