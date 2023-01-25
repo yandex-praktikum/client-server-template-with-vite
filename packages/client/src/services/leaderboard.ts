@@ -3,9 +3,7 @@ import { UserFromServer } from "@/api/typesApi";
 
 export const getLeaders = async () => {
     try {
-        const response = await getLeaderboard();
-
-        return response;
+        return await getLeaderboard();
     } catch (error) {
         return null;
     }
@@ -13,9 +11,7 @@ export const getLeaders = async () => {
 
 export const addScore = async (user: UserFromServer, score: string) => {
     try {
-        const response = await addLeaderboardScore(user, score);
-
-        return response;
+        return await addLeaderboardScore(user, score);
     } catch (error) {
         return null;
     }
