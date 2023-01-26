@@ -26,29 +26,6 @@ const LoginPage = () => (
                     <LoginForm />
                 </div>
             </Col>
-            <Col
-                flex={1}
-                style={{
-                    padding: "2rem",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    rowGap: "2rem",
-                }}>
-                <div className="video-container" data-testid="video-container">
-                    <video
-                        width="400"
-                        height="300"
-                        controls
-                        data-testid="video">
-                        <source
-                            src="/videos/FlappyBird-HowToPlay.mp4"
-                            type="video/mp4"
-                        />
-                    </video>
-                </div>
-            </Col>
         </Row>
     </Layout>
 );

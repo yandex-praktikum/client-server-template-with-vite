@@ -2,11 +2,12 @@ import { FunctionComponent, ReactElement } from "react";
 import { Layout, Row, Col, Button } from "antd";
 import "./MainLayout.sass";
 import { NavigationMenu } from "@/components/navigation/Navigation";
-import Title from "antd/es/typography/Title";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./MainPage.scss";
 import { useAppSelector } from "@/store/hooks";
 import { userSelectors } from "@/store/slices/user/userSlice";
+import Title from "antd/lib/typography/Title";
+
 const { Content, Footer, Header } = Layout;
 
 type MainLayoutProps = {
@@ -14,7 +15,6 @@ type MainLayoutProps = {
 };
 
 const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
-    const { pathname } = useLocation();
     const { user } = useAppSelector(userSelectors.all);
 
     return (
@@ -37,9 +37,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
                             alignItems: "center",
                             justifyContent: "flex-start",
                         }}>
-                        <Title level={2}>
-                            Привет, {user ? user.login : "Юзер"}!
-                        </Title>
+                        <h2>Привет, {user ? user.login : "Юзер"}!</h2>
 
                         {user ? (
                             <Title level={3}>Твой лучший результат: 777</Title>
@@ -47,20 +45,17 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
 
                         <NavigationMenu />
 
-                        {pathname === "/" ? null : (
-                            <NavLink to={"/"}>
-                                <Button
-                                    size="large"
-                                    htmlType="button"
-                                    type="primary"
-                                    className="layout_content-start">
-                                    СТАРТ
-                                </Button>
-                            </NavLink>
-                        )}
+                        <NavLink to={"/game"}>
+                            <Button
+                                htmlType="button"
+                                type="primary"
+                                className="layout_content-start">
+                                СТАРТ
+                            </Button>
+                        </NavLink>
                     </Col>
 
-                    <Col span={17} className="layout_content-child">
+                    <Col span={15} className="layout_content-child">
                         {children}
                     </Col>
                 </Row>

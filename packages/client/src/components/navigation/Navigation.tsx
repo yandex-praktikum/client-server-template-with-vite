@@ -10,6 +10,8 @@ import { MouseEventHandler } from "react";
 import { NavLink } from "react-router-dom";
 import { signout } from "@/services/authorization";
 import "./Navigation.scss";
+import { useAppSelector } from "@/store/hooks";
+import { userSelectors } from "@/store/slices/user/userSlice";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -30,9 +32,9 @@ function getItem(
 }
 
 export const NavigationMenu = () => {
-    const storedUser = localStorage.getItem("user");
+    const { user } = useAppSelector(userSelectors.all);
 
-    const firstItem = storedUser
+    const firstItem = user
         ? getItem(
               "Профиль",
               "1",
@@ -48,7 +50,7 @@ export const NavigationMenu = () => {
               </NavLink>
           );
 
-    const lastItem = storedUser
+    const lastItem = user
         ? getItem(
               "Выйти",
               "4",

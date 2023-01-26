@@ -1,10 +1,10 @@
-import { Form, Button, Input, Avatar, Divider, Upload } from "antd";
-
+import { Button, Input, Avatar, Divider, Upload } from "antd";
+import Form from "antd/lib/form";
 import { useEffect, useState } from "react";
 import "../ProfileForm.scss";
 import { updateInfo } from "@/services/profile";
 import { getUserInfo } from "@/services/authorization";
-import { useForm } from "antd/es/form/Form";
+import { useForm } from "antd/lib/form/Form";
 import { getValidator } from "../validation";
 import { UserOutlined } from "@ant-design/icons";
 import { PATH } from "@/constants/apiPaths";

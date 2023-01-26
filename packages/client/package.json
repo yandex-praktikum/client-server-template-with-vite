@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --config vite.config.ts",
+    "build:ssr": "tsc && vite build --config ssr.config.ts",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -13,6 +14,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
     "@reduxjs/toolkit": "^1.9.0",
+    "@rollup/plugin-alias": "^4.0.2",
     "@use-it/event-listener": "^0.1.7",
     "antd": "^5.0.2",
     "axios": "^1.2.0",
@@ -36,6 +38,7 @@
     "@types/jest": "^28.1.8",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "@types/react-router-dom": "^5.3.3",
     "@types/react-router-redux": "^5.0.21",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",

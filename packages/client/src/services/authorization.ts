@@ -9,10 +9,17 @@ import { signupRequestData } from "@/api/typesApi";
 import { LoginFormValuesType } from "@/components/forms/LoginForm/LoginForm";
 import { NavigateFunction } from "react-router-dom";
 import { MouseEventHandler } from "react";
+import { apiErrorHandler } from "@/api/apiErrorHandler";
 
 export const signin = async (values: LoginFormValuesType) => {
     try {
-        await signinRequest(values);
+        const response = await signinRequest(values);
+
+        if (response.status && response.status > 400) {
+            apiErrorHandler(response.status);
+
+            return;
+        }
 
         return true;
     } catch (error) {

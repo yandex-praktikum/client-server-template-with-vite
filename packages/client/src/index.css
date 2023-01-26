@@ -77,4 +77,10 @@ h6 {
     font-size: inherit;
     font-weight: 400;
 }
+
+h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 10px 0;
+}
 /*--------------------*/
