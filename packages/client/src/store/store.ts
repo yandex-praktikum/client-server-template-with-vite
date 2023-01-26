@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { userReducer } from "./slices/user/userSlice";
+import { leaderboardReducer } from "@/store/slices/leaderboard/leaderBoardSlice";
 
 const preloadedState =
     typeof window !== "undefined" ? window.__PRELOADED_STATE__ : undefined;
@@ -10,6 +11,7 @@ export const createStore = (
     return configureStore({
         reducer: {
             user: userReducer,
+            leaderboard: leaderboardReducer,
         },
         preloadedState,
     });
