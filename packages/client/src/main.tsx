@@ -24,4 +24,8 @@ const app = (
     </Provider>
 );
 
-ReactDOM.hydrateRoot(rootElement, app);
+if (rootElement.innerHTML === "<!--ssr-insertion-->") {
+    ReactDOM.createRoot(rootElement).render(app);
+} else {
+    ReactDOM.hydrateRoot(rootElement, app);
+}

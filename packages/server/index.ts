@@ -15,13 +15,18 @@ const startServer = async () => {
 
     let vite: ViteDevServer | undefined;
 
-    const distPath = path.dirname(require.resolve("client/dist/index.html"));
-    const srcPath = path.dirname(require.resolve("client"));
-    const ssrClientPath = require.resolve("client/dist-ssr/ssr.cjs");
+    // const distPath = path.dirname(require.resolve("client/dist/index.html"));
+    // const srcPath = path.dirname(require.resolve("client"));
+    // const ssrClientPath = require.resolve("client/dist-ssr/ssr.cjs");
+
+    let distPath = "";
+    let srcPath = "";
+    let ssrClientPath = "";
 
     app.use(cors());
 
     if (isDev()) {
+        srcPath = path.dirname(require.resolve("client"));
         vite = await createViteServer({
             server: { middlewareMode: true },
             root: srcPath,
@@ -29,6 +34,9 @@ const startServer = async () => {
         });
 
         app.use(vite.middlewares);
+    } else {
+        distPath = path.dirname(require.resolve("client/dist/index.html"));
+        ssrClientPath = require.resolve("client/dist-ssr/ssr.cjs");
     }
 
     app.get("/api", (_, res) => {
@@ -88,7 +96,6 @@ const startServer = async () => {
                 `<!--ssr-insertion-->`,
                 appHtml + stateHtml
             );
-
             res.status(200).set({ "Content-Type": "text/html" }).end(html);
         } catch (error) {
             if (isDev()) {

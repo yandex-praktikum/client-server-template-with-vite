@@ -49,7 +49,7 @@ const SIGNUP_FORM_VALIDATION_SCHEMA = yup.object().shape({
         .max(15, "Phone must contain less than 15 symbols"),
 });
 
-export const validator = (input: RuleObject, value: StoreValue) =>
+export const validator = (input: any, value: StoreValue) =>
     yup
         .reach(SIGNUP_FORM_VALIDATION_SCHEMA, input.field)
         .validate(value)

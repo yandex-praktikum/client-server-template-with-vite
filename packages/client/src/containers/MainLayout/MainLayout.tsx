@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactElement } from "react";
-import { Layout, Row, Col, Button } from "antd";
+import { Layout, Row, Col, Button, Image } from "antd";
 import "./MainLayout.sass";
 import { NavigationMenu } from "@/components/navigation/Navigation";
 import { NavLink } from "react-router-dom";
@@ -7,6 +7,7 @@ import "./MainPage.scss";
 import { useAppSelector } from "@/store/hooks";
 import { userSelectors } from "@/store/slices/user/userSlice";
 import Title from "antd/lib/typography/Title";
+import { COLORED_LOGO } from "@/constants/imagesPaths";
 
 const { Content, Footer, Header } = Layout;
 
@@ -20,10 +21,11 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
     return (
         <Layout className="layout">
             <Header className="layout_header">
-                <img
-                    src={"../../../public/Flappy_Logo.png"}
-                    alt={"logo"}
+                <Image
+                    width={300}
                     className="layout_header_img"
+                    src={COLORED_LOGO}
+                    data-testid="logo"
                 />
             </Header>
 
