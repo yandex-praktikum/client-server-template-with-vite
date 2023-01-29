@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { themeActions, themeSelectors } from "@/store/slices/theme/themeSlice";
 import "./ThemeSwitcher.scss";
 import { MAP_NAME_TO_THEME } from "@/constants/appTheme";
+import LightThemeIcon from "../customIcons/LightThemeIcon";
+import DarkThemeIcon from "../customIcons/DarkThemeIcon";
 
 export const ThemeSwitcher = () => {
     const dispatch = useAppDispatch();
@@ -23,7 +25,7 @@ export const ThemeSwitcher = () => {
 
     return (
         <Switch
-            className="theme-switch"
+            className="switch"
             onChange={toggleTheme}
             checked={isThemeDark}
             style={{
@@ -31,6 +33,8 @@ export const ThemeSwitcher = () => {
                     ? design.token.colorLight
                     : design.token.colorLink,
             }}
+            checkedChildren={<LightThemeIcon style={{ color: "#fff" }} />}
+            unCheckedChildren={<DarkThemeIcon style={{ color: "#fff" }} />}
         />
     );
 };

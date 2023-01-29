@@ -33,3 +33,12 @@
         text-transform: uppercase;
     }
 }
+
+.ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked {
+    margin-inline-start: 6px;
+    margin-inline-end: 28px;
+}
+.ant-switch .ant-switch-inner .ant-switch-inner-unchecked {
+    margin-inline-start: 28px;
+    margin-inline-end: 6px;
+}

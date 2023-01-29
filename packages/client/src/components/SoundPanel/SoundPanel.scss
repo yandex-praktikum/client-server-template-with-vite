@@ -1,6 +1,4 @@
-.sound-switch {
-    width: 60px;
-    height: 30px;
+.switch {
     position: absolute;
     top: 30px;
     left: 30px;
@@ -8,24 +6,4 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-.ant-switch {
-    & .ant-switch-handle {
-        top: 5px;
-        inset-inline-start: calc(100% - 50px);
-
-        &::before {
-            inset-inline-end: 4px;
-            inset-inline-start: -4px;
-        }
-    }
-}
-
-.ant-switch .ant-switch-inner .ant-switch-inner-unchecked {
-    margin-inline-start: 36px;
-}
-
-.ant-switch .ant-switch-inner {
-    margin-top: 2px;
 }
