@@ -13,7 +13,9 @@ import { getYandexToken } from "./services/oAuthYandex";
 import StartPage from "./pages/StartPage/StartPage";
 import { ErrorBoundary } from "./pages/errorPages/ErrorBoundary";
 import { ConfigProvider } from "antd";
-import { themeSelectors } from "./store/slices/theme/themeSlice";
+import { themeActions, themeSelectors } from "./store/slices/theme/themeSlice";
+import { ThemeNames } from "./store/slices/theme/typings";
+import { MAP_NAME_TO_THEME } from "./constants/appTheme";
 
 export const App = () => {
     const navigate = useNavigate();
@@ -36,6 +38,19 @@ export const App = () => {
                 getYandexToken(code, navigate, dispatch);
             }
         }
+    }, []);
+
+    useEffect(() => {
+        const storedThemeName =
+            typeof window !== "undefined"
+                ? localStorage.getItem("theme")
+                : ThemeNames.Dark;
+
+        dispatch(
+            themeActions.setTheme(
+                MAP_NAME_TO_THEME[storedThemeName as ThemeNames]
+            )
+        );
     }, []);
 
     return (

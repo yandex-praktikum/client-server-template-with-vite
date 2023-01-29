@@ -6,6 +6,9 @@
     background-repeat: no-repeat;
     display: flex;
     justify-content: center;
+    &_header {
+        position: relative;
+    }
 }
 
 .main-page {

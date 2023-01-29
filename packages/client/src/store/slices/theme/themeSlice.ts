@@ -1,15 +1,22 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ThemeObject } from "@/api/typesApi";
-import { RootState } from "@/store/store";
-import { DARK_THEME, LIGHT_THEME } from "@/constants/appTheme";
 
-const storedTheme =
-    typeof window !== "undefined" ? localStorage.getItem("theme") : null;
+import { RootState } from "@/store/store";
+import { MAP_NAME_TO_THEME } from "@/constants/appTheme";
+import { ThemeNames, ThemeObject } from "./typings";
+
+const storedThemeName =
+    typeof window !== "undefined"
+        ? localStorage.getItem("theme")
+        : ThemeNames.Dark;
+
+const initialTheme: ThemeObject =
+    MAP_NAME_TO_THEME[storedThemeName as ThemeNames] ||
+    MAP_NAME_TO_THEME[ThemeNames.Dark];
 
 export const themeSlice = createSlice({
     name: "theme",
     initialState: {
-        theme: storedTheme ? JSON.parse(storedTheme) : DARK_THEME,
+        theme: initialTheme,
     },
     reducers: {
         setTheme: (state, { payload }: PayloadAction<ThemeObject>) => {

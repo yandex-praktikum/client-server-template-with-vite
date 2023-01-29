@@ -1,5 +1,7 @@
+import { ThemeNames } from "@/store/slices/theme/typings";
+
 export const LIGHT_THEME = {
-    name: "light",
+    name: ThemeNames.Light,
     design: {
         token: {
             colorPrimary: "#73bf43",
@@ -25,7 +27,7 @@ export const LIGHT_THEME = {
 };
 
 export const DARK_THEME = {
-    name: "dark",
+    name: ThemeNames.Dark,
     design: {
         token: {
             colorPrimary: "#008793",
@@ -48,4 +50,9 @@ export const DARK_THEME = {
         clouds: "/assets/images/clouds-dark.png",
         cloudsRotated: "/assets/images/cloudsRotate-dark.png",
     },
+};
+
+export const MAP_NAME_TO_THEME = {
+    LIGHT: LIGHT_THEME,
+    DARK: DARK_THEME,
 };

@@ -1,5 +1,3 @@
-import { ThemeConfig } from "antd/lib/config-provider/context";
-
 export type ResponseStatus = {
     ok: string;
     status: number;
@@ -68,10 +66,3 @@ export interface LeaderBoardRequestData {
         result: LeaderBoardUser;
     };
 }
-
-export type ThemeObject = {
-    design: ThemeConfig;
-    name?: string;
-    images?: Record<string, string>;
-    components?: Record<string, Record<string, string>>;
-};
