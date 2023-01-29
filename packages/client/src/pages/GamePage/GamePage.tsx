@@ -1,8 +1,12 @@
 import Game from "@/components/Game/Game";
 import "./GamePage.scss";
-
+import MainLayout from "@/containers/MainLayout/MainLayout";
 const GamePage = () => {
-    return <Game />;
+    return (
+        <MainLayout data-testid="login-page">
+            <Game />
+        </MainLayout>
+    );
 };
 
 export default GamePage;

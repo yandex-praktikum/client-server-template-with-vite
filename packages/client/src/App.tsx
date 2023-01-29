@@ -11,6 +11,7 @@ import { lazy, Suspense, useEffect } from "react";
 import { useAppDispatch } from "./store/hooks";
 import { getYandexToken } from "./services/oAuthYandex";
 import StartPage from "./pages/StartPage/StartPage";
+import MainLayout from "@/containers/MainLayout/MainLayout";
 
 export const App = () => {
     const navigate = useNavigate();
@@ -41,7 +42,12 @@ export const App = () => {
                 <Route
                     path="/game"
                     element={
-                        <Suspense fallback={<>Загрузка...</>}>
+                        <Suspense
+                            fallback={
+                                <MainLayout>
+                                    <>Загрузка</>
+                                </MainLayout>
+                            }>
                             <GamePage />
                         </Suspense>
                     }
