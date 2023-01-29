@@ -14,11 +14,6 @@ const startServer = async () => {
     const port = Number(process.env.SERVER_PORT) || 5000;
 
     let vite: ViteDevServer | undefined;
-
-    // const distPath = path.dirname(require.resolve("client/dist/index.html"));
-    // const srcPath = path.dirname(require.resolve("client"));
-    // const ssrClientPath = require.resolve("client/dist-ssr/ssr.cjs");
-
     let distPath = "";
     let srcPath = "";
     let ssrClientPath = "";
@@ -87,7 +82,6 @@ const startServer = async () => {
             const state = store.getState();
 
             const appHtml = await render(store, req.url);
-
             const stateHtml = `<script>window.__PRELOADED_STATE__=${JSON.stringify(
                 state
             ).replace(/</g, "\\u003c")}</script>`;
