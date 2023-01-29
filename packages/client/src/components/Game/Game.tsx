@@ -7,6 +7,8 @@ import { SoundPanel } from "../SoundPanel/SoundPanel";
 import { addScore } from "@/services/leaderboard";
 import { useAppSelector } from "@/store/hooks";
 import { userSelectors } from "@/store/slices/user/userSlice";
+import { DARK_THEME } from "@/constants/appTheme";
+import { themeSelectors } from "@/store/slices/theme/themeSlice";
 
 //TODO: положить саунды и аудиоконтекст в стор при загрузке приложения. Иначе долго грузится.
 const { soundElements, audioContext } = createSounds();
@@ -148,6 +150,7 @@ const Game = () => {
     const canvas = useRef<HTMLCanvasElement>(null);
 
     const { user } = useAppSelector(userSelectors.all);
+    const { theme } = useAppSelector(themeSelectors.all);
 
     // bird jump
     const jump = () => {
@@ -191,8 +194,12 @@ const Game = () => {
 
     const draw = (context: CanvasRenderingContext2D) => {
         // draw background
-        context.fillStyle = "#abfcff";
+        context.fillStyle = theme.design.token.colorLink;
         context.fillRect(0, 0, constants.CANVAS_WIDTH, constants.CANVAS_HEIGHT);
+        constants.GROUND.src = theme.images.ground;
+        constants.CLOUDS.src = theme.images.clouds;
+        constants.CLOUDSROTATE.src = theme.images.cloudsRotated;
+        constants.CLOUDSTHIRD.src = theme.images.clouds;
 
         // draw clouds
         context.drawImage(

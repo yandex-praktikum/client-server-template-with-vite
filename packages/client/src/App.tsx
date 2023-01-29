@@ -8,13 +8,17 @@ import { ProfilePage } from "./pages/profile/ProfilePage";
 import { ProfileChangePage } from "./pages/profile-change/ProfileChangePage";
 import "./App.css";
 import { lazy, Suspense, useEffect } from "react";
-import { useAppDispatch } from "./store/hooks";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { getYandexToken } from "./services/oAuthYandex";
 import StartPage from "./pages/StartPage/StartPage";
+import { ErrorBoundary } from "./pages/errorPages/ErrorBoundary";
+import { ConfigProvider } from "antd";
+import { themeSelectors } from "./store/slices/theme/themeSlice";
 
 export const App = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const { theme } = useAppSelector(themeSelectors.all);
 
     const GamePage = lazy(() =>
         import("./pages/GamePage/GamePage").then(module => ({
@@ -35,26 +39,33 @@ export const App = () => {
     }, []);
 
     return (
-        <div className="App">
-            <Routes>
-                <Route path="/" element={<StartPage />} />
-                <Route
-                    path="/game"
-                    element={
-                        <Suspense fallback={<>Загрузка...</>}>
-                            <GamePage />
-                        </Suspense>
-                    }
-                />
-                <Route path="/sign-in" element={<LoginPage />} />
-                <Route path="/sign-up" element={<SignUpPage />} />
-                <Route path="/forum" element={<ForumPage />} />
-                <Route path="/ladder" element={<LadderPage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/profile-change" element={<ProfileChangePage />} />
-                <Route path="/*" element={<div>error404</div>} />
-            </Routes>
-        </div>
+        <ConfigProvider theme={theme.design}>
+            <ErrorBoundary>
+                <div className="App">
+                    <Routes>
+                        <Route path="/" element={<StartPage />} />
+                        <Route
+                            path="/game"
+                            element={
+                                <Suspense fallback={<>Загрузка...</>}>
+                                    <GamePage />
+                                </Suspense>
+                            }
+                        />
+                        <Route path="/sign-in" element={<LoginPage />} />
+                        <Route path="/sign-up" element={<SignUpPage />} />
+                        <Route path="/forum" element={<ForumPage />} />
+                        <Route path="/ladder" element={<LadderPage />} />
+                        <Route path="/profile" element={<ProfilePage />} />
+                        <Route
+                            path="/profile-change"
+                            element={<ProfileChangePage />}
+                        />
+                        <Route path="/*" element={<div>error404</div>} />
+                    </Routes>
+                </div>
+            </ErrorBoundary>
+        </ConfigProvider>
     );
 };
 

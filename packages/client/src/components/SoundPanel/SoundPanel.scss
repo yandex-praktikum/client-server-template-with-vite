@@ -10,13 +10,15 @@
     justify-content: space-between;
 }
 
-.ant-switch .ant-switch-handle {
-    top: 5px;
-    inset-inline-start: calc(100% - 50px);
+.ant-switch {
+    & .ant-switch-handle {
+        top: 5px;
+        inset-inline-start: calc(100% - 50px);
 
-    &::before {
-        inset-inline-end: 4px;
-        inset-inline-start: -4px;
+        &::before {
+            inset-inline-end: 4px;
+            inset-inline-start: -4px;
+        }
     }
 }
 
