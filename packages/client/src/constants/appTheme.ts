@@ -17,6 +17,7 @@ export const LIGHT_THEME = {
         },
     },
     images: {
+        backgroundLong: `url("/assets/images/bkg-long.png")`,
         ground: "/assets/images/base.png",
         clouds: "/assets/images/clouds.png",
         cloudsRotated: "/assets/images/cloudsRotate.png",
@@ -42,6 +43,7 @@ export const DARK_THEME = {
         },
     },
     images: {
+        backgroundLong: `url("/assets/images/bkg-long-dark.png")`,
         ground: "/assets/images/base-dark.png",
         clouds: "/assets/images/clouds-dark.png",
         cloudsRotated: "/assets/images/cloudsRotate-dark.png",
