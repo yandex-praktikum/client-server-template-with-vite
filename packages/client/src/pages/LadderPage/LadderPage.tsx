@@ -2,7 +2,6 @@ import MainLayout from "@/containers/MainLayout/MainLayout";
 import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import ContentContainer from "@/containers/ContentContainer/ContentContainer";
-import { getLeaders } from "@/services/leaderboard";
 import React, { useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
@@ -40,18 +39,11 @@ const LadderPage = () => {
         []
     );
 
-    const fetchLeadersAll = async () => {
-        const data: any = await getLeaders();
-        if (data) {
-            dispatch(leaderboardActions.setLeaders(data.data));
-        }
-    };
-
     useEffect(() => {
-        fetchLeadersAll();
+        dispatch(leaderboardActions.get());
     }, []);
 
-    const { data } = useAppSelector(leaderboardSelector.leaders);
+    const { data, fetching } = useAppSelector(leaderboardSelector.leaders);
 
     const formattedData = useMemo(
         () =>
@@ -71,11 +63,16 @@ const LadderPage = () => {
     return (
         <MainLayout data-testid="leader-board">
             <ContentContainer title="Доска лидеров">
-                <Table
-                    columns={columns}
-                    dataSource={formattedData}
-                    pagination={false}
-                />
+                {fetching ? (
+                    // TODO: лоадер
+                    "Загрузка..."
+                ) : (
+                    <Table
+                        columns={columns}
+                        dataSource={formattedData}
+                        pagination={false}
+                    />
+                )}
             </ContentContainer>
         </MainLayout>
     );

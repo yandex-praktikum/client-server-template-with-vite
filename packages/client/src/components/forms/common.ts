@@ -8,7 +8,7 @@ import {
     ONLY_LATIN_LETTERS,
     PHONE_SYMBOLS,
     SPECIAL_CHARACTERS,
-} from "../../constants/validateRegExps";
+} from "@/constants/validateRegExps";
 
 const NOT_EMPTY_TEXT = "Field can not be empty";
 const NOT_SPACE_TEXT = "Field should not contain space symbols";
