@@ -1,13 +1,14 @@
+import { Game } from '@src/game_modules';
+import { Scene } from '@src/game_modules/Scene';
+import { GameEndEvent } from '@src/game_modules/types';
 import { useEffect, FC, RefObject } from 'react';
 
-import { Game } from '../../../../game_modules';
-import { Scene } from '../../../../game_modules/Scene';
-
 interface IGameCanvasProps {
-  innerRef: RefObject<HTMLCanvasElement>;
+  innerRef: RefObject<HTMLCanvasElement>,
+  onGameOver: (e: GameEndEvent) => void
 }
 
-export const GameCanvas: FC<IGameCanvasProps> = ({ innerRef }) => {
+export const GameCanvas: FC<IGameCanvasProps> = ({ innerRef, onGameOver }) => {
   useEffect(() => {
     const canvas = innerRef.current;
 
@@ -16,7 +17,7 @@ export const GameCanvas: FC<IGameCanvasProps> = ({ innerRef }) => {
       if (context === null) throw new Error('canvas context is null');
 
       const canvasScene = new Scene(canvas.width, canvas.height);
-      const game = new Game(canvasScene, context);
+      const game = new Game(canvasScene, context, onGameOver);
       game.start();
     }
   }, [innerRef.current]);

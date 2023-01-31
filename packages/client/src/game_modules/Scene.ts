@@ -34,7 +34,7 @@ export class Scene {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    ctx.clearRect(0, 0, this.width, this.height);
+    ctx.clearRect(0, 0, this.width, this.height); //TODO: separate Scene from obj
 
     ctx.drawImage(this.image, this.x--, 0, this.width * 2, this.height);
 

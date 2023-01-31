@@ -1,4 +1,4 @@
-import { Position } from './GameTypes';
+import { Position } from './types';
 
 export class Legend {
   private _position: Position;

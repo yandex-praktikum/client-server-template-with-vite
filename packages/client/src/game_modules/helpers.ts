@@ -1,7 +1,7 @@
-export const randomIntInRange = (min: number, max: number) => {
+export const getRandomIntInRange = (min: number, max: number) => {
   return Math.round(Math.random() * (max - min) + min);
 };
 
-export const randomArbitrary = (min: number, max: number) => {
+export const getRandomArbitrary = (min: number, max: number) => {
   return Math.random() * (max - min) + min;
 };

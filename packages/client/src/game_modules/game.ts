@@ -1,10 +1,10 @@
-import { randomIntInRange, randomArbitrary } from './helpers';
+import { getRandomIntInRange, getRandomArbitrary } from './helpers';
 import { Legend } from './Legend';
 import { BaseObject } from './MovableObject';
 import { Obstacle } from './Obstacle';
 import { Player } from './Player';
 import { Scene } from './Scene';
-import { CustomWindow } from './types';
+import { CustomWindow, GameEndEvent } from './types';
 
 declare let window: CustomWindow;
 
@@ -28,18 +28,20 @@ export class Game {
 
   private score!: number;
   private scoreText!: Legend;
-  private highscore = 0;
-  private highscoreText!: Legend;
   private gameSpeed!: number;
   private initialGenerateTimer!: number;
   private generateTimer = this.initialGenerateTimer;
   private initialPlayerWidth = 100;
   private initialPlayerHeight = 112;
+  private speedDelta = 0.003;
+  private speedIncreaseCoefficient = 8;
+  private handleGameOver: (e: GameEndEvent) => void;
 
-  constructor(canvas: Scene, context: CanvasRenderingContext2D) {
+  constructor(canvas: Scene, context: CanvasRenderingContext2D, handlerEndOfGame: (e: GameEndEvent) => void) {
     this.scene = canvas;
     this.context = context;
     this.init();
+    this.handleGameOver = handlerEndOfGame;
   }
 
   addResizeListeners = () => {
@@ -84,9 +86,9 @@ export class Game {
   }
 
   generateObstacle = () => {
-    const len = randomIntInRange(50, 130);
-    const isGroundType = randomIntInRange(0, 1);
-    const coeff = randomArbitrary(0.25, 1.15);
+    const len = getRandomIntInRange(50, 130);
+    const isGroundType = getRandomIntInRange(0, 1);
+    const coeff = getRandomArbitrary(0.25, 1.15);
 
     let obstacle: Obstacle;
 
@@ -126,13 +128,8 @@ export class Game {
 
   generateLegend = () => {
     this.scoreText = new Legend(
-      { xPos: 60, yPos: 60 },
-      'Score: ' + this.score,
-      20
-    );
-    this.highscoreText = new Legend(
       { xPos: 60, yPos: 25 },
-      'Highscore: ' + this.highscore,
+      'Score: ' + this.score,
       20
     );
   };
@@ -161,8 +158,7 @@ export class Game {
   }
 
   showEndGame = () => {
-    // TODO: here needs to be the logic to handle end of game
-    this.start();
+    this.handleGameOver({ gameScore: this.score });
   };
 
   start = () => {
@@ -181,7 +177,7 @@ export class Game {
     if (this.generateTimer <= 0) {
       this.generateObstacle();
 
-      this.generateTimer = this.initialGenerateTimer - this.gameSpeed * 8;
+      this.generateTimer = this.initialGenerateTimer - this.gameSpeed * this.speedIncreaseCoefficient;
 
       if (this.generateTimer < 60) {
         this.generateTimer = 60;
@@ -195,29 +191,22 @@ export class Game {
         this.obstacles.splice(i, 1);
       }
 
-      if (this.isCollisionDetected(this.player, o)) {
+      o.update();
+      o.draw(this.context);
+
+      if (this.isCollisionDetected(this.player, o)) { // TODO?
         cancelAnimationFrame(reqId);
         this.showEndGame();
       }
-
-      o.update();
-      o.draw(this.context);
     }
 
     this.player.update(this.scene);
     this.player.draw(this.context);
-    this.gameSpeed += 0.003;
+    this.gameSpeed += this.speedDelta;
 
     this.score++;
     this.scoreText.update('Score: ' + this.score);
     this.scoreText.draw(this.context);
-
-    if (this.score > this.highscore) {
-      this.highscore = this.score;
-      this.highscoreText.update('Highscore: ' + this.highscore);
-    }
-
-    this.highscoreText.draw(this.context);
   };
 
   private init() {

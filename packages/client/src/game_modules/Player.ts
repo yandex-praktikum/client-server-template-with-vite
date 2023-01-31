@@ -1,7 +1,6 @@
-import { Size, Position } from './GameTypes';
 import { BaseObject } from './MovableObject';
 import { Scene } from './Scene';
-import { CustomWindow } from './types';
+import { TSize, Position, CustomWindow } from './types';
 
 import JumpSprite from '../assets/jump.png';
 import RunSprite from '../assets/run.png';
@@ -22,7 +21,7 @@ export class Player extends BaseObject {
 
   private readonly image: HTMLImageElement;
 
-  constructor(position: Position, size: Size) {
+  constructor(position: Position, size: TSize) {
     super(position, size);
 
     this.verDelta = 0;

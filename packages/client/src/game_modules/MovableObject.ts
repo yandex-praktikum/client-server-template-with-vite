@@ -1,10 +1,10 @@
-import { Size, Position } from './GameTypes';
+import { TSize, Position } from './types';
 
 export class BaseObject {
   protected position: Position;
-  protected size: Size;
+  protected size: TSize;
 
-  constructor(position: Position, size: Size) {
+  constructor(position: Position, size: TSize) {
     this.position = position;
     this.size = size;
   }

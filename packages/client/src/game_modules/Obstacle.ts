@@ -1,5 +1,5 @@
-import { Size, Position, ObstaclesType } from './GameTypes';
 import { BaseObject } from './MovableObject';
+import { TSize, Position, Obstacles } from './types';
 
 import Tree from '../assets/pine.png';
 import SnowMan from '../assets/snowman.png';
@@ -12,7 +12,7 @@ export class Obstacle extends BaseObject {
 
   constructor(
     position: Position,
-    size: Size,
+    size: TSize,
     speed: number,
     type: number
   ) {
@@ -24,7 +24,7 @@ export class Obstacle extends BaseObject {
   }
 
   isFlying() {
-    if (this.type === ObstaclesType.FlyingObject) {
+    if (this.type === Obstacles.FlyingObject) {
       this.image.src = Tree;
     } else {
       this.image.src = SnowMan;
