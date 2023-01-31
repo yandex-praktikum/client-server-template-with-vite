@@ -5,6 +5,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { withAccessRights } from '@src/HOCs';
+import { useAppDispatch } from '@src/hooks/useAppDispatch';
+import { useAppSelector } from '@src/hooks/useAppSelector';
+import { getLeadersList } from '@src/store/actions/leaders';
+import { selectLeaders } from '@src/store/selectors';
 import { IOutletContext } from '@src/utils/OutletContext';
 import { FC, useEffect, useMemo } from 'react';
 import { useOutletContext } from 'react-router';
@@ -12,38 +16,20 @@ import { useOutletContext } from 'react-router';
 import { TableLeader } from './components/TableLeader';
 import styles from './Leaderboard.module.scss';
 
-function createData(userId: number, user: string, score: number) {
-  return { userId, user, score };
-}
-
-//temporary MockData for Leaderboard Page
-const rows = [
-  createData(1, 'Frozen', 159),
-  createData(2, 'Icecream2', 256),
-  createData(3, 'Eclair1', 269),
-  createData(4, 'Cupcake', 305),
-  createData(5, 'Gingerbread', 356),
-  createData(6, 'Yyoghurt2', 159),
-  createData(7, 'Sandwich', 237),
-  createData(8, 'Eclair2', 262),
-  createData(9, 'Foghurt', 159),
-  createData(10, 'Sandwich3', 256),
-  createData(11, 'Eclair3', 262),
-];
-
 const Leaderboard: FC = () => {
   const { setPageName } = useOutletContext<IOutletContext>();
+  const leaders = useAppSelector(selectLeaders);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setPageName('Лидерборд');
+    dispatch(getLeadersList());
   }, []);
 
-  const tableRows = useMemo(
-    () =>
-      rows.map(({ userId, user, score }) => (
-        <TableLeader user={user} score={score} key={userId} />
-      )),
-    [rows]
+  const tableRows = useMemo(() =>
+    leaders.map(({ id, user, score }) =>
+      <TableLeader user={user} score={score} key={id} />)
+    , [leaders]
   );
 
   return (
