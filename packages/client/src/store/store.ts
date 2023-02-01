@@ -15,6 +15,8 @@ export const createStore = (
             leaderboard: leaderboardReducer,
             theme: themeReducer,
         },
+        middleware: getDefaultMiddleware =>
+            getDefaultMiddleware({ serializableCheck: false }),
         preloadedState,
     });
 };

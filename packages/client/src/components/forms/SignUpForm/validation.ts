@@ -7,8 +7,8 @@ import {
     ONLY_LETTERS_AND_DASH,
     SPECIAL_CHARACTERS,
     PHONE_SYMBOLS,
-} from "../../../constants/validateRegExps";
-import { RuleObject, StoreValue } from "rc-field-form/lib/interface";
+} from "@/constants/validateRegExps";
+import { StoreValue } from "rc-field-form/lib/interface";
 
 export const EMAIL_MESSAGE_ERROR = "Must be in the format example@site.com";
 

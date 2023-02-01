@@ -6,7 +6,7 @@ import { PATH } from "@/constants/apiPaths";
 const TEAM_NAME = "pachkateam";
 const RATING_FIELD_NAME = "result";
 
-export const getLeaderboard = async (): Promise<ResponseStatus | AxiosError> =>
+export const getLeaderboard = async () =>
     await axios.post(`${PATH.BASE}leaderboard/${TEAM_NAME}`, {
         ratingFieldName: RATING_FIELD_NAME,
         cursor: 0,

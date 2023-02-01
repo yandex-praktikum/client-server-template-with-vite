@@ -16,6 +16,7 @@ import { ConfigProvider } from "antd";
 import { themeActions, themeSelectors } from "./store/slices/theme/themeSlice";
 import { ThemeNames } from "./store/slices/theme/typings";
 import { MAP_NAME_TO_THEME } from "./constants/appTheme";
+import MainLayout from "@/containers/MainLayout/MainLayout";
 
 export const App = () => {
     const navigate = useNavigate();
@@ -62,7 +63,12 @@ export const App = () => {
                         <Route
                             path="/game"
                             element={
-                                <Suspense fallback={<>Загрузка...</>}>
+                                <Suspense
+                                  fallback={
+                                      <MainLayout>
+                                          <>Загрузка</>
+                                      </MainLayout>
+                                  }>
                                     <GamePage />
                                 </Suspense>
                             }
