@@ -1,15 +1,14 @@
-const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
-    process.env;
-const numPort = Number(POSTGRES_PORT);
 import { Sequelize, SequelizeOptions } from "sequelize-typescript";
 import { Forum, ForumComments, Ladder } from "./tables";
 
+const host = process.env.POSTGRES_HOST ?? "localhost";
+
 const sequelizeOptions: SequelizeOptions = {
-    host: "localhost",
-    port: numPort,
-    username: POSTGRES_USER,
-    password: POSTGRES_PASSWORD,
-    database: POSTGRES_DB,
+    host: host,
+    port: 5432,
+    username: "postgres",
+    password: "postgres",
+    database: "postgres",
     dialect: "postgres",
 };
 

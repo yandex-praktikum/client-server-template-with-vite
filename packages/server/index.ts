@@ -32,8 +32,10 @@ const startServer = async () => {
 
         app.use(vite.middlewares);
     } else {
-        distPath = path.dirname(require.resolve("client/dist/index.html"));
-        ssrClientPath = require.resolve("client/dist-ssr/ssr.cjs");
+        distPath = path.dirname(
+            require.resolve("../../client/dist/index.html")
+        );
+        ssrClientPath = require.resolve("../../client/dist-ssr/ssr.cjs");
     }
 
     app.use(express.json());

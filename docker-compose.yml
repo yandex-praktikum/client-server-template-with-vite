@@ -26,8 +26,13 @@ services:
         restart: always
         ports:
             - "${SERVER_PORT}:${SERVER_PORT}"
+        depends_on:
+              - postgres
+        networks:
+              - awesome
         environment:
           SERVER_PORT: ${SERVER_PORT}
+          POSTGRES_HOST: ${POSTGRES_HOST}
 
     postgres:
       image: postgres:14     
@@ -39,4 +44,9 @@ services:
         POSTGRES_DB: ${POSTGRES_DB}
       volumes:
         - ./tmp/pgdata:/var/lib/postgresql/data
+      networks:
+        - awesome
 
+networks:
+      awesome:
+        driver: bridge
