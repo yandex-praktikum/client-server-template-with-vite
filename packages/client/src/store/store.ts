@@ -13,6 +13,8 @@ export const createStore = (
             user: userReducer,
             leaderboard: leaderboardReducer,
         },
+        middleware: getDefaultMiddleware =>
+            getDefaultMiddleware({ serializableCheck: false }),
         preloadedState,
     });
 };

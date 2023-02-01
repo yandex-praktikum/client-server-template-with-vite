@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { validationSchema } from "../common";
-import { RuleObject, StoreValue } from "rc-field-form/lib/interface";
+import { StoreValue } from "rc-field-form/lib/interface";
 import * as Yup from "yup";
 
 export const PROFILE_FORM_VALIDATION_SCHEMA = yup.object({
@@ -20,13 +20,13 @@ export const PROFILE_PASSWORD_FORM_VALIDATION_SCHEMA = Yup.object({
 type ValidatorTypes = "profile" | "password";
 
 export const getValidator =
-    (type: ValidatorTypes) => (input: RuleObject, value: StoreValue) =>
+    (type: ValidatorTypes) => (input: any, value: StoreValue) =>
         yup
             .reach(
                 type === "profile"
                     ? PROFILE_FORM_VALIDATION_SCHEMA
                     : PROFILE_PASSWORD_FORM_VALIDATION_SCHEMA,
-                (input as any).field
+                input.field
             )
             .validate(value)
             .then(() => Promise.resolve())

@@ -7,8 +7,8 @@ import {
     ONLY_LETTERS_AND_DASH,
     SPECIAL_CHARACTERS,
     PHONE_SYMBOLS,
-} from "../../../constants/validateRegExps";
-import { RuleObject, StoreValue } from "rc-field-form/lib/interface";
+} from "@/constants/validateRegExps";
+import { StoreValue } from "rc-field-form/lib/interface";
 
 export const EMAIL_MESSAGE_ERROR = "Must be in the format example@site.com";
 
@@ -49,7 +49,7 @@ const SIGNUP_FORM_VALIDATION_SCHEMA = yup.object().shape({
         .max(15, "Phone must contain less than 15 symbols"),
 });
 
-export const validator = (input: RuleObject, value: StoreValue) =>
+export const validator = (input: any, value: StoreValue) =>
     yup
         .reach(SIGNUP_FORM_VALIDATION_SCHEMA, input.field)
         .validate(value)
