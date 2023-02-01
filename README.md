@@ -64,13 +64,19 @@
 Все ваши PR будут автоматически деплоиться на vercel. URL вам предоставит деплоящий бот
 
 ## Production окружение в докере
-Перед первым запуском выполните `node init.js`
+Перед первым запуском:
+- Выполните `node init.js`
 
-
-`docker compose up` - запустит три сервиса
+`docker compose up` - запустит четыре сервиса
 1. nginx, раздающий клиентскую статику (client)
 2. node, ваш сервер (server)
 3. postgres, вашу базу данных (postgres)
+4. pgAdmin для визуального ковыряния в базе, по умолчанию доступен на 8080 порту, креденшелы в `.env`
+
+- В pgAdmin должна быть видна база team-08-wonderful-game, это собственно наша база, если её нет - паникуйте.
+Потом пкм по Servers => create => server => заполнить любой Name => Connection => host: host.docker.internal;
+  database, user, password - из .env => save. Если база не появилась, продолжайте паниковать.
+- Если получаете ошибку `user declined directory sharing`, идите на дашборд докера -> settings ->Resources -> FileSharing. Добавьте рабочую директорию, нажмите Apply & Restart, пересоберите образ.
 
 Если вам понадобится только один сервис, просто уточните какой в команде
 `docker compose up {sevice_name}`, например `docker compose up server`
