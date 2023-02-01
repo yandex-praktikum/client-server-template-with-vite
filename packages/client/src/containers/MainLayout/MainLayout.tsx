@@ -8,6 +8,8 @@ import { useAppSelector } from "@/store/hooks";
 import { userSelectors } from "@/store/slices/user/userSlice";
 import Title from "antd/lib/typography/Title";
 import { COLORED_LOGO } from "@/constants/imagesPaths";
+import { themeSelectors } from "@/store/slices/theme/themeSlice";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher/ThemeSwitcher";
 
 const { Content, Footer, Header } = Layout;
 
@@ -17,10 +19,15 @@ type MainLayoutProps = {
 
 const MainLayout: FunctionComponent<MainLayoutProps> = ({ children }) => {
     const { user } = useAppSelector(userSelectors.all);
+    const { theme } = useAppSelector(themeSelectors.all);
 
     return (
-        <Layout className="layout">
+        <Layout
+            className="layout"
+            style={{ backgroundImage: theme.images.backgroundLong }}>
             <Header className="layout_header">
+                <ThemeSwitcher />
+
                 <Image
                     width={300}
                     className="layout_header_img"
