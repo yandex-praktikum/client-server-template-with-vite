@@ -1,12 +1,14 @@
 .layout {
     width: 100%;
     height: 100vh;
-    background-image: url("./images/bkg-long.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;
     justify-content: center;
+    &_header {
+        position: relative;
+    }
 }
 
 .main-page {
@@ -30,4 +32,13 @@
         font-weight: 600;
         text-transform: uppercase;
     }
+}
+
+.ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked {
+    margin-inline-start: 6px;
+    margin-inline-end: 28px;
+}
+.ant-switch .ant-switch-inner .ant-switch-inner-unchecked {
+    margin-inline-start: 28px;
+    margin-inline-end: 6px;
 }

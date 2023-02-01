@@ -16,7 +16,6 @@ const startServer = async () => {
     const port = Number(process.env.SERVER_PORT) || 5000;
 
     let vite: ViteDevServer | undefined;
-
     let distPath = "";
     let srcPath = "";
     let ssrClientPath = "";
@@ -136,7 +135,6 @@ const startServer = async () => {
             const state = store.getState();
 
             const appHtml = await render(store, req.url);
-
             const stateHtml = `<script>window.__PRELOADED_STATE__=${JSON.stringify(
                 state
             ).replace(/</g, "\\u003c")}</script>`;
@@ -145,7 +143,6 @@ const startServer = async () => {
                 `<!--ssr-insertion-->`,
                 appHtml + stateHtml
             );
-
             res.status(200).set({ "Content-Type": "text/html" }).end(html);
         } catch (error) {
             if (isDev()) {
