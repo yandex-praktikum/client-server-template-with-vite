@@ -8,17 +8,19 @@ import { CustomWindow, GameEndEvent } from './types';
 
 declare let window: CustomWindow;
 
-document.addEventListener('DOMContentLoaded', () => {
-  window.keys = {};
-});
+if (typeof document !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', () => {
+    window.keys = {};
+  });
 
-document.addEventListener('keydown', function (evt) {
-  window.keys[evt.code] = true;
-});
+  document.addEventListener('keydown', function (evt) {
+    window.keys[evt.code] = true;
+  });
 
-document.addEventListener('keyup', function (evt) {
-  window.keys[evt.code] = false;
-});
+  document.addEventListener('keyup', function (evt) {
+    window.keys[evt.code] = false;
+  });
+}
 
 export class Game {
   private readonly scene: Scene;
