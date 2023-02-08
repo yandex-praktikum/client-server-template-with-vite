@@ -14,6 +14,9 @@ const isDev = () => process.env.NODE_ENV === 'development';
 async function startServer() {
   const app = express();
 
+  //Если сделать то же самое через импорты, оно отказывается работать. Ещё какая-нибудь либа нужна или типа того.
+  require('./publicApi')(app);
+
   const clientPort = Number(process.env.CLIENT_PORT) || 3000;
   const serverPort = Number(process.env.SERVER_PORT) || 3001;
 
@@ -43,10 +46,6 @@ async function startServer() {
     app.use(vite.middlewares);
   }
 
-  app.get('/api', (_, res) => {
-    res.json('👋 Howdy from the server :)');
-  });
-
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')));
     app.use('/images', express.static(path.resolve(distPath, 'images')));
@@ -65,7 +64,10 @@ async function startServer() {
           'utf-8'
         );
       } else {
-        template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8');
+        template = fs.readFileSync(
+          path.resolve(srcPath, 'index.html'),
+          'utf-8'
+        );
 
         template = await vite!.transformIndexHtml(url, template);
       }

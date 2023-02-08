@@ -57,7 +57,9 @@ const Game: FC = () => {
               </Button>
             ),
             [EGameStatus.LOADING]: <CircularProgress />,
-            [EGameStatus.PLAY]: <GameCanvas innerRef={canvasRef} onGameOver={handleEndGame} />,
+            [EGameStatus.PLAY]: (
+              <GameCanvas innerRef={canvasRef} onGameOver={handleEndGame} />
+            ),
           }[status]
         }
       </div>
