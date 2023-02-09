@@ -4,18 +4,19 @@ import express from 'express';
 import { createServer as createViteServer } from 'vite';
 import type { ViteDevServer } from 'vite';
 
+import { createClientAndConnect } from './db';
+import { apiRoute } from './publicApi';
+
 import * as fs from 'fs';
 import * as path from 'path';
 
+const bodyParser = require('body-parser');
 dotenv.config();
 
 const isDev = () => process.env.NODE_ENV === 'development';
 
 async function startServer() {
   const app = express();
-
-  //Если сделать то же самое через импорты, оно отказывается работать. Ещё какая-нибудь либа нужна или типа того.
-  require('./publicApi')(app);
 
   const clientPort = Number(process.env.CLIENT_PORT) || 3000;
   const serverPort = Number(process.env.SERVER_PORT) || 3001;
@@ -29,6 +30,11 @@ async function startServer() {
   };
 
   app.use(cors(corsOptions));
+  app.use(bodyParser.json());
+
+  createClientAndConnect();
+
+  app.use('/api', apiRoute);
 
   let vite: ViteDevServer | undefined;
 

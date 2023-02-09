@@ -1,22 +1,14 @@
-import bodyParser from 'body-parser';
-import type { Express } from 'express';
+import { type Request, type Response, Router } from 'express';
 
 import Message from './database/tables/Message';
 import Thread from './database/tables/Thread';
 import User from './database/tables/User';
-import { createClientAndConnect } from './db';
 
 const MISSING_BODY_MESSAGE = 'Отсутствует тело запроса';
 const MISSING_AUTHOR_MESSAGE = 'Отсутствует автор';
 
-module.exports = function (app: Express) {
-  createClientAndConnect();
-
-  app.get('/api', (_, res) => {
-    res.json('👋 Howdy from the server :)');
-  });
-
-  app.get('/getThreads', async (_, res) => {
+export const apiRoute = Router()
+  .get('/getThreads', async (_, res: Response) => {
     Thread.findAll({
       include: [
         {
@@ -26,13 +18,13 @@ module.exports = function (app: Express) {
         },
       ],
       attributes: { exclude: ['author_id'] },
+      order: [['created_at', 'DESC']],
     }).then(result => {
       res.status(200);
       res.json(result);
     });
-  });
-
-  app.get('/getMessagesByThreadId', async (req, res) => {
+  })
+  .get('/getMessagesByThreadId', async (req: Request, res: Response) => {
     const { id } = req.query;
 
     if (!id) {
@@ -56,9 +48,8 @@ module.exports = function (app: Express) {
       res.status(200);
       res.json(result);
     });
-  });
-
-  app.post('/createThread', bodyParser.json(), async (req, res) => {
+  })
+  .post('/createThread', async (req: Request, res: Response) => {
     try {
       const body = req.body;
       const { user, title, description } = body ?? {};
@@ -95,9 +86,8 @@ module.exports = function (app: Express) {
     } catch (err) {
       console.error(err);
     }
-  });
-
-  app.post('/createMessage', bodyParser.json(), async (req, res) => {
+  })
+  .post('/createMessage', async (req: Request, res: Response) => {
     try {
       const body = req.body;
       const { user, thread_id, content } = body ?? {};
@@ -134,9 +124,8 @@ module.exports = function (app: Express) {
     } catch (err) {
       console.error(err);
     }
-  });
-
-  app.get('/getIsNightModeEnabled', async (req, res) => {
+  })
+  .get('/getIsNightModeEnabled', async (req: Request, res: Response) => {
     const { id } = req.query;
 
     if (!id) {
@@ -148,9 +137,8 @@ module.exports = function (app: Express) {
 
     res.status(200);
     res.json({ isNightModeEnabled: user ? user.is_night_mode_enabled : false });
-  });
-
-  app.put('/setIsNightModeEnabled', bodyParser.json(), async (req, res) => {
+  })
+  .put('/setIsNightModeEnabled', async (req: Request, res: Response) => {
     try {
       const body = req.body;
       const { user, isNightModeEnabled } = body ?? {};
@@ -179,4 +167,3 @@ module.exports = function (app: Express) {
       console.error(err);
     }
   });
-};
