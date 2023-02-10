@@ -12,6 +12,7 @@ import { IOutletContext } from '@src/utils/OutletContext';
 import { FC, useCallback, useEffect, useRef } from 'react';
 import { useOutletContext } from 'react-router';
 
+import AudioButton from './components/AudioButton';
 import { GameCanvas } from './components/Canvas';
 import GameControl from './components/GameControl';
 import ResizeButton from './components/ResizeButton';
@@ -71,6 +72,7 @@ const Game: FC = () => {
           {status === EGameStatus.PLAY && (
             <ResizeButton canvasRef={canvasRef} />
           )}
+          <AudioButton />
         </div>
       </div>
     </div>
