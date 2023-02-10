@@ -14,9 +14,9 @@ export default defineConfig({
   define: {
     __SERVER_PORT__: process.env.SERVER_PORT || 3001,
   },
-  resolve:{
-    alias:{
-      '@src' : path.resolve(__dirname, './src'),
+  resolve: {
+    alias: {
+      '@src': path.resolve(__dirname, './src'),
     },
   },
   plugins: [react()],

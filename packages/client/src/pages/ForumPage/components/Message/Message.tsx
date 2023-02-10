@@ -1,24 +1,29 @@
+import ForumIcon from '@mui/icons-material/Forum';
 import {
   Avatar, Divider,
+  IconButton,
   ListItem,
   ListItemAvatar, ListItemText,
   Typography,
 } from '@mui/material';
+import type { IForumCommentApiModel } from '@src/types/forumPageProps';
 import { FC } from 'react';
 
 import styles from './Message.module.scss';
 
-import { messageProps } from '../../../../types/messageProps';
-
-const Message: FC<messageProps> = ({ author, text }) => {
+const Message: FC<IForumCommentApiModel> = ({ id, author, content }) => {
   return (
     <div className={styles.Post}>
-      <ListItem alignItems="flex-start">
+      <ListItem alignItems="flex-start" secondaryAction={
+        <IconButton edge="end" onClick={() => console.log(`send reply for ${id} message`)}>
+          <ForumIcon />
+        </IconButton>
+      }>
         <ListItemAvatar>
           <Avatar>А</Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={text}
+          primary={content}
           secondary={
             <>
               <Typography
@@ -27,7 +32,7 @@ const Message: FC<messageProps> = ({ author, text }) => {
                 variant="body2"
                 color="text.primary"
               >
-                {author}
+                {author.name}
               </Typography>
             </>
           }

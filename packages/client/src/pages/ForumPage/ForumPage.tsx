@@ -1,5 +1,9 @@
 import { List } from '@mui/material';
 import { withAccessRights } from '@src/HOCs';
+import { useAppDispatch } from '@src/hooks/useAppDispatch';
+import { useAppSelector } from '@src/hooks/useAppSelector';
+import { getCommentsListForThread } from '@src/store/actions/forum';
+import { selectComments, selectPickedThread } from '@src/store/selectors';
 import { IOutletContext } from '@src/utils/OutletContext';
 import { FC, useEffect, useMemo } from 'react';
 import { useOutletContext } from 'react-router';
@@ -10,28 +14,35 @@ import styles from './ForumPage.module.scss';
 
 const ForumPage: FC = () => {
   const { setPageName } = useOutletContext<IOutletContext>();
-  const MOCK = {
-    post: { id: 1, author: 'Автор', subject: 'Тема', text: 'Текст' },
-    messages: [
-      { id: 1, author: 'Автор', text: 'Текст' },
-      { id: 2, author: 'Автор', text: 'Текст' },
-      { id: 3, author: 'Автор', text: 'Текст' },
-    ],
-  };
+  const pickedThreadInfo = useAppSelector(selectPickedThread);
+  const comments = useAppSelector(selectComments);
+  const { title } = pickedThreadInfo ?? {};
+
+  const dispatch = useAppDispatch();
+
   const messageList = useMemo(
-    () =>
-      MOCK.messages?.map(message => <Message key={message.id} {...message} />),
-    [MOCK.messages]
+    () => {
+      if (comments.length === 0) {
+        return <div>Комментариев по данной теме не найдено</div>;
+      }
+      else {
+        return (comments.map(message => <Message key={message.id} {...message} />));
+      }
+    },
+    [comments]
   );
 
   useEffect(() => {
-    setPageName('Форум');
+    setPageName(`Тема: ${title}`);
+    dispatch(getCommentsListForThread());
   }, []);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.forumPage__body}>
-        <List sx={{ width: '100%' }}>{messageList}</List>
+        <List sx={{ width: '100%' }}>{
+          messageList
+        }</List>
       </div>
       <div className={styles.forumPage__footer}>
         <MessageField />

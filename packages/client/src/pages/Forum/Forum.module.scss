@@ -1,5 +1,23 @@
 .wrapper {
   height: calc(100% - 64px);
   padding: 10px;
-  overflow-y: scroll;
+  display: grid;
+  grid-template-rows: 1fr min-content;
+}
+
+.forum {
+  &__body {
+    height: 100%;
+    overflow-y: scroll;
+  }
+
+  &__footer {
+    padding-top: 20px;
+
+    &__form {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-around;
+    }
+  }
 }

@@ -1,37 +1,35 @@
-import ForumIcon from '@mui/icons-material/Forum';
 import {
   Avatar, Divider,
-  IconButton,
   ListItem,
   ListItemAvatar, ListItemText,
   Typography,
 } from '@mui/material';
-import { forumPageProps } from '@src/types/forumPageProps';
+import { useAppDispatch } from '@src/hooks/useAppDispatch';
+import { setPickedThread } from '@src/store/reducers';
+import type { IForumThreadApiModel } from '@src/types/forumPageProps';
 import { RoutePaths } from '@src/utils/routes';
 import { FC, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './Post.module.scss';
 
-const Post: FC<forumPageProps> = ({ id, author, subject, text }) => {
+const Post: FC<IForumThreadApiModel> = ({ id, author, title, description }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const handlePostClick = useCallback(() => {
+  const handlePostClick = useCallback(async () => {
+    await dispatch(setPickedThread({ thread_id: id, title }));
     navigate(`${RoutePaths.forum}/${id}`);
   }, []);
 
   return (
     <div className={styles.Post}>
-      <ListItem secondaryAction={
-        <IconButton edge="end" aria-label="delete">
-          <ForumIcon onClick={handlePostClick} />
-        </IconButton>
-      } alignItems="flex-start">
+      <ListItem onClick={handlePostClick} alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar>А</Avatar>
+          <Avatar>{author.avatar_path ? author.avatar_path : 'А'}</Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={subject}
+          primary={title}
           secondary={
             <>
               <Typography
@@ -40,9 +38,9 @@ const Post: FC<forumPageProps> = ({ id, author, subject, text }) => {
                 variant="body2"
                 color="text.primary"
               >
-                {author}
+                {author.name}
               </Typography>
-              {` — ${text}`}
+              {` — ${description}`}
             </>
           }
         />
