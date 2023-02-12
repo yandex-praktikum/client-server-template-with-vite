@@ -4,7 +4,7 @@ import FormikTextField from '@src/components/Formik/FormikTextField';
 import { useAppDispatch } from '@src/hooks/useAppDispatch';
 import { validationSchemaComment } from '@src/pages/Forum/utils/validationSchema';
 import { setCommentForThread } from '@src/store/actions/forum';
-import { Formik, Form, FormikHelpers } from 'formik';
+import { Formik, Form, type FormikHelpers } from 'formik';
 import { FC } from 'react';
 
 type TInitialValue = { content: string };

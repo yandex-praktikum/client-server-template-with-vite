@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { IForumThreadApiModel, IForumCommentApiModel } from '@src/types/forumPageProps';
 
 type TThreadData = {

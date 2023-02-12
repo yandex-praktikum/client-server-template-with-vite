@@ -6,7 +6,7 @@ import { useAppSelector } from '@src/hooks/useAppSelector';
 import { getThreadList, setThread } from '@src/store/actions/forum';
 import { selectThreads } from '@src/store/selectors';
 import { IOutletContext } from '@src/utils/OutletContext';
-import { Formik, Form, FormikHelpers } from 'formik';
+import { Formik, Form, type FormikHelpers } from 'formik';
 import { FC, useEffect, useMemo } from 'react';
 import { useOutletContext } from 'react-router';
 
