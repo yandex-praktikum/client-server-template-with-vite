@@ -1,5 +1,6 @@
 import { Card } from '@mui/material';
 import PageWrapper from '@src/components/PageWrapper';
+import RuntimeError from '@src/components/RuntimeError';
 import { withAccessRights } from '@src/HOCs';
 import { FC, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -7,10 +8,6 @@ import { Outlet } from 'react-router';
 
 import MainCardHeader from './components/MainCardHeader';
 import styles from './Root.module.scss';
-
-import PageWrapper from '../../components/PageWrapper';
-import { RuntimeError } from '../../components/RuntimeError/RuntimeError';
-import { withAccessRights } from '../../HOCs';
 
 const Root: FC = () => {
   const [pageName, setPageName] = useState('');
