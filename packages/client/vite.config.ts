@@ -13,6 +13,7 @@ export default defineConfig({
   },
   define: {
     __SERVER_PORT__: process.env.SERVER_PORT || 3001,
+    __API_SERVER_HOST__: `'${process.env.SERVER_HOST}'`,
   },
   resolve: {
     alias: {

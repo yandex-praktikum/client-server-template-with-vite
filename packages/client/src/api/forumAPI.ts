@@ -4,11 +4,11 @@ import type {
     IForumCommentApiModel,
     IForumThreadApiModel,
 } from '@src/types/forumPageProps';
-import { SERVER_HOST } from '@src/utils/constants';
+import { SERVER_API } from '@src/utils/constants';
 import axios, { type AxiosPromise } from 'axios';
 
 const forumApi = axios.create({
-    baseURL: SERVER_HOST,
+    baseURL: SERVER_API,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',

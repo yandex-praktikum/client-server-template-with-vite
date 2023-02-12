@@ -14,5 +14,6 @@ export default {
   testMatch: ['<rootDir>/src/**/*.test.{ts,tsx}'],
   globals: {
     __SERVER_PORT__: process.env.SERVER_PORT,
+    __API_SERVER_HOST__: process.env.SERVER_HOST
   },
 };
