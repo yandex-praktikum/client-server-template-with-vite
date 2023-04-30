@@ -1,0 +1,30 @@
+# Игнорировать установленные node.js модули
+node_modules
+
+# Игнорировать файлы и папки, связанные с Git
+.git
+.gitignore
+
+# Игнорировать файлы конфигурации
+/.env*
+
+# Игнорировать файлы, необходимые только для разработки
+.DS_Store
+.vscode
+
+# Игнорировать файлы описания Docker-контейнеров и Compose
+Dockerfile*
+docker-compose*.yml
+
+# Игнорировать файлы, связанные с eslint
+.eslintignore
+.eslintrc*
+
+# Игнорировать файлы, связанные с prettier и editorconfig и lefthook
+.prettierignore
+.prettierrc
+.editorconfig
+lefthook.yml
+
+# Игнорировать файл с описанием репозитория
+/README.md

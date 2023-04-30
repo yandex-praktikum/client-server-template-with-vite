@@ -18,10 +18,10 @@ RUN rm -rf /app/packages/server/dist/ && yarn build --scope=server
 
 FROM node:$NODE_VERSION-buster-slim as production
 WORKDIR /app
-
+ENV NODE_ENV production
 COPY --from=builder /app/packages/server/dist/ /app/
 COPY --from=builder /app/packages/server/package.json /app/package.json
-RUN yarn install --production=true
-
+RUN yarn && \
+    yarn cache clean
 EXPOSE $SERVER_PORT
 CMD [ "node", "/app/index.js" ]
