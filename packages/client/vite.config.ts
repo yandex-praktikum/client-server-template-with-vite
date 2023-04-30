@@ -11,5 +11,9 @@ export default defineConfig({
   define: {
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
+  ssr: {
+    target: 'node',
+    format: 'cjs',
+  },
   plugins: [react()],
 })
