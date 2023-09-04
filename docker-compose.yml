@@ -30,7 +30,7 @@ services:
           SERVER_PORT: ${SERVER_PORT}
 
     postgres:
-      image: postgres:14     
+      image: postgres:14
       ports:
         - "${POSTGRES_PORT}:${POSTGRES_PORT}"
       environment:
