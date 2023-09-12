@@ -16,5 +16,7 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,
+    'no-case-declarations': 'error',
+    'no-console': 'off'
   },
 }

@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
+import { TestComponent } from './TestComponent'
 import './App.css'
+
 //Todo
 
 function App() {
@@ -13,11 +15,7 @@ function App() {
 
     fetchServerData()
   }, [])
-  return (
-    <div className="App">
-      Вот тут будет жить ваше приложение :) Проверим работу
-    </div>
-  )
+  return <div className="App">Вот тут будет жить ваше приложение :)</div>
 }
 
 export default App
