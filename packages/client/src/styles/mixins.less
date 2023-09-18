@@ -1,0 +1,17 @@
+.button-style-mixin() {
+  color: @white;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  border-radius: 8px;
+}
+
+.button-mixin(@type) when (@type = 'accept') {
+  .button-style-mixin();
+  background-color: @pink;
+  font-size: 14px;
+  transition: all 0.2s;
+  &:hover {
+    background-color: @blue_grey;
+  }
+}

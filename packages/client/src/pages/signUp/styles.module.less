@@ -1,0 +1,23 @@
+@import '@styles/theme.less';
+@import '@styles/mixins.less';
+
+.signUp {
+  & .title {
+    font-family: @font-family-bold;
+    font-size: @font-size-title;
+    color: @blue_text;
+    margin-bottom: 30px;
+  }
+  & .ant-modal-content {
+    display: none;
+  }
+
+  &__btn {
+    .button-mixin('accept');
+    margin-top: 10px;
+  }
+}
+
+.formTitle {
+  background-color: red;
+}
