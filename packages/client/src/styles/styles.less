@@ -1,0 +1,28 @@
+@import './theme.less';
+@import './mixins.less';
+@import '@fonts/index.less';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: @font-family-medium;
+}
+
+html,
+body {
+  background-color: @black;
+}
+.ant-form-item {
+  margin-bottom: 10px;
+}
+
+.ant-col.ant-form-item-label {
+  padding: 0;
+}
+
+button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+}

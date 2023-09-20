@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { TestComponent } from './TestComponent'
-import './App.css'
+import SignUp from '@pages/signUp/sugnUp'
 
 //Todo
 
@@ -15,7 +15,7 @@ function App() {
 
     fetchServerData()
   }, [])
-  return <div className="App">Вот тут будет жить ваше приложение :)</div>
+  return <SignUp />
 }
 
 export default App
