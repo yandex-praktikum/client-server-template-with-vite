@@ -1,0 +1,41 @@
+@import '@styles/theme.less';
+
+.header {
+  width: 100%;
+  padding: 0 18px;
+  height: 75px;
+  border-bottom: 1px solid @coffee;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: @blue_grey;
+  border-radius: 16px 16px 0 0;
+
+  &__logotype {
+    color: @white;
+    font-family: @font-family-bold;
+    font-size: 36px;
+    font-weight: 700;
+  }
+
+  &__menu {
+    width: 100%;
+    padding: 0 60px;
+
+    &__item {
+      margin-right: 15px;
+      font-family: @font-family-bold;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+
+      &--active {
+        color: @yellow;
+      }
+
+      &--default {
+        color: @coffee;
+      }
+    }
+  }
+}
