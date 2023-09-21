@@ -1,6 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import { DEFAULT_AVATAR } from '@/utils/constants'
+
 import classes from './styles.module.less'
 
 const cx = classNames.bind(classes)
