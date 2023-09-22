@@ -3,7 +3,7 @@ import PageFrame from '@components/PageFrame/PageFrame'
 
 const LeaderboardPage = () => {
   return (
-    <PageFrame name="forum">
+    <PageFrame name="leaderboard">
       <div>Leaderboard</div>
     </PageFrame>
   )

@@ -8,6 +8,7 @@ import '@styles/styles.less'
 import { UserContextProvider } from '@/providers/userProvider/UserProvider'
 
 import avatar from '../public/avatar1.jpg'
+import Forum from './pages/forum/Forum'
 
 const defaultUser = {
   avatar: avatar,
@@ -28,7 +29,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path="/game" element={<App />} />
           <Route path="/profile" element={<App />} />
           <Route path="/leaderboard" element={<LeaderboardPage />} />
-          <Route path="/forum" element={<App />} />
+          <Route path="/forum" element={<Forum />} />
           <Route path="/forum/topic" element={<App />} />
           <Route path="*" element={<App />} />
         </Routes>

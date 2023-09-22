@@ -8,7 +8,7 @@ const cx = classNames.bind(classes)
 
 interface PageFrameProps {
   name: PageTypes
-  children: ReactElement
+  children: ReactElement | ReactElement[]
 }
 
 const PageFrame = ({ name, children }: PageFrameProps) => {
