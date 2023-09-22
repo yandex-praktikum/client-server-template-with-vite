@@ -1,4 +1,3 @@
-import React from 'react'
 import PageFrame from '@components/PageFrame/PageFrame'
 import LeaderCard from '@components/LeaderCard/LeaderCard'
 import {

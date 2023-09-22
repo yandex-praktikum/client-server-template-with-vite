@@ -7,7 +7,7 @@ import classes from './styles.module.less'
 const cx = classNames.bind(classes)
 
 interface PageFrameProps {
-  children: ReactElement
+  children: ReactElement | ReactElement[]
 }
 
 const PageFrame = ({ children }: PageFrameProps) => {
