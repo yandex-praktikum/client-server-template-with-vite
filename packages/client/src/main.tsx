@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './App'
 import '@styles/styles.less'
+import Error from './pages/error/error'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -16,6 +17,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <Route path="/leaderboard" element={<App />} />
         <Route path="/forum" element={<App />} />
         <Route path="/forum/topic" element={<App />} />
+        <Route path="/notFound" element={<Error code={404} text='Page not found'/>} />        
+        <Route path="/error" element={<Error code={500} text='Server error'/>} />
         <Route path="*" element={<App />} />
       </Routes>
     </BrowserRouter>
