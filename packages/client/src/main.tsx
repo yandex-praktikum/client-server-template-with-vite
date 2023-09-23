@@ -5,6 +5,7 @@ import App from './App'
 import SignUp from '@pages/signUp/SignUp'
 import LeaderboardPage from '@pages/leaderboard/Leaderboard'
 import '@styles/styles.less'
+import Login from './pages/login/login'
 import { UserContextProvider } from '@/providers/userProvider/UserProvider'
 
 import avatar from '../public/avatar1.jpg'
@@ -23,7 +24,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="/login" element={<App />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<SignUp />} />
           <Route path="/game" element={<App />} />
           <Route path="/profile" element={<App />} />
