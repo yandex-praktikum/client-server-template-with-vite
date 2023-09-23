@@ -1,13 +1,13 @@
 import React from 'react'
-import classes from './styles.module.less'
+import classes from '../signUp/styles.module.less'
 import { Button, Form, Input } from 'antd'
 import TetrisImg from '../../components/TetrisImg/Tetris'
 
 const Login: React.FC = () => {
   return (
-    <div className={classes.login}>
+    <div className={classes.signUp}>
       <TetrisImg />
-      <div className={classes.login__form}>
+      <div className={classes.signUp__form}>
         <span className={classes.title}>Welcome to Tetris</span>
         <Form>
           <Form.Item
@@ -25,7 +25,7 @@ const Login: React.FC = () => {
             <Input placeholder="Password" type="password" />
           </Form.Item>
           <button
-            className={classes.login__btn}
+            className={classes.signUp__btn}
             style={{
               width: '100%',
             }}>
