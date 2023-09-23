@@ -1,0 +1,44 @@
+@import '@styles/theme.less';
+
+.leaderCard {
+  width: 214px;
+  padding: 21px 32px 32px 32px;
+  border-radius: @border-radius-md;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__first {
+    background: @white;
+  }
+  &__second {
+    background: @coffee;
+  }
+  &__third {
+    background: @sky;
+  }
+
+  &__name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 22px;
+    align-items: center;
+    color: @blue_text;
+  }
+
+  &__score {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 5px;
+    color: @blue_grey;
+  }
+
+  &__position {
+    margin-top: 22px;
+    color: @white;
+    font-size: 24px;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+  }
+}

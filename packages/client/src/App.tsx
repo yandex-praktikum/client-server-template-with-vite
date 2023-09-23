@@ -1,8 +1,5 @@
 import { useEffect } from 'react'
-import { TestComponent } from './TestComponent'
-import SignUp from '@pages/signUp/sugnUp'
-
-//Todo
+import SignUp from '@pages/signUp/SignUp'
 
 function App() {
   useEffect(() => {
