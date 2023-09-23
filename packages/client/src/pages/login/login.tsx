@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './styles.module.less'
 import { Button, Form, Input } from 'antd'
-import TetrisImg from './components/tetrisImg/Tetris'
+import TetrisImg from '../../components/TetrisImg/Tetris'
 
 const Login: React.FC = () => {
   return (
