@@ -1,10 +1,12 @@
 import React from 'react'
 import classes from './styles.module.less'
 import { Form, Input } from 'antd'
+import Avatar from '@/components/Avatar/Avatar'
 
 const Profile: React.FC = () => {
   return (
     <div className={classes.profile}>
+      <Avatar size='md'></Avatar>
       <div className={classes.profile__form}>
         <Form>
           <Form.Item
