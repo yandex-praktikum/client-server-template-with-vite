@@ -9,6 +9,7 @@ import Login from './pages/login/login'
 import { UserContextProvider } from '@/providers/userProvider/UserProvider'
 
 import avatar from '../public/avatar1.jpg'
+import Profile from './pages/profile/Profile'
 
 const defaultUser = {
   avatar: avatar,
@@ -27,7 +28,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<SignUp />} />
           <Route path="/game" element={<App />} />
-          <Route path="/profile" element={<App />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/leaderboard" element={<LeaderboardPage />} />
           <Route path="/forum" element={<App />} />
           <Route path="/forum/topic" element={<App />} />

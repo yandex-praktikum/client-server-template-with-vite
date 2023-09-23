@@ -1,0 +1,28 @@
+@import '@styles/theme.less';
+@import '@styles/mixins.less';
+
+.profile {
+  display: flex;
+  width: 800px;
+  height: 700px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 16px;
+  background-color: @light-yellow;
+  &__form {
+    margin-right: 40px;
+  }
+  &__btn {
+    .button-mixin('accept');
+    margin-top: 10px;
+  }
+}
+
+.formTitle {
+  background-color: red;
+}
