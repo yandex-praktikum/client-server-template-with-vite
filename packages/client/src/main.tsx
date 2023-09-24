@@ -5,7 +5,9 @@ import App from './App'
 import SignUp from '@pages/signUp/SignUp'
 import LeaderboardPage from '@pages/leaderboard/Leaderboard'
 import '@styles/styles.less'
+import Error from './pages/error/error'
 import Login from './pages/login/login'
+
 import { UserContextProvider } from '@/providers/userProvider/UserProvider'
 
 import avatar from '../public/avatar1.jpg'
@@ -30,7 +32,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path="/profile" element={<App />} />
           <Route path="/leaderboard" element={<LeaderboardPage />} />
           <Route path="/forum" element={<App />} />
-          <Route path="/forum/topic" element={<App />} />
+          <Route path="/forum/topic" element={<App />} />          
+          <Route path="/notFound" element={<Error code={404} text='Page not found'/>} />        
+          <Route path="/error" element={<Error code={500} text='Server error'/>} />
           <Route path="*" element={<App />} />
         </Routes>
       </BrowserRouter>
