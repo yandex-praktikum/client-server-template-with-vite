@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance } from 'axios'
 
-import getApiError, { ApiError } from './getApiError'
+import getApiError, { DataErrorType } from './getApiError'
 
 export const getYandexClientApi = (): AxiosInstance => {
   const apiClient = axios.create()
@@ -10,15 +10,7 @@ export const getYandexClientApi = (): AxiosInstance => {
 
   apiClient.interceptors.response.use(
     response => response,
-    (error: AxiosError<ApiError>) => {
-      if (
-        error.response &&
-        (error.response.status === 401 || error.response.status === 500)
-      ) {
-        //TODO когда будет страница с ошибкой - сделать редерект на нее
-        window.location.href = '/'
-      }
-
+    (error: AxiosError<DataErrorType>) => {
       return Promise.reject(getApiError(error))
     }
   )

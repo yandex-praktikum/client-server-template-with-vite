@@ -1,15 +1,41 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
+import { redirect } from 'react-router-dom'
 import { Button, Form, Input } from 'antd'
+import ErrorMessage from '@components/ErrorMesage/ErrorMessage'
+import { postLoginUser, SignInType } from '@/api/auth'
+import { urls } from '@/utils/navigation'
 import classes from '../signUp/styles.module.less'
 import TetrisImg from '../../components/TetrisImg/Tetris'
 
 const Login: React.FC = () => {
+  const [authError, setAuthError] = useState<string | null>(null)
+
+  const submitForm = useCallback(
+    async (values: SignInType) => {
+      if (values.login && values.password) {
+        setAuthError(null)
+        postLoginUser(values)
+          .then(() => {
+            console.log('=need redirect')
+            redirect(urls.home)
+          })
+          .catch(({ error }) => {
+            setAuthError(error.description)
+          })
+        //console.log('=result', result);
+      }
+      console.log('=login v', values)
+    },
+    [authError]
+  )
+  console.log('=authError', authError)
+
   return (
     <div className={classes.signUp}>
       <TetrisImg />
       <div className={classes.signUp__form}>
         <span className={classes.title}>Welcome to Tetris</span>
-        <Form>
+        <Form onFinish={submitForm}>
           <Form.Item
             labelCol={{ span: 24 }}
             colon={false}
@@ -24,6 +50,7 @@ const Login: React.FC = () => {
             name="password">
             <Input placeholder="Password" type="password" />
           </Form.Item>
+          <ErrorMessage message={authError} />
           <button
             className={classes.signUp__btn}
             type="submit"

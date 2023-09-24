@@ -1,27 +1,22 @@
 import { AxiosError } from 'axios'
 
-export type Error = {
-  code: string
-  description: string
-  details?: unknown
-}
-
-export type ApiError = {
-  error?: Error
-}
-
-const getApiError = (error: AxiosError<ApiError>): Error => {
-  console.log('=error', error)
-  if (
-    error.response?.data?.error?.code &&
-    error.response?.data?.error?.code.toString() !== '0'
-  ) {
-    return error.response?.data.error
+export type ErrorType = {
+  error: {
+    code: string
+    description: string
+    details?: unknown
   }
+}
 
+export type DataErrorType = {
+  reason?: string
+}
+const getApiError = (error: AxiosError<DataErrorType>): ErrorType => {
   return {
-    code: '400',
-    description: error.response?.data?.error?.description || '',
+    error: {
+      code: error.response?.status.toString() || '401',
+      description: error.response?.data?.reason || '',
+    },
   }
 }
 
