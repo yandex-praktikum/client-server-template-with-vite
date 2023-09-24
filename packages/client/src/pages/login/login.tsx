@@ -1,6 +1,6 @@
 import React from 'react'
-import classes from '../signUp/styles.module.less'
 import { Button, Form, Input } from 'antd'
+import classes from '../signUp/styles.module.less'
 import TetrisImg from '../../components/TetrisImg/Tetris'
 
 const Login: React.FC = () => {
@@ -26,6 +26,7 @@ const Login: React.FC = () => {
           </Form.Item>
           <button
             className={classes.signUp__btn}
+            type="submit"
             style={{
               width: '100%',
             }}>

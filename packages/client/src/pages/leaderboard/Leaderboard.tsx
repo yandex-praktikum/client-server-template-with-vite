@@ -18,6 +18,7 @@ const LeaderboardPage = () => {
             <LeaderCard
               user={item}
               className={classes.leadersCardWrapper__card}
+              key={`leader_card_${item.position}`}
             />
           ))}
         </div>
