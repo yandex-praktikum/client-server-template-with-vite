@@ -8,33 +8,33 @@ export const usersScoreMock = [
   {
     avatar: DEFAULT_AVATAR,
     name: 'Leonardo',
-    score: 19800,
+    score: 19800
   },
   {
     avatar: DEFAULT_AVATAR,
     name: 'Artur Klark',
-    score: 19800,
+    score: 19800
   },
   {
     avatar: DEFAULT_AVATAR,
     name: 'Turing',
-    score: 19800,
+    score: 19800
   },
   {
     avatar: DEFAULT_AVATAR,
     name: 'Brian Herbert',
-    score: 19800,
+    score: 19800
   },
   {
     avatar: DEFAULT_AVATAR,
     name: 'Mr. Feynman',
-    score: 19800,
+    score: 19800
   },
   {
     avatar: DEFAULT_AVATAR,
     name: 'Mari Shelli',
-    score: 19800,
-  },
+    score: 19800
+  }
 ]
 
 export const leadersMock: LeaderUserType[] = [
@@ -42,18 +42,18 @@ export const leadersMock: LeaderUserType[] = [
     avatar: avatar0,
     display_name: 'Rigel',
     score: 23000,
-    position: 'first',
+    position: 'first'
   },
   {
     avatar: avatar2,
     display_name: 'Mipha',
     score: 20022,
-    position: 'second',
+    position: 'second'
   },
   {
     avatar: avatar1,
     display_name: 'Link',
     score: 19988,
-    position: 'third',
-  },
+    position: 'third'
+  }
 ]

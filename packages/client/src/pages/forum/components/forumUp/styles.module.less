@@ -1,0 +1,64 @@
+@import '@styles/theme.less';
+
+.forum {
+  &__table {
+    background-color: @grey;
+    border-radius: 20px 20px 0 0;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: @blue_text;
+    }
+  }
+  &__tableHead {
+    border-bottom: 1px solid @blue_text;
+    font-size: 18px;
+  }
+  &__tableRow {
+    text-align: center;
+    cursor: pointer;
+    border-bottom: 1px solid @blue_text;
+  }
+
+  &__tableHeaderCell {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 800;
+    padding: 20px 0;
+  }
+
+  &__tableBodyCell {
+    text-align: center;
+    padding: 20px 0;
+    font-size: 18px;
+  }
+
+  &__count {
+    padding: 12px 16px;
+    background-color: @white;
+    text-align: center;
+    border-radius: 100px;
+    border: 1px dashed @blue_text;
+  }
+
+  &__author {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &__authorDate {
+    font-size: 14px;
+    margin-bottom: 7px;
+  }
+
+  &__authorInner {
+    display: flex;
+    align-items: center;
+    width: 170px;
+    justify-content: space-between;
+    background-color: #e8e8ee;
+    padding: 8px 11px;
+    border-radius: 20px;
+  }
+}

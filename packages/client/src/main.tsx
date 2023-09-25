@@ -11,13 +11,15 @@ import Login from './pages/login/login'
 import { UserContextProvider } from '@/providers/userProvider/UserProvider'
 
 import avatar from '../public/avatar1.jpg'
+import Forum from './pages/forum/Forum'
+import { ProvideTopic } from './providers/userProvider/TopicContext'
 
 const defaultUser = {
   avatar: avatar,
   first_name: 'Link',
   second_name: 'Hyrule',
   login: 'Link',
-  email: 'email@test.com',
+  email: 'email@test.com'
 }
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
@@ -31,10 +33,24 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path="/game" element={<App />} />
           <Route path="/profile" element={<App />} />
           <Route path="/leaderboard" element={<LeaderboardPage />} />
-          <Route path="/forum" element={<App />} />
-          <Route path="/forum/topic" element={<App />} />          
-          <Route path="/notFound" element={<Error code={404} text='Page not found'/>} />        
-          <Route path="/error" element={<Error code={500} text='Server error'/>} />
+          <Route path="/forum/topic" element={<App />} />
+          <Route
+            path="/notFound"
+            element={<Error code={404} text="Page not found" />}
+          />
+          <Route
+            path="/error"
+            element={<Error code={500} text="Server error" />}
+          />
+          <Route
+            path="/forum"
+            element={
+              <ProvideTopic>
+                <Forum />
+              </ProvideTopic>
+            }
+          />
+          <Route path="/forum/topic" element={<App />} />
           <Route path="*" element={<App />} />
         </Routes>
       </BrowserRouter>

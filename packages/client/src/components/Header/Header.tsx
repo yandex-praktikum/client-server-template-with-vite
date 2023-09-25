@@ -12,23 +12,23 @@ const menuList = [
   {
     id: 'index',
     title: 'Home',
-    link: '/',
+    link: '/'
   },
   {
     id: 'leaderboard',
     title: 'Leaderboard',
-    link: '/leaderboard',
+    link: '/leaderboard'
   },
   {
     id: 'game',
     title: 'Game',
-    link: '/game',
+    link: '/game'
   },
   {
     id: 'forum',
     title: 'Forum',
-    link: '/forum',
-  },
+    link: '/forum'
+  }
 ]
 
 const Header = () => {
@@ -40,7 +40,7 @@ const Header = () => {
         className:
           item.id === activePage
             ? classes['header__menu__item--active']
-            : classes['header__menu__item--default'],
+            : classes['header__menu__item--default']
       })),
     [activePage]
   )
