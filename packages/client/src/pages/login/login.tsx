@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react'
-import { redirect } from 'react-router-dom'
 import { Button, Form, Input } from 'antd'
 import ErrorMessage from '@components/ErrorMesage/ErrorMessage'
 import { postLoginUser, SignInType } from '@/api/auth'
@@ -10,25 +9,18 @@ import TetrisImg from '../../components/TetrisImg/Tetris'
 const Login: React.FC = () => {
   const [authError, setAuthError] = useState<string | null>(null)
 
-  const submitForm = useCallback(
-    async (values: SignInType) => {
-      if (values.login && values.password) {
-        setAuthError(null)
-        postLoginUser(values)
-          .then(() => {
-            console.log('=need redirect')
-            redirect(urls.home)
-          })
-          .catch(({ error }) => {
-            setAuthError(error.description)
-          })
-        //console.log('=result', result);
-      }
-      console.log('=login v', values)
-    },
-    [authError]
-  )
-  console.log('=authError', authError)
+  const submitForm = useCallback(async (values: SignInType) => {
+    if (values.login && values.password) {
+      setAuthError(null)
+      postLoginUser(values)
+        .then(() => {
+          window.location.href = urls.home
+        })
+        .catch(({ error }) => {
+          setAuthError(error.description)
+        })
+    }
+  }, [])
 
   return (
     <div className={classes.signUp}>

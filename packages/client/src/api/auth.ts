@@ -1,13 +1,12 @@
 import { UserType } from '@components/types'
 import { yandexApi } from './setupApi'
-import { ErrorType } from './getApiError'
 
 export type SignInType = {
   login: string
   password: string
 }
 
-export const getUserInfo = (): Promise<UserType | ErrorType> => {
+export const getUserInfo = (): Promise<UserType> => {
   return yandexApi.get('auth/user').then(res => {
     return res.data
   })
@@ -20,4 +19,8 @@ export const postLoginUser = ({
   return yandexApi
     .post('auth/signin', { login, password })
     .then(res => res.data)
+}
+
+export const postLogout = () => {
+  return yandexApi.post('auth/logout').then(res => res.data)
 }

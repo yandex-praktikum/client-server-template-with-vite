@@ -1,5 +1,6 @@
 import React from 'react'
 import classes from './styles.module.less'
+import { urls } from '@/utils/navigation'
 import { Button } from 'antd'
 
 type ErrorProps = {
@@ -11,7 +12,7 @@ const Error: React.FC<ErrorProps> = ({ code, text }) => {
     <div className={classes.error}>
       <h1>{code}</h1>
       <h3>{text}</h3>
-      <Button type="link" href="/">
+      <Button type="link" href={urls.login}>
         Back to homepage
       </Button>
     </div>

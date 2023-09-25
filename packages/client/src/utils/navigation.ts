@@ -7,6 +7,7 @@ export const urls = {
   forum: '/forum',
   game: '/game',
   profile: '/profile',
+  errorNotFound: '/notFound',
   error: '/error',
   leaderboard: '/leaderboard',
 }

@@ -1,11 +1,12 @@
-export type PageTypes = 'profile' | 'leaderboard' | 'game' | 'forum'
 export type UserType = {
-  avatar?: string
-  first_name?: string
-  second_name?: string
-  phone?: string
+  id: number
+  display_name: null | string
+  first_name: string | null
+  second_name: string | null
   login: string
   email: string
+  phone: string | null
+  avatar: string | null
 }
 
 export type LeaderUserType = {

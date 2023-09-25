@@ -23,8 +23,10 @@ const LeaderboardPage = () => {
           ))}
         </div>
         <div className={classes.leaderboardTableWrapper}>
-          {usersScoreMock.map(item => (
-            <div className={classes.leaderboardTableWrapper__item}>
+          {usersScoreMock.map((item, key) => (
+            <div
+              className={classes.leaderboardTableWrapper__item}
+              key={`user_score_map_${key}`}>
               <Avatar size="xs" img={item.avatar} />
               <div className={classes.leaderboardTableWrapper__name}>
                 {item.name}

@@ -1,27 +1,23 @@
-import React, { useEffect } from 'react'
-import { BrowserRouter, Route, Routes, redirect } from 'react-router-dom'
-import SignUp from '@pages/signUp/SignUp'
+import React, { useEffect, useState } from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { ErrorType } from '@/api/getApiError'
 import { UserContextProvider } from '@/providers/userProvider/UserProvider'
+import { activePage, urls } from '@/utils/navigation'
+import { UserType } from '@components/types'
+import SignUp from '@pages/signUp/SignUp'
 import LeaderboardPage from '@pages/leaderboard/Leaderboard'
 import Login from '@pages/login/login'
 import HomePage from '@pages/home/Home'
-import { activePage } from '@/utils/navigation'
-import avatar from '../public/avatar1.jpg'
-import { urls } from './utils/navigation'
+import Error from '@pages/error/error'
 import { getUserInfo } from './api/auth'
-
-const defaultUser = {
-  avatar: avatar,
-  first_name: 'Link',
-  second_name: 'Hyrule',
-  login: 'Link',
-  email: 'email@test.com',
-}
 
 const closePage = ['profile', 'game', 'forum', 'leaderboard', '/']
 
 function App() {
+  const [getUserError, setGetUserError] = useState<ErrorType | null>()
+  const [userInfo, setUserInfo] = useState<UserType | null>({} as UserType)
   /*
+  //TODO эта часть может понадобиться в дальнейшем для работы с бекендом. Пока оставила.
   useEffect(() => {
     const fetchServerData = async () => {
       const url = `http://localhost:${__SERVER_PORT__}`
@@ -36,22 +32,23 @@ function App() {
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      getUserInfo()
+      await getUserInfo()
         .then(result => {
-          console.log('=result', result)
+          setUserInfo(result)
           if (activePage === 'login' || activePage === 'registration') {
-            redirect(urls.home)
+            window.location.href = urls.home
           }
         })
         .catch(({ error }) => {
-          if (error.code === '500') {
-            redirect(urls.error) // TODO не работает редирект ?
-          }
-          if (
-            error.code === '401' &&
-            (activePage.indexOf(activePage) !== -1 || activePage === '')
+          setGetUserError(error)
+          if (error.code === 500) {
+            window.location.href = urls.error
+          } else if (
+            error.code >= 400 &&
+            error.code < 500 &&
+            (closePage.indexOf(activePage) !== -1 || activePage === '')
           ) {
-            // window.location = urls.login;
+            window.location.href = urls.errorNotFound
           }
         })
     }
@@ -60,18 +57,35 @@ function App() {
 
   return (
     <React.StrictMode>
-      <UserContextProvider user={defaultUser}>
+      <UserContextProvider user={userInfo}>
         <BrowserRouter>
           <Routes>
             <Route path={urls.home} element={<HomePage />} />
-            <Route path={urls.login} element={<Login />} />
+            <Route path="/login" element={<Login />} />
             <Route path={urls.signup} element={<SignUp />} />
+            <Route path="/leaderboard" element={<LeaderboardPage />} />
+
             <Route path="/game" element={<Login />} />
             <Route path="/profile" element={<Login />} />
-            <Route path="/leaderboard" element={<LeaderboardPage />} />
             <Route path="/forum" element={<Login />} />
             <Route path="/forum/topic" element={<Login />} />
-            <Route path="*" element={<Login />} />
+            <Route
+              path={urls.errorNotFound}
+              element={
+                <Error
+                  code={getUserError?.error?.code || 401}
+                  text="Page not found"
+                />
+              }
+            />
+            <Route
+              path={urls.error}
+              element={<Error code={500} text="Server error" />}
+            />
+            <Route
+              path="*"
+              element={<Error code={404} text="Page not found" />}
+            />
           </Routes>
         </BrowserRouter>
       </UserContextProvider>

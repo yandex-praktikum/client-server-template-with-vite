@@ -4,7 +4,7 @@ import { UserType } from '@components/types'
 
 interface UserContextProps {
   children?: ReactNode
-  user: UserType
+  user: UserType | null
 }
 
 export const UserContextProvider = ({ user, children }: UserContextProps) => {

@@ -18,6 +18,28 @@
     font-weight: 700;
   }
 
+  &__user_menu {
+    width: 150px;
+    position: absolute;
+    top: 100%;
+    right: -16px;
+    background: @grey;
+    padding: 9px 0;
+    border-radius: 8px;
+    margin-top: 8px;
+
+    li {
+      margin: 0;
+      padding: 8px 12px;
+      list-style-type: none;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(217, 4, 93, 0.10);
+      }
+    }
+  }
+
   &__menu {
     width: 100%;
     padding: 0 60px;
@@ -36,6 +58,11 @@
       &--default {
         color: @coffee;
       }
+    }
+
+    &__avatar {
+      position: relative;
+      cursor: pointer;
     }
   }
 }
