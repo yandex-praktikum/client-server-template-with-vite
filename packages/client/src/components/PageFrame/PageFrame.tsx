@@ -11,6 +11,7 @@ interface PageFrameProps {
 }
 
 const PageFrame = ({ children }: PageFrameProps) => {
+  console.log('=activePage', activePage)
   return (
     <div
       className={cx(

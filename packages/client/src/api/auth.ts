@@ -16,11 +16,9 @@ export const postLoginUser = ({
   login,
   password,
 }: SignInType): Promise<UserType> => {
-  return yandexApi
-    .post('auth/signin', { login, password })
-    .then(res => res.data)
+  return yandexApi.post('auth/signin', { login, password })
 }
 
 export const postLogout = () => {
-  return yandexApi.post('auth/logout').then(res => res.data)
+  return yandexApi.post('auth/logout')
 }

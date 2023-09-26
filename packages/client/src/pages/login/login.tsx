@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { Button, Form, Input } from 'antd'
+import { useNavigate } from 'react-router-dom'
 import ErrorMessage from '@components/ErrorMesage/ErrorMessage'
 import { postLoginUser, SignInType } from '@/api/auth'
 import { urls } from '@/utils/navigation'
@@ -8,13 +9,14 @@ import TetrisImg from '../../components/TetrisImg/Tetris'
 
 const Login: React.FC = () => {
   const [authError, setAuthError] = useState<string | null>(null)
+  const navigate = useNavigate()
 
   const submitForm = useCallback(async (values: SignInType) => {
     if (values.login && values.password) {
       setAuthError(null)
       postLoginUser(values)
         .then(() => {
-          window.location.href = urls.home
+          navigate(urls.home)
         })
         .catch(({ error }) => {
           setAuthError(error.description)
