@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ErrorType } from '@/api/getApiError'
 import { UserContextProvider } from '@/providers/userProvider/UserProvider'
-import { activePage, urls } from '@/utils/navigation'
+import { urls } from '@/utils/navigation'
 import { UserType } from '@components/types'
 import Preloader from '@components/Preloader/Preloader'
 import AppRouters from './routers'
@@ -13,6 +13,7 @@ function App() {
   const [userInfo, setUserInfo] = useState<UserType>({} as UserType)
   const [isFetcing, setIsFetching] = useState(true)
   const navigate = useNavigate()
+  const activePage = window.location.pathname.substring(1).split('/')[0]
   /*
   //TODO эта часть может понадобиться в дальнейшем для работы с бекендом. Пока оставила.
   useEffect(() => {

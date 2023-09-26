@@ -1,11 +1,9 @@
-import React from 'react'
 import PageFrame from '@components/PageFrame/PageFrame'
 import LeaderCard from '@components/LeaderCard/LeaderCard'
 import {
   leadersMock,
   usersScoreMock,
 } from '@pages/leaderboard/leader-users-mock'
-
 import classes from './styles.module.less'
 import Avatar from '@components/Avatar/Avatar'
 
