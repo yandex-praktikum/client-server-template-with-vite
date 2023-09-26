@@ -1,17 +1,16 @@
 import React, { ReactElement } from 'react'
 import classNames from 'classnames'
-import { activePage } from '@/utils/navigation'
 import Header from '@components/Header/Header'
 import classes from './styles.module.less'
 
 const cx = classNames.bind(classes)
 
 interface PageFrameProps {
-  children: ReactElement
+  children: ReactElement | ReactElement[]
 }
 
 const PageFrame = ({ children }: PageFrameProps) => {
-  console.log('=activePage', activePage)
+  const activePage = window.location.pathname.substring(1).split('/')[0]
   return (
     <div
       className={cx(

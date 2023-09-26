@@ -1,11 +1,12 @@
 import axios, { AxiosError, AxiosInstance } from 'axios'
-import { activePage, urls } from '@/utils/navigation'
+import { urls } from '@/utils/navigation'
 import getApiError, { DataErrorType } from './getApiError'
 
 const closePage = ['profile', 'game', 'forum', 'leaderboard', '/']
 
 export const getYandexClientApi = (): AxiosInstance => {
   const apiClient = axios.create()
+  const activePage = window.location.pathname.substring(1).split('/')[0]
   apiClient.defaults.baseURL = 'https://ya-praktikum.tech/api/v2/'
   apiClient.defaults.withCredentials = true
   apiClient.defaults.validateStatus = status => status >= 200 && status < 300

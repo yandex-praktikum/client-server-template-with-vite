@@ -6,6 +6,8 @@ import Login from '@pages/login/login'
 import SignUp from '@pages/signUp/SignUp'
 import LeaderboardPage from '@pages/leaderboard/Leaderboard'
 import Error from '@pages/error/error'
+import { ProvideTopic } from '@/providers/userProvider/TopicContext'
+import Forum from '@pages/forum/Forum'
 
 type AppRoutersType = {
   error: number
@@ -21,8 +23,6 @@ const AppRouters = ({ error }: AppRoutersType) => {
 
       <Route path="/game" element={<Login />} />
       <Route path="/profile" element={<Login />} />
-      <Route path="/forum" element={<Login />} />
-      <Route path="/forum/topic" element={<Login />} />
       <Route
         path={urls.errorNotFound}
         element={<Error code={error} text="Page not found" />}
@@ -30,6 +30,18 @@ const AppRouters = ({ error }: AppRoutersType) => {
       <Route
         path={urls.error}
         element={<Error code={500} text="Server error" />}
+      />
+      <Route
+        path="/forum"
+        element={
+          <ProvideTopic>
+            <Forum />
+          </ProvideTopic>
+        }
+      />
+      <Route
+        path="/forum/topic"
+        element={<Error code={404} text="Page not found" />}
       />
       <Route path="*" element={<Error code={404} text="Page not found" />} />
     </Routes>
