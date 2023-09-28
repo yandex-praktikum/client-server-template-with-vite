@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './App'
 import '@styles/styles.less'
+import Canvas from './pages/canvas/canvas'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <Route path="/leaderboard" element={<App />} />
         <Route path="/forum" element={<App />} />
         <Route path="/forum/topic" element={<App />} />
+        <Route path="/canvas" element={<Canvas />} />
         <Route path="*" element={<App />} />
       </Routes>
     </BrowserRouter>
