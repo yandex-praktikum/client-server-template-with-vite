@@ -33,7 +33,10 @@ const menuList = [
 ]
 
 const Header = () => {
-  const activePage = window.location.pathname.substring(1).split('/')[0]
+  const activePage =
+    window.location.pathname === '/'
+      ? 'index'
+      : window.location.pathname.substring(1).split('/')[0]
   const [showUserMenu, setShowUserMenu] = useState(false)
   const { avatar } = useContext(UserContext)
   const navigate = useNavigate()

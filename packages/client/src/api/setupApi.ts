@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosInstance } from 'axios'
 import { urls } from '@/utils/navigation'
 import getApiError, { DataErrorType } from './getApiError'
 
-const closePage = ['profile', 'game', 'forum', 'leaderboard', '/']
+const closePage = ['profile', 'game', 'forum', 'leaderboard']
 
 export const getYandexClientApi = (): AxiosInstance => {
   const apiClient = axios.create()
@@ -19,9 +19,12 @@ export const getYandexClientApi = (): AxiosInstance => {
           window.location.href = urls.error
         } else if (
           error.response.status === 401 &&
-          (closePage.indexOf(activePage) !== -1 || activePage === '')
+          closePage.indexOf(activePage) !== -1
         ) {
           window.location.href = urls.errorNotFound
+        }
+        if (error.response.status === 401 && activePage === '') {
+          window.location.href = urls.login
         }
         // TODO вывод натификаций в случае других ошибок
       }
