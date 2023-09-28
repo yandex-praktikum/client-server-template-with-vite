@@ -19,10 +19,10 @@ const AppRouters = ({ error }: AppRoutersType) => {
       <Route path={urls.home} element={<HomePage />} />
       <Route path={urls.login} element={<Login />} />
       <Route path={urls.signup} element={<SignUp />} />
-      <Route path="/leaderboard" element={<LeaderboardPage />} />
+      <Route path={urls.leaderboard} element={<LeaderboardPage />} />
 
-      <Route path="/game" element={<Login />} />
-      <Route path="/profile" element={<Login />} />
+      <Route path={urls.game} element={<Login />} />
+      <Route path={urls.profile} element={<Login />} />
       <Route
         path={urls.errorNotFound}
         element={<Error code={error} text="Page not found" />}
@@ -32,7 +32,7 @@ const AppRouters = ({ error }: AppRoutersType) => {
         element={<Error code={500} text="Server error" />}
       />
       <Route
-        path="/forum"
+        path={urls.forum}
         element={
           <ProvideTopic>
             <Forum />
@@ -40,7 +40,7 @@ const AppRouters = ({ error }: AppRoutersType) => {
         }
       />
       <Route
-        path="/forum/topic"
+        path={`${urls.forum}/topic`}
         element={<Error code={404} text="Page not found" />}
       />
       <Route path="*" element={<Error code={404} text="Page not found" />} />

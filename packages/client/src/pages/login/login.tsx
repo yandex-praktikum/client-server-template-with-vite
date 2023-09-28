@@ -11,7 +11,7 @@ const Login: React.FC = () => {
   const [authError, setAuthError] = useState<string | null>(null)
   const navigate = useNavigate()
 
-  const submitForm = useCallback(async (values: SignInType) => {
+  const submitForm = useCallback((values: SignInType) => {
     if (values.login && values.password) {
       setAuthError(null)
       postLoginUser(values)

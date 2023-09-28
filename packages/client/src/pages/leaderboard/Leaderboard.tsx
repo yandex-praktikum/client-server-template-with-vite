@@ -9,7 +9,7 @@ import Avatar from '@components/Avatar/Avatar'
 
 const LeaderboardPage = () => {
   return (
-    <PageFrame>
+    <PageFrame pageType="leaderboard">
       <>
         <div className={classes.leadersCardWrapper}>
           {leadersMock.map(item => (

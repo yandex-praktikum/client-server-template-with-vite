@@ -14,19 +14,6 @@ function App() {
   const [isFetcing, setIsFetching] = useState(true)
   const navigate = useNavigate()
   const activePage = window.location.pathname.substring(1).split('/')[0]
-  /*
-  //TODO эта часть может понадобиться в дальнейшем для работы с бекендом. Пока оставила.
-  useEffect(() => {
-    const fetchServerData = async () => {
-      const url = `http://localhost:${__SERVER_PORT__}`
-      const response = await fetch(url)
-      const data = await response.json()
-      console.log(data)
-    }
-
-    fetchServerData()
-  }, [])
-   */
 
   useEffect(() => {
     const fetchUserInfo = async () => {

@@ -3,7 +3,7 @@ import PageFrame from '@components/PageFrame/PageFrame'
 
 const HomePage = () => {
   return (
-    <PageFrame>
+    <PageFrame pageType="default">
       <>Home</>
     </PageFrame>
   )
