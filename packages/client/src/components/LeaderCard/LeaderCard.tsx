@@ -18,7 +18,7 @@ type LeaderCardProps = {
 const positionTitle = {
   first: 'First',
   second: 'Second',
-  third: 'Third'
+  third: 'Third',
 }
 
 const LeaderCard = ({ user, className }: LeaderCardProps) => {

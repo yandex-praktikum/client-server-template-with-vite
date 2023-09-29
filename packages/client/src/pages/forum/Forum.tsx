@@ -4,7 +4,7 @@ import ForumUp from './components/forumUp/ForumUp'
 
 const Forum: React.FC = () => {
   return (
-    <PageFrame>
+    <PageFrame pageType="forum">
       <ForumUp />
       <ForumForm />
     </PageFrame>

@@ -1,59 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import App from './App'
-import SignUp from '@pages/signUp/SignUp'
-import LeaderboardPage from '@pages/leaderboard/Leaderboard'
 import '@styles/styles.less'
-import Error from './pages/error/error'
-import Login from './pages/login/login'
-
-import { UserContextProvider } from '@/providers/userProvider/UserProvider'
-
-import avatar from '../public/avatar1.jpg'
-import Forum from './pages/forum/Forum'
-import { ProvideTopic } from './providers/userProvider/TopicContext'
-
-const defaultUser = {
-  avatar: avatar,
-  first_name: 'Link',
-  second_name: 'Hyrule',
-  login: 'Link',
-  email: 'email@test.com'
-}
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <UserContextProvider user={defaultUser}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/registration" element={<SignUp />} />
-          <Route path="/game" element={<App />} />
-          <Route path="/profile" element={<App />} />
-          <Route path="/leaderboard" element={<LeaderboardPage />} />
-          <Route path="/forum/topic" element={<App />} />
-          <Route
-            path="/notFound"
-            element={<Error code={404} text="Page not found" />}
-          />
-          <Route
-            path="/error"
-            element={<Error code={500} text="Server error" />}
-          />
-          <Route
-            path="/forum"
-            element={
-              <ProvideTopic>
-                <Forum />
-              </ProvideTopic>
-            }
-          />
-          <Route path="/forum/topic" element={<App />} />
-          <Route path="*" element={<App />} />
-        </Routes>
-      </BrowserRouter>
-    </UserContextProvider>
-  </React.StrictMode>
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
 )
