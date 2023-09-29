@@ -22,6 +22,7 @@ class CanvasAPI {
   private shapeMatrix: number[][] = []
   private state = 0
   private shapeColor = ''
+  private gameState = false
 
   constructor(element: HTMLCanvasElement) {
     this.context = element.getContext('2d') as CanvasRenderingContext2D
@@ -39,8 +40,11 @@ class CanvasAPI {
   }
 
   startGame() {
-    this.setListeners()
-    this.drawObjects()
+    if (!this.gameState) {
+      this.gameState = true
+      this.setListeners()
+      this.drawObjects()
+    }
   }
 
   setListeners() {

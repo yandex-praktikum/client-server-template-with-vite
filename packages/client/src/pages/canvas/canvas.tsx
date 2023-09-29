@@ -14,17 +14,22 @@ const Canvas: React.FC = () => {
 
   return (
     <>
-      <canvas
-        width="420"
-        height="600"
+      <div
         style={{
-          background: '#fff',
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-        }}
-        onClick={startGame}></canvas>
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: '100vh',
+        }}>
+        <canvas
+          width="420"
+          height="600"
+          style={{
+            background: '#fff',
+          }}
+          onClick={startGame}></canvas>
+      </div>
     </>
   )
 }
