@@ -8,19 +8,50 @@ enum shapeColors {
   NAVYBLUE = '#0F588C',
 }
 
+const startShapeMatrix = {
+  YELLOW: [[1, 1, 1, 1]],
+  BLUE: [
+    [1, 1],
+    [1, 0],
+    [1, 0],
+  ],
+  RED: [
+    [1, 1],
+    [0, 1],
+    [0, 1],
+  ],
+  CRIMSON: [
+    [1, 1],
+    [1, 1],
+  ],
+  GRAY: [
+    [1, 0],
+    [1, 1],
+    [0, 1],
+  ],
+  FLESH: [
+    [0, 1],
+    [1, 1],
+    [1, 0],
+  ],
+  NAVYBLUE: [
+    [1, 0],
+    [1, 1],
+    [1, 0],
+  ],
+}
+
 class CanvasAPI {
   private context: CanvasRenderingContext2D
   private squareWidth = 30
-  private width: number
-  private height: number
-  private x: number
+  private animTime = 6000
+  private width = 0
+  private height = 0
+  private x = 0
   private y = 0
-  private shapeWidth = 0
-  private shapeHeight = 0
   private animId = 0
   private fieldMatrix: string[][] = []
   private shapeMatrix: number[][] = []
-  private state = 0
   private shapeColor = ''
   private gameState = false
 
@@ -42,19 +73,19 @@ class CanvasAPI {
   startGame() {
     if (!this.gameState) {
       this.gameState = true
-      this.setListeners()
       this.drawObjects()
+      this.setListeners()
     }
   }
 
-  setListeners() {
+  private setListeners() {
     document.addEventListener('keyup', e => {
       this.moveObject(e)
       this.rotateObject(e)
     })
   }
 
-  drawPiece(color: string, positionX: number, positionY: number) {
+  private drawPiece(color: string, positionX: number, positionY: number) {
     this.context.fillStyle = color
     this.context.lineWidth = 2
 
@@ -72,16 +103,12 @@ class CanvasAPI {
     )
   }
 
-  animation(
-    startTime: number,
-    animationTime: number,
-    func: typeof this.drawCheck
-  ) {
+  private animation(startTime: number, animationTime: number) {
     let stopAnim = false
     const time = performance.now()
     const shift = time - startTime
     const multiply = shift / animationTime
-    const length = this.height - this.shapeHeight
+    const length = this.height - this.shapeMatrix.length * this.squareWidth
     this.y = length * multiply
     const currentMatrixPosY = Math.floor(this.y / this.squareWidth)
     const currentMatrixPosX = this.x / this.squareWidth
@@ -99,12 +126,12 @@ class CanvasAPI {
       }
     }
 
-    func(this.x, this.y, this.state)
+    this.drawShape(this.x, this.y)
 
     if (multiply < 1) {
       if (this.fieldMatrix.length != currentMatrixPosY + 1) {
-        for (let i = 0; i < this.shapeWidth / this.squareWidth; i++) {
-          for (let j = this.shapeHeight / this.squareWidth - 1; j >= 0; j--) {
+        for (let i = 0; i < this.shapeMatrix[0].length; i++) {
+          for (let j = this.shapeMatrix.length - 1; j >= 0; j--) {
             if (
               this.shapeMatrix[j][i] &&
               this.fieldMatrix[currentMatrixPosY + j + 1][currentMatrixPosX + i]
@@ -118,7 +145,7 @@ class CanvasAPI {
 
       if (!stopAnim) {
         this.animId = requestAnimationFrame(() =>
-          this.animation(startTime, animationTime, func)
+          this.animation(startTime, animationTime)
         )
       }
     } else {
@@ -126,8 +153,8 @@ class CanvasAPI {
     }
 
     if (stopAnim) {
-      for (let i = 0; i < this.shapeHeight / this.squareWidth; i++) {
-        for (let j = 0; j < this.shapeWidth / this.squareWidth; j++) {
+      for (let i = 0; i < this.shapeMatrix.length; i++) {
+        for (let j = 0; j < this.shapeMatrix[0].length; j++) {
           if (this.shapeMatrix[i][j]) {
             const posY =
               (Math.floor(this.y / 10) * 10 + this.squareWidth * i) /
@@ -144,413 +171,111 @@ class CanvasAPI {
     }
   }
 
-  drawObjects() {
-    const index = Math.floor(Math.random() * 6)
-    const time = 6000
+  private drawObjects() {
+    const index = Math.floor(Math.random() * 7)
 
     switch (index) {
       case 0:
-        this.drawCheck(this.x, 0, 0)
-        this.animation(performance.now(), time, this.drawCheck.bind(this))
+        this.shapeColor = shapeColors.YELLOW
+        this.shapeMatrix = startShapeMatrix.YELLOW
         break
       case 1:
-        this.drawInvertCheck(this.x, 0, 0)
-        this.animation(performance.now(), time, this.drawInvertCheck.bind(this))
+        this.shapeColor = shapeColors.BLUE
+        this.shapeMatrix = startShapeMatrix.BLUE
         break
       case 2:
-        this.drawG(this.x, 0, 0)
-        this.animation(performance.now(), time, this.drawG.bind(this))
+        this.shapeColor = shapeColors.RED
+        this.shapeMatrix = startShapeMatrix.RED
         break
       case 3:
-        this.drawInvertG(this.x, 0, 0)
-        this.animation(performance.now(), time, this.drawInvertG.bind(this))
+        this.shapeColor = shapeColors.CRIMSON
+        this.shapeMatrix = startShapeMatrix.CRIMSON
         break
       case 4:
-        this.drawSquare(this.x, 0, 0)
-        this.animation(performance.now(), time, this.drawSquare.bind(this))
+        this.shapeColor = shapeColors.GRAY
+        this.shapeMatrix = startShapeMatrix.GRAY
         break
       case 5:
-        this.drawLine(this.x, 0, 0)
-        this.animation(performance.now(), time, this.drawLine.bind(this))
+        this.shapeColor = shapeColors.FLESH
+        this.shapeMatrix = startShapeMatrix.FLESH
+        break
+      case 6:
+        this.shapeColor = shapeColors.NAVYBLUE
+        this.shapeMatrix = startShapeMatrix.NAVYBLUE
         break
     }
+
+    this.animation(performance.now(), this.animTime)
   }
 
-  drawLine(positionX: number, positionY: number, state: number) {
-    this.shapeColor = shapeColors.YELLOW
-    if (state == 0 || state == 2) {
-      for (let i = 0; i < 4; i++) {
-        this.drawPiece(
-          this.shapeColor,
-          positionX + this.squareWidth * i,
-          positionY
-        )
+  private drawShape(positionX: number, positionY: number) {
+    for (let i = 0; i < this.shapeMatrix.length; i++) {
+      for (let j = 0; j < this.shapeMatrix[i].length; j++) {
+        if (this.shapeMatrix[i][j]) {
+          this.drawPiece(
+            this.shapeColor,
+            positionX + j * this.squareWidth,
+            positionY + i * this.squareWidth
+          )
+        }
       }
-      this.shapeMatrix = [[1, 1, 1, 1]]
-      this.shapeWidth = this.squareWidth * 4
-      this.shapeHeight = this.squareWidth * 1
-    } else {
-      for (let i = 0; i < 4; i++) {
-        this.drawPiece(
-          this.shapeColor,
-          positionX,
-          positionY + this.squareWidth * i
-        )
+    }
+  }
+
+  private rotateMatrix() {
+    const newArr: number[][] = []
+
+    for (let i = 0; i < this.shapeMatrix[0].length; i++) {
+      const subArr: number[] = []
+      for (let j = this.shapeMatrix.length - 1; j >= 0; j--) {
+        subArr.push(this.shapeMatrix[j][i])
       }
-      this.shapeMatrix = [[1], [1], [1], [1]]
-      this.shapeWidth = this.squareWidth * 1
-      this.shapeHeight = this.squareWidth * 4
+      newArr.push(subArr)
     }
+
+    this.shapeMatrix = newArr
   }
 
-  drawSquare(positionX: number, positionY: number, state: number) {
-    if (state) {
-      this.shapeColor = shapeColors.CRIMSON
-      this.shapeWidth = this.squareWidth * 2
-      this.shapeHeight = this.squareWidth * 2
-      this.drawPiece(this.shapeColor, positionX, positionY)
-      this.drawPiece(this.shapeColor, positionX + this.squareWidth, positionY)
-      this.drawPiece(this.shapeColor, positionX, positionY + this.squareWidth)
-      this.drawPiece(
-        this.shapeColor,
-        positionX + this.squareWidth,
-        positionY + this.squareWidth
-      )
-      this.shapeMatrix = [
-        [1, 1],
-        [1, 1],
-      ]
-    }
-  }
-
-  drawG(positionX: number, positionY: number, state: number) {
-    this.shapeColor = shapeColors.BLUE
-    switch (state) {
-      case 0:
-        this.shapeWidth = this.squareWidth * 2
-        this.shapeHeight = this.squareWidth * 3
-        this.drawPiece(this.shapeColor, positionX, positionY)
-        this.drawPiece(this.shapeColor, positionX + this.squareWidth, positionY)
-        this.drawPiece(this.shapeColor, positionX, positionY + this.squareWidth)
-        this.drawPiece(
-          this.shapeColor,
-          positionX,
-          positionY + this.squareWidth * 2
-        )
-        this.shapeMatrix = [
-          [1, 1],
-          [1, 1],
-          [1, 1],
-        ]
-        this.shapeMatrix[1][1] = 0
-        this.shapeMatrix[2][1] = 0
-        break
-      case 1:
-        this.shapeWidth = this.squareWidth * 3
-        this.shapeHeight = this.squareWidth * 2
-        this.drawPiece(this.shapeColor, positionX, positionY)
-        this.drawPiece(this.shapeColor, positionX + this.squareWidth, positionY)
-        this.drawPiece(
-          this.shapeColor,
-          positionX + this.squareWidth * 2,
-          positionY
-        )
-        this.drawPiece(
-          this.shapeColor,
-          positionX + this.squareWidth * 2,
-          positionY + this.squareWidth
-        )
-        this.shapeMatrix = new Array(2).fill(new Array(3).fill(1))
-        this.shapeMatrix = [
-          [1, 1, 1],
-          [1, 1, 1],
-        ]
-        this.shapeMatrix[1][0] = 0
-        this.shapeMatrix[1][1] = 0
-        break
-      case 2:
-        this.shapeWidth = this.squareWidth * 2
-        this.shapeHeight = this.squareWidth * 3
-        this.drawPiece(this.shapeColor, positionX + this.squareWidth, positionY)
-        this.drawPiece(
-          this.shapeColor,
-          positionX + this.squareWidth,
-          positionY + this.squareWidth
-        )
-        this.drawPiece(
-          this.shapeColor,
-          positionX + this.squareWidth,
-          positionY + this.squareWidth * 2
-        )
-        this.drawPiece(
-          this.shapeColor,
-          positionX,
-          positionY + this.squareWidth * 2
-        )
-        this.shapeMatrix = [
-          [1, 1],
-          [1, 1],
-          [1, 1],
-        ]
-        this.shapeMatrix[0][0] = 0
-        this.shapeMatrix[1][0] = 0
-        break
-      case 3:
-        this.shapeWidth = this.squareWidth * 3
-        this.shapeHeight = this.squareWidth * 2
-        this.drawPiece(this.shapeColor, positionX, positionY)
-        this.drawPiece(this.shapeColor, positionX, positionY + this.squareWidth)
-        this.drawPiece(
-          this.shapeColor,
-          positionX + this.squareWidth,
-          positionY + this.squareWidth
-        )
-        this.drawPiece(
-          this.shapeColor,
-          positionX + this.squareWidth * 2,
-          positionY + this.squareWidth
-        )
-        this.shapeMatrix = [
-          [1, 1, 1],
-          [1, 1, 1],
-        ]
-        this.shapeMatrix[0][1] = 0
-        this.shapeMatrix[0][2] = 0
-        break
-    }
-  }
-
-  drawInvertG(positionX: number, positionY: number, state: number) {
-    this.shapeColor = shapeColors.RED
-    switch (state) {
-      case 0:
-        this.shapeWidth = this.squareWidth * 2
-        this.shapeHeight = this.squareWidth * 3
-        this.drawPiece(this.shapeColor, positionX, positionY)
-        this.drawPiece(this.shapeColor, positionX + this.squareWidth, positionY)
-        this.drawPiece(
-          this.shapeColor,
-          positionX + this.squareWidth,
-          positionY + this.squareWidth
-        )
-        this.drawPiece(
-          this.shapeColor,
-          positionX + this.squareWidth,
-          positionY + this.squareWidth * 2
-        )
-        this.shapeMatrix = [
-          [1, 1],
-          [1, 1],
-          [1, 1],
-        ]
-        this.shapeMatrix[1][0] = 0
-        this.shapeMatrix[2][0] = 0
-        break
-      case 1:
-        this.shapeWidth = this.squareWidth * 3
-        this.shapeHeight = this.squareWidth * 2
-        this.drawPiece(this.shapeColor, positionX, positionY + this.squareWidth)
-        this.drawPiece(
-          this.shapeColor,
-          positionX + this.squareWidth,
-          positionY + this.squareWidth
-        )
-        this.drawPiece(
-          this.shapeColor,
-          positionX + this.squareWidth * 2,
-          positionY + this.squareWidth
-        )
-        this.drawPiece(
-          this.shapeColor,
-          positionX + this.squareWidth * 2,
-          positionY
-        )
-        this.shapeMatrix = [
-          [1, 1, 1],
-          [1, 1, 1],
-        ]
-        this.shapeMatrix[0][0] = 0
-        this.shapeMatrix[0][1] = 0
-        break
-      case 2:
-        this.shapeWidth = this.squareWidth * 2
-        this.shapeHeight = this.squareWidth * 3
-        this.drawPiece(this.shapeColor, positionX, positionY)
-        this.drawPiece(this.shapeColor, positionX, positionY + this.squareWidth)
-        this.drawPiece(
-          this.shapeColor,
-          positionX,
-          positionY + this.squareWidth * 2
-        )
-        this.drawPiece(
-          this.shapeColor,
-          positionX + this.squareWidth,
-          positionY + this.squareWidth * 2
-        )
-        this.shapeMatrix = [
-          [1, 1],
-          [1, 1],
-          [1, 1],
-        ]
-        this.shapeMatrix[0][1] = 0
-        this.shapeMatrix[1][1] = 0
-        break
-      case 3:
-        this.shapeWidth = this.squareWidth * 3
-        this.shapeHeight = this.squareWidth * 2
-        this.drawPiece(this.shapeColor, positionX, positionY)
-        this.drawPiece(this.shapeColor, positionX, positionY + this.squareWidth)
-        this.drawPiece(this.shapeColor, positionX + this.squareWidth, positionY)
-        this.drawPiece(
-          this.shapeColor,
-          positionX + this.squareWidth * 2,
-          positionY
-        )
-        this.shapeMatrix = [
-          [1, 1, 1],
-          [1, 1, 1],
-        ]
-        this.shapeMatrix[1][1] = 0
-        this.shapeMatrix[1][2] = 0
-        break
-    }
-  }
-
-  drawCheck(positionX: number, positionY: number, state: number) {
-    this.shapeColor = shapeColors.GRAY
-    if (state == 0 || state == 2) {
-      this.shapeWidth = this.squareWidth * 2
-      this.shapeHeight = this.squareWidth * 3
-      this.drawPiece(this.shapeColor, positionX, positionY)
-      this.drawPiece(this.shapeColor, positionX, positionY + this.squareWidth)
-      this.drawPiece(
-        this.shapeColor,
-        positionX + this.squareWidth,
-        positionY + this.squareWidth
-      )
-      this.drawPiece(
-        this.shapeColor,
-        positionX + this.squareWidth,
-        positionY + this.squareWidth * 2
-      )
-      this.shapeMatrix = [
-        [1, 1],
-        [1, 1],
-        [1, 1],
-      ]
-      this.shapeMatrix[0][1] = 0
-      this.shapeMatrix[2][0] = 0
-    } else {
-      this.shapeWidth = this.squareWidth * 3
-      this.shapeHeight = this.squareWidth * 2
-      this.drawPiece(this.shapeColor, positionX, positionY + this.squareWidth)
-      this.drawPiece(
-        this.shapeColor,
-        positionX + this.squareWidth,
-        positionY + this.squareWidth
-      )
-      this.drawPiece(this.shapeColor, positionX + this.squareWidth, positionY)
-      this.drawPiece(
-        this.shapeColor,
-        positionX + this.squareWidth * 2,
-        positionY
-      )
-      this.shapeMatrix = [
-        [1, 1, 1],
-        [1, 1, 1],
-      ]
-      this.shapeMatrix[0][0] = 0
-      this.shapeMatrix[1][2] = 0
-    }
-  }
-
-  drawInvertCheck(positionX: number, positionY: number, state: number) {
-    this.shapeColor = shapeColors.FLESH
-    if (state == 0 || state == 2) {
-      this.shapeWidth = this.squareWidth * 2
-      this.shapeHeight = this.squareWidth * 3
-      this.drawPiece(this.shapeColor, positionX + this.squareWidth, positionY)
-      this.drawPiece(
-        this.shapeColor,
-        positionX + this.squareWidth,
-        positionY + this.squareWidth
-      )
-      this.drawPiece(this.shapeColor, positionX, positionY + this.squareWidth)
-      this.drawPiece(
-        this.shapeColor,
-        positionX,
-        positionY + this.squareWidth * 2
-      )
-      this.shapeMatrix = [
-        [1, 1],
-        [1, 1],
-        [1, 1],
-      ]
-      this.shapeMatrix[0][0] = 0
-      this.shapeMatrix[2][1] = 0
-    } else {
-      this.shapeWidth = this.squareWidth * 3
-      this.shapeHeight = this.squareWidth * 2
-      this.drawPiece(this.shapeColor, positionX, positionY)
-      this.drawPiece(this.shapeColor, positionX + this.squareWidth, positionY)
-      this.drawPiece(
-        this.shapeColor,
-        positionX + this.squareWidth,
-        positionY + this.squareWidth
-      )
-      this.drawPiece(
-        this.shapeColor,
-        positionX + this.squareWidth * 2,
-        positionY + this.squareWidth
-      )
-      this.shapeMatrix = [
-        [1, 1, 1],
-        [1, 1, 1],
-      ]
-      this.shapeMatrix[0][2] = 0
-      this.shapeMatrix[1][0] = 0
-    }
-  }
-
-  rotateObject(e: KeyboardEvent) {
+  private rotateObject(e: KeyboardEvent) {
     if (e.key == 'ArrowUp') {
-      if (this.x + this.shapeHeight > this.width) {
-        this.x = this.width - this.shapeHeight
-      }
+      if (
+        this.y + this.shapeMatrix[0].length * this.squareWidth <
+        this.height
+      ) {
+        if (this.x + this.shapeMatrix.length * this.squareWidth > this.width) {
+          this.x = this.width - this.shapeMatrix.length * this.squareWidth
+        }
 
-      const buff = this.shapeWidth
-      this.shapeWidth = this.shapeHeight
-      this.shapeHeight = buff
-
-      this.state = this.state + 1
-      if (this.state > 3) {
-        this.state = 0
+        this.rotateMatrix()
       }
     }
   }
 
-  moveObject(e: KeyboardEvent) {
-    if (e.key == 'ArrowRight' && this.x != this.width - this.shapeWidth) {
+  private moveObject(e: KeyboardEvent) {
+    if (
+      e.key == 'ArrowRight' &&
+      this.x != this.width - this.shapeMatrix[0].length * this.squareWidth
+    ) {
       let pass = true
 
-      for (let i = 0; i < this.shapeHeight / this.squareWidth; i++) {
+      for (let i = 0; i < this.shapeMatrix.length; i++) {
         if (
           this.fieldMatrix[Math.floor(this.y / this.squareWidth) + i + 1][
-            (this.x + this.shapeWidth) / this.squareWidth
+            (this.x + this.shapeMatrix[0].length * this.squareWidth) /
+              this.squareWidth
           ]
         ) {
           pass = false
         }
       }
 
-      if (pass) {
-        this.x = this.x + this.squareWidth
-      }
+      if (pass) this.x = this.x + this.squareWidth
     }
+
     if (e.key == 'ArrowLeft' && this.x != 0) {
       let pass = true
 
-      for (let i = 0; i < this.shapeHeight / this.squareWidth; i++) {
+      for (let i = 0; i < this.shapeMatrix.length; i++) {
         if (
           this.fieldMatrix[Math.floor(this.y / this.squareWidth) + i + 1][
             this.x / this.squareWidth - 1
@@ -560,9 +285,7 @@ class CanvasAPI {
         }
       }
 
-      if (pass) {
-        this.x = this.x - this.squareWidth
-      }
+      if (pass) this.x = this.x - this.squareWidth
     }
   }
 }
