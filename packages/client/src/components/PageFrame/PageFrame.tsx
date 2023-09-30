@@ -1,27 +1,28 @@
 import React, { ReactElement } from 'react'
 import classNames from 'classnames'
-import { activePage } from '@/utils/navigation'
 import Header from '@components/Header/Header'
 import classes from './styles.module.less'
+import { PageTypes } from '@components/types'
 
 const cx = classNames.bind(classes)
 
 interface PageFrameProps {
-  children: ReactElement
+  children: ReactElement | ReactElement[]
+  pageType: PageTypes
 }
 
-const PageFrame = ({ children }: PageFrameProps) => {
+const PageFrame = ({ pageType, children }: PageFrameProps) => {
   return (
     <div
       className={cx(
         classes.pageFrame,
-        classes[`pageFrame__${activePage}`] || classes[`pageFrame__default`]
+        classes[`pageFrame__${pageType}`] || classes[`pageFrame__default`]
       )}>
       <Header />
       <div
         className={cx(
           classes.pageFrame__content,
-          classes[`pageFrame__content__${activePage}`] ||
+          classes[`pageFrame__content__${pageType}`] ||
             classes[`pageFrame__content__default`]
         )}>
         {children}
