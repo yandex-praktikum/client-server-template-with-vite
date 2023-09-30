@@ -8,5 +8,5 @@ interface UserContextProps {
 }
 
 export const UserContextProvider = ({ user, children }: UserContextProps) => {
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>
+  return <UserContext.Provider value={user as UserType}>{children}</UserContext.Provider>
 }
