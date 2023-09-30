@@ -1,0 +1,41 @@
+@import '@styles/theme.less';
+.topics {
+  background-color: @white;
+  &__img {
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+  }
+  &__list {
+    list-style: none;
+  }
+  &__wrapperImg {
+    padding: 30px;
+  }
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid @blue_text;
+  }
+  &__wrapperText {
+    margin-left: 26px;
+    padding: 30px;
+    border-left: 1px solid @blue_text;
+    color: @blue_text;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__text,
+  &__subText {
+    font-family: @font-family-Inter-medium;
+  }
+
+  &__subText {
+    align-self: end;
+    font-size: 12px;
+    color: rgba(29, 30, 83, 0.44);
+    margin-bottom: 10px;
+  }
+}

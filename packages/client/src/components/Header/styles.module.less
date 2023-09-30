@@ -1,0 +1,68 @@
+@import '@styles/theme.less';
+
+.header {
+  width: 100%;
+  padding: 0 18px;
+  height: 75px;
+  border-bottom: 1px solid @coffee;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: @blue_grey;
+  border-radius: 16px 16px 0 0;
+
+  &__logotype {
+    color: @white;
+    font-family: @font-family-bold;
+    font-size: 36px;
+    font-weight: 700;
+  }
+
+  &__user_menu {
+    width: 150px;
+    position: absolute;
+    top: 100%;
+    right: -16px;
+    background: @grey;
+    padding: 9px 0;
+    border-radius: 8px;
+    margin-top: 8px;
+
+    li {
+      margin: 0;
+      padding: 8px 12px;
+      list-style-type: none;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(217, 4, 93, 0.10);
+      }
+    }
+  }
+
+  &__menu {
+    width: 100%;
+    padding: 0 60px;
+
+    &__item {
+      margin-right: 15px;
+      font-family: @font-family-bold;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+
+      &--active {
+        color: @yellow;
+      }
+
+      &--default {
+        color: @coffee;
+      }
+    }
+
+    &__avatar {
+      position: relative;
+      cursor: pointer;
+    }
+  }
+}

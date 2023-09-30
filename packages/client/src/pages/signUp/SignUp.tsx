@@ -1,12 +1,12 @@
 import React from 'react'
 import classes from './styles.module.less'
 import { Button, Form, Input } from 'antd'
-import TetrisImg from './components/tetrisImg/Tetris'
+import Tetris from '@/components/TetrisImg/Tetris'
 
 const SignUp: React.FC = () => {
   return (
     <div className={classes.signUp}>
-      <TetrisImg />
+      <Tetris />
       <div className={classes.signUp__form}>
         <span className={classes.title}>Welcome to Tetris</span>
         <Form>
