@@ -5,6 +5,7 @@ import Avatar from '@/components/Avatar/Avatar'
 import { UserContext } from '@/providers/userProvider/UserContext'
 import { baseApiUrl } from '@/api/api'
 import { useForm } from 'antd/es/form/Form'
+import { PasswordRequest, putChangePassword } from '@/api/changePassword'
 
 interface FieldData {
   name: string | number | (string | number)[];
@@ -24,11 +25,7 @@ function ObjectToFieldData<T extends Record<string, unknown>>(model: T): FieldDa
   }
   return res;
 }
-type PasswordRequest = {
-  old_password: string,
-  new_password: string
 
-}
 const Profile: React.FC = () => {
   const user = useContext(UserContext);
   const [fields] = useState<FieldData[]>(ObjectToFieldData(user));
@@ -43,8 +40,10 @@ const Profile: React.FC = () => {
     setIsModalOpen(false);
   },[]);
 
-  const changePassword = useCallback((values: PasswordRequest)=>{
+  const changePassword = useCallback(async (values: PasswordRequest)=>{
     console.log(values);
+    await putChangePassword(values);
+    setIsModalOpen(false);
   }, [])
 
   const resourcesUrl = baseApiUrl + 'resources';
@@ -107,10 +106,10 @@ const Profile: React.FC = () => {
         </Form>
         <Modal open={isModalOpen} onCancel={cancelChangePassword} onOk={passwordForm.submit}>
               <Form className={classes.passwordForm} form={passwordForm} onFinish={changePassword}>
-                <Form.Item name='old_password'>
+                <Form.Item name='oldPassword'>
                   <Input type='password' placeholder='Old password'></Input>
                 </Form.Item>
-                <Form.Item name='new_password'>
+                <Form.Item name='newPassword'>
                   <Input type='password' placeholder='New password'></Input>
                 </Form.Item>
               </Form>
