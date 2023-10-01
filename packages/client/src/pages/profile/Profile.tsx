@@ -1,9 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import classes from './styles.module.less'
-import { Form, Input } from 'antd'
+import { Button, Form, Input, Modal } from 'antd'
 import Avatar from '@/components/Avatar/Avatar'
 import { UserContext } from '@/providers/userProvider/UserContext'
 import { baseApiUrl } from '@/api/api'
+import { useForm } from 'antd/es/form/Form'
 
 interface FieldData {
   name: string | number | (string | number)[];
@@ -23,10 +24,29 @@ function ObjectToFieldData<T extends Record<string, unknown>>(model: T): FieldDa
   }
   return res;
 }
+type PasswordRequest = {
+  old_password: string,
+  new_password: string
 
+}
 const Profile: React.FC = () => {
   const user = useContext(UserContext);
-  const fields =  ObjectToFieldData(user);
+  const [fields] = useState<FieldData[]>(ObjectToFieldData(user));
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [passwordForm] = useForm();
+
+  const openChangePasswordDialog = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
+
+  const cancelChangePassword = useCallback(()=>{
+    setIsModalOpen(false);
+  },[]);
+
+  const changePassword = useCallback((values: PasswordRequest)=>{
+    console.log(values);
+  }, [])
+
   const resourcesUrl = baseApiUrl + 'resources';
   return (
     <div className={classes.profile}>
@@ -75,14 +95,26 @@ const Profile: React.FC = () => {
             name="display_name">
             <Input placeholder="Display name"/>
           </Form.Item>
-          <button
-            className={classes.profile__btn}
-            style={{
-              width: '100%',
-            }}>
-            Save
-          </button>
+            <Button
+              className={classes.profile__btn__primary}>
+              Save
+            </Button>
+            <Button className={classes.profile__btn}
+            onClick={openChangePasswordDialog}
+            >
+              Change password
+            </Button>
         </Form>
+        <Modal open={isModalOpen} onCancel={cancelChangePassword} onOk={passwordForm.submit}>
+              <Form className={classes.passwordForm} form={passwordForm} onFinish={changePassword}>
+                <Form.Item name='old_password'>
+                  <Input type='password' placeholder='Old password'></Input>
+                </Form.Item>
+                <Form.Item name='new_password'>
+                  <Input type='password' placeholder='New password'></Input>
+                </Form.Item>
+              </Form>
+        </Modal>
       </div>
     </div>
   )
