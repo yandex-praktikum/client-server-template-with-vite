@@ -5,7 +5,7 @@ import Avatar from '@/components/Avatar/Avatar'
 import { UserContext } from '@/providers/userProvider/UserContext'
 import { baseApiUrl } from '@/api/api'
 import { useForm } from 'antd/es/form/Form'
-import { PasswordRequest, putChangePassword } from '@/api/changePassword'
+import { PasswordRequest, UserProfile, putChangePassword, putUserProfile } from '@/api/user'
 
 interface FieldData {
   name: string | number | (string | number)[];
@@ -27,8 +27,8 @@ function ObjectToFieldData<T extends Record<string, unknown>>(model: T): FieldDa
 }
 
 const Profile: React.FC = () => {
-  const user = useContext(UserContext);
-  const [fields] = useState<FieldData[]>(ObjectToFieldData(user));
+  const {avatar, ...user} = useContext(UserContext);
+  const [profileFields] = useState<FieldData[]>(ObjectToFieldData(user));
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [passwordForm] = useForm();
 
@@ -41,17 +41,21 @@ const Profile: React.FC = () => {
   },[]);
 
   const changePassword = useCallback(async (values: PasswordRequest)=>{
-    console.log(values);
     await putChangePassword(values);
     setIsModalOpen(false);
+  }, [])
+
+  const changeProfileData = useCallback( (values: UserProfile) => {
+    console.log('пупу');
+    putUserProfile(values);
   }, [])
 
   const resourcesUrl = baseApiUrl + 'resources';
   return (
     <div className={classes.profile}>
-      <Avatar size='md' img={resourcesUrl + user.avatar}></Avatar>
+      <Avatar size='md' img={resourcesUrl + avatar}></Avatar>
       <div className={classes.profile__form}>
-        <Form fields={fields}>
+        <Form fields={profileFields} onFinish={changeProfileData}>
           <Form.Item
             labelCol={{ span: 24 }}
             colon={false}
@@ -94,10 +98,10 @@ const Profile: React.FC = () => {
             name="display_name">
             <Input placeholder="Display name"/>
           </Form.Item>
-            <Button
+            <button type='submit'
               className={classes.profile__btn__primary}>
-              Save
-            </Button>
+              Save              
+            </button>
             <Button className={classes.profile__btn}
             onClick={openChangePasswordDialog}
             >
