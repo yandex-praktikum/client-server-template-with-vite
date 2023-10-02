@@ -8,4 +8,5 @@ export const urls = {
   errorNotFound: '/notFound',
   error: '/error',
   leaderboard: '/leaderboard',
+  presentation: '/presentation',
 }
