@@ -1,11 +1,14 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import classes from './styles.module.less'
-import { Button, Form, Input, Modal, Upload, UploadFile } from 'antd'
+import { Button, Form, Input, Modal } from 'antd'
 import Avatar from '@/components/Avatar/Avatar'
 import { UserContext } from '@/providers/userProvider/UserContext'
 import { baseApiUrl } from '@/api/api'
 import { useForm } from 'antd/es/form/Form'
-import { PasswordRequest, UserProfile, putChangePassword, putUserAvatar, putUserProfile } from '@/api/user'
+import { PasswordRequest, UserProfile, putChangePassword, putUserProfile } from '@/api/user'
+import { ChangeAvatar } from '@/components/ChangeAvatar/ChangeAvatar'
+import { getUserInfo } from '@/api/auth'
+import { DEFAULT_AVATAR } from '@/utils/constants'
 
 interface FieldData {
   name: string | number | (string | number)[];
@@ -30,11 +33,19 @@ const Profile: React.FC = () => {
   const user = useContext(UserContext);
   const [avatar, setAvatar] = useState('');
   const [profileFields] = useState<FieldData[]>(ObjectToFieldData(user));
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);  
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
   const [passwordForm] = useForm();
-  const [file, setFile] = useState<File>();
+  
+
+  const resourcesUrl = baseApiUrl + 'resources';
   useEffect(() => {
-    setAvatar(user.avatar as string);
+    if (user.avatar) {
+      setAvatar(resourcesUrl + user.avatar);
+    }
+    else {
+      setAvatar(DEFAULT_AVATAR);
+    }
   }, [])
   const openChangePasswordDialog = useCallback(() => {
     setIsModalOpen(true);
@@ -53,34 +64,30 @@ const Profile: React.FC = () => {
     putUserProfile(values);
   }, [])
 
-  const uploadNewAvatar = useCallback(()=> {
-    if (file) {
-      const request = new FormData();
-      request.append('avatar', file);
-      putUserAvatar(request).then(
-        x=> {
-          console.log(x);
-          setAvatar(x.avatar as string);
-        }
-      )
-    }
-  }, [file]);
+  const onAvatarChanged = useCallback(()=>{
+    getUserInfo().then(
+      u=>
+      {    
+        if (u.avatar) {
+          setAvatar(resourcesUrl + u.avatar);
+      }
+      else {
+        setAvatar(DEFAULT_AVATAR);
+      }}
+    );
+  },[]);
 
-  const resourcesUrl = baseApiUrl + 'resources';
   return (
-    <div className={classes.profile}>
-      <Form onFinish={uploadNewAvatar}>       
-        <Avatar size='md' img={resourcesUrl + avatar}></Avatar>
-        <Form.Item>
-          <Upload accept='image/*' beforeUpload={(newFile)=>{setFile(newFile); return false;}} >
-            <Button>Click to upload</Button>
-          </Upload>
-        </Form.Item>
-        <button type='submit'
-              className={classes.profile__btn__primary}>
-              Upload new avatar              
-            </button>
-      </Form>
+    <div className={classes.profile}>      
+      <Avatar size='md' img={avatar}></Avatar>
+      <Button onClick={()=>{setIsAvatarModalOpen(true)}}>
+        Change avatar
+      </Button>
+      <ChangeAvatar 
+        isOpen={isAvatarModalOpen}
+        avatar={user.avatar as string}
+        onCancel={()=>setIsAvatarModalOpen(false)}
+        onOk={()=>{ setIsAvatarModalOpen(false);setTimeout(()=>onAvatarChanged(), 100);}} />
       <div className={classes.profile__form}>
         <Form fields={profileFields} onFinish={changeProfileData}>
           <Form.Item
