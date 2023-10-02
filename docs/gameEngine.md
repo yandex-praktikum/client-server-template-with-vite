@@ -38,14 +38,14 @@ import React, { useEffect } from 'react'
 import CanvasAPI from '@/services/CanvasAPI'
 
 const Canvas: React.FC = () => {
-  let api: CanvasAPI
+  const [api, setApi] = useState<CanvasAPI>()
 
   useEffect(() => {
-    api = new CanvasAPI(document.querySelector('canvas') as HTMLCanvasElement)
+    setApi(new CanvasAPI(document.querySelector('canvas') as HTMLCanvasElement))
   }, [])
 
   const startGame = () => {
-    api.startGame()
+    api?.startGame()
   }
 
   return (
