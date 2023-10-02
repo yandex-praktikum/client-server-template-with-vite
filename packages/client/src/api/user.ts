@@ -1,3 +1,4 @@
+import { UserType } from "@/components/types"
 import { yandexApi } from "./setupApi"
 
 export type PasswordRequest = {
@@ -21,5 +22,10 @@ export type UserProfile = {
 
   export const putUserProfile = (request: UserProfile) => {
     return yandexApi.put('user/profile', request)
+    .catch((reason) => console.log(reason));
+  }
+  export const putUserAvatar = (request: FormData): Promise<UserType>  => {
+    return yandexApi.put('user/profile/avatar', request)
+    .then(res =>{ return res.data})
     .catch((reason) => console.log(reason));
   }

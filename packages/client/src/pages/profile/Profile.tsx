@@ -1,11 +1,11 @@
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import classes from './styles.module.less'
-import { Button, Form, Input, Modal } from 'antd'
+import { Button, Form, Input, Modal, Upload, UploadFile } from 'antd'
 import Avatar from '@/components/Avatar/Avatar'
 import { UserContext } from '@/providers/userProvider/UserContext'
 import { baseApiUrl } from '@/api/api'
 import { useForm } from 'antd/es/form/Form'
-import { PasswordRequest, UserProfile, putChangePassword, putUserProfile } from '@/api/user'
+import { PasswordRequest, UserProfile, putChangePassword, putUserAvatar, putUserProfile } from '@/api/user'
 
 interface FieldData {
   name: string | number | (string | number)[];
@@ -27,11 +27,15 @@ function ObjectToFieldData<T extends Record<string, unknown>>(model: T): FieldDa
 }
 
 const Profile: React.FC = () => {
-  const {avatar, ...user} = useContext(UserContext);
+  const user = useContext(UserContext);
+  const [avatar, setAvatar] = useState('');
   const [profileFields] = useState<FieldData[]>(ObjectToFieldData(user));
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [passwordForm] = useForm();
-
+  const [file, setFile] = useState<File>();
+  useEffect(() => {
+    setAvatar(user.avatar as string);
+  }, [])
   const openChangePasswordDialog = useCallback(() => {
     setIsModalOpen(true);
   }, []);
@@ -46,14 +50,37 @@ const Profile: React.FC = () => {
   }, [])
 
   const changeProfileData = useCallback( (values: UserProfile) => {
-    console.log('пупу');
     putUserProfile(values);
   }, [])
+
+  const uploadNewAvatar = useCallback(()=> {
+    if (file) {
+      const request = new FormData();
+      request.append('avatar', file);
+      putUserAvatar(request).then(
+        x=> {
+          console.log(x);
+          setAvatar(x.avatar as string);
+        }
+      )
+    }
+  }, [file]);
 
   const resourcesUrl = baseApiUrl + 'resources';
   return (
     <div className={classes.profile}>
-      <Avatar size='md' img={resourcesUrl + avatar}></Avatar>
+      <Form onFinish={uploadNewAvatar}>       
+        <Avatar size='md' img={resourcesUrl + avatar}></Avatar>
+        <Form.Item>
+          <Upload accept='image/*' beforeUpload={(newFile)=>{setFile(newFile); return false;}} >
+            <Button>Click to upload</Button>
+          </Upload>
+        </Form.Item>
+        <button type='submit'
+              className={classes.profile__btn__primary}>
+              Upload new avatar              
+            </button>
+      </Form>
       <div className={classes.profile__form}>
         <Form fields={profileFields} onFinish={changeProfileData}>
           <Form.Item
