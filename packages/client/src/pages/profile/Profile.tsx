@@ -55,7 +55,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     setAvatar(user.avatar as string)
-  }, [])
+  }, [user.avatar])
   const openChangePasswordDialog = useCallback(() => {
     setIsModalOpen(true)
   }, [])

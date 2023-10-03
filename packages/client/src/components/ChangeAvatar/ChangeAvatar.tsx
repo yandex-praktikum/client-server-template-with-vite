@@ -1,8 +1,9 @@
 import { Button, Form, Modal, Upload, message } from 'antd'
-import { FC, useCallback, useEffect, useState } from 'react'
+import { FC, useCallback, useContext, useEffect, useState } from 'react'
 import Avatar from '../Avatar/Avatar'
 import { putUserAvatar } from '@/api/user'
 import { useForm } from 'antd/es/form/Form'
+import { UserContext } from '@/providers/userProvider/UserContext'
 
 type ChangeAvatarProps = {
   avatar: string
@@ -35,6 +36,8 @@ export const ChangeAvatar: FC<ChangeAvatarProps> = (
       putUserAvatar(request).then(x => {
         if (x) {
           setImageSource(x.avatar as string)
+          const user = useContext(UserContext)
+          user.avatar = x.avatar
         } else {
           messageApi.error('Could not load new avatar', 2)
         }
