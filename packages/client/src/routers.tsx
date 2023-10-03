@@ -9,6 +9,7 @@ import Error from '@pages/error/error'
 import { ProvideTopic } from '@/providers/userProvider/TopicContext'
 import Forum from '@pages/forum/Forum'
 import Profile from './pages/profile/Profile'
+import Presentation from './pages/presentation/Presentation'
 
 type AppRoutersType = {
   error: number
@@ -24,6 +25,7 @@ const AppRouters = ({ error }: AppRoutersType) => {
 
       <Route path={urls.game} element={<Login />} />
       <Route path={urls.profile} element={<Profile />} />
+      <Route path={urls.presentation} element={<Presentation />} />
       <Route
         path={urls.errorNotFound}
         element={<Error code={error} text="Page not found" />}
