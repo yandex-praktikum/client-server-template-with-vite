@@ -1,8 +1,6 @@
 import { Button, Form, Modal, Upload } from 'antd'
 import { FC, useCallback, useEffect, useState } from 'react'
 import Avatar from '../Avatar/Avatar'
-import { baseApiUrl } from '@/api/api'
-import { DEFAULT_AVATAR } from '@/utils/constants'
 import { putUserAvatar } from '@/api/user'
 import { useForm } from 'antd/es/form/Form'
 
@@ -16,13 +14,10 @@ type ChangeAvatarProps = {
 export const ChangeAvatar: FC<ChangeAvatarProps> = (
   props: ChangeAvatarProps
 ) => {
-  const resourcesUrl = baseApiUrl + 'resources'
   const [avatarForm] = useForm()
   const [imageSource, setImageSource] = useState('')
   useEffect(() => {
-    if (props.avatar) {
-      setImageSource(resourcesUrl + props.avatar)
-    } else setImageSource(DEFAULT_AVATAR)
+    setImageSource(props.avatar)
   }, [])
   const [file, setFile] = useState<File>()
   const beforeUpload = useCallback((newFile: File) => {
@@ -36,7 +31,7 @@ export const ChangeAvatar: FC<ChangeAvatarProps> = (
       const request = new FormData()
       request.append('avatar', file)
       putUserAvatar(request).then(x => {
-        setImageSource(resourcesUrl + x.avatar)
+        setImageSource(x.avatar as string)
       })
     }
   }, [file])

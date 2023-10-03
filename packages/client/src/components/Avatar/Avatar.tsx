@@ -1,8 +1,8 @@
-import React from 'react'
 import classNames from 'classnames'
 import { DEFAULT_AVATAR } from '@/utils/constants'
 
 import classes from './styles.module.less'
+import { baseApiUrl } from '@/api/api'
 
 const cx = classNames.bind(classes)
 
@@ -12,9 +12,15 @@ type AvatarProps = {
 }
 
 const Avatar = ({ img, size }: AvatarProps) => {
+  const resourcesUrl = baseApiUrl + 'resources'
   return (
     <div className={cx(classes.avatar, classes[`avatar__size--${size}`])}>
-      {<img src={img || DEFAULT_AVATAR} alt="user avatar" />}
+      {
+        <img
+          src={img ? resourcesUrl + img : DEFAULT_AVATAR}
+          alt="user avatar"
+        />
+      }
     </div>
   )
 }

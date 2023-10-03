@@ -45,7 +45,7 @@ const Header = () => {
       : window.location.pathname.substring(1).split('/')[0]
   const [showUserMenu, setShowUserMenu] = useState(false)
   const { avatar } = useContext(UserContext)
-  const resourcesUrl = baseApiUrl + 'resources';
+  const resourcesUrl = baseApiUrl + 'resources'
   const navigate = useNavigate()
   const menu = useMemo(
     () =>
@@ -84,10 +84,12 @@ const Header = () => {
       <div
         className={classes.header__menu__avatar}
         onClick={switchShowUserMenu}>
-        <Avatar size="xs" img={resourcesUrl + avatar} />
+        <Avatar size="xs" img={avatar} />
         {showUserMenu && (
           <ul className={classes.header__user_menu}>
-            <li><a href={urls.profile}>Profile</a></li>
+            <li>
+              <a href={urls.profile}>Profile</a>
+            </li>
             <li onClick={handleLogout}>Logout</li>
           </ul>
         )}

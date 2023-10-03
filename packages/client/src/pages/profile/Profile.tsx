@@ -3,7 +3,6 @@ import classes from './styles.module.less'
 import { Button, Form, Input, Modal } from 'antd'
 import Avatar from '@/components/Avatar/Avatar'
 import { UserContext } from '@/providers/userProvider/UserContext'
-import { baseApiUrl } from '@/api/api'
 import { useForm } from 'antd/es/form/Form'
 import {
   PasswordRequest,
@@ -13,7 +12,6 @@ import {
 } from '@/api/user'
 import { ChangeAvatar } from '@/components/ChangeAvatar/ChangeAvatar'
 import { getUserInfo } from '@/api/auth'
-import { DEFAULT_AVATAR } from '@/utils/constants'
 import PageFrame from '@/components/PageFrame/PageFrame'
 
 interface FieldData {
@@ -45,13 +43,8 @@ const Profile: React.FC = () => {
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false)
   const [passwordForm] = useForm()
 
-  const resourcesUrl = baseApiUrl + 'resources'
   useEffect(() => {
-    if (user.avatar) {
-      setAvatar(resourcesUrl + user.avatar)
-    } else {
-      setAvatar(DEFAULT_AVATAR)
-    }
+    setAvatar(user.avatar as string)
   }, [])
   const openChangePasswordDialog = useCallback(() => {
     setIsModalOpen(true)
@@ -72,11 +65,7 @@ const Profile: React.FC = () => {
 
   const onAvatarChanged = useCallback(() => {
     getUserInfo().then(u => {
-      if (u.avatar) {
-        setAvatar(resourcesUrl + u.avatar)
-      } else {
-        setAvatar(DEFAULT_AVATAR)
-      }
+      setAvatar(u.avatar as string)
     })
   }, [])
 
