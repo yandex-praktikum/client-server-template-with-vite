@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import Avatar from '@components/Avatar/Avatar'
@@ -6,7 +6,6 @@ import { urls } from '@/utils/navigation'
 import classes from './styles.module.less'
 import { UserContext } from '@/providers/userProvider/UserContext'
 import { postLogout } from '@/api/auth'
-import { baseApiUrl } from '@/api/api'
 
 const cx = classNames.bind(classes)
 
@@ -45,7 +44,6 @@ const Header = () => {
       : window.location.pathname.substring(1).split('/')[0]
   const [showUserMenu, setShowUserMenu] = useState(false)
   const { avatar } = useContext(UserContext)
-  const resourcesUrl = baseApiUrl + 'resources'
   const navigate = useNavigate()
   const menu = useMemo(
     () =>

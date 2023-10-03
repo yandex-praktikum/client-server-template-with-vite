@@ -13,14 +13,15 @@ type AvatarProps = {
 
 const Avatar = ({ img, size }: AvatarProps) => {
   const resourcesUrl = baseApiUrl + 'resources'
+
+  const source = img
+    ? img.startsWith('/')
+      ? resourcesUrl + img
+      : img
+    : DEFAULT_AVATAR
   return (
     <div className={cx(classes.avatar, classes[`avatar__size--${size}`])}>
-      {
-        <img
-          src={img ? resourcesUrl + img : DEFAULT_AVATAR}
-          alt="user avatar"
-        />
-      }
+      {<img src={source} alt="user avatar" />}
     </div>
   )
 }

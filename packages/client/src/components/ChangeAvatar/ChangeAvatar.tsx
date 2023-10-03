@@ -1,4 +1,4 @@
-import { Button, Form, Modal, Upload } from 'antd'
+import { Button, Form, Modal, Upload, message } from 'antd'
 import { FC, useCallback, useEffect, useState } from 'react'
 import Avatar from '../Avatar/Avatar'
 import { putUserAvatar } from '@/api/user'
@@ -15,6 +15,8 @@ export const ChangeAvatar: FC<ChangeAvatarProps> = (
   props: ChangeAvatarProps
 ) => {
   const [avatarForm] = useForm()
+  const [messageApi, contextHolder] = message.useMessage()
+
   const [imageSource, setImageSource] = useState('')
   useEffect(() => {
     setImageSource(props.avatar)
@@ -31,7 +33,11 @@ export const ChangeAvatar: FC<ChangeAvatarProps> = (
       const request = new FormData()
       request.append('avatar', file)
       putUserAvatar(request).then(x => {
-        setImageSource(x.avatar as string)
+        if (x) {
+          setImageSource(x.avatar as string)
+        } else {
+          messageApi.error('Could not load new avatar', 2)
+        }
       })
     }
   }, [file])
@@ -44,8 +50,9 @@ export const ChangeAvatar: FC<ChangeAvatarProps> = (
         await avatarForm.submit()
         props.onOk()
       }}>
+      {contextHolder}
       <Form onFinish={uploadNewAvatar} form={avatarForm}>
-        <Avatar size="md" img={imageSource}></Avatar>
+        <Avatar size="md" img={imageSource} />
         <Form.Item>
           <Upload accept="image/*" beforeUpload={beforeUpload}>
             <Button>Click to upload</Button>

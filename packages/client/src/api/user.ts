@@ -2,9 +2,9 @@ import { UserType } from "@/components/types"
 import { yandexApi } from "./setupApi"
 
 export type PasswordRequest = {
-    oldPassword: string,
-    newPassword: string  
-  }
+  oldPassword: string,
+  newPassword: string
+}
 
 export type UserProfile = {
   first_name: string,
@@ -15,17 +15,17 @@ export type UserProfile = {
   phone: string
 }
 
-  export const putChangePassword = (request: PasswordRequest) => {
-    return yandexApi.put('user/password', request)
-    .catch((reason) => {console.log(reason)});
-  }
+export const putChangePassword = (request: PasswordRequest) => {
+  return yandexApi.put('user/password', request)
+    .catch((reason) => { console.log(reason) });
+}
 
-  export const putUserProfile = (request: UserProfile) => {
-    return yandexApi.put('user/profile', request)
+export const putUserProfile = (request: UserProfile) => {
+  return yandexApi.put('user/profile', request)
     .catch((reason) => console.log(reason));
-  }
-  export const putUserAvatar = (request: FormData): Promise<UserType>  => {
-    return yandexApi.put('user/profile/avatar', request)
-    .then(res =>{ return res.data})
-    .catch((reason) => console.log(reason));
-  }
+}
+export const putUserAvatar = (request: FormData): Promise<UserType> => {
+  return yandexApi.put('user/profile/avatar', request)
+    .then(res => { return res.data })
+    .catch((reason) => { console.log(reason); return null; });
+}
