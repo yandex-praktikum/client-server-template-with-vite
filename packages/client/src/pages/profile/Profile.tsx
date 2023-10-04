@@ -8,7 +8,7 @@ import React, {
 import classes from './styles.module.less'
 import { Button, ColProps, Form, Input, Modal } from 'antd'
 import Avatar from '@/components/Avatar/Avatar'
-import { UserContext } from '@/providers/userProvider/UserContext'
+import UserContext from '@/providers/userProvider/UserContext'
 import { useForm } from 'antd/es/form/Form'
 import {
   PasswordRequest,
@@ -17,7 +17,6 @@ import {
   putUserProfile,
 } from '@/api/user'
 import { ChangeAvatar } from '@/components/ChangeAvatar/ChangeAvatar'
-import { getUserInfo } from '@/api/auth'
 import PageFrame from '@/components/PageFrame/PageFrame'
 
 interface FieldData {
@@ -42,9 +41,9 @@ function ObjectToFieldData<T extends Record<string, unknown>>(
 }
 
 const Profile: React.FC = () => {
-  const user = useContext(UserContext)
+  const { user } = useContext(UserContext)
   const [avatar, setAvatar] = useState('')
-  const [profileFields] = useState<FieldData[]>(ObjectToFieldData(user))
+  const [profileFields, setProfileFields] = useState<FieldData[]>()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false)
   const [passwordForm] = useForm()
@@ -54,8 +53,11 @@ const Profile: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    setAvatar(user.avatar as string)
-  }, [user.avatar])
+    if (user) {
+      setAvatar(user.avatar as string)
+      setProfileFields(ObjectToFieldData(user))
+    }
+  }, [user])
   const openChangePasswordDialog = useCallback(() => {
     setIsModalOpen(true)
   }, [])
@@ -82,9 +84,6 @@ const Profile: React.FC = () => {
 
   const onAvatarChanged = useCallback(() => {
     setIsAvatarModalOpen(false)
-    setTimeout(() => {
-      getUserInfo().then(u => setAvatar(u.avatar as string))
-    }, 100)
   }, [])
 
   return (
@@ -94,7 +93,7 @@ const Profile: React.FC = () => {
         <Button onClick={openChangeAvatarDialog}>Change avatar</Button>
         <ChangeAvatar
           isOpen={isAvatarModalOpen}
-          avatar={user.avatar as string}
+          avatar={user?.avatar ?? ''}
           onCancel={cancelChangeAvatar}
           onOk={onAvatarChanged}
         />

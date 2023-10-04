@@ -1,12 +1,21 @@
 import React, { ReactNode } from 'react'
-import { UserContext } from './UserContext'
+import UserContext from './UserContext'
 import { UserType } from '@components/types'
 
 interface UserContextProps {
   children?: ReactNode
-  user: UserType | null
+  user: UserType
+  setUser: React.Dispatch<React.SetStateAction<UserType>>
 }
 
-export const UserContextProvider = ({ user, children }: UserContextProps) => {
-  return <UserContext.Provider value={user as UserType}>{children}</UserContext.Provider>
+export const UserContextProvider = ({
+  user,
+  children,
+  setUser,
+}: UserContextProps) => {
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  )
 }

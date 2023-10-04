@@ -27,5 +27,5 @@ export const putUserProfile = (request: UserProfile) => {
 export const putUserAvatar = (request: FormData): Promise<UserType> => {
   return yandexApi.put('user/profile/avatar', request)
     .then(res => { return res.data })
-    .catch((reason) => { console.log(reason); return null; });
+    .catch((reason) => { console.log(reason); throw Error('Could not load new avatar'); });
 }
