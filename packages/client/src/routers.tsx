@@ -10,7 +10,6 @@ import Forum from '@pages/forum/Forum'
 import Profile from './pages/profile/Profile'
 import Game from '@pages/game/Game'
 import Presentation from './pages/presentation/Presentation'
-import Game from './pages/game/Game'
 
 type AppRoutersType = {
   error: number
