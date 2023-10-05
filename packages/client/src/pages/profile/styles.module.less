@@ -1,0 +1,22 @@
+@import '@styles/theme.less';
+@import '@styles/mixins.less';
+
+.profile {
+  margin-top: -100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &__btn__primary {
+    .button-mixin('accept');
+    margin-top: 10px;
+    width: 100%;
+  }
+  &__btn {
+    margin-top: 10px;
+    width: 100%;
+  }
+}
+.passwordForm {
+  padding: 15px;
+}

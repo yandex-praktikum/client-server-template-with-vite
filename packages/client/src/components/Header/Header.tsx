@@ -1,10 +1,10 @@
-import React, { useContext, useMemo, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import Avatar from '@components/Avatar/Avatar'
 import { urls } from '@/utils/navigation'
 import classes from './styles.module.less'
-import { UserContext } from '@/providers/userProvider/UserContext'
+import UserContext from '@/providers/userProvider/UserContext'
 import { postLogout } from '@/api/auth'
 
 const cx = classNames.bind(classes)
@@ -43,7 +43,7 @@ const Header = () => {
       ? 'index'
       : window.location.pathname.substring(1).split('/')[0]
   const [showUserMenu, setShowUserMenu] = useState(false)
-  const { avatar } = useContext(UserContext)
+  const { user } = useContext(UserContext)
   const navigate = useNavigate()
   const menu = useMemo(
     () =>
@@ -82,9 +82,12 @@ const Header = () => {
       <div
         className={classes.header__menu__avatar}
         onClick={switchShowUserMenu}>
-        <Avatar size="xs" img={avatar} />
+        <Avatar size="xs" img={user?.avatar ?? ''} />
         {showUserMenu && (
           <ul className={classes.header__user_menu}>
+            <li>
+              <a href={urls.profile}>Profile</a>
+            </li>
             <li onClick={handleLogout}>Logout</li>
           </ul>
         )}

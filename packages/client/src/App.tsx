@@ -35,7 +35,7 @@ function App() {
 
   return (
     <React.StrictMode>
-      <UserContextProvider user={userInfo}>
+      <UserContextProvider user={userInfo} setUser={setUserInfo}>
         {isFetcing ? (
           <Preloader />
         ) : (
