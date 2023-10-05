@@ -1,10 +1,4 @@
-export type PageTypes =
-  | 'profile'
-  | 'leaderboard'
-  | 'game'
-  | 'forum'
-  | 'default'
-  | 'presentation'
+export type PageTypes = 'profile' | 'leaderboard' | 'game' | 'forum' | 'default'
 export type UserType = {
   id: number
   display_name: null | string

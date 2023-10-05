@@ -9,7 +9,7 @@ const cx = classNames.bind(classes)
 
 const Presentation: React.FC = () => {
   return (
-    <PageFrame pageType="presentation">
+    <PageFrame pageType="default">
       <div className={classes.presentation}>
         <img src={logo} className={classes.presentation__logo} />
         <div

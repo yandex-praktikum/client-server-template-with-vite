@@ -56,9 +56,9 @@ class CanvasAPI {
   private gameState = false
 
   constructor(element: HTMLCanvasElement) {
-    this.context = element.getContext('2d') as CanvasRenderingContext2D
-    this.width = element.width
-    this.height = element.height
+    this.context = element?.getContext('2d') as CanvasRenderingContext2D
+    this.width = element?.width
+    this.height = element?.height
     this.x = this.width / 2
 
     for (let i = 0; i < this.height / this.squareWidth; i++) {
@@ -79,7 +79,8 @@ class CanvasAPI {
   }
 
   private setListeners() {
-    document.addEventListener('keyup', e => {
+    document.addEventListener('keydown', e => {
+      e.preventDefault()
       this.moveObject(e)
       this.rotateObject(e)
     })
