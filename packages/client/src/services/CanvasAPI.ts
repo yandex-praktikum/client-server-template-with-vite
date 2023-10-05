@@ -79,7 +79,8 @@ class CanvasAPI {
   }
 
   private setListeners() {
-    document.addEventListener('keyup', e => {
+    document.addEventListener('keydown', e => {
+      e.preventDefault()
       this.moveObject(e)
       this.rotateObject(e)
     })

@@ -1,15 +1,15 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { urls } from '@/utils/navigation'
-import HomePage from '@pages/home/Home'
 import Login from '@pages/login/login'
 import SignUp from '@pages/signUp/SignUp'
 import LeaderboardPage from '@pages/leaderboard/Leaderboard'
 import Error from '@pages/error/error'
 import { ProvideTopic } from '@/providers/userProvider/TopicContext'
 import Forum from '@pages/forum/Forum'
-import Profile from './pages/profile/Profile'
-import Presentation from './pages/presentation/Presentation'
+import Profile from '@pages/profile/Profile'
+import Presentation from '@pages/presentation/Presentation'
+import Game from '@pages/game/Game'
 
 type AppRoutersType = {
   error: number
@@ -18,14 +18,13 @@ type AppRoutersType = {
 const AppRouters = ({ error }: AppRoutersType) => {
   return (
     <Routes>
-      <Route path={urls.home} element={<HomePage />} />
+      <Route path={urls.home} element={<Presentation />} />
       <Route path={urls.login} element={<Login />} />
       <Route path={urls.signup} element={<SignUp />} />
       <Route path={urls.leaderboard} element={<LeaderboardPage />} />
 
-      <Route path={urls.game} element={<Login />} />
+      <Route path={urls.game} element={<Game />} />
       <Route path={urls.profile} element={<Profile />} />
-      <Route path={urls.presentation} element={<Presentation />} />
       <Route
         path={urls.errorNotFound}
         element={<Error code={error} text="Page not found" />}

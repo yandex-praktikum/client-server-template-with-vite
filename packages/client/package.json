@@ -11,6 +11,7 @@
     "test": "jest ./"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
     "antd": "^5.9.1",
     "axios": "^1.5.0",
     "classnames": "^2.3.2",
@@ -24,8 +25,8 @@
   "devDependencies": {
     "@testing-library/react": "^13.3.0",
     "@types/jest": "^28.1.8",
-    "@types/react": "^18.0.17",
-    "@types/react-dom": "^18.0.6",
+    "@types/react": "^18.2.25",
+    "@types/react-dom": "^18.2.10",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "@vitejs/plugin-react": "^2.0.1",

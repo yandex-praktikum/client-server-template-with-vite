@@ -1,0 +1,15 @@
+@import '@styles/theme';
+@import '@styles/mixins';
+
+.game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__field {
+    margin: 50px 0;
+    border-radius: @border-radius;
+    background-color: @grey;
+    box-shadow: 0 0 50px 15px @black;
+  }
+}
