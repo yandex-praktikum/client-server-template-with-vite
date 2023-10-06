@@ -1,7 +1,5 @@
 import classNames from 'classnames'
 import classes from './styles.module.less'
-import { useEffect, useState } from 'react'
-import CanvasAPI from '@/services/CanvasAPI'
 import {
   ArrowLeftOutlined,
   ArrowRightOutlined,
