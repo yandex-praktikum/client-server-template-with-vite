@@ -15,3 +15,13 @@
     background-color: @blue_grey;
   }
 }
+
+.button-mixin(@type) when (@type = 'default') {
+  .button-style-mixin();
+  background-color: @blue;
+  font-size: 14px;
+  transition: all 0.2s;
+  &:hover {
+    background-color: @blue_grey;
+  }
+}

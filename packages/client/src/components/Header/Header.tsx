@@ -30,11 +30,6 @@ const menuList = [
     title: 'Forum',
     link: '/forum',
   },
-  {
-    id: 'presentation',
-    title: 'Presentation',
-    link: '/presentation',
-  },
 ]
 
 const Header = () => {
