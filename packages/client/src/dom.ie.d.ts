@@ -4,4 +4,5 @@ interface Element {
 
 interface Document {
     msFullscreenElement(): void;
+    msExitFullscreen(): void;
 }

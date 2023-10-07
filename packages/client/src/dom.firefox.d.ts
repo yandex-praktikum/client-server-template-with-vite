@@ -4,5 +4,6 @@ interface Element {
 
 interface Document {
     mozFullScreenElement(): void;
+    mozCancelFullScreen(): void;
 }
 

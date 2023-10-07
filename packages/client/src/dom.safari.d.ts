@@ -4,4 +4,5 @@ interface Element {
 
 interface Document {
     webkitFullscreenElement(): void;
+    webkitExitFullscreen(): void;
 }
