@@ -3,6 +3,7 @@ import PageFrame from '@/components/PageFrame/PageFrame'
 import classes from './styles.module.less'
 import GameStartMenu from './components/GameStartMenu/GameStartMenu'
 import useGameApi from '@/hooks/useGameApi'
+import { requestFullscreen } from '@/utils/requestFullscreen'
 
 const Game: React.FC = () => {
   const api = useGameApi(document.querySelector('canvas') as HTMLCanvasElement)
@@ -11,6 +12,17 @@ const Game: React.FC = () => {
   const [intervalId, setIntervalId] = useState<ReturnType<typeof setInterval>>()
 
   const canvasRef = useRef(null)
+
+  useEffect(() => {
+    document.addEventListener('keydown', (ev: KeyboardEvent) => {
+      if (ev.key.toLocaleLowerCase() == 'f') {
+        const gameEl = document.getElementsByClassName(classes.game)
+        if (gameEl && gameEl.length) {
+          requestFullscreen(gameEl[0])
+        }
+      }
+    })
+  }, [])
 
   useEffect(() => {
     if (startCountdown === '') {
