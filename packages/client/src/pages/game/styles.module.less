@@ -1,11 +1,14 @@
 @import '@styles/theme';
 @import '@styles/mixins';
 
+
+
 .game {
-  //   background-color: red;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+
   &__menu {
     background-color: @grey;
     border-radius: @border-radius;
@@ -40,5 +43,18 @@
     border-radius: @border-radius;
     background-color: @grey;
     box-shadow: 0 0 50px 15px @black;
+  }
+
+  &__score {
+    background: @grey;
+    width: 200px;
+    border-radius: @border-radius;
+    padding: 10px 20px;
+    background: @coffee;
+    color: @blue;
+    font-size: 24px;
+    position: absolute;
+    right: 30px;
+    top: 100px;
   }
 }

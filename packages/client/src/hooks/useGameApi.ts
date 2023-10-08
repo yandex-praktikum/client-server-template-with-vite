@@ -1,14 +1,14 @@
-import CanvasAPI from '@/services/CanvasAPI'
+import CanvasAPI, { CanvasAPIType } from '@/services/CanvasAPI'
 import { useEffect, useState } from 'react'
 
-const useGameApi = (canvasEl: HTMLCanvasElement) => {
+const useGameApi = (props: CanvasAPIType) => {
   const [api, setApi] = useState<CanvasAPI>()
 
   useEffect(() => {
-    if (canvasEl) {
-      setApi(new CanvasAPI(canvasEl))
+    if (props.element) {
+      setApi(new CanvasAPI(props))
     }
-  }, [canvasEl])
+  }, [props.element])
 
   return api
 }
