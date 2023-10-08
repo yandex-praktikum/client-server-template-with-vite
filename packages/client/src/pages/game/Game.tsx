@@ -11,22 +11,12 @@ const Game: React.FC = () => {
   const [isGameEnded, setIsGameEnded] = useState(false)
   const [intervalId, setIntervalId] = useState<ReturnType<typeof setInterval>>()
   const [gameScore, setGameScore] = useState({ score: 0, speed: 0 })
-<<<<<<< HEAD
   const [nextShape, setNextShape] = useState<string>()
-=======
->>>>>>> 9cef51e (feat: add game logic)
   const api = useGameApi({
     element: document.querySelector('canvas') as HTMLCanvasElement,
     setScore: setGameScore,
-<<<<<<< HEAD
     setGameEnd: setIsGameEnded,
-<<<<<<< HEAD
     setNextShape: setNextShape
-=======
->>>>>>> 9cef51e (feat: add game logic)
-=======
-    setGameEnd: setIsGameEnded
->>>>>>> bd54f5e (feat: add game logic)
   })
 
   const canvasRef = useRef(null)
@@ -41,11 +31,8 @@ const Game: React.FC = () => {
     setIsGameStarted(false)
     setIsGameEnded(false)
     setStartCountdown(3)
-<<<<<<< HEAD
     clearInterval(intervalId)
     setNextShape('')
-=======
->>>>>>> 9cef51e (feat: add game logic)
   }
 
   const content = useMemo(() => {
@@ -77,7 +64,6 @@ const Game: React.FC = () => {
           className={classes.game__field}
         />
         <div className={classes.game__score}>
-<<<<<<< HEAD
           <button
             className={classes.game__btnBack}
             onClick={() => {
@@ -105,14 +91,6 @@ const Game: React.FC = () => {
       </>
     )
   }, [isGameEnded, isGameStarted, gameScore, nextShape, startCountdown])
-=======
-          <p>Score: {gameScore.score}</p>
-          <p>Speed: {gameScore.speed}</p>
-        </div>
-      </>
-    )
-  }, [isGameEnded, isGameStarted, gameScore, startCountdown])
->>>>>>> 9cef51e (feat: add game logic)
 
   if (startCountdown === 0) {
     clearInterval(intervalId)

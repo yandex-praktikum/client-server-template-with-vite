@@ -5,7 +5,7 @@ enum shapeColors {
   CRIMSON = '#D9045D',
   GRAY = '#EEEEF5',
   FLESH = '#FFF0C0',
-  NAVYBLUE = '#0F588C'
+  NAVYBLUE = '#0F588C',
 }
 
 const startShapeMatrix = {
@@ -13,32 +13,32 @@ const startShapeMatrix = {
   BLUE: [
     [1, 1],
     [1, 0],
-    [1, 0]
+    [1, 0],
   ],
   RED: [
     [1, 1],
     [0, 1],
-    [0, 1]
+    [0, 1],
   ],
   CRIMSON: [
     [1, 1],
-    [1, 1]
+    [1, 1],
   ],
   GRAY: [
     [1, 0],
     [1, 1],
-    [0, 1]
+    [0, 1],
   ],
   FLESH: [
     [0, 1],
     [1, 1],
-    [1, 0]
+    [1, 0],
   ],
   NAVYBLUE: [
     [1, 0],
     [1, 1],
-    [1, 0]
-  ]
+    [1, 0],
+  ],
 }
 
 const LINE_SCORE = 100
