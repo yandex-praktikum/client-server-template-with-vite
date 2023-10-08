@@ -1,5 +1,6 @@
 import { UserType } from '@components/types'
 import { yandexApi } from './setupApi'
+import { baseApiUrl } from '@/api/api'
 
 export type SignInType = {
   login: string
