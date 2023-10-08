@@ -11,24 +11,28 @@ const Game: React.FC = () => {
   const [isGameEnded, setIsGameEnded] = useState(false)
   const [intervalId, setIntervalId] = useState<ReturnType<typeof setInterval>>()
   const [gameScore, setGameScore] = useState({ score: 0, speed: 0 })
-  const gameApi = useGameApi({
+  const [nextShape, setNextShape] = useState<string>()
+  const api = useGameApi({
     element: document.querySelector('canvas') as HTMLCanvasElement,
     setScore: setGameScore,
     setGameEnd: setIsGameEnded,
+    setNextShape: setNextShape
   })
 
   const canvasRef = useRef(null)
 
   useEffect(() => {
     if (startCountdown === '') {
-      gameApi?.startGame()
+      api?.startGame()
     }
-  }, [startCountdown, gameApi])
+  }, [startCountdown, api])
 
   const restartGame = () => {
     setIsGameStarted(false)
     setIsGameEnded(false)
     setStartCountdown(3)
+    clearInterval(intervalId)
+    setNextShape('')
   }
 
   const content = useMemo(() => {
@@ -60,12 +64,33 @@ const Game: React.FC = () => {
           className={classes.game__field}
         />
         <div className={classes.game__score}>
+          <button
+            className={classes.game__btnBack}
+            onClick={() => {
+              restartGame()
+              api?.gameOver()
+            }}>
+            Выйти
+          </button>
           <p>Score: {gameScore.score}</p>
           <p>Speed: {gameScore.speed}</p>
+          {nextShape && (
+            <div className={classes.game__nextBlock}>
+              Next:{' '}
+              <img
+                style={{
+                  width: 50,
+                  height: 50
+                }}
+                src={`../../../public/${nextShape}.svg`}
+                alt="next shape"
+              />
+            </div>
+          )}
         </div>
       </>
     )
-  }, [isGameEnded, isGameStarted, gameScore, startCountdown])
+  }, [isGameEnded, isGameStarted, gameScore, nextShape, startCountdown])
 
   if (startCountdown === 0) {
     clearInterval(intervalId)
