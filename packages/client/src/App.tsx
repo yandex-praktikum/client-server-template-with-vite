@@ -7,6 +7,7 @@ import { UserType } from '@components/types'
 import Preloader from '@components/Preloader/Preloader'
 import AppRouters from './routers'
 import { getUserInfo } from './api/auth'
+import '../sw'
 
 function App() {
   const [getUserError, setGetUserError] = useState<ErrorType | null>()
