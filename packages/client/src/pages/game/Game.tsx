@@ -18,11 +18,15 @@ const Game: React.FC = () => {
   const api = useGameApi({
     element: document.querySelector('canvas') as HTMLCanvasElement,
     setScore: setGameScore,
+<<<<<<< HEAD
     setGameEnd: setIsGameEnded,
 <<<<<<< HEAD
     setNextShape: setNextShape
 =======
 >>>>>>> 9cef51e (feat: add game logic)
+=======
+    setGameEnd: setIsGameEnded
+>>>>>>> bd54f5e (feat: add game logic)
   })
 
   const canvasRef = useRef(null)
