@@ -1,6 +1,6 @@
 import { Form, Input } from 'antd'
 import classes from './styles.module.less'
-import { useTopic } from '@/providers/userProvider/TopicContext'
+import { useTopic } from '@/providers/TopicContext'
 
 const ForumForm: React.FC = () => {
   const { topicId } = useTopic()

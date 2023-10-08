@@ -1,45 +1,57 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import PageFrame from '@/components/PageFrame/PageFrame'
-import classNames from 'classnames'
-import CanvasAPI from '@/services/CanvasAPI'
 import classes from './styles.module.less'
-import {
-  ArrowLeftOutlined,
-  ArrowRightOutlined,
-  ArrowUpOutlined,
-} from '@ant-design/icons'
-
-const cx = classNames.bind(classes)
+import GameStartMenu from './components/GameStartMenu'
+import GameEnd from './components/GameEnd'
+import useGameApi from '@/hooks/useGameApi'
 
 const Game: React.FC = () => {
-  const [api, setApi] = useState<CanvasAPI>()
+  const api = useGameApi(document.querySelector('canvas') as HTMLCanvasElement)
   const [startCountdown, setStartCountdown] = useState<number | string>(3)
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false)
+  const [isGameEnded, setIsGameEnded] = useState(false)
   const [intervalId, setIntervalId] = useState<ReturnType<typeof setInterval>>()
 
   const canvasRef = useRef(null)
-
-  useEffect(() => {
-    if (canvasRef.current) {
-      setApi(
-        new CanvasAPI(document.querySelector('canvas') as HTMLCanvasElement)
-      )
-    }
-  }, [canvasRef.current])
-
-  const startGame = () => {
-    setIsGameStarted(true)
-    const id = setInterval(() => {
-      setStartCountdown(prev => (typeof prev === 'number' ? prev - 1 : prev))
-    }, 1000)
-    setIntervalId(id)
-  }
 
   useEffect(() => {
     if (startCountdown === '') {
       api?.startGame()
     }
   }, [startCountdown, api])
+
+  const restartGame = () => {
+    setIsGameStarted(false)
+    setIsGameEnded(false)
+  }
+
+  const content = useMemo(() => {
+    if (isGameEnded) {
+      return <GameEnd setIsGameRestarted={restartGame} score={23400} />
+    }
+
+    if (!isGameStarted) {
+      return (
+        <GameStartMenu
+          setIsGameStarted={setIsGameStarted}
+          setStartCountdown={setStartCountdown}
+          setIntervalId={setIntervalId}
+        />
+      )
+    }
+
+    return (
+      <>
+        <span className={classes.game__countdown}>{startCountdown}</span>
+        <canvas
+          ref={canvasRef}
+          width="420"
+          height="600"
+          className={classes.game__field}
+        />
+      </>
+    )
+  }, [isGameEnded, isGameStarted])
 
   if (startCountdown === 0) {
     clearInterval(intervalId)
@@ -51,45 +63,7 @@ const Game: React.FC = () => {
 
   return (
     <PageFrame pageType="game">
-      <div className={classes.game}>
-        {!isGameStarted ? (
-          <div className={classes.game__menu}>
-            <button
-              onClick={startGame}
-              className={cx(classes.game__btn, classes.game__btn_start)}>
-              Старт
-            </button>
-            <button
-              className={cx(classes.game__btn, classes.game__btn_options)}>
-              Настройки
-            </button>
-            <div className={classes.game__menuRules}>
-              <p>
-                move left
-                <ArrowLeftOutlined />
-              </p>
-              <p>
-                move right
-                <ArrowRightOutlined />
-              </p>
-              <p>
-                rotate
-                <ArrowUpOutlined />
-              </p>
-            </div>
-          </div>
-        ) : (
-          <>
-            <span className={classes.game__countdown}>{startCountdown}</span>
-            <canvas
-              ref={canvasRef}
-              width="420"
-              height="600"
-              className={classes.game__field}
-            />
-          </>
-        )}
-      </div>
+      <div className={classes.game}>{content}</div>
     </PageFrame>
   )
 }

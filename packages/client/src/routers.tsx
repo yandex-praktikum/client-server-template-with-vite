@@ -5,11 +5,11 @@ import Login from '@pages/login/login'
 import SignUp from '@pages/signUp/SignUp'
 import LeaderboardPage from '@pages/leaderboard/Leaderboard'
 import Error from '@pages/error/error'
-import { ProvideTopic } from '@/providers/userProvider/TopicContext'
+import { ProvideTopic } from '@/providers/TopicContext'
 import Forum from '@pages/forum/Forum'
-import Profile from './pages/profile/Profile'
+import Profile from '@pages/profile/Profile'
+import Presentation from '@pages/presentation/Presentation'
 import Game from '@pages/game/Game'
-import Presentation from './pages/presentation/Presentation'
 
 type AppRoutersType = {
   error: number

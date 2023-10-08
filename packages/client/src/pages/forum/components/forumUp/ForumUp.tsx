@@ -3,7 +3,7 @@ import classes from './styles.module.less'
 import avatar from '../../../../../public/user.svg'
 import { RowProps } from 'antd'
 import ForumTopics from '../forumTopics/ForumTopics'
-import { useTopic } from '@/providers/userProvider/TopicContext'
+import { useTopic } from '@/providers/TopicContext'
 
 const tableItems = [
   {
@@ -75,7 +75,7 @@ const ForumUp: React.FC = () => {
         },
       }}
       onRow={record => ({
-        onClick: e => {
+        onClick: () => {
           if (setTopicId) {
             setTopicId(record.id as number)
           }
@@ -112,7 +112,7 @@ const ForumUp: React.FC = () => {
               <div className={classes.forum__author}>
                 <span className={classes.forum__authorDate}>{value.date}</span>
                 <div className={classes.forum__authorInner}>
-                  <img src={avatar} />
+                  <img src={avatar} alt="avatar" />
                   <div className={classes.forum__authorName}>
                     {value.author}
                   </div>
