@@ -16,3 +16,7 @@ export type LeaderUserType = {
   score: number
   position: 'first' | 'second' | 'third'
 }
+
+export type GameType = {
+  score: number
+}

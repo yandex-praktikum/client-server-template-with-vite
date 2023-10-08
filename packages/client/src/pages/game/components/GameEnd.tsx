@@ -16,6 +16,7 @@ const GameEnd = ({ setIsGameRestarted, score }: GameEndType) => {
 
   return (
     <div className={classes.menu}>
+      <div className={classes.menu__gameOver}>GAME OVER</div>
       <div className={classes.menu__score}>
         You score:
         <p>{score.toLocaleString('ru-RU')}</p>

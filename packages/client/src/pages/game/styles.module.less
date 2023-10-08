@@ -2,43 +2,28 @@
 @import '@styles/mixins';
 
 .game {
-  //   background-color: red;
   display: flex;
   justify-content: center;
   align-items: center;
-  &__menu {
-    background-color: @grey;
-    border-radius: @border-radius;
-    padding: 50px;
-    margin: 50px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-  }
-
-  &__btn {
-    width: 100%;
-    &_start {
-      .button-mixin('accept');
-    }
-    &_options {
-      .button-mixin('default');
-    }
-  }
-
-  &__countdown {
-    position: absolute;
-    font-size: 50px;
-    color: @blue_text;
-    font-weight: 700;
-  }
+  position: relative;
 
   &__field {
     margin: 50px 0;
     border-radius: @border-radius;
-    background-color: @grey;
+    background-color: @white;
     box-shadow: 0 0 50px 15px @black;
+  }
+
+  &__score {
+    background: @grey;
+    width: 200px;
+    border-radius: @border-radius;
+    padding: 10px 20px;
+    background: @coffee;
+    color: @blue;
+    font-size: 24px;
+    position: absolute;
+    right: 30px;
+    top: 100px;
   }
 }
