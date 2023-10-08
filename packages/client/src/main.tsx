@@ -5,9 +5,9 @@ import '@styles/styles.less'
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    const imgUrl = new URL('../sw.js', import.meta.url).href
+    const SW = new URL('../sw.js', import.meta.url).href
     navigator.serviceWorker
-      .register(imgUrl, { scope: './' })
+      .register(SW, { scope: './' })
       .then(registration => {
         console.log(
           'ServiceWorker registration successful with scope: ',
