@@ -3,16 +3,6 @@ const URLS = [
   '/',
 ]
 
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.ts", { scope: "./" }).then(registration => {
-      console.log("ServiceWorker registration successful with scope: ", registration.scope);
-    }).catch((error) => {
-      console.log("ServiceWorker registration failed: ", error);
-    });
-  });
-}
-
 self.addEventListener("install", (e) => {
   e.waitUntil(
     (async () => {

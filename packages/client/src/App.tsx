@@ -17,6 +17,22 @@ function App() {
   const activePage = window.location.pathname.substring(1).split('/')[0]
 
   useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker
+          .register('../sw.js', { scope: './' })
+          .then(registration => {
+            console.log(
+              'ServiceWorker registration successful with scope: ',
+              registration.scope
+            )
+          })
+          .catch(error => {
+            console.log('ServiceWorker registration failed: ', error)
+          })
+      })
+    }
+
     const fetchUserInfo = async () => {
       await getUserInfo()
         .then(result => {
