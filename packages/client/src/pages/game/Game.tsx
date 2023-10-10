@@ -90,7 +90,7 @@ const Game: React.FC = () => {
             className={classes.game__btnBack}
             onClick={() => {
               restartGame()
-              api?.gameOver()
+              gameApi?.gameOver()
             }}>
             Выйти
           </button>
