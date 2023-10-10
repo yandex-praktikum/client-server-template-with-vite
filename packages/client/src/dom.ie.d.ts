@@ -1,8 +1,8 @@
 interface Element {
-    msRequestFullscreen(): void;
+  msRequestFullscreen(): void
 }
 
 interface Document {
-    msFullscreenElement(): void;
-    msExitFullscreen(): void;
+  msFullscreenElement(): void
+  msExitFullscreen(): void
 }

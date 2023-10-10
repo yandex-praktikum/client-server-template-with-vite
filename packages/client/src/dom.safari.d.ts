@@ -1,8 +1,8 @@
 interface Element {
-    webkitRequestFullscreen(): void;
+  webkitRequestFullscreen(): void
 }
 
 interface Document {
-    webkitFullscreenElement(): void;
-    webkitExitFullscreen(): void;
+  webkitFullscreenElement(): void
+  webkitExitFullscreen(): void
 }

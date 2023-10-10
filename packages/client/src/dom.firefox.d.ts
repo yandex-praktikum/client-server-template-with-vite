@@ -1,9 +1,8 @@
 interface Element {
-    mozRequestFullScreen(): void;
+  mozRequestFullScreen(): void
 }
 
 interface Document {
-    mozFullScreenElement(): void;
-    mozCancelFullScreen(): void;
+  mozFullScreenElement(): void
+  mozCancelFullScreen(): void
 }
-

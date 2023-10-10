@@ -41,10 +41,22 @@ const startShapeMatrix = {
   ],
 }
 
+const LINE_SCORE = 100
+const SPEED_STEP = 1000
+const MAX_SPEED = 5
+const START_ANIMATE_TIME = 6000
+const MAX_SPEED_ANIMATE_TIME = 2000
+
+export type CanvasAPIType = {
+  element: HTMLCanvasElement
+  setScore: ({ score, speed }: { score: number; speed: number }) => void
+  setGameEnd: (b: boolean) => void
+}
+
 class CanvasAPI {
   private context: CanvasRenderingContext2D
   private squareWidth = 30
-  private animTime = 6000
+  private animTime = START_ANIMATE_TIME
   private width = 0
   private height = 0
   private x = 0
@@ -54,12 +66,18 @@ class CanvasAPI {
   private shapeMatrix: number[][] = []
   private shapeColor = ''
   private gameState = false
+  private score = 0
+  private setScore
+  private setGameEnd
+  private speed = 0
 
-  constructor(element: HTMLCanvasElement) {
-    this.context = element.getContext('2d') as CanvasRenderingContext2D
-    this.width = element.width
-    this.height = element.height
+  constructor({ element, setScore, setGameEnd }: CanvasAPIType) {
+    this.context = element?.getContext('2d') as CanvasRenderingContext2D
+    this.width = element?.width
+    this.height = element?.height
     this.x = this.width / 2
+    this.setScore = setScore
+    this.setGameEnd = setGameEnd
 
     for (let i = 0; i < this.height / this.squareWidth; i++) {
       const subArr: string[] = []
@@ -168,8 +186,87 @@ class CanvasAPI {
       }
 
       this.x = this.width / 2
-      this.drawObjects()
+      this.burning()
+      /**
+       * Выполняем проверку не законченна ли игра.
+       * Если игра закончена - сбрасываем скорость и выводим экран окончания игры.
+       * Иначе - отрисовываем новый тетрамино
+       */
+      if (!this.gameOver()) {
+        this.drawObjects()
+      } else {
+        this.setGameEnd(true)
+        this.speed = 0
+      }
     }
+  }
+
+  private burning() {
+    /**
+     * Алгоритм сжигания строки.
+     * Проходимся сверху вниз по матрице. Для каждой строки определяем есть или нет не закрашенные ячейки.
+     * Если найдена строка, без закрашенных ячеек - запускаем процесс сжигания этой строки.
+     * После сжигания строки - увеличивем очки игрока и запускаем функцию для увеличения скорости
+     */
+    for (let line = 0; line < this.fieldMatrix.length; line++) {
+      const fieldNullSquare = this.fieldMatrix[line].filter(item => item === '')
+      if (fieldNullSquare.length === 0) {
+        this.reshuffle(line)
+        // Так как удалили одну строку - добавляем очки
+        this.score += LINE_SCORE
+        this.changeSpeed()
+        // Передаем значение очков и скорости в компонент для отрисовки блока с подсказками и хранения очков пользователя
+        this.setScore({ score: this.score, speed: this.speed })
+      }
+    }
+  }
+
+  private changeSpeed() {
+    /**
+     * Изменение скорости игры.
+     * Если количество очков кратно SPEED_STEP (шаг для изменения скорости) - производим перерасчет скорости
+     * Если были на максимальной - сбрасываем на 0 скорость. Иначе прибавляем 1
+     * После изменения скорости производим рассчет времени на анимацию падения фигурки для полученной скорости
+     */
+    if (this.score % SPEED_STEP === 0) {
+      this.speed = this.speed === MAX_SPEED ? 0 : this.speed + 1
+      this.animTime =
+        START_ANIMATE_TIME -
+        ((START_ANIMATE_TIME - MAX_SPEED_ANIMATE_TIME) / MAX_SPEED) * this.speed
+    }
+  }
+
+  private reshuffle(lineNumber: number) {
+    /**
+     * Удаление закрашенной строки.
+     * Алгоритм замены текущей строки на вышестоящей.
+     * Замена происходит от полученной строки до предпоследней.
+     * Ячейки последней строки заполняются пустыми значениями (символ не закрашенной ячейки)
+     */
+    for (let line = lineNumber; line > 0; line--) {
+      for (let cell = 0; cell < this.fieldMatrix[line].length; cell++) {
+        this.fieldMatrix[line][cell] = this.fieldMatrix[cell - 1][cell]
+      }
+    }
+    for (let cell = 0; cell < this.fieldMatrix[0].length; cell++) {
+      this.fieldMatrix[0][cell] = ''
+    }
+  }
+
+  private gameOver() {
+    /**
+     * Проверка не оконченна ли игра. Производится перед запуском новой фигурки.
+     * Если в верхней строке (нулевой) есть хотя бы одна закрашенная ячейка -
+     * считаем, что игрок заполнил весь стакан.
+     */
+    let isGameOver = false
+    for (let i = 0; i < this.fieldMatrix[0].length; i++) {
+      if (this.fieldMatrix[0][i] !== '') {
+        isGameOver = true
+      }
+    }
+
+    return isGameOver
   }
 
   private drawObjects() {
