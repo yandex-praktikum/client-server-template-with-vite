@@ -13,11 +13,11 @@ const Game: React.FC = () => {
   const [intervalId, setIntervalId] = useState<ReturnType<typeof setInterval>>()
   const [gameScore, setGameScore] = useState({ score: 0, speed: 0 })
   const [nextShape, setNextShape] = useState<string>()
-  const api = useGameApi({
+  const gameApi = useGameApi({
     element: document.querySelector('canvas') as HTMLCanvasElement,
     setScore: setGameScore,
     setGameEnd: setIsGameEnded,
-    setNextShape: setNextShape
+    setNextShape: setNextShape,
   })
 
   const canvasRef = useRef(null)
@@ -28,7 +28,7 @@ const Game: React.FC = () => {
       if (ev.key.toLocaleLowerCase() == 'f') {
         const gameEl = document.getElementsByClassName(classes.game)
         if (gameEl && gameEl.length) {
-          if (fullScreen === false) {
+          if (!fullScreen) {
             fullScreen = true
             requestFullscreen(gameEl[0])
           } else {
@@ -45,9 +45,9 @@ const Game: React.FC = () => {
 
   useEffect(() => {
     if (startCountdown === '') {
-      api?.startGame()
+      gameApi?.startGame()
     }
-  }, [startCountdown, api])
+  }, [startCountdown, gameApi])
 
   const restartGame = () => {
     setIsGameStarted(false)
@@ -90,7 +90,7 @@ const Game: React.FC = () => {
             className={classes.game__btnBack}
             onClick={() => {
               restartGame()
-              api?.gameOver()
+              gameApi?.gameOver()
             }}>
             Выйти
           </button>
@@ -102,7 +102,7 @@ const Game: React.FC = () => {
               <img
                 style={{
                   width: 50,
-                  height: 50
+                  height: 50,
                 }}
                 src={`../../../public/${nextShape}.svg`}
                 alt="next shape"
