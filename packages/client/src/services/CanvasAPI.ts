@@ -51,6 +51,7 @@ export type CanvasAPIType = {
   element: HTMLCanvasElement
   setScore: ({ score, speed }: { score: number; speed: number }) => void
   setGameEnd: (b: boolean) => void
+  setNextShape: (a: string) => void
 }
 
 class CanvasAPI {
@@ -64,20 +65,25 @@ class CanvasAPI {
   private animId = 0
   private fieldMatrix: string[][] = []
   private shapeMatrix: number[][] = []
+  private nextShapeMatrix: number[][] = []
   private shapeColor = ''
+  private nextShapeColor = ''
+  private nextShapeName = ''
   private gameState = false
   private score = 0
   private setScore
   private setGameEnd
+  private setNextShape
   private speed = 0
 
-  constructor({ element, setScore, setGameEnd }: CanvasAPIType) {
+  constructor({ element, setScore, setGameEnd, setNextShape }: CanvasAPIType) {
     this.context = element?.getContext('2d') as CanvasRenderingContext2D
     this.width = element?.width
     this.height = element?.height
     this.x = this.width / 2
     this.setScore = setScore
     this.setGameEnd = setGameEnd
+    this.setNextShape = setNextShape
 
     for (let i = 0; i < this.height / this.squareWidth; i++) {
       const subArr: string[] = []
@@ -87,7 +93,6 @@ class CanvasAPI {
       this.fieldMatrix.push(subArr)
     }
   }
-
   startGame() {
     if (!this.gameState) {
       this.gameState = true
@@ -122,11 +127,11 @@ class CanvasAPI {
     )
   }
 
-  private animation(startTime: number, animationTime: number) {
+  private animation(startTime: number) {
     let stopAnim = false
     const time = performance.now()
     const shift = time - startTime
-    const multiply = shift / animationTime
+    const multiply = shift / this.animTime
     const length = this.height - this.shapeMatrix.length * this.squareWidth
     this.y = length * multiply
     const currentMatrixPosY = Math.floor(this.y / this.squareWidth)
@@ -163,9 +168,7 @@ class CanvasAPI {
       }
 
       if (!stopAnim) {
-        this.animId = requestAnimationFrame(() =>
-          this.animation(startTime, animationTime)
-        )
+        this.animId = requestAnimationFrame(() => this.animation(startTime))
       }
     } else {
       stopAnim = true
@@ -187,79 +190,46 @@ class CanvasAPI {
 
       this.x = this.width / 2
       this.burning()
-      /**
-       * Выполняем проверку не законченна ли игра.
-       * Если игра закончена - сбрасываем скорость и выводим экран окончания игры.
-       * Иначе - отрисовываем новый тетрамино
-       */
       if (!this.gameOver()) {
         this.drawObjects()
       } else {
         this.setGameEnd(true)
-        this.speed = 0
       }
     }
   }
 
   private burning() {
-    /**
-     * Алгоритм сжигания строки.
-     * Проходимся сверху вниз по матрице. Для каждой строки определяем есть или нет не закрашенные ячейки.
-     * Если найдена строка, без закрашенных ячеек - запускаем процесс сжигания этой строки.
-     * После сжигания строки - увеличивем очки игрока и запускаем функцию для увеличения скорости
-     */
-    for (let line = 0; line < this.fieldMatrix.length; line++) {
-      const fieldNullSquare = this.fieldMatrix[line].filter(item => item === '')
+    for (let i = 0; i < this.fieldMatrix.length; i++) {
+      const fieldNullSquare = this.fieldMatrix[i].filter(item => item === '')
       if (fieldNullSquare.length === 0) {
-        this.reshuffle(line)
-        // Так как удалили одну строку - добавляем очки
+        this.reshuffle(i)
         this.score += LINE_SCORE
-        this.changeSpeed()
-        // Передаем значение очков и скорости в компонент для отрисовки блока с подсказками и хранения очков пользователя
+        if (this.score % SPEED_STEP === 0) {
+          this.speed = this.speed === MAX_SPEED ? 0 : this.speed + 1
+          this.animTime =
+            START_ANIMATE_TIME -
+            ((START_ANIMATE_TIME - MAX_SPEED_ANIMATE_TIME) / MAX_SPEED) *
+              this.speed
+        }
         this.setScore({ score: this.score, speed: this.speed })
       }
     }
   }
 
-  private changeSpeed() {
-    /**
-     * Изменение скорости игры.
-     * Если количество очков кратно SPEED_STEP (шаг для изменения скорости) - производим перерасчет скорости
-     * Если были на максимальной - сбрасываем на 0 скорость. Иначе прибавляем 1
-     * После изменения скорости производим рассчет времени на анимацию падения фигурки для полученной скорости
-     */
-    if (this.score % SPEED_STEP === 0) {
-      this.speed = this.speed === MAX_SPEED ? 0 : this.speed + 1
-      this.animTime =
-        START_ANIMATE_TIME -
-        ((START_ANIMATE_TIME - MAX_SPEED_ANIMATE_TIME) / MAX_SPEED) * this.speed
-    }
-  }
-
   private reshuffle(lineNumber: number) {
-    /**
-     * Удаление закрашенной строки.
-     * Алгоритм замены текущей строки на вышестоящей.
-     * Замена происходит от полученной строки до предпоследней.
-     * Ячейки последней строки заполняются пустыми значениями (символ не закрашенной ячейки)
-     */
-    for (let line = lineNumber; line > 0; line--) {
-      for (let cell = 0; cell < this.fieldMatrix[line].length; cell++) {
-        this.fieldMatrix[line][cell] = this.fieldMatrix[cell - 1][cell]
+    for (let i = lineNumber; i > 0; i--) {
+      for (let j = 0; j < this.fieldMatrix[i].length; j++) {
+        this.fieldMatrix[i][j] = this.fieldMatrix[i - 1][j]
       }
     }
-    for (let cell = 0; cell < this.fieldMatrix[0].length; cell++) {
-      this.fieldMatrix[0][cell] = ''
+    for (let j = 0; j < this.fieldMatrix[0].length; j++) {
+      this.fieldMatrix[0][j] = ''
     }
   }
 
-  private gameOver() {
-    /**
-     * Проверка не оконченна ли игра. Производится перед запуском новой фигурки.
-     * Если в верхней строке (нулевой) есть хотя бы одна закрашенная ячейка -
-     * считаем, что игрок заполнил весь стакан.
-     */
+  gameOver() {
     let isGameOver = false
+    cancelAnimationFrame(this.animId)
     for (let i = 0; i < this.fieldMatrix[0].length; i++) {
       if (this.fieldMatrix[0][i] !== '') {
         isGameOver = true
@@ -269,7 +239,63 @@ class CanvasAPI {
     return isGameOver
   }
 
+  private drawNextObject() {
+    const index = Math.floor(Math.random() * 7)
+
+    switch (index) {
+      case 0:
+        this.nextShapeColor = shapeColors.YELLOW
+        this.nextShapeMatrix = startShapeMatrix.YELLOW
+        this.nextShapeName = 'yellow'
+        break
+      case 1:
+        this.nextShapeColor = shapeColors.BLUE
+        this.nextShapeMatrix = startShapeMatrix.BLUE
+        this.nextShapeName = 'blue'
+        break
+      case 2:
+        this.nextShapeColor = shapeColors.RED
+        this.nextShapeMatrix = startShapeMatrix.RED
+        this.nextShapeName = 'red'
+        break
+      case 3:
+        this.nextShapeColor = shapeColors.CRIMSON
+        this.nextShapeMatrix = startShapeMatrix.CRIMSON
+        this.nextShapeName = 'crimson'
+        break
+      case 4:
+        this.nextShapeColor = shapeColors.GRAY
+        this.nextShapeMatrix = startShapeMatrix.GRAY
+        this.nextShapeName = 'gray'
+        break
+      case 5:
+        this.nextShapeColor = shapeColors.FLESH
+        this.nextShapeMatrix = startShapeMatrix.FLESH
+        this.nextShapeName = 'flesh'
+        break
+      case 6:
+        this.nextShapeColor = shapeColors.NAVYBLUE
+        this.nextShapeMatrix = startShapeMatrix.NAVYBLUE
+        this.nextShapeName = 'navyblue'
+        break
+    }
+
+    if (this.nextShapeName) {
+      this.setNextShape(this.nextShapeName)
+    }
+  }
+
   private drawObjects() {
+    if (this.nextShapeMatrix && this.nextShapeColor) {
+      this.shapeMatrix = this.nextShapeMatrix
+      this.shapeColor = this.nextShapeColor
+      this.drawNextObject()
+      this.animation(performance.now())
+
+      return
+    }
+
+    this.drawNextObject()
     const index = Math.floor(Math.random() * 7)
 
     switch (index) {
@@ -303,7 +329,7 @@ class CanvasAPI {
         break
     }
 
-    this.animation(performance.now(), this.animTime)
+    this.animation(performance.now())
   }
 
   private drawShape(positionX: number, positionY: number) {
