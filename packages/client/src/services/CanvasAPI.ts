@@ -249,7 +249,7 @@ class CanvasAPI {
      */
     for (let line = lineNumber; line > 0; line--) {
       for (let cell = 0; cell < this.fieldMatrix[line].length; cell++) {
-        this.fieldMatrix[line][cell] = this.fieldMatrix[cell - 1][cell]
+        this.fieldMatrix[line][cell] = this.fieldMatrix[line - 1][cell]
       }
     }
     for (let cell = 0; cell < this.fieldMatrix[0].length; cell++) {
