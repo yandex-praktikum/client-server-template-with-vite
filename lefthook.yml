@@ -3,7 +3,7 @@ pre-commit:
   commands:
     lint:
       glob: '*.{ts,tsx}'
-      run: lerna run lint
+      run: yarn run lint
     prettier:
       glob: '*.{ts,tsx,css}'
       run: yarn prettier -w {staged_files} && git add {staged_files}
