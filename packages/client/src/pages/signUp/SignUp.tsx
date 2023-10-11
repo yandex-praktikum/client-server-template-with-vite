@@ -1,15 +1,31 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import classes from './styles.module.less'
-import { Button, Form, Input } from 'antd'
+import { Form, Input } from 'antd'
 import Tetris from '@/components/TetrisImg/Tetris'
+import { useForm } from 'antd/es/form/Form'
+import { NewUser, postSignUp } from '@/api/auth'
+import useMessage from 'antd/es/message/useMessage'
+import { useNavigate } from 'react-router-dom'
+import { urls } from '@/utils/navigation'
 
 const SignUp: React.FC = () => {
+  const [form] = useForm()
+  const [messageApi] = useMessage()
+  const navigate = useNavigate()
+  const signUp = useCallback((values: NewUser) => {
+    postSignUp(values)
+      .then(() => navigate(urls.home))
+      .catch(reason => {
+        console.log(reason)
+        messageApi.error('Could not create new user', 2)
+      })
+  }, [])
   return (
     <div className={classes.signUp}>
       <Tetris />
       <div className={classes.signUp__form}>
         <span className={classes.title}>Welcome to Tetris</span>
-        <Form>
+        <Form form={form} onFinish={signUp}>
           <Form.Item
             labelCol={{ span: 24 }}
             colon={false}
@@ -53,19 +69,13 @@ const SignUp: React.FC = () => {
             <Input placeholder="Password" type="password" />
           </Form.Item>
           <button
+            type="submit"
             className={classes.signUp__btn}
             style={{
               width: '100%',
             }}>
-            Login
+            Create account
           </button>
-          <Button
-            type="link"
-            style={{
-              width: '100%',
-            }}>
-            Don’t have an account?
-          </Button>
         </Form>
       </div>
     </div>

@@ -1,9 +1,17 @@
 import { UserType } from '@components/types'
 import { yandexApi } from './setupApi'
-import { baseApiUrl } from '@/api/api'
 
 export type SignInType = {
   login: string
+  password: string
+}
+
+export type NewUser = {
+  first_name: string,
+  second_name: string,
+  login: string,
+  email: string,
+  phone: string,
   password: string
 }
 
@@ -22,4 +30,8 @@ export const postLoginUser = ({
 
 export const postLogout = () => {
   return yandexApi.post('auth/logout')
+}
+
+export const postSignUp = (newUser: NewUser) => {
+  return yandexApi.post('auth/signUp', newUser)
 }

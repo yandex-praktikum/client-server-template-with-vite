@@ -54,6 +54,7 @@ const Login: React.FC = () => {
             Login
           </button>
           <Button
+            href={urls.signup}
             type="link"
             style={{
               width: '100%',
