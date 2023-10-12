@@ -1,7 +1,5 @@
 {
   "extends": ["../../.eslintrc.js", "plugin:react/recommended"],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": { "ecmaVersion": "latest", "sourceType": "module" },
   "plugins": ["react-refresh"],
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
@@ -12,6 +10,7 @@
     "max-classes-per-file": "off",
     "react/prop-types": "off",
     "max-len": ["warn", 120],
+    "react/react-in-jsx-scope": "off",
     "no-param-reassign": [
       "error",
       {
@@ -26,10 +25,7 @@
         "namedComponents": "arrow-function"
       }
     ],
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      { "argsIgnorePattern": "^_" }
-    ]
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
   },
   "settings": {
     "react": {
