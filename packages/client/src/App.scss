@@ -1,0 +1,17 @@
+@import 'assets/style/variables';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+:root {
+  color: $common-black-text;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+body {
+  margin: 0;
+}
