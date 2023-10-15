@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react'
 import './App.scss'
-import LoginPage from './pages/login'
+import RegistrationPage from './pages/registrationPage'
 
 const App: FC = () => {
   useEffect(() => {
@@ -15,7 +15,7 @@ const App: FC = () => {
   }, [])
   return (
     <div className="App">
-      <LoginPage />
+      <RegistrationPage />
     </div>
   )
 }
