@@ -4,7 +4,8 @@ import { Form, Formik } from 'formik'
 import { FormHeader } from '../../components/FormHeader'
 import { FormInput } from '../../components/FormInput'
 import { FormSubmitButton } from '../../components/FormSubmitButton'
-import { FormAsLinkButton } from '../../components/FormAsLinkButton'
+import { FormLinkButton } from '../../components/FormAsLinkButton'
+import { ROUTES_NAMES } from '../../const/routeNames'
 
 const LoginPage = () => {
   return (
@@ -43,9 +44,8 @@ const LoginPage = () => {
                 buttonType="submit"
                 buttonText="Авторизоваться"
               />
-              <FormAsLinkButton
-                disabled={false}
-                buttonType="button"
+              <FormLinkButton
+                to={ROUTES_NAMES.SIGNUP}
                 buttonText="Нет аккаунта?"
               />
             </div>

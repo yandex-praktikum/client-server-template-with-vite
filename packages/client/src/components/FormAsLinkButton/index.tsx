@@ -1,28 +1,26 @@
 import React from 'react'
 import styles from './index.module.scss'
+import { Link } from 'react-router-dom'
 
 type TFormAsLinkButton = {
-  disabled: boolean
-  buttonType: 'button' | 'submit' | 'reset' | undefined
+  to: string
   buttonText: string
   onClickCallback?: () => void
   className?: string
 }
 
-export const FormAsLinkButton = ({
+export const FormLinkButton = ({
+  to,
   buttonText,
-  buttonType,
   onClickCallback,
-  disabled,
   className,
 }: TFormAsLinkButton) => {
   return (
-    <button
-      type={buttonType}
-      disabled={disabled}
+    <Link
+      to={to}
       onClick={onClickCallback}
       className={`${className} ${styles.link} ${styles.font_13}`}>
       {buttonText}
-    </button>
+    </Link>
   )
 }

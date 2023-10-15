@@ -4,7 +4,8 @@ import { FormWrapper } from '../../components/FormWrapper'
 import { FormHeader } from '../../components/FormHeader'
 import { FormInput } from '../../components/FormInput'
 import { FormSubmitButton } from '../../components/FormSubmitButton'
-import { FormAsLinkButton } from '../../components/FormAsLinkButton'
+import { FormLinkButton } from '../../components/FormAsLinkButton'
+import { ROUTES_NAMES } from '../../const/routeNames'
 
 const RegistrationPage = () => {
   return (
@@ -82,11 +83,7 @@ const RegistrationPage = () => {
                 buttonType="submit"
                 buttonText="Зарегистрироваться"
               />
-              <FormAsLinkButton
-                disabled={false}
-                buttonType="button"
-                buttonText="Войти"
-              />
+              <FormLinkButton to={ROUTES_NAMES.SIGN_IN} buttonText="Войти" />
             </div>
           </Form>
         </FormWrapper>

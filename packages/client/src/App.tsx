@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './components/Router'
 import './App.scss'
-import RegistrationPage from './pages/registrationPage'
 
 const App: FC = () => {
   useEffect(() => {
@@ -15,7 +16,7 @@ const App: FC = () => {
   }, [])
   return (
     <div className="App">
-      <RegistrationPage />
+      <RouterProvider router={router} />
     </div>
   )
 }
