@@ -1,7 +1,16 @@
 import React from 'react'
 
-const UserProfilePage = () => {
-  return <div>UserProfilePage</div>
+type TUserProfilePage = {
+  logoutCallback: () => void
+}
+
+const UserProfilePage = ({ logoutCallback }: TUserProfilePage) => {
+  return (
+    <div>
+      UserProfilePage
+      <button onClick={logoutCallback}>Logout</button>
+    </div>
+  )
 }
 
 export default UserProfilePage

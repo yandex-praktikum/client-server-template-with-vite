@@ -1,7 +1,16 @@
 import React from 'react'
 
-const LeaderBoardPage = () => {
-  return <div>LeaderBoardPage</div>
+type TLeaderBoardPage = {
+  logoutCallback: () => void
+}
+
+const LeaderBoardPage = ({ logoutCallback }: TLeaderBoardPage) => {
+  return (
+    <div>
+      LeaderBoardPage
+      <button onClick={logoutCallback}>Logout</button>
+    </div>
+  )
 }
 
 export default LeaderBoardPage

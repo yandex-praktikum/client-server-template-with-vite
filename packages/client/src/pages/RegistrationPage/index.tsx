@@ -6,8 +6,24 @@ import { FormInput } from '../../components/FormInput'
 import { FormSubmitButton } from '../../components/FormSubmitButton'
 import { FormLinkButton } from '../../components/FormAsLinkButton'
 import { ROUTES_NAMES } from '../../const/routeNames'
+import { useNavigate } from 'react-router-dom'
+import { authApi } from '../../api/authApi'
+import { TSignupRequestData } from '../../api/types'
 
 const RegistrationPage = () => {
+  const navigate = useNavigate()
+
+  const registrationHandler = (data: TSignupRequestData) => {
+    authApi
+      .signup(data)
+      .then(response => {
+        console.log(response)
+        console.log(response)
+        navigate(ROUTES_NAMES.MAIN)
+      })
+      .catch(error => console.log(error))
+  }
+
   return (
     <div className="page_wrapper">
       <Formik
@@ -19,9 +35,8 @@ const RegistrationPage = () => {
           phone: '',
           password: '',
         }}
-        onSubmit={async values => {
-          await new Promise(r => setTimeout(r, 500))
-          alert(JSON.stringify(values, null, 2))
+        onSubmit={values => {
+          registrationHandler(values)
         }}>
         <FormWrapper>
           <Form>
@@ -49,9 +64,9 @@ const RegistrationPage = () => {
                 placeholder="Введите имя"
               />
               <FormInput
+                type="text"
                 id="second_name"
                 name="second_name"
-                type="password"
                 labelText="Фамилия"
                 placeholder="Введите фамилию"
               />
@@ -59,8 +74,8 @@ const RegistrationPage = () => {
                 id="phone"
                 name="phone"
                 type="text"
-                labelText="Пароль"
-                placeholder="Введите пароль"
+                labelText="Телефон"
+                placeholder="Введите Телефон"
               />
               <FormInput
                 id="password"
