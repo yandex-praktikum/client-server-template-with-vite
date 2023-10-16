@@ -1,10 +1,14 @@
 import { useSelector } from '../store'
 
-import { selectUser } from '../slices/userSlice'
+import { fetchUserThunk, selectUser } from '../slices/userSlice'
 import { Header } from '../components/Header'
+import { usePage } from '../hooks/usePage'
+import { PageInitArgs } from '../routes'
 
 export const MainPage = () => {
   const user = useSelector(selectUser)
+
+  usePage({ initPage: initMainPage })
   return (
     <div>
       <Header />
@@ -18,4 +22,10 @@ export const MainPage = () => {
       )}
     </div>
   )
+}
+
+export const initMainPage = async ({ dispatch, state }: PageInitArgs) => {
+  if (!selectUser(state)) {
+    return dispatch(fetchUserThunk())
+  }
 }

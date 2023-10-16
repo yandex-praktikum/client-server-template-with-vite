@@ -11,6 +11,14 @@ const port = Number(process.env.SERVER_PORT) || 3001
 
 createClientAndConnect()
 
+app.get('/friends', (_, res) => {
+  res.json([
+    { name: 'Саша', secondName: 'Панов' },
+    { name: 'Лёша', secondName: 'Садовников' },
+    { name: 'Серёжа', secondName: 'Иванов' },
+  ])
+})
+
 app.get('/user', (_, res) => {
   res.json({ name: '</script>Степа', secondName: 'Степанов' })
 })

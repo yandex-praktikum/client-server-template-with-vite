@@ -1,4 +1,9 @@
 import { Request as ExpressRequest } from 'express'
+import { PageInitContext } from './routes'
+
+export const createContext = (req: ExpressRequest): PageInitContext => ({
+  clientToken: req.cookies.token,
+})
 
 export const createUrl = (req: ExpressRequest) => {
   const origin = `${req.protocol}://${req.get('host')}`

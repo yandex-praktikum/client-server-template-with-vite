@@ -1,6 +1,9 @@
 import { Header } from '../components/Header'
+import { usePage } from '../hooks/usePage'
 
 export const NotFoundPage = () => {
+  usePage({ initPage: initNotFoundPage })
+
   return (
     <div className="App">
       <Header />
@@ -8,3 +11,5 @@ export const NotFoundPage = () => {
     </div>
   )
 }
+
+export const initNotFoundPage = () => Promise.resolve()

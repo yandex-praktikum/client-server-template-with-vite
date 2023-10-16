@@ -11,32 +11,49 @@ import { matchRoutes } from 'react-router-dom'
 import { configureStore } from '@reduxjs/toolkit'
 
 import {
+  createContext,
   createFetchRequest,
-  createUrl,
+  createUrl
 } from './entry-server.utils'
 import { reducer } from './store'
 import { routes } from './routes'
 import './index.css'
+import { setPageHasBeenInitializedOnServer } from './slices/ssrSlice'
 
 export const render = async (req: ExpressRequest) => {
-  // 1.
   const { query, dataRoutes } = createStaticHandler(routes)
-  // 2.
   const fetchRequest = createFetchRequest(req)
-  // 3.
   const context = await query(fetchRequest)
 
-  // 4.
   if (context instanceof Response) {
     throw context
   }
 
-  // 5.
   const store = configureStore({
     reducer,
   })
 
-  // 6.
+  const url = createUrl(req)
+
+  const foundRoutes = matchRoutes(routes, url)
+  if (!foundRoutes) {
+    throw new Error('Страница не найдена!')
+  }
+
+  const [{route: { fetchData }}] = foundRoutes
+
+  try {
+    await fetchData({
+      dispatch: store.dispatch,
+      state: store.getState(),
+      ctx: createContext(req),
+    })
+  } catch (e) {
+    console.log('Инициализация страницы произошла с ошибкой', e)
+  }
+
+  store.dispatch(setPageHasBeenInitializedOnServer(true))
+
   const router = createStaticRouter(dataRoutes, context)
 
   // 7.
