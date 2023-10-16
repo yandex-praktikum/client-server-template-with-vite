@@ -1,5 +1,6 @@
-import { useSelector } from '../store'
+import { Helmet } from 'react-helmet'
 
+import { useSelector } from '../store'
 import { fetchUserThunk, selectUser } from '../slices/userSlice'
 import { Header } from '../components/Header'
 import { usePage } from '../hooks/usePage'
@@ -11,6 +12,11 @@ export const MainPage = () => {
   usePage({ initPage: initMainPage })
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Главная</title>
+        <meta name="description" content="Главная страница с информацией о пользователе"/>
+      </Helmet>
       <Header />
       {user ? (
         <div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/server'
 import { Provider } from 'react-redux'
+import { Helmet } from 'react-helmet'
 import { Request as ExpressRequest } from 'express'
 import {
   createStaticHandler,
@@ -55,14 +56,17 @@ export const render = async (req: ExpressRequest) => {
   store.dispatch(setPageHasBeenInitializedOnServer(true))
 
   const router = createStaticRouter(dataRoutes, context)
+  const html = ReactDOM.renderToString(
+    <Provider store={store}>
+      <StaticRouterProvider router={router} context={context} />
+    </Provider>
+  );
 
-  // 7.
+  const helmet = Helmet.renderStatic();
+
   return {
-    html: ReactDOM.renderToString(
-      <Provider store={store}>
-        <StaticRouterProvider router={router} context={context} />
-      </Provider>
-    ),
+    html,
+    helmet,
     initialState: store.getState(),
   }
 }
