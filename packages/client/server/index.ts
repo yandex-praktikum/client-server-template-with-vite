@@ -6,6 +6,7 @@ import path from 'path'
 
 import fs from 'fs/promises'
 import { createServer as createViteServer, ViteDevServer } from 'vite'
+import serialize from 'serialize-javascript'
 
 const port = process.env.PORT || 80
 const clientPath = path.join(__dirname, '..')
@@ -35,7 +36,7 @@ async function createServer() {
     try {
       // Получаем файл client/index.html который мы правили ранее
       // Создаём переменные
-      let render: () => Promise<string>
+      let render: () => Promise<{ html: string; initialState: unknown }>
       let template: string
       if (vite) {
         template = await fs.readFile(
@@ -70,10 +71,14 @@ async function createServer() {
       }
 
       // Получаем HTML-строку из JSX
-      const appHtml = await render()
+      const { html: appHtml, initialState } = await render()
 
-      // Заменяем комментарий на сгенерированную HTML-строку
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+      const html = template.replace(`<!--ssr-outlet-->`, appHtml).replace(
+        `<!--ssr-initial-state-->`,
+        `<script>window.APP_INITIAL_STATE = ${serialize(initialState, {
+          isJSON: true,
+        })}</script>`
+      )
 
       // Завершаем запрос и отдаём HTML-страницу
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)

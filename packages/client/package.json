@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.0.0",
   "scripts": {
-    "dev": "tsc --project tsconfig.server.json && cross-env NODE_ENV=development node server/index.js",
+    "dev": "tsc --project tsconfig.server.json && cross-env NODE_ENV=development EXTERNAL_SERVER_URL='http://localhost:3001' INTERNAL_SERVER_URL='http://localhost:3001' node server/index.js",
     "build": "tsc --project tsconfig.server.json && vite build && vite build --ssr src/entry-server.tsx --outDir dist/server",
     "preview": "node server/index.js",
     "lint": "eslint .",
@@ -10,12 +10,16 @@
     "test": "jest ./"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "dotenv": "^16.0.2",
     "eslint-config-prettier": "^8.5.0",
     "express": "^4.18.2",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.1.2",
+    "redux": "^4.2.1",
+    "serialize-javascript": "^6.0.1",
     "vite": "^4.4.9"
   },
   "devDependencies": {
