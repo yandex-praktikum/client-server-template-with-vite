@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/server'
 import { Provider } from 'react-redux'
+import { ServerStyleSheet } from 'styled-components'
 import { Helmet } from 'react-helmet'
 import { Request as ExpressRequest } from 'express'
 import {
@@ -56,17 +57,24 @@ export const render = async (req: ExpressRequest) => {
   store.dispatch(setPageHasBeenInitializedOnServer(true))
 
   const router = createStaticRouter(dataRoutes, context)
-  const html = ReactDOM.renderToString(
-    <Provider store={store}>
-      <StaticRouterProvider router={router} context={context} />
-    </Provider>
-  );
+  const sheet = new ServerStyleSheet()
+  try {
+    const html = ReactDOM.renderToString(sheet.collectStyles(
+      <Provider store={store}>
+        <StaticRouterProvider router={router} context={context} />
+      </Provider>
+    ));
+    const styleTags = sheet.getStyleTags();
 
-  const helmet = Helmet.renderStatic();
+    const helmet = Helmet.renderStatic();
 
-  return {
-    html,
-    helmet,
-    initialState: store.getState(),
+    return {
+      html,
+      helmet,
+      styleTags,
+      initialState: store.getState(),
+    }
+  } finally {
+    sheet.seal()
   }
 }
