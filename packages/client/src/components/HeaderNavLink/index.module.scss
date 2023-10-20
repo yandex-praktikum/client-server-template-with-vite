@@ -1,3 +1,4 @@
+@import 'src/assets/style/variables';
 
 .link {
     text-decoration: none;
@@ -7,6 +8,6 @@
 
 .active {
     font-size: 20px;
-    color: #45CAD6;
+    color: $turquoise;
     text-decoration: underline;
 }

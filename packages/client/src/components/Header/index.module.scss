@@ -1,3 +1,5 @@
+@import 'src/assets/style/variables';
+
 .header {
     height: 95px;
     display: flex;
@@ -23,7 +25,7 @@
 
 .active {
     font-size: 20px;
-    color: #45CAD6;
+    color: $turquoise;
     text-decoration: underline;
 }
 
