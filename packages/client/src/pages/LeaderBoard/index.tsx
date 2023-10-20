@@ -1,16 +1,51 @@
 import React from 'react'
 
-type TLeaderBoardPage = {
-  logoutCallback: () => void
-}
+import s from './index.module.scss'
+import Header from '../../components/Header'
 
-const LeaderBoardPage = ({ logoutCallback }: TLeaderBoardPage) => {
+const LeaderBordPage = () => {
   return (
-    <div>
-      LeaderBoardPage
-      <button onClick={logoutCallback}>Logout</button>
+    <div className={s.wrapper}>
+      <div className={s.container}>
+        <Header />
+        <main className={s.main}>
+          <h1 className={s.title}>Доска лидеров</h1>
+
+          <div className={s.table}>
+            <div className={`${s.row} ${s.thead}`}>
+              <div>Место</div>
+              <div>Игрок</div>
+              <div>Счет</div>
+            </div>
+            <div className={`${s.row} ${s.td_body}`}>
+              <div>1</div>
+              <div className={s.td_name}>
+                <img
+                  className={s.avatar}
+                  src="src/assets/avatar.svg"
+                  alt="avatar"
+                />
+                <span>name</span>
+              </div>
+              <div>222</div>
+            </div>
+            <div className={`${s.row} ${s.td_body}`}>
+              <div>1</div>
+              <div className={s.td_name}>
+                <img
+                  className={s.avatar}
+                  src="src/assets/avatar.svg"
+                  alt="avatar"
+                />
+                <span>name</span>
+              </div>
+              <div>222</div>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
   )
 }
 
-export default LeaderBoardPage
+export default LeaderBordPage
