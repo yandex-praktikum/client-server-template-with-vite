@@ -9,6 +9,7 @@ export type TSignupRequestData = {
   email: string
   password: string
   phone: string
+  passwordRepeat: string
 }
 
 export type TSignupResponse = {

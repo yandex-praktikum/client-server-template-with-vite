@@ -14,3 +14,8 @@ export enum END_POINTS_URL {
   CHANGE_USER_PASSWORD = '/user/password',
   CHANGE_USER_PROFILE_AVATAR = '/user/profile/avatar',
 }
+
+export enum API_ERROR_MESSAGES {
+  COOKIE_NOT_VALID = 'Cookie is not valid',
+  USER_ALREADY_IN_SYSTEM = 'User already in system',
+}
