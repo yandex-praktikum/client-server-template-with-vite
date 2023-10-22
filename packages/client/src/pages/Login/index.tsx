@@ -24,7 +24,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="page_wrapper">
+    <div className="page_wrapper page_background">
       <Formik
         initialValues={{
           login: '',
@@ -33,8 +33,8 @@ const LoginPage = () => {
         onSubmit={values => {
           authHandler(values)
         }}>
-        <FormWrapper>
-          <Form>
+        <Form className="form">
+          <FormWrapper>
             <FormHeader text="Вход" />
             <div className="form_inputs-wrapper">
               <FormInput
@@ -52,19 +52,19 @@ const LoginPage = () => {
                 placeholder="Введите пароль"
               />
             </div>
-            <div className="form_buttons-wrapper button-block_login-page">
-              <FormSubmitButton
-                disabled={false}
-                buttonType="submit"
-                buttonText="Авторизоваться"
-              />
-              <FormLinkButton
-                to={ROUTES_NAMES.SIGNUP}
-                buttonText="Нет аккаунта?"
-              />
-            </div>
-          </Form>
-        </FormWrapper>
+          </FormWrapper>
+          <div className="form_buttons-wrapper button-block_login-page">
+            <FormSubmitButton
+              disabled={false}
+              buttonType="submit"
+              buttonText="Авторизоваться"
+            />
+            <FormLinkButton
+              to={ROUTES_NAMES.SIGNUP}
+              buttonText="Нет аккаунта?"
+            />
+          </div>
+        </Form>
       </Formik>
     </div>
   )

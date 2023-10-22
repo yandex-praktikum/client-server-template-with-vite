@@ -16,21 +16,62 @@ body {
   margin: 0;
 }
 
-button {
+.button {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+.form_button {
+  background-color: $medium-turquoise;
+  border: 1px solid $azure;
+  box-shadow: 0 4px 4px 0 $shadow-color;
+  color: $azure;
+  height: 2.5625rem;
+  max-width: 21.25rem;
+  width: 100%;
 }
 
 .page_wrapper {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  padding: 2rem;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.page_background {
+  background-image: url('src/assets/formPageBackground.jpg');
+}
+
+.error_page_background {
+  background-image: url('src/assets/errorPageBackground.jpg');
+}
+
+.form {
+  max-width: 21.25rem;
   width: 100%;
 }
 
 .link_block {
   gap: 1rem;
+}
+
+.link {
+  color: $light-blue;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .header-wrapper {
@@ -43,7 +84,6 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.875rem;
 }
 
 .form_inputs-wrapper {
@@ -53,11 +93,13 @@ button {
 }
 
 .button-block_login-page {
-  margin-top: 9.625rem;
+  gap: 0.875rem;
+  margin-top: 1.6875rem;
 }
 
 .button-block_login-reg-page {
-  margin-top: 2.9375rem;
+  gap: 0.3125rem;
+  margin-top: 0.5rem;
 }
 
 .error_page_header {
@@ -67,4 +109,9 @@ button {
 .error-page_message {
   margin-top: 0;
   margin-bottom: 1.25rem;
+}
+
+.error input,
+.error input::placeholder {
+  color: red;
 }

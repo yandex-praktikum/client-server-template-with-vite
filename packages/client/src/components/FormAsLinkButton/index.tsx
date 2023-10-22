@@ -19,7 +19,7 @@ export const FormLinkButton = ({
     <Link
       to={to}
       onClick={onClickCallback}
-      className={`${className} ${styles.link} ${styles.font_13}`}>
+      className={`button form_button ${className} ${styles.form_link_button} ${styles.font_24}`}>
       {buttonText}
     </Link>
   )

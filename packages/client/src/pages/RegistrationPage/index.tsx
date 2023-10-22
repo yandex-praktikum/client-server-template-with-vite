@@ -25,7 +25,7 @@ const RegistrationPage = () => {
   }
 
   return (
-    <div className="page_wrapper">
+    <div className="page_wrapper page_background">
       <Formik
         initialValues={{
           email: '',
@@ -38,8 +38,8 @@ const RegistrationPage = () => {
         onSubmit={values => {
           registrationHandler(values)
         }}>
-        <FormWrapper>
-          <Form>
+        <Form className="form">
+          <FormWrapper>
             <FormHeader text="Регистрация" />
             <div className="form_inputs-wrapper">
               <FormInput
@@ -92,16 +92,16 @@ const RegistrationPage = () => {
                 placeholder="Введите пароль (еще раз)"
               />
             </div>
-            <div className="form_buttons-wrapper button-block_login-reg-page">
-              <FormSubmitButton
-                disabled={false}
-                buttonType="submit"
-                buttonText="Зарегистрироваться"
-              />
-              <FormLinkButton to={ROUTES_NAMES.SIGN_IN} buttonText="Войти" />
-            </div>
-          </Form>
-        </FormWrapper>
+          </FormWrapper>
+          <div className="form_buttons-wrapper button-block_login-reg-page">
+            <FormSubmitButton
+              disabled={false}
+              buttonType="submit"
+              buttonText="Зарегистрироваться"
+            />
+            <FormLinkButton to={ROUTES_NAMES.SIGN_IN} buttonText="Войти" />
+          </div>
+        </Form>
       </Formik>
     </div>
   )
