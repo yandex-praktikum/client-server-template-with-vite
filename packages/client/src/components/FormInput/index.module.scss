@@ -33,3 +33,7 @@
 .form_input::placeholder {
   color: $light-gray;
 }
+
+.form_error_message {
+  color: $red-alert;
+}

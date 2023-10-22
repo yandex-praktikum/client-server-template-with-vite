@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FormWrapper } from '../../components/FormWrapper'
 import { Form, Formik } from 'formik'
 import { FormHeader } from '../../components/FormHeader'
@@ -9,9 +9,12 @@ import { ROUTES_NAMES } from '../../const/routeNames'
 import { authApi } from '../../api/authApi'
 import { useNavigate } from 'react-router-dom'
 import { TSignInRequestData } from '../../api/types'
+import { API_ERROR_MESSAGES } from '../../const/api'
+import { MyErrorMessage } from '../../components/myErrorMessage'
 
 const LoginPage = () => {
   const navigate = useNavigate()
+  const [errorMessage, setErrorMessage] = useState('')
 
   const authHandler = (data: TSignInRequestData) => {
     authApi
@@ -20,7 +23,20 @@ const LoginPage = () => {
         console.log(response)
         navigate(ROUTES_NAMES.MAIN)
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        const { reason } = error.response.data
+        if (reason === API_ERROR_MESSAGES.USER_ALREADY_IN_SYSTEM) {
+          navigate(ROUTES_NAMES.MAIN)
+        }
+
+        setErrorMessage(reason)
+      })
+  }
+
+  const cleanFetchErrorHandler = () => {
+    if (errorMessage) {
+      setErrorMessage('')
+    }
   }
 
   return (
@@ -30,10 +46,8 @@ const LoginPage = () => {
           login: '',
           password: '',
         }}
-        onSubmit={values => {
-          authHandler(values)
-        }}>
-        <Form className="form">
+        onSubmit={authHandler}>
+        <Form onChange={cleanFetchErrorHandler} className="form">
           <FormWrapper>
             <FormHeader text="Вход" />
             <div className="form_inputs-wrapper">
@@ -51,6 +65,7 @@ const LoginPage = () => {
                 labelText="Пароль"
                 placeholder="Введите пароль"
               />
+              {errorMessage ? <MyErrorMessage message={errorMessage} /> : null}
             </div>
           </FormWrapper>
           <div className="form_buttons-wrapper button-block_login-page">

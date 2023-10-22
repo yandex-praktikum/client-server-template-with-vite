@@ -111,7 +111,11 @@ body {
   margin-bottom: 1.25rem;
 }
 
-.error input,
-.error input::placeholder {
+.error_input,
+.error_input::placeholder {
   color: red;
+}
+
+.form_error_message {
+  color: $red-alert;
 }
