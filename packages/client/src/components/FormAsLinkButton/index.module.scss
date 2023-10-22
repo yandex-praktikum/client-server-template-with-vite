@@ -1,13 +1,6 @@
 @import 'src/assets/style/variables';
 @import 'src/assets/style/fonts';
 
-.link {
-  border: none;
-  background: none;
-  color: $light-blue;
+.form_link_button {
   text-decoration: none;
-
-  &:hover {
-    text-decoration: none;
-  }
 }

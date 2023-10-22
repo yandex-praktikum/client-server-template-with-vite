@@ -21,7 +21,7 @@ export const FormSubmitButton = ({
       type={buttonType}
       disabled={disabled}
       onClick={onClickCallback}
-      className={`${className} ${styles.button} ${styles.form_button}`}>
+      className={`button form_button ${className} ${styles.font_24}`}>
       {buttonText}
     </button>
   )
