@@ -21,7 +21,7 @@ export const FormInput = ({
 }: TFormInput) => {
   return (
     <div className={`${styles.form_input_block_wrapper} ${className}`}>
-      <label htmlFor={id} className={`${styles.form_label} ${styles.font_9}`}>
+      <label htmlFor={id} className={`${styles.form_label} ${styles.font_18}`}>
         {labelText}
       </label>
       <Field
@@ -29,7 +29,7 @@ export const FormInput = ({
         name={name}
         type={type}
         placeholder={placeholder}
-        className={styles.form_input}
+        className={`${styles.form_input} ${styles.font_24}`}
       />
     </div>
   )
