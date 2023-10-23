@@ -6,15 +6,8 @@ import { height, width, offset, towersPlace, buildingTower } from './consts'
 const Canvas: React.FC = () => {
   const refCanvas = useRef<HTMLCanvasElement | null>(null)
 
-  let activeBuildPlace: BuildPlace | TowerPlaceType | null
-
-  let animationFrame = 0
   let stopGame = false
 
-  const mouse: Mouse = {
-    x: 0,
-    y: 0,
-  }
   const waypoints = [
     { x: 0, y: 210 },
     { x: 800, y: 210 },
@@ -27,9 +20,11 @@ const Canvas: React.FC = () => {
     { x: 450, y: 100 },
   ]
 
-  const enemies: Enemy[] = []
-
   useEffect(() => {
+    const enemies: Enemy[] = []
+    let animationFrame = 0
+    let activeBuildPlace: BuildPlace | TowerPlaceType | null
+
     const canvas = refCanvas.current
     if (!canvas) {
       return
@@ -155,6 +150,11 @@ const Canvas: React.FC = () => {
     }
 
     const mouseActiveBuildPlace = (e: MouseEvent) => {
+      const mouse: Mouse = {
+        x: 0,
+        y: 0,
+      }
+
       mouse.x = e.clientX
       mouse.y = e.clientY
 
