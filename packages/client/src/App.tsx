@@ -8,10 +8,11 @@ import RegistrationPage from './pages/RegistrationPage'
 import UserProfilePage from './pages/UserProfile'
 import MainPage from './pages/Main'
 import GamePage from './pages/Game'
-import LeaderBoardPage from './pages/LeaderBoard'
+
 import ForumPage from './pages/Forum'
 import Error404 from './pages/Error_404'
 import Error5XX from './pages/Error_5XX'
+import LeaderBoardPage from './pages/LeaderBoard'
 
 const App: FC = () => {
   const navigate = useNavigate()

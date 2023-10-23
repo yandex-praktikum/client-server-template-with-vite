@@ -8,14 +8,14 @@
 }
 
 .form_label {
-  color: $light-gray;
+  color: $azure;
 }
 
 .form_input {
   border: none;
-  border-bottom: 2px solid $light-blue;
+  border-bottom: 1px solid $azure;
   color: var(--common-black-text);
-  padding-bottom: 0.167rem;
+  padding: 0.5rem 1rem;
   width: 100%;
 }
 
@@ -32,4 +32,8 @@
 
 .form_input::placeholder {
   color: $light-gray;
+}
+
+.form_error_message {
+  color: $red-alert;
 }

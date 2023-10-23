@@ -5,7 +5,7 @@ export enum ROUTES_NAMES {
   GAME = '/game',
   SETTINGS = '/settings',
   FORUM = '/forum',
-  LEADER_BOARD = 'leader_board',
+  LEADER_BOARD = '/leader_board',
   ERROR_404 = '/*',
   ERROR_5XX = '/error_5xx',
 }

@@ -8,8 +8,20 @@
   @include font(2.5rem, 500, 2.5rem);
 }
 
+.font_26 {
+  @include font(1.625rem, 500, 1.55rem);
+}
+
+.font_24 {
+  @include font(1.5rem, 500, 1.5rem);
+}
+
 .font_20 {
   @include font(1.25rem, 500, 1.25rem);
+}
+
+.font_18 {
+  @include font(1.125rem, 600, 1.25rem);
 }
 
 .font_16 {
