@@ -26,3 +26,8 @@ export type BuildPlace = {
   y: number
   isOccupied: boolean
 }
+
+export type WaypointsType = {
+  x: number
+  y: number
+}

@@ -1,5 +1,5 @@
-import { Mouse, EnemyTypes } from './interfaces'
-import { waypoints, offset } from './consts'
+import { Mouse, EnemyTypes, WaypointsType } from './interfaces'
+import { offset } from './consts'
 
 export class Rect {
   x: number
@@ -65,8 +65,14 @@ export class Enemy {
   center: { x: number; y: number }
   radius: number
   context: CanvasRenderingContext2D | null
+  waypoints: WaypointsType[]
 
-  constructor(x: number, y: number, context: CanvasRenderingContext2D | null) {
+  constructor(
+    x: number,
+    y: number,
+    context: CanvasRenderingContext2D | null,
+    waypoints: WaypointsType[]
+  ) {
     this.x = x
     this.y = y
     this.height = 30
@@ -78,6 +84,7 @@ export class Enemy {
     }
     this.radius = 15
     this.context = context
+    this.waypoints = waypoints
   }
 
   draw() {
@@ -99,7 +106,7 @@ export class Enemy {
     if (this.context) {
       this.draw()
 
-      const waypoint = waypoints[this.waypointIndex]
+      const waypoint = this.waypoints[this.waypointIndex]
       const yDistance = waypoint.y - this.y
       const xDistance = waypoint.x - this.x
       const angle = Math.atan2(yDistance, xDistance)
@@ -110,7 +117,7 @@ export class Enemy {
       if (
         Math.round(this.x) === Math.round(waypoint.x) &&
         Math.round(this.y) === Math.round(waypoint.y) &&
-        this.waypointIndex !== waypoints.length - 1
+        this.waypointIndex !== this.waypoints.length - 1
       ) {
         this.waypointIndex++
       }

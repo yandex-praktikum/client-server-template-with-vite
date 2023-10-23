@@ -1,17 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import { Rect, Enemy, TowerPlace, BuildTower } from './classes'
-import { BuildPlace, TowerPlaceType } from './interfaces'
-import {
-  height,
-  width,
-  offset,
-  enemies,
-  waypoints,
-  towerPlace,
-  towersPlace,
-  buildingTower,
-  mouse,
-} from './consts'
+import { BuildPlace, Mouse, TowerPlaceType } from './interfaces'
+import { height, width, offset, towersPlace, buildingTower } from './consts'
 
 const Canvas: React.FC = () => {
   const refCanvas = useRef<HTMLCanvasElement | null>(null)
@@ -20,6 +10,24 @@ const Canvas: React.FC = () => {
 
   let animationFrame = 0
   let stopGame = false
+
+  const mouse: Mouse = {
+    x: 0,
+    y: 0,
+  }
+  const waypoints = [
+    { x: 0, y: 210 },
+    { x: 800, y: 210 },
+    { x: 850, y: 210 },
+    { x: 900, y: 210 },
+  ]
+  const towerPlace = [
+    { x: 250, y: 100 },
+    { x: 350, y: 100 },
+    { x: 450, y: 100 },
+  ]
+
+  const enemies: Enemy[] = []
 
   useEffect(() => {
     const canvas = refCanvas.current
@@ -71,7 +79,12 @@ const Canvas: React.FC = () => {
     for (let i = 0; i < 5; i++) {
       const offset = 150
       enemies.push(
-        new Enemy(waypoints[0].x - offset * i, waypoints[0].y, context)
+        new Enemy(
+          waypoints[0].x - offset * i,
+          waypoints[0].y,
+          context,
+          waypoints
+        )
       )
     }
 
