@@ -24,6 +24,10 @@ const Canvas: React.FC = () => {
     const enemies: Enemy[] = []
     let animationFrame = 0
     let activeBuildPlace: BuildPlace | TowerPlaceType | null
+    const mouse: Mouse = {
+      x: 0,
+      y: 0,
+    }
 
     const canvas = refCanvas.current
     if (!canvas) {
@@ -150,11 +154,6 @@ const Canvas: React.FC = () => {
     }
 
     const mouseActiveBuildPlace = (e: MouseEvent) => {
-      const mouse: Mouse = {
-        x: 0,
-        y: 0,
-      }
-
       mouse.x = e.clientX
       mouse.y = e.clientY
 
