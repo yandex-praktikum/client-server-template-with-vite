@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './index.module.scss'
-import { ErrorPageLink } from '../../components/errorPageLink'
+import { ErrorPageLink } from '../../components/ErrorPageLink'
 
 const Error404 = () => {
   return (
