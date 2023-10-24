@@ -1,16 +1,7 @@
-import React from 'react'
+import React, { FC } from 'react'
 
-type TForumPage = {
-  logoutCallback: () => void
-}
-
-const ForumPage = ({ logoutCallback }: TForumPage) => {
-  return (
-    <div>
-      ForumPage
-      <button onClick={logoutCallback}>Logout</button>
-    </div>
-  )
+const ForumPage: FC = () => {
+  return <div></div>
 }
 
 export default ForumPage
