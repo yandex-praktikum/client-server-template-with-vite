@@ -71,10 +71,7 @@ const App: FC = () => {
           path={ROUTES_NAMES.GAME}
           element={<GamePage logoutCallback={logoutHandler} />}
         />
-        <Route
-          path={ROUTES_NAMES.LEADER_BOARD}
-          element={<LeaderBoardPage logoutCallback={logoutHandler} />}
-        />
+        <Route path={ROUTES_NAMES.LEADER_BOARD} element={<LeaderBoardPage />} />
         <Route
           path={ROUTES_NAMES.FORUM}
           element={<ForumPage logoutCallback={logoutHandler} />}

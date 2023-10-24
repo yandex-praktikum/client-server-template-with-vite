@@ -42,6 +42,13 @@ svg {
     height: auto;
 }
 
+img,
+svg {
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+}
+
 .page_wrapper {
   background-repeat: no-repeat;
   background-position: center;
