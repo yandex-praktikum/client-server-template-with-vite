@@ -1,0 +1,22 @@
+.user_form_wrapper {
+  width: 100%;
+}
+
+.user_form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  width: 100%;
+}
+
+.submit_button_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.input_block_without_border {
+  border: none;
+}

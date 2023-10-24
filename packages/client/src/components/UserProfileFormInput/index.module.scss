@@ -1,0 +1,48 @@
+@import 'src/assets/style/variables';
+@import 'src/assets/style/fonts';
+
+.user_form_input_block_wrapper {
+  border-bottom: 1px solid white;
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.625rem;
+}
+
+.user_form_label {
+  color: $common-black-text;
+}
+
+.user_form_input_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.user_form_input {
+  border: none;
+  background: none;
+  color: $common-black-text;
+  text-align: right;
+  width: 100%;
+}
+
+.user_form_input::placeholder {
+  color: $common-black-text;
+}
+
+.user_form_input:focus,
+.user_form_input:active,
+.user_form_input:focus-visible {
+  outline: none;
+}
+
+.user_form_input:disabled {
+  color: $medium-turquoise;
+}
+
+.user_form_input:disabled::placeholder {
+  color: $medium-turquoise;
+}

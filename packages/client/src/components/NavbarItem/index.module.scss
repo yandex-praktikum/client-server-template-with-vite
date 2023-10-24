@@ -1,0 +1,16 @@
+@import 'src/assets/style/variables';
+@import 'src/assets/style/fonts';
+
+.link {
+  color: white;
+  text-decoration: none;
+  &:hover {
+    color: $medium-turquoise;
+    text-decoration: underline;
+  }
+}
+
+.active {
+  color: $medium-turquoise;
+  text-decoration: underline;
+}

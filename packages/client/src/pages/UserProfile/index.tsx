@@ -1,14 +1,95 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { FormikValues } from 'formik'
+import { userApi } from '../../api/userApi'
+import { authApi } from '../../api/authApi'
+import { ROUTES_NAMES } from '../../const/routeNames'
+import { PageHeader } from '../../components/PageHeader'
+import { UserAvatar } from '../../components/UserAvatar'
+import { TUserData, TUserPassword } from '../../api/types'
+import { initialData, USER_PROFILE_ERRORS_TEXT } from '../../const/userProfile'
+import { UserProfileFormTemplate } from '../../components/UserProfileFormTemplate'
+import style from './index.module.scss'
 
 type TUserProfilePage = {
   logoutCallback: () => void
 }
 
 const UserProfilePage = ({ logoutCallback }: TUserProfilePage) => {
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const [userData, setUserData] = useState<TUserData>(initialData)
+
+  useEffect(() => {
+    if (!userData.id) {
+      authApi
+        .getUserData()
+        .then(response => {
+          setUserData(response.data)
+        })
+        .catch(() => {
+          navigate(ROUTES_NAMES.SIGN_IN)
+        })
+    }
+  }, [userData.id])
+
+  const changeAvatarHandler = (data: FormData): Promise<string> => {
+    return userApi
+      .setNewAvatarData(data)
+      .then(response => {
+        setUserData(response.data)
+        return ''
+      })
+      .catch(error => {
+        return (
+          error.response?.data?.reason || USER_PROFILE_ERRORS_TEXT.UNKNOWN_ERROR
+        )
+      })
+  }
+
+  const changeUserDataHandler = (data: FormikValues) => {
+    return userApi
+      .changeUserProfileData(data as TUserData)
+      .then(response => {
+        setUserData(response.data)
+        return ''
+      })
+      .catch(error => {
+        return (
+          error.response?.data?.reason || USER_PROFILE_ERRORS_TEXT.UNKNOWN_ERROR
+        )
+      })
+  }
+
+  const changeUserPasswordHandler = (data: TUserPassword): Promise<string> => {
+    return userApi
+      .changeUserPasswordData(data)
+      .then(response => {
+        console.log(response.data)
+        return ''
+      })
+      .catch(error => {
+        return (
+          error.response?.data?.reason || USER_PROFILE_ERRORS_TEXT.UNKNOWN_ERROR
+        )
+      })
+  }
+
   return (
-    <div>
-      UserProfilePage
-      <button onClick={logoutCallback}>Logout</button>
+    <div
+      className={`page_wrapper page_background ${style.settings_page_wrapper}`}>
+      <PageHeader url={userData.avatar} pathName={pathname} />
+      <UserAvatar
+        url={userData.avatar}
+        changeAvatarHandler={changeAvatarHandler}
+        className={style.user_avatar_margin}
+      />
+      <UserProfileFormTemplate
+        userData={userData}
+        logoutCallback={logoutCallback}
+        changeUserDataHandler={changeUserDataHandler}
+        changeUserPasswordHandler={changeUserPasswordHandler}
+      />
     </div>
   )
 }

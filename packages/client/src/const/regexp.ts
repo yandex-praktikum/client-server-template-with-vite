@@ -1,10 +1,10 @@
 export const REGEXP = {
   startWithCapitalizeLetter: /^[A-ZА-Я]/,
   latinOrCyrillic: /^[a-zA-Zа-яА-Я]+$/,
-  noSpaceSymbols: /^[^\s]+$/,
+  noSpaceSymbols: /^[^\s]*$/,
   noDigitSymbols: /^[^\d]*$/,
   capitalizeLettersOnlyOnStat: /^[A-ZА-ЯЁ][a-zа-яё-]*$/,
-  namesValidation: /^(?:[A-ZА-ЯЁ][a-zа-яё-]*)$/,
+  namesValidation: /^[A-Za-zА-ЯЁа-яё]*$/,
   loginValidation: /^(?=.{3,20}$)(?!^\d+$)[a-zA-Z\d_-]+$/,
   latinLetters: /^[A-Za-z0-9!@#$%^&*()_+\-={};':"\\|,.<>/?~\s]*$/,
   digitsAndLetters: /^(?=.*[^\d]).+$/,

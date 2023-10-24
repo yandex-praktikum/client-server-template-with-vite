@@ -1,10 +1,11 @@
 import { instance } from './axiosInstance'
 import { END_POINTS_URL } from '../const/api'
 import {
+  TUserData,
   TRequestStatus,
+  TSignupResponse,
   TSignInRequestData,
   TSignupRequestData,
-  TSignupResponse,
 } from './types'
 
 export const authApi = {
@@ -24,6 +25,6 @@ export const authApi = {
     return instance.post(END_POINTS_URL.AUTH_LOGOUT)
   },
   getUserData() {
-    return instance.get(END_POINTS_URL.AUTH_USER)
+    return instance.get<TUserData>(END_POINTS_URL.AUTH_USER)
   },
 }

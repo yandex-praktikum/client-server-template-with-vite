@@ -1,0 +1,17 @@
+@import 'src/assets/style/variables';
+@import 'src/assets/style/fonts';
+
+.user_profile_button {
+  color: $azure;
+  cursor: pointer;
+  background-color: $medium-turquoise;
+  border: 1px solid $azure;
+  box-shadow: 0 4px 4px 0 $shadow-color;
+  height: 3.125rem;
+  max-width: 18.75rem;
+  width: 100%;
+}
+
+.user_profile_button_text {
+  text-shadow: 0 4px 4px 0 $shadow-color;
+}

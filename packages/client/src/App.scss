@@ -49,7 +49,7 @@ body {
 }
 
 .page_background {
-  background-image: url('src/assets/formPageBackground.jpg');
+  background-image: url('src/assets/pageBackground.jpg');
 }
 
 .error_page_background {
@@ -118,4 +118,25 @@ body {
 
 .form_error_message {
   color: $red-alert;
+}
+
+.block-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.625rem;
+  width: 100%;
+}
+
+.block_wrapper_border {
+  border-bottom: 1px solid white;
+}
+
+.block-wrapper_link {
+  justify-content: flex-start;
+}
+
+.error_message_margin {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
