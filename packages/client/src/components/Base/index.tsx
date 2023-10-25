@@ -1,9 +1,8 @@
 import Header from '../Header'
 import s from './index.module.scss'
-import { typedMemo } from '../../utils/typedMemo'
 import { Outlet } from 'react-router-dom'
 
-const BaseComponent = () => {
+export const BaseComponent = () => {
   return (
     <div className={s.wrapper}>
       <div className={s.container}>
@@ -15,5 +14,3 @@ const BaseComponent = () => {
     </div>
   )
 }
-
-export const Base = typedMemo(BaseComponent)

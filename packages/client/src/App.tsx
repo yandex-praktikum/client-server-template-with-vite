@@ -13,7 +13,7 @@ import ForumPage from './pages/Forum'
 import Error404 from './pages/Error_404'
 import Error5XX from './pages/Error_5XX'
 import LeaderBoardPage from './pages/LeaderBoard'
-import { Base } from './components/Base'
+import { BaseComponent } from './components/Base'
 
 const App: FC = () => {
   const navigate = useNavigate()
@@ -58,7 +58,7 @@ const App: FC = () => {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Base />}>
+        <Route path="/" element={<BaseComponent />}>
           <Route
             path={ROUTES_NAMES.LEADER_BOARD}
             element={<LeaderBoardPage />}
