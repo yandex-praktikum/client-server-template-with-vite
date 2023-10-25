@@ -5,6 +5,7 @@ type TForumPage = {
 }
 
 const ForumPage = ({ logoutCallback }: TForumPage) => {
+  throw new Error('Ошибка на клиенте')
   return (
     <div>
       ForumPage

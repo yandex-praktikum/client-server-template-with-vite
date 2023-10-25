@@ -14,6 +14,7 @@ import Error404 from './pages/Error_404'
 import Error5XX from './pages/Error_5XX'
 import LeaderBoardPage from './pages/LeaderBoard'
 import { BaseComponent } from './components/Base'
+import { ErrorBoundary } from './hoc/ErrorBoundary'
 
 const App: FC = () => {
   const navigate = useNavigate()
@@ -56,7 +57,7 @@ const App: FC = () => {
   // }, [])
 
   return (
-    <div className="App">
+    <ErrorBoundary>
       <Routes>
         <Route path="/" element={<BaseComponent />}>
           <Route
@@ -85,7 +86,7 @@ const App: FC = () => {
         <Route path={ROUTES_NAMES.ERROR_5XX} element={<Error5XX />} />
         <Route path={ROUTES_NAMES.ERROR_404} element={<Error404 />} />
       </Routes>
-    </div>
+    </ErrorBoundary>
   )
 }
 
