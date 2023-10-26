@@ -1,8 +1,10 @@
 import { TUserData } from '../../api/types'
 
 export type TForum = {
-  id: number
+  id: string
   title: string
+  description: string
+  image: string
 }
 
 export type TForumCreation = {
@@ -11,6 +13,9 @@ export type TForumCreation = {
 }
 
 export type TComment = {
+  id: string
+  text: string
+  date: string
   user: TUserData
   likesCount: number
   isLiked: boolean
@@ -18,4 +23,8 @@ export type TComment = {
 
 export type TForumDetails = TForum & {
   comments: TComment[]
+}
+
+export type TForumMessageCreation = {
+  message: string
 }

@@ -1,0 +1,54 @@
+@import '../../assets/style/variables.scss';
+@import '../../assets/style/fonts.scss';
+
+.comment {
+  padding: 12px 16px;
+  border: 2px solid $azure;
+  display: flex;
+  gap: 16px;
+}
+
+.comment-user-avatar {
+  width: 30px;
+  height: 30px;
+  outline: 1px solid $image-outline;
+  border-radius: 50%;
+  filter: drop-shadow(0px 4px 4px $shadow-color);
+}
+
+.comment-username {
+  margin-bottom: 8px;
+}
+
+.comment-text {
+  margin-bottom: 16px;
+}
+
+.comment-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.comment-like-button {
+  border-radius: 16px;
+  background-color: $white;
+  display: flex;
+  align-items: center;
+  border: none;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.like-button-image {
+  width: 20px;
+  height: 20px;
+}
+
+.like-button-count {
+  color: $medium-turquoise;
+}
+
+.comment:not(:last-child) {
+  margin-bottom: 16px;
+}

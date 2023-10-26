@@ -13,6 +13,7 @@ import { API_ERROR_MESSAGES } from '../../const/api'
 import { MyErrorMessage } from '../../components/myErrorMessage'
 
 const LoginPage = () => {
+  console.log(123)
   const navigate = useNavigate()
   const [errorMessage, setErrorMessage] = useState('')
 

@@ -8,6 +8,7 @@
 }
 
 .forum-title {
+  color: $azure;
   text-align: center;
   margin-bottom: 32px;
 }
@@ -27,8 +28,8 @@
   padding: 24px 32px;
   width: 100%;
   display: inline-block;
+  color: $azure;
   background-color: $medium-turquoise;
-  color: $white;
   cursor: pointer;
   box-shadow: 0px 4px 4px 0px $shadow-color;
 }

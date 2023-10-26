@@ -6,6 +6,7 @@ export enum ROUTES_NAMES {
   SETTINGS = '/settings',
   FORUM = '/forum',
   FORUM_CREATION = '/forum/create',
+  FORUM_DETAILS = '/forum/:id',
   LEADER_BOARD = '/leader_board',
   ERROR_404 = '/*',
   ERROR_5XX = '/error_5xx',

@@ -1,0 +1,46 @@
+@import '../../../assets/style/variables.scss';
+@import '../../../assets/style/fonts.scss';
+
+.notfound-title {
+  text-align: center;
+  color: $azure;
+}
+
+.forum-image {
+  width: 60px;
+  height: 60px;
+  outline: 1px solid $image-outline;
+  border-radius: 50%;
+}
+
+.forum {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.forum-text {
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: $azure;
+}
+
+.comments-container {
+  width: 100%;
+  color: $azure;
+  border: 1px solid $azure;
+  background-color: $medium-turquoise;
+  box-shadow: 0px 4px 4px 0px $shadow-color;
+  padding: 12px 32px 32px 32px;
+}
+
+.comments-wrapper {
+  height: 500px;
+  overflow: auto;
+}
+
+.comments-description {
+  margin-bottom: 16px;
+}
