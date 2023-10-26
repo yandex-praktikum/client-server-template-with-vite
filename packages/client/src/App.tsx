@@ -15,13 +15,20 @@ import { BaseComponent } from './components/Base'
 import { ForumCreation } from './pages/Forum/ForumCreation'
 import { ForumDetails } from './pages/Forum/ForumDetails'
 import './App.scss'
+import { ErrorBoundary } from './hoc/ErrorBoundary'
 
 const App: FC = () => {
   const navigate = useNavigate()
   const path = useLocation().pathname
 
   useEffect(() => {
-    if (!(ROUTES_NAMES.SIGNUP === path || ROUTES_NAMES.SIGN_IN === path)) {
+    if (
+      !(
+        ROUTES_NAMES.SIGNUP === path ||
+        ROUTES_NAMES.SIGN_IN === path ||
+        ROUTES_NAMES.SETTINGS
+      )
+    ) {
       authApi
         .getUserData()
         .then(response => console.log(response))
@@ -57,7 +64,7 @@ const App: FC = () => {
   // }, [])
 
   return (
-    <div className="App">
+    <ErrorBoundary>
       <Routes>
         <Route path={ROUTES_NAMES.SIGN_IN} element={<LoginPage />} />
         <Route path={ROUTES_NAMES.SIGNUP} element={<RegistrationPage />} />
@@ -89,7 +96,7 @@ const App: FC = () => {
         <Route path={ROUTES_NAMES.ERROR_5XX} element={<Error5XX />} />
         <Route path={ROUTES_NAMES.ERROR_404} element={<Error404 />} />
       </Routes>
-    </div>
+    </ErrorBoundary>
   )
 }
 

@@ -1,0 +1,30 @@
+@import 'src/assets/style/variables';
+@import 'src/assets/style/fonts';
+
+.profile_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 31.875rem;
+  width: 100%;
+}
+
+.save_button {
+  margin-top: 2.3125rem;
+}
+
+.user_profile_form_margin {
+  margin-bottom: 1.6875rem;
+}
+
+.user_name_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.user_name_text {
+  color: $common-black-text;
+  text-align: center;
+}
