@@ -11,9 +11,9 @@ export const NavbarAvatar = ({ imageUrl }: TNavbarAvatar) => {
   const src = getFullUrlToResource(imageUrl, BASE_RESOURCES_URL)
 
   return (
-    <div className={style.avatar_wrapper}>
+    <div className={style.avatarWrapper}>
       {imageUrl ? (
-        <img src={src} alt="avatar" className={style.avatar_image} />
+        <img src={src} alt="avatar" className={style.avatarImage} />
       ) : (
         <img src="./src/assets/user.svg" />
       )}

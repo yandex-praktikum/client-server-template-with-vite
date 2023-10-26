@@ -20,14 +20,14 @@ export const UserProfileForm = ({
   className = '',
 }: TUserProfileForm) => {
   return (
-    <div className={`${style.user_form_wrapper} ${className}`}>
+    <div className={`${style.userFormWrapper} ${className}`}>
       <Formik
         enableReinitialize={true}
         initialValues={userData}
         validate={validate}
         onSubmit={onsubmit}>
         {({ values }) => (
-          <Form className={style.user_form}>
+          <Form className={style.userForm}>
             <UserProfileFormInput
               id="email"
               type="text"
@@ -81,10 +81,10 @@ export const UserProfileForm = ({
               value={values['phone']}
               isDisabled={isDisable}
               placeholder="Введите телефон"
-              className={style.input_block_without_border}
+              className={style.inputBlockWithoutBorder}
             />
             {!isDisable ? (
-              <div className={style.submit_button_wrapper}>
+              <div className={style.submitButtonWrapper}>
                 <UserProfileSaveButton className={style.save_button} />
               </div>
             ) : null}

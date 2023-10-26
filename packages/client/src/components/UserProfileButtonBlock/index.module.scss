@@ -1,12 +1,12 @@
 @import 'src/assets/style/variables';
 
-.button_wrapper {
+.buttonWrapper {
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
   width: 100%;
 }
 
-.red_text {
+.redText {
   color: $red-alert;
 }

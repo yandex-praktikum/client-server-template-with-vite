@@ -19,7 +19,7 @@ export const FormLinkButton = ({
     <Link
       to={to}
       onClick={onClick}
-      className={`button form_button ${className} ${styles.form_link_button} ${styles.font_24}`}>
+      className={`button form-button ${className} ${styles.formLinkButton} ${styles.font_24}`}>
       {buttonText}
     </Link>
   )

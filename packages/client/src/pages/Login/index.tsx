@@ -40,7 +40,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="page_wrapper page_background">
+    <div className="page-wrapper page-background">
       <Formik
         initialValues={{
           login: '',
@@ -50,7 +50,7 @@ const LoginPage = () => {
         <Form onChange={cleanFetchErrorHandler} className="form">
           <FormWrapper>
             <FormHeader text="Вход" />
-            <div className="form_inputs-wrapper">
+            <div className="form-inputs-wrapper">
               <FormInput
                 type="text"
                 id="login"
@@ -68,7 +68,7 @@ const LoginPage = () => {
               {errorMessage ? <MyErrorMessage message={errorMessage} /> : null}
             </div>
           </FormWrapper>
-          <div className="form_buttons-wrapper button-block_login-page">
+          <div className="form-buttons-wrapper button-block-login-page">
             <FormSubmitButton
               disabled={false}
               buttonType="submit"

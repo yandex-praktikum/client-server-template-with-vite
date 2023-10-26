@@ -11,7 +11,7 @@ type TNavbar = {
 
 export const Navbar = ({ imageUrl, pathName }: TNavbar) => {
   return (
-    <div className={style.navbar_wrapper}>
+    <div className={style.navbarWrapper}>
       <NavbarItem to={ROUTES_NAMES.MAIN} pathName={pathName} text="Главная" />
       <NavbarItem
         to={ROUTES_NAMES.SETTINGS}

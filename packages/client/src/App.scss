@@ -25,7 +25,7 @@ body {
   margin: 0;
 }
 
-.form_button {
+.form-button {
   background-color: $medium-turquoise;
   border: 1px solid $azure;
   box-shadow: 0 4px 4px 0 $shadow-color;
@@ -35,7 +35,7 @@ body {
   width: 100%;
 }
 
-.page_wrapper {
+.page-wrapper {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -48,11 +48,11 @@ body {
   width: 100%;
 }
 
-.page_background {
+.page-background {
   background-image: url('src/assets/pageBackground.jpg');
 }
 
-.error_page_background {
+.error-page-background {
   background-image: url('src/assets/errorPageBackground.jpg');
 }
 
@@ -61,7 +61,7 @@ body {
   width: 100%;
 }
 
-.link_block {
+.link-block {
   gap: 1rem;
 }
 
@@ -80,43 +80,43 @@ body {
   justify-content: center;
 }
 
-.form_buttons-wrapper {
+.form-buttons-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.form_inputs-wrapper {
+.form-inputs-wrapper {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.button-block_login-page {
+.button-block-login-page {
   gap: 0.875rem;
   margin-top: 1.6875rem;
 }
 
-.button-block_login-reg-page {
+.button-block-login-reg-page {
   gap: 0.3125rem;
   margin-top: 0.5rem;
 }
 
-.error_page_header {
+.error-page-header {
   margin-bottom: 1.25rem;
 }
 
-.error-page_message {
+.error-page-message {
   margin-top: 0;
   margin-bottom: 1.25rem;
 }
 
-.error_input,
-.error_input::placeholder {
+.error-input,
+.error-input::placeholder {
   color: red;
 }
 
-.form_error_message {
+.form-error-message {
   color: $red-alert;
 }
 
@@ -128,15 +128,15 @@ body {
   width: 100%;
 }
 
-.block_wrapper_border {
+.block-wrapper-border {
   border-bottom: 1px solid white;
 }
 
-.block-wrapper_link {
+.block-wrapper-link {
   justify-content: flex-start;
 }
 
-.error_message_margin {
+.error-message-margin {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }

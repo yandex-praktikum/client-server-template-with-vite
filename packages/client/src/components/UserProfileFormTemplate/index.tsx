@@ -76,30 +76,30 @@ export const UserProfileFormTemplate = ({
   }
 
   return (
-    <div className={style.profile_wrapper}>
-      <div className={style.user_name_wrapper}>
-        <span className={`${style.user_name_text} ${style.font_18}`}>
+    <div className={style.profileWrapper}>
+      <div className={style.userNameWrapper}>
+        <span className={`${style.userNameText} ${style.font_18}`}>
           {first_name}
         </span>
-        <span className={`${style.user_name_text} ${style.font_18}`}>
+        <span className={`${style.userNameText} ${style.font_18}`}>
           {second_name}
         </span>
       </div>
       {error ? (
-        <ErrorMessage text={error} className="error_message_margin" />
+        <ErrorMessage text={error} className="error-message-margin" />
       ) : null}
       {isPasswordEdit ? (
         <PasswordChangeForm
           isDisable={!isPasswordEdit}
           onsubmit={changeUserPassword}
-          className={style.user_profile_form_margin}
+          className={style.userProfileFormMargin}
         />
       ) : (
         <UserProfileForm
           userData={userData}
           isDisable={!isEdit}
           onsubmit={changeUserData}
-          className={style.user_profile_form_margin}
+          className={style.userProfileFormMargin}
         />
       )}
       {!hideButtons ? (

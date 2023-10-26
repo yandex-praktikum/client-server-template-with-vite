@@ -77,15 +77,13 @@ export const UserAvatar = ({
         onMouseLeave={onMouseLeaveHandler}
         className={`${style.avatar} ${className}`}>
         {url ? (
-          <img src={src} alt="avatar" className={style.avatar_image} />
+          <img src={src} alt="avatar" className={style.avatarImage} />
         ) : (
           <img src="./src/assets/userBig.svg" />
         )}
         {isShow ? (
-          <div onClick={fileUploadHandler} className={`${style.avatar_cover}`}>
-            <span className={`${style.avatar_cover_text}`}>
-              Поменять аватар
-            </span>
+          <div onClick={fileUploadHandler} className={`${style.avatarCover}`}>
+            <span className={`${style.avatarCoverText}`}>Поменять аватар</span>
           </div>
         ) : null}
         <input
@@ -98,7 +96,7 @@ export const UserAvatar = ({
         />
       </div>
       {error ? (
-        <ErrorMessage text={error} className="error_message_margin" />
+        <ErrorMessage text={error} className="error-message-margin" />
       ) : null}
     </div>
   )

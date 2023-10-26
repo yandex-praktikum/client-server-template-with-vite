@@ -14,14 +14,14 @@ export const UserProfileButtonBlock = ({
   userDataChange,
 }: TUserProfileButtonBlock) => {
   return (
-    <div className={style.button_wrapper}>
+    <div className={style.buttonWrapper}>
       <UserFormLinkButton text="Изменить данные" callback={userDataChange} />
       <UserFormLinkButton text="Изменить пароль" callback={passwordChange} />
       <UserFormLinkButton
         text="Выйти"
         callback={logOut}
         isNoBorder
-        className={style.red_text}
+        className={style.redText}
       />
     </div>
   )

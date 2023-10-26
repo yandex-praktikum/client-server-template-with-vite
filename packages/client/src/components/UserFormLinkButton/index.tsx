@@ -16,12 +16,12 @@ export const UserFormLinkButton = ({
 }: TUserFormLinkButton) => {
   return (
     <div
-      className={`block-wrapper block-wrapper_link ${
-        isNoBorder ? '' : 'block_wrapper_border'
+      className={`block-wrapper block-wrapper-link ${
+        isNoBorder ? '' : 'block-wrapper-border'
       }`}>
       <button
         onClick={callback}
-        className={`${style.button} ${style.link_button} ${style.font_13} ${className}`}>
+        className={`${style.button} ${style.linkButton} ${style.font_13} ${className}`}>
         {text}
       </button>
     </div>

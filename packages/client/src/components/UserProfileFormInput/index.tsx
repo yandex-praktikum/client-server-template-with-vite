@@ -34,13 +34,13 @@ export const UserProfileFormInput = ({
   className = '',
 }: TUserProfileFormInput) => {
   return (
-    <div className={`${styles.user_form_input_block_wrapper} ${className}`}>
+    <div className={`${styles.useFformInputBlockWrapper} ${className}`}>
       <label
         htmlFor={id}
-        className={`${styles.user_form_label} ${styles.font_13}`}>
+        className={`${styles.userFormLabel} ${styles.font_13}`}>
         {labelText}
       </label>
-      <div className={styles.user_form_input_wrapper}>
+      <div className={styles.userFormInputWrapper}>
         <Field
           id={id}
           name={name}
@@ -48,14 +48,14 @@ export const UserProfileFormInput = ({
           value={value}
           disabled={isDisabled}
           placeholder={placeholder}
-          className={`${styles.user_form_input} ${styles.font_14} ${
-            touched[name] && errors[name] ? 'error_input' : ''
+          className={`${styles.userFormInput} ${styles.font_14} ${
+            touched[name] && errors[name] ? 'error-input' : ''
           }`}
         />
         <ErrorMessage
           component="p"
           name={name}
-          className={`form_error_message ${styles.font_8}`}
+          className={`form-error-message ${styles.font_8}`}
         />
       </div>
     </div>

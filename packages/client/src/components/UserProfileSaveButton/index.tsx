@@ -11,8 +11,8 @@ export const UserProfileSaveButton = ({
   return (
     <button
       type="submit"
-      className={`${style.user_profile_button} ${style.font_24} ${className}`}>
-      <span className={style.user_profile_button_text}>Сохранить</span>
+      className={`${style.userProfileButton} ${style.font_24} ${className}`}>
+      <span className={style.userProfileButtonText}>Сохранить</span>
     </button>
   )
 }

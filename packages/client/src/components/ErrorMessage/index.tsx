@@ -7,5 +7,5 @@ type TErrorMessage = {
 }
 
 export const ErrorMessage = ({ text, className = '' }: TErrorMessage) => (
-  <p className={`${style.error_message} ${className}`}>{text}</p>
+  <p className={`${style.errorMessage} ${className}`}>{text}</p>
 )
