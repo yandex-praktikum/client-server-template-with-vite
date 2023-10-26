@@ -1,16 +1,13 @@
 @import '../../../assets/style/variables.scss';
 @import '../../../assets/style/fonts.scss';
 
-.notfound-title {
+.notFoundTitle {
   text-align: center;
   color: $azure;
 }
 
-.forum-image {
-  width: 60px;
-  height: 60px;
-  outline: 1px solid $image-outline;
-  border-radius: 50%;
+.forumImage {
+  box-shadow: none;
 }
 
 .forum {
@@ -19,7 +16,7 @@
   margin-bottom: 16px;
 }
 
-.forum-text {
+.forumText {
   padding-top: 8px;
   display: flex;
   flex-direction: column;
@@ -27,7 +24,7 @@
   color: $azure;
 }
 
-.comments-container {
+.commentsContainer {
   width: 100%;
   color: $azure;
   border: 1px solid $azure;
@@ -36,11 +33,11 @@
   padding: 12px 32px 32px 32px;
 }
 
-.comments-wrapper {
+.commentsWrapper {
   height: 500px;
   overflow: auto;
 }
 
-.comments-description {
+.commentsDescription {
   margin-bottom: 16px;
 }

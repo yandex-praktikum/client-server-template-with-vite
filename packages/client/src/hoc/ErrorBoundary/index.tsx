@@ -1,5 +1,5 @@
 import React, { ErrorInfo, Component, ReactNode } from 'react'
-import s from './index.module.scss'
+import styles from './index.module.scss'
 
 interface IErrorBoundary {
   children: ReactNode
@@ -30,7 +30,7 @@ export class ErrorBoundary extends Component<
   public render() {
     if (this.state.hasError) {
       return (
-        <section className={s.wrapper}>
+        <section className={styles.wrapper}>
           <h1>Что-то пошло не так.</h1>
           <p>
             В приложении произошла ошибка. Пожалуйста, перезагрузите страницу.

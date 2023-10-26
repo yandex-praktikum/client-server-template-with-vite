@@ -4,21 +4,21 @@ import { TUserPassword } from '../../api/types'
 import { validate } from '../../utils/validator'
 import { UserProfileFormInput } from '../UserProfileFormInput'
 import { UserProfileSaveButton } from '../UserProfileSaveButton'
-import style from '../userProfileForm/index.module.scss'
+import style from './index.module.scss'
 
 type TPasswordChangeForm = {
   isDisable: boolean
-  onsubmitCallback: (values: TUserPassword) => void
+  onsubmit: (values: TUserPassword) => void
   className?: string
 }
 
 export const PasswordChangeForm = ({
+  onsubmit,
   isDisable,
-  onsubmitCallback,
   className = '',
 }: TPasswordChangeForm) => {
   return (
-    <div className={`${style.user_form_wrapper} ${className}`}>
+    <div className={`${style.userFormWrapper} ${className}`}>
       <Formik
         initialValues={{
           oldPassword: '',
@@ -26,9 +26,9 @@ export const PasswordChangeForm = ({
           repeatNewPassword: '',
         }}
         validate={validate}
-        onSubmit={onsubmitCallback}>
+        onSubmit={onsubmit}>
         {({ values }) => (
-          <Form className={style.user_form}>
+          <Form className={style.userForm}>
             <UserProfileFormInput
               id="oldPassword"
               type="password"
@@ -56,8 +56,8 @@ export const PasswordChangeForm = ({
               value={values['repeatNewPassword']}
               placeholder="Повторите новый пароль"
             />
-            <div className={style.submit_button_wrapper}>
-              <UserProfileSaveButton className={style.save_button} />
+            <div className={style.submitButtonWrapper}>
+              <UserProfileSaveButton className={style.saveButton} />
             </div>
           </Form>
         )}

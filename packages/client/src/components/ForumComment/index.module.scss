@@ -1,6 +1,11 @@
 @import '../../assets/style/variables.scss';
 @import '../../assets/style/fonts.scss';
 
+.commentAvatarContainer {
+  width: 30px;
+  height: 30px;
+}
+
 .comment {
   padding: 12px 16px;
   border: 2px solid $azure;
@@ -8,7 +13,7 @@
   gap: 16px;
 }
 
-.comment-user-avatar {
+.commentUserAvatar {
   width: 30px;
   height: 30px;
   outline: 1px solid $image-outline;
@@ -16,21 +21,21 @@
   filter: drop-shadow(0px 4px 4px $shadow-color);
 }
 
-.comment-username {
+.commentUsername {
   margin-bottom: 8px;
 }
 
-.comment-text {
+.commentText {
   margin-bottom: 16px;
 }
 
-.comment-actions {
+.commentActions {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.comment-like-button {
+.commentLikeButton {
   border-radius: 16px;
   background-color: $white;
   display: flex;
@@ -40,12 +45,12 @@
   cursor: pointer;
 }
 
-.like-button-image {
+.likeButtonImage {
   width: 20px;
   height: 20px;
 }
 
-.like-button-count {
+.likeButtonCount {
   color: $medium-turquoise;
 }
 

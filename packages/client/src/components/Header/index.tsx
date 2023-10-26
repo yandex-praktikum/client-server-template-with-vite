@@ -3,6 +3,7 @@ import s from './index.module.scss'
 import GoBack from '../GoBack'
 import { ROUTES_NAMES } from '../../const/routeNames'
 import HeaderNavLink from '../HeaderNavLink'
+import { Avatar } from '../Avatar'
 
 const Header = () => {
   return (
@@ -15,7 +16,7 @@ const Header = () => {
           <HeaderNavLink to={ROUTES_NAMES.LEADER_BOARD} label="Лидеры" />
           <HeaderNavLink to={ROUTES_NAMES.FORUM} label="Форум" />
         </nav>
-        <img className={s.avatar} src="/src/assets/avatar.svg" alt="avatar" />
+        <Avatar imageUrl={null} />
       </div>
     </header>
   )

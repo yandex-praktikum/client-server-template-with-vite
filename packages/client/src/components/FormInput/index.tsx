@@ -34,8 +34,8 @@ export const FormInput = ({
   inputClassName = '',
 }: TFormInput) => {
   return (
-    <div className={`${styles.form_input_block_wrapper} ${className}`}>
-      <label htmlFor={id} className={`${styles.form_label} ${styles.font_18}`}>
+    <div className={`${styles.formInputBlockWrapper} ${className}`}>
+      <label htmlFor={id} className={`${styles.formLabel} ${styles.font_18}`}>
         {labelText}
       </label>
       <Field
@@ -44,14 +44,14 @@ export const FormInput = ({
         name={name}
         type={type}
         placeholder={placeholder}
-        className={`${styles.form_input} ${styles.font_24} ${
-          touched[name] && errors[name] ? 'error_input' : ''
+        className={`${styles.formInput} ${styles.font_24} ${
+          touched[name] && errors[name] ? 'error-input' : ''
         } ${inputClassName}`}
       />
       <ErrorMessage
         component="p"
         name={name}
-        className={`form_error_message ${styles.font_8}`}
+        className={`form-error-message ${styles.font_8}`}
       />
     </div>
   )

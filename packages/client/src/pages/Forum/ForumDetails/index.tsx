@@ -6,6 +6,7 @@ import { MOCK_FORUMS_DETAILS } from '../mockForums'
 import { ForumComment } from '../../../components/ForumComment'
 import { ForumMessageForm } from '../../../components/ForumMessageForm'
 import styles from './index.module.scss'
+import { Avatar } from '../../../components/Avatar'
 
 // TODO: рассмотреть динамическую пагинацию комментариев
 export const ForumDetails = () => {
@@ -44,7 +45,7 @@ export const ForumDetails = () => {
 
   if (!forum) {
     return (
-      <h2 className={`${styles.font_32} ${styles['notfound-title']}`}>
+      <h2 className={`${styles.font_32} ${styles.notFoundTitle}`}>
         Форум не найден
       </h2>
     )
@@ -53,21 +54,17 @@ export const ForumDetails = () => {
   return (
     <>
       <div className={styles.forum}>
-        <img
-          src={forum.image}
-          className={styles['forum-image']}
-          alt={`Картинка ${forum.title}`}
-        />
-        <div className={styles['forum-text']}>
+        <Avatar imageUrl={null} size={60} />
+        <div className={styles.forumText}>
           <h2 className={styles.font_20}>{forum.title}</h2>
           <h3 className={styles.font_16_500}>{forum.description}</h3>
         </div>
       </div>
-      <div className={styles['comments-container']}>
-        <h4 className={`${styles['comments-description']} ${styles.font_24}`}>
+      <div className={styles.commentsContainer}>
+        <h4 className={`${styles.commentsDescription} ${styles.font_24}`}>
           Комментарии:
         </h4>
-        <div className={styles['comments-wrapper']}>
+        <div className={styles.commentsWrapper}>
           {forum.comments.map(comment => (
             <ForumComment
               key={comment.id}

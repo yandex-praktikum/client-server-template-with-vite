@@ -8,8 +8,8 @@ import styles from './index.module.scss'
 export const ForumPage = () => {
   return (
     <div className={styles.wrapper}>
-      <h1 className={`${styles.font_40} ${styles['forum-title']}`}>Форумы</h1>
-      <ul className={styles['forums-container']}>
+      <h1 className={`${styles.font_40} ${styles.forumTitle}`}>Форумы</h1>
+      <ul className={styles.forumsContainer}>
         {MOCK_FORUMS.map(mockForum => (
           <li key={mockForum.id}>
             <Link
@@ -23,7 +23,7 @@ export const ForumPage = () => {
       <FormLinkButton
         to="create"
         buttonText="Создать тему"
-        className={styles['forum-create']}
+        className={styles.forumCreate}
       />
     </div>
   )

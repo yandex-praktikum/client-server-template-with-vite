@@ -1,9 +1,13 @@
-.settings_page_wrapper {
-  justify-content: flex-start;
-  padding: 2rem 4.5rem 3.875rem;
+.settingsPageWrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
-.user_avatar_margin {
+.userAvatarMargin {
   margin-top: 1.25rem;
   margin-bottom: 1rem;
 }

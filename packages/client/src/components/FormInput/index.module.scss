@@ -1,39 +1,38 @@
 @import 'src/assets/style/variables';
 @import 'src/assets/style/fonts';
 
-.form_input_block_wrapper {
+.formInputBlockWrapper {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.form_label {
+.formLabel {
   color: $azure;
 }
 
-.form_input {
+.formInput {
   border: none;
   border-bottom: 1px solid $azure;
-  color: var(--common-black-text);
   padding: 0.5rem 1rem;
   width: 100%;
 }
 
-.form_input:focus,
-.form_input:active,
-.form_input:focus-visible {
+.formInput:focus,
+.formInput:active,
+.formInput:focus-visible {
   outline: none;
 }
 
-.form_input:disabled {
+.formInput:disabled {
   border: none;
   background: none;
 }
 
-.form_input::placeholder {
+.formInput::placeholder {
   color: $light-gray;
 }
 
-.form_error_message {
+.form-error-message {
   color: $red-alert;
 }

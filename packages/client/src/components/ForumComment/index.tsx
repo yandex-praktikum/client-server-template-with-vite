@@ -2,6 +2,7 @@ import { TComment } from '../../pages/Forum/types'
 import { ReactComponent as Heart } from '../../assets/heart.svg'
 import { convertISOtoTimeDateMonth } from '../../utils/dateConvertors'
 import styles from './index.module.scss'
+import { Avatar } from '../Avatar'
 
 type ForumCommentProps = {
   comment: TComment
@@ -14,29 +15,25 @@ export const ForumComment = ({
 }: ForumCommentProps) => {
   return (
     <div className={styles.comment}>
-      <img
-        className={styles['comment-user-avatar']}
-        src={comment.user.avatar}
-        alt={comment.user.first_name}
-      />
-      <div className={styles['comment__text-container']}>
-        <p className={`${styles['comment-username']} ${styles.font_16_500}`}>
+      <div className={styles.commentAvatarContainer}>
+        <Avatar imageUrl={comment.user.avatar} />
+      </div>
+      <div className={styles.commentTextContainer}>
+        <p className={`${styles.commentUsername} ${styles.font_16_500}`}>
           {comment.user.display_name}
         </p>
-        <p className={`${styles['comment-text']} ${styles.font_16_500}`}>
+        <p className={`${styles.commentText} ${styles.font_16_500}`}>
           {comment.text}
         </p>
-        <div className={styles['comment-actions']}>
+        <div className={styles.commentActions}>
           <button
             onClick={() => handleLikeButtonClick(comment.id)}
-            className={styles['comment-like-button']}>
+            className={styles.commentLikeButton}>
             <Heart
               fill={comment.isLiked ? '#DC143C' : '#686868'}
-              className={styles['like-button-image']}
+              className={styles.likeButtonImage}
             />
-            <span className={styles['like-button-count']}>
-              {comment.likesCount}
-            </span>
+            <span className={styles.likeButtonCount}>{comment.likesCount}</span>
           </button>
           <span className={styles.font_13}>
             {convertISOtoTimeDateMonth(comment.date)}
