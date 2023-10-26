@@ -34,6 +34,9 @@ body {
   height: 2.5625rem;
   max-width: 21.25rem;
   width: 100%;
+  &:hover {
+    opacity: .8;
+  }
 }
 
 img,
