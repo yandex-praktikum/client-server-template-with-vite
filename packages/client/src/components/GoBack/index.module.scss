@@ -1,0 +1,16 @@
+@import 'src/assets/style/variables';
+
+.link {
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  width: 64px;
+  height: 64px;
+  background-color: $medium-turquoise;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.img {
+  margin: auto;
+}

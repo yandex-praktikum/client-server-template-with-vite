@@ -8,10 +8,13 @@ import RegistrationPage from './pages/RegistrationPage'
 import UserProfilePage from './pages/UserProfile'
 import MainPage from './pages/Main'
 import GamePage from './pages/Game'
-import LeaderBoardPage from './pages/LeaderBoard'
+
 import ForumPage from './pages/Forum'
 import Error404 from './pages/Error_404'
 import Error5XX from './pages/Error_5XX'
+import LeaderBoardPage from './pages/LeaderBoard'
+import { BaseComponent } from './components/Base'
+import { ErrorBoundary } from './hoc/ErrorBoundary'
 
 const App: FC = () => {
   const navigate = useNavigate()
@@ -60,34 +63,36 @@ const App: FC = () => {
   // }, [])
 
   return (
-    <div className="App">
+    <ErrorBoundary>
       <Routes>
-        <Route path={ROUTES_NAMES.SIGN_IN} element={<LoginPage />} />
-        <Route path={ROUTES_NAMES.SIGNUP} element={<RegistrationPage />} />
-        <Route
-          path={ROUTES_NAMES.SETTINGS}
-          element={<UserProfilePage logoutCallback={logoutHandler} />}
-        />
+        <Route path="/" element={<BaseComponent />}>
+          <Route
+            path={ROUTES_NAMES.LEADER_BOARD}
+            element={<LeaderBoardPage />}
+          />
+          <Route
+            path={ROUTES_NAMES.FORUM}
+            element={<ForumPage logoutCallback={logoutHandler} />}
+          />
+          <Route
+            path={ROUTES_NAMES.SETTINGS}
+            element={<UserProfilePage logoutCallback={logoutHandler} />}
+          />
+        </Route>
         <Route
           path={ROUTES_NAMES.MAIN}
           element={<MainPage logoutCallback={logoutHandler} />}
         />
+        <Route path={ROUTES_NAMES.SIGN_IN} element={<LoginPage />} />
+        <Route path={ROUTES_NAMES.SIGNUP} element={<RegistrationPage />} />
         <Route
           path={ROUTES_NAMES.GAME}
           element={<GamePage logoutCallback={logoutHandler} />}
         />
-        <Route
-          path={ROUTES_NAMES.LEADER_BOARD}
-          element={<LeaderBoardPage logoutCallback={logoutHandler} />}
-        />
-        <Route
-          path={ROUTES_NAMES.FORUM}
-          element={<ForumPage logoutCallback={logoutHandler} />}
-        />
         <Route path={ROUTES_NAMES.ERROR_5XX} element={<Error5XX />} />
         <Route path={ROUTES_NAMES.ERROR_404} element={<Error404 />} />
       </Routes>
-    </div>
+    </ErrorBoundary>
   )
 }
 
