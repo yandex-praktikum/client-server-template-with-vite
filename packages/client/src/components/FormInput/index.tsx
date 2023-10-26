@@ -11,23 +11,27 @@ import styles from './index.module.scss'
 type TFormInput = {
   id: string
   name: string
-  type: string
   labelText: string
-  placeholder: string
+  placeholder?: string
+  as?: string
+  type?: string
   touched?: FormikTouched<FormikValues>
   errors?: FormikErrors<FormikValues>
   className?: string
+  inputClassName?: string
 }
 
 export const FormInput = ({
   id,
   name,
-  type,
   labelText,
-  placeholder,
+  type,
+  placeholder = '',
+  as = 'input',
   touched = {},
   errors = {},
   className = '',
+  inputClassName = '',
 }: TFormInput) => {
   return (
     <div className={`${styles.form_input_block_wrapper} ${className}`}>
@@ -36,12 +40,13 @@ export const FormInput = ({
       </label>
       <Field
         id={id}
+        as={as}
         name={name}
         type={type}
         placeholder={placeholder}
         className={`${styles.form_input} ${styles.font_24} ${
           touched[name] && errors[name] ? 'error_input' : ''
-        }`}
+        } ${inputClassName}`}
       />
       <ErrorMessage
         component="p"

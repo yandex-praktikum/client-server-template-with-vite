@@ -14,6 +14,8 @@ export type InputType =
   | 'newPassword'
   | 'repeatNewPassword'
   | 'passwordRepeat'
+  | 'description'
+  | 'title'
   | ''
 
 type TValidate = (value: string, inputName: InputType) => Record<string, string>
@@ -136,6 +138,28 @@ const messageValidator: TValidate = (message, inputName) => {
   return errors
 }
 
+const descriptionValidator: TValidate = (message, inputName) => {
+  const errors: Record<string, string> = {}
+
+  if (!message.trim()) {
+    errors[inputName] = 'Описание не может быть пустым'
+    return errors
+  }
+
+  return errors
+}
+
+const titleValidator: TValidate = (message, inputName) => {
+  const errors: Record<string, string> = {}
+
+  if (!message.trim()) {
+    errors[inputName] = 'Название не может быть пустым'
+    return errors
+  }
+
+  return errors
+}
+
 export const validate: (values: FormikValues) => void | object = values => {
   const errorsArray = Object.entries(values).map(item => {
     const inputName = item[0]
@@ -159,6 +183,10 @@ export const validate: (values: FormikValues) => void | object = values => {
         return phoneValidator(values, inputName)
       case 'message':
         return messageValidator(values, inputName)
+      case 'description':
+        return descriptionValidator(values, inputName)
+      case 'title':
+        return titleValidator(values, inputName)
       default:
         return {}
     }

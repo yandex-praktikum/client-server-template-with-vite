@@ -9,11 +9,12 @@ import UserProfilePage from './pages/UserProfile'
 import MainPage from './pages/Main'
 import GamePage from './pages/Game'
 
-import ForumPage from './pages/Forum'
+import { ForumPage } from './pages/Forum/ForumsList'
 import Error404 from './pages/Error_404'
 import Error5XX from './pages/Error_5XX'
 import LeaderBoardPage from './pages/LeaderBoard'
 import { BaseComponent } from './components/Base'
+import { ForumCreation } from './pages/Forum/ForumCreation'
 
 const App: FC = () => {
   const navigate = useNavigate()
@@ -63,9 +64,10 @@ const App: FC = () => {
             path={ROUTES_NAMES.LEADER_BOARD}
             element={<LeaderBoardPage />}
           />
+          <Route path={ROUTES_NAMES.FORUM} element={<ForumPage />} />
           <Route
-            path={ROUTES_NAMES.FORUM}
-            element={<ForumPage logoutCallback={logoutHandler} />}
+            path={ROUTES_NAMES.FORUM_CREATION}
+            element={<ForumCreation />}
           />
           <Route
             path={ROUTES_NAMES.SETTINGS}
