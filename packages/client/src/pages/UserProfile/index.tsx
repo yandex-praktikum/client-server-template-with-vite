@@ -86,7 +86,7 @@ const UserProfilePage = ({ logoutCallback }: TUserProfilePage) => {
       />
       <UserProfileFormTemplate
         userData={userData}
-        logoutCallback={logoutCallback}
+        logout={logoutCallback}
         changeUserDataHandler={changeUserDataHandler}
         changeUserPasswordHandler={changeUserPasswordHandler}
       />

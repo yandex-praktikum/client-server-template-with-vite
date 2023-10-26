@@ -5,20 +5,20 @@ import { Link } from 'react-router-dom'
 type TFormAsLinkButton = {
   to: string
   buttonText: string
-  onClickCallback?: () => void
+  onClick?: () => void
   className?: string
 }
 
 export const FormLinkButton = ({
   to,
   buttonText,
-  onClickCallback,
+  onClick,
   className,
 }: TFormAsLinkButton) => {
   return (
     <Link
       to={to}
-      onClick={onClickCallback}
+      onClick={onClick}
       className={`button form_button ${className} ${styles.form_link_button} ${styles.font_24}`}>
       {buttonText}
     </Link>

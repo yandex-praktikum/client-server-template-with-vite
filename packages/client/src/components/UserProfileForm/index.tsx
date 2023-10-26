@@ -9,14 +9,14 @@ import style from './index.module.scss'
 type TUserProfileForm = {
   isDisable: boolean
   userData: TUserData
-  onsubmitCallback: (values: FormikValues) => void
+  onsubmit: (values: FormikValues) => void
   className?: string
 }
 
 export const UserProfileForm = ({
   userData,
   isDisable,
-  onsubmitCallback,
+  onsubmit,
   className = '',
 }: TUserProfileForm) => {
   return (
@@ -25,7 +25,7 @@ export const UserProfileForm = ({
         enableReinitialize={true}
         initialValues={userData}
         validate={validate}
-        onSubmit={onsubmitCallback}>
+        onSubmit={onsubmit}>
         {({ values }) => (
           <Form className={style.user_form}>
             <UserProfileFormInput

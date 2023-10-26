@@ -8,13 +8,13 @@ import style from '../userProfileForm/index.module.scss'
 
 type TPasswordChangeForm = {
   isDisable: boolean
-  onsubmitCallback: (values: TUserPassword) => void
+  onsubmit: (values: TUserPassword) => void
   className?: string
 }
 
 export const PasswordChangeForm = ({
+  onsubmit,
   isDisable,
-  onsubmitCallback,
   className = '',
 }: TPasswordChangeForm) => {
   return (
@@ -26,7 +26,7 @@ export const PasswordChangeForm = ({
           repeatNewPassword: '',
         }}
         validate={validate}
-        onSubmit={onsubmitCallback}>
+        onSubmit={onsubmit}>
         {({ values }) => (
           <Form className={style.user_form}>
             <UserProfileFormInput

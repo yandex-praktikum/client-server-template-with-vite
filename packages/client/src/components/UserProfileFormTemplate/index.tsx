@@ -10,14 +10,14 @@ import style from './index.module.scss'
 
 type TUserProfileFormTemplate = {
   userData: TUserData
-  logoutCallback: () => void
+  logout: () => void
   changeUserDataHandler: (data: FormikValues) => Promise<string>
   changeUserPasswordHandler: (data: TUserPassword) => Promise<string>
 }
 
 export const UserProfileFormTemplate = ({
+  logout,
   userData,
-  logoutCallback,
   changeUserDataHandler,
   changeUserPasswordHandler,
 }: TUserProfileFormTemplate) => {
@@ -68,11 +68,10 @@ export const UserProfileFormTemplate = ({
     setError('')
     const result = await changeUserPasswordHandler(values)
 
-    if (!result) {
-      disableEditMode()
-    }
     if (result) {
       setError(result)
+    } else {
+      disableEditMode()
     }
   }
 
@@ -92,22 +91,22 @@ export const UserProfileFormTemplate = ({
       {isPasswordEdit ? (
         <PasswordChangeForm
           isDisable={!isPasswordEdit}
-          onsubmitCallback={changeUserPassword}
+          onsubmit={changeUserPassword}
           className={style.user_profile_form_margin}
         />
       ) : (
         <UserProfileForm
           userData={userData}
           isDisable={!isEdit}
-          onsubmitCallback={changeUserData}
+          onsubmit={changeUserData}
           className={style.user_profile_form_margin}
         />
       )}
       {!hideButtons ? (
         <UserProfileButtonBlock
-          logOutCallback={logoutCallback}
-          userDataChangeCallback={userDataEditToggle}
-          passwordChangeCallback={passwordChangeToggle}
+          logOut={logout}
+          userDataChange={userDataEditToggle}
+          passwordChange={passwordChangeToggle}
         />
       ) : null}
     </div>
