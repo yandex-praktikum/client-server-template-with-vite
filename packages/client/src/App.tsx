@@ -21,7 +21,13 @@ const App: FC = () => {
   const path = useLocation().pathname
 
   useEffect(() => {
-    if (!(ROUTES_NAMES.SIGNUP === path || ROUTES_NAMES.SIGN_IN === path)) {
+    if (
+      !(
+        ROUTES_NAMES.SIGNUP === path ||
+        ROUTES_NAMES.SIGN_IN === path ||
+        ROUTES_NAMES.SETTINGS
+      )
+    ) {
       authApi
         .getUserData()
         .then(response => console.log(response))
