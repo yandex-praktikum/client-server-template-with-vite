@@ -1,6 +1,10 @@
 .settingsPageWrapper {
-  justify-content: flex-start;
-  padding: 2rem 4.5rem 3.875rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .userAvatarMargin {

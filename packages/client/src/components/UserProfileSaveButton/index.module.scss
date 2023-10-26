@@ -10,6 +10,9 @@
   height: 3.125rem;
   max-width: 18.75rem;
   width: 100%;
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .userProfileButtonText {
