@@ -19,7 +19,7 @@
   width: 7rem;
 }
 
-.avatar_cover {
+.avatarCover {
   position: absolute;
   background-color: $avatar-hover-background;
   border-radius: 99px;
@@ -32,7 +32,7 @@
   width: 7rem;
 }
 
-.avatar_cover {
+.avatarCover {
   background-color: $avatar-hover-background;
   border-radius: 99px;
   cursor: pointer;
@@ -41,13 +41,13 @@
   word-break: break-word;
 }
 
-.avatar_cover_text {
+.avatarCoverText {
   line-height: 0.875rem;
   text-align: center;
   width: 80%;
 }
 
-.avatar_image {
+.avatarImage {
   height: 7rem;
   width: 7rem;
 }

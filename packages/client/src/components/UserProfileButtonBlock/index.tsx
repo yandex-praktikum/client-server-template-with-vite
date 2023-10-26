@@ -3,31 +3,25 @@ import { UserFormLinkButton } from '../UserFormLinkButton'
 import style from './index.module.scss'
 
 type TUserProfileButtonBlock = {
-  logOutCallback: () => void
-  userDataChangeCallback: () => void
-  passwordChangeCallback: () => void
+  logOut: () => void
+  userDataChange: () => void
+  passwordChange: () => void
 }
 
 export const UserProfileButtonBlock = ({
-  logOutCallback,
-  passwordChangeCallback,
-  userDataChangeCallback,
+  logOut,
+  passwordChange,
+  userDataChange,
 }: TUserProfileButtonBlock) => {
   return (
-    <div className={style.button_wrapper}>
-      <UserFormLinkButton
-        text="Изменить данные"
-        callback={userDataChangeCallback}
-      />
-      <UserFormLinkButton
-        text="Изменить пароль"
-        callback={passwordChangeCallback}
-      />
+    <div className={style.buttonWrapper}>
+      <UserFormLinkButton text="Изменить данные" callback={userDataChange} />
+      <UserFormLinkButton text="Изменить пароль" callback={passwordChange} />
       <UserFormLinkButton
         text="Выйти"
-        callback={logOutCallback}
+        callback={logOut}
         isNoBorder
-        className={style.red_text}
+        className={style.redText}
       />
     </div>
   )

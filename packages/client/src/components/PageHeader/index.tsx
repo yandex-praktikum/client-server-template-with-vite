@@ -11,7 +11,7 @@ type TPageHeader = {
 
 export const PageHeader = ({ url, pathName, className = '' }: TPageHeader) => {
   return (
-    <div className={`${style.page_header} ${className}`}>
+    <div className={`${style.pageHeader} ${className}`}>
       <BackButton />
       <Navbar imageUrl={url} pathName={pathName} />
     </div>

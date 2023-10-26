@@ -10,14 +10,14 @@ import style from './index.module.scss'
 
 type TUserProfileFormTemplate = {
   userData: TUserData
-  logoutCallback: () => void
+  logout: () => void
   changeUserDataHandler: (data: FormikValues) => Promise<string>
   changeUserPasswordHandler: (data: TUserPassword) => Promise<string>
 }
 
 export const UserProfileFormTemplate = ({
+  logout,
   userData,
-  logoutCallback,
   changeUserDataHandler,
   changeUserPasswordHandler,
 }: TUserProfileFormTemplate) => {
@@ -68,46 +68,45 @@ export const UserProfileFormTemplate = ({
     setError('')
     const result = await changeUserPasswordHandler(values)
 
-    if (!result) {
-      disableEditMode()
-    }
     if (result) {
       setError(result)
+    } else {
+      disableEditMode()
     }
   }
 
   return (
-    <div className={style.profile_wrapper}>
-      <div className={style.user_name_wrapper}>
-        <span className={`${style.user_name_text} ${style.font_18}`}>
+    <div className={style.profileWrapper}>
+      <div className={style.userNameWrapper}>
+        <span className={`${style.userNameText} ${style.font_18}`}>
           {first_name}
         </span>
-        <span className={`${style.user_name_text} ${style.font_18}`}>
+        <span className={`${style.userNameText} ${style.font_18}`}>
           {second_name}
         </span>
       </div>
       {error ? (
-        <ErrorMessage text={error} className="error_message_margin" />
+        <ErrorMessage text={error} className="error-message-margin" />
       ) : null}
       {isPasswordEdit ? (
         <PasswordChangeForm
           isDisable={!isPasswordEdit}
-          onsubmitCallback={changeUserPassword}
-          className={style.user_profile_form_margin}
+          onsubmit={changeUserPassword}
+          className={style.userProfileFormMargin}
         />
       ) : (
         <UserProfileForm
           userData={userData}
           isDisable={!isEdit}
-          onsubmitCallback={changeUserData}
-          className={style.user_profile_form_margin}
+          onsubmit={changeUserData}
+          className={style.userProfileFormMargin}
         />
       )}
       {!hideButtons ? (
         <UserProfileButtonBlock
-          logOutCallback={logoutCallback}
-          userDataChangeCallback={userDataEditToggle}
-          passwordChangeCallback={passwordChangeToggle}
+          logOut={logout}
+          userDataChange={userDataEditToggle}
+          passwordChange={passwordChangeToggle}
         />
       ) : null}
     </div>

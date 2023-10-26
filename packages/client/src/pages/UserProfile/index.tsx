@@ -77,16 +77,16 @@ const UserProfilePage = ({ logoutCallback }: TUserProfilePage) => {
 
   return (
     <div
-      className={`page_wrapper page_background ${style.settings_page_wrapper}`}>
+      className={`page-wrapper page-background ${style.settingsPageWrapper}`}>
       <PageHeader url={userData.avatar} pathName={pathname} />
       <UserAvatar
         url={userData.avatar}
         changeAvatarHandler={changeAvatarHandler}
-        className={style.user_avatar_margin}
+        className={style.userAvatarMargin}
       />
       <UserProfileFormTemplate
         userData={userData}
-        logoutCallback={logoutCallback}
+        logout={logoutCallback}
         changeUserDataHandler={changeUserDataHandler}
         changeUserPasswordHandler={changeUserPasswordHandler}
       />

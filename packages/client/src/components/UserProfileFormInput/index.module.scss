@@ -1,7 +1,7 @@
 @import 'src/assets/style/variables';
 @import 'src/assets/style/fonts';
 
-.user_form_input_block_wrapper {
+.useFformInputBlockWrapper {
   border-bottom: 1px solid white;
   display: flex;
   flex-grow: 1;
@@ -10,18 +10,18 @@
   padding-bottom: 0.625rem;
 }
 
-.user_form_label {
+.userFormLabel {
   color: $common-black-text;
 }
 
-.user_form_input_wrapper {
+.userFormInputWrapper {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
 }
 
-.user_form_input {
+.userFormInput {
   border: none;
   background: none;
   color: $common-black-text;
@@ -29,20 +29,20 @@
   width: 100%;
 }
 
-.user_form_input::placeholder {
+.userFormInput::placeholder {
   color: $common-black-text;
 }
 
-.user_form_input:focus,
-.user_form_input:active,
-.user_form_input:focus-visible {
+.userFormInput:focus,
+.userFormInput:active,
+.userFormInput:focus-visible {
   outline: none;
 }
 
-.user_form_input:disabled {
+.userFormInput:disabled {
   color: $medium-turquoise;
 }
 
-.user_form_input:disabled::placeholder {
+.userFormInput:disabled::placeholder {
   color: $medium-turquoise;
 }
