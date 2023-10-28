@@ -15,9 +15,12 @@ import Error5XX from './pages/Error_5XX'
 import LeaderBoardPage from './pages/LeaderBoard'
 import { BaseComponent } from './components/Base'
 import { ErrorBoundary } from './hoc/ErrorBoundary'
+import { setUser } from './store/reducers/user'
+import { useAppDispatch } from './store'
 
 const App: FC = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const path = useLocation().pathname
 
   useEffect(() => {
@@ -30,7 +33,9 @@ const App: FC = () => {
     ) {
       authApi
         .getUserData()
-        .then(response => console.log(response))
+        .then(response => {
+          dispatch(setUser(response.data))
+        })
         .catch(error => {
           console.log(error)
           navigate(ROUTES_NAMES.SIGN_IN)
