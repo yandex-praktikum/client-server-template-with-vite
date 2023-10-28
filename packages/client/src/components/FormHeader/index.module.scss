@@ -1,11 +1,10 @@
 @import 'src/assets/style/fonts';
 @import 'src/assets/style/variables';
 
-.form_header {
+.formHeader {
   color: $azure;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 1.25rem;
   margin-bottom: 2.5rem;
 }

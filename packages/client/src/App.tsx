@@ -21,7 +21,13 @@ const App: FC = () => {
   const path = useLocation().pathname
 
   useEffect(() => {
-    if (!(ROUTES_NAMES.SIGNUP === path || ROUTES_NAMES.SIGN_IN === path)) {
+    if (
+      !(
+        path === ROUTES_NAMES.SIGNUP ||
+        path === ROUTES_NAMES.SIGN_IN ||
+        path === ROUTES_NAMES.SETTINGS
+      )
+    ) {
       authApi
         .getUserData()
         .then(response => console.log(response))
@@ -59,7 +65,7 @@ const App: FC = () => {
   return (
     <ErrorBoundary>
       <Routes>
-        <Route path="/" element={<BaseComponent />}>
+        <Route element={<BaseComponent />}>
           <Route
             path={ROUTES_NAMES.LEADER_BOARD}
             element={<LeaderBoardPage />}

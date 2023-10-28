@@ -7,5 +7,5 @@ type TFormWrapper = {
 }
 
 export const FormWrapper = ({ children, className }: TFormWrapper) => {
-  return <div className={`${styles.form_wrapper} ${className}`}>{children}</div>
+  return <div className={`${styles.formWrapper} ${className}`}>{children}</div>
 }

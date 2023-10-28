@@ -19,7 +19,6 @@ export type TSignupResponse = {
 export type TSignInRequestData = Pick<TSignupRequestData, 'login' | 'password'>
 
 export type TUserData = {
-  [key: string]: number | string
   id: number
   first_name: string
   second_name: string
@@ -43,6 +42,7 @@ export type TChatUserData = {
 export type TUserPassword = {
   oldPassword: string
   newPassword: string
+  repeatNewPassword: string
 }
 
 export type TSearchUserByLoginData = {

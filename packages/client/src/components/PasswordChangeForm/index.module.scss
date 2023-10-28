@@ -1,0 +1,19 @@
+.userFormWrapper {
+  width: 100%;
+}
+
+.userForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.submitButtonWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8.1875rem;
+  width: 100%;
+}

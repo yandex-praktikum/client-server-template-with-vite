@@ -1,0 +1,20 @@
+@import 'src/assets/style/variables';
+@import 'src/assets/style/fonts';
+
+.userProfileButton {
+  color: $azure;
+  cursor: pointer;
+  background-color: $medium-turquoise;
+  border: 1px solid $azure;
+  box-shadow: 0 4px 4px 0 $shadow-color;
+  height: 3.125rem;
+  max-width: 18.75rem;
+  width: 100%;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.userProfileButtonText {
+  text-shadow: 0 4px 4px 0 $shadow-color;
+}

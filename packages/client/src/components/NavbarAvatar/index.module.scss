@@ -1,0 +1,18 @@
+@import 'src/assets/style/variables';
+
+.avatarWrapper {
+  background-color: $avatar-background;
+  border-radius: 99px;
+  box-shadow: 0 4px 4px 0 $shadow-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 1.875rem;
+  width: 1.875rem;
+}
+
+.avatarImage {
+  height: 1.875rem;
+  width: 1.875rem;
+}

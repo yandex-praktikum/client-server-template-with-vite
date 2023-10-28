@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
-import { Form, Formik } from 'formik'
-import { FormWrapper } from '../../components/FormWrapper'
-import { FormHeader } from '../../components/FormHeader'
-import { FormInput } from '../../components/FormInput'
-import { FormSubmitButton } from '../../components/FormSubmitButton'
-import { FormLinkButton } from '../../components/FormAsLinkButton'
-import { ROUTES_NAMES } from '../../const/routeNames'
 import { useNavigate } from 'react-router-dom'
+import { Form, Formik } from 'formik'
 import { authApi } from '../../api/authApi'
-import { TSignupRequestData } from '../../api/types'
 import { validate } from '../../utils/validator'
 import { API_ERROR_MESSAGES } from '../../const/api'
-import { MyErrorMessage } from '../../components/myErrorMessage'
+import { TSignupRequestData } from '../../api/types'
+import { ROUTES_NAMES } from '../../const/routeNames'
+import { FormInput } from '../../components/FormInput'
+import { FormHeader } from '../../components/FormHeader'
+import { FormWrapper } from '../../components/FormWrapper'
+import { MyErrorMessage } from '../../components/MyErrorMessage'
+import { FormLinkButton } from '../../components/FormAsLinkButton'
+import { FormSubmitButton } from '../../components/FormSubmitButton'
 import { inputsData, REG_FORM_ERROR } from '../../const/registrationPage'
 
 const RegistrationPage = () => {
@@ -69,7 +69,7 @@ const RegistrationPage = () => {
   )
 
   return (
-    <div className="page_wrapper page_background">
+    <div className="page-wrapper page-background">
       <Formik
         initialValues={{
           email: '',
@@ -85,12 +85,12 @@ const RegistrationPage = () => {
         <Form onChange={cleanFetchErrorHandler} className="form">
           <FormWrapper>
             <FormHeader text="Регистрация" />
-            <div className="form_inputs-wrapper">
+            <div className="form-inputs-wrapper">
               {formInputs}
               {errorMessage ? <MyErrorMessage message={errorMessage} /> : null}
             </div>
           </FormWrapper>
-          <div className="form_buttons-wrapper button-block_login-reg-page">
+          <div className="form-buttons-wrapper button-block-login-reg-page">
             <FormSubmitButton
               disabled={false}
               buttonType="submit"

@@ -5,5 +5,5 @@ type TMyErrorMessage = {
 }
 
 export const MyErrorMessage = ({ message }: TMyErrorMessage) => (
-  <p className="form_error_message">{message}</p>
+  <p className="form-error-message">{message}</p>
 )

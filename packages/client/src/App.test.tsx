@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { render, screen } from '@testing-library/react'
 import App from './App'
 
-const appContent = 'Главная'
+const appContent = 'Вход'
 
 // @ts-ignore
 global.fetch = jest.fn(() =>
