@@ -1,4 +1,4 @@
-@import 'src/assets/style/variables';
+@import './assets/style/variables';
 
 * {
   box-sizing: border-box;
@@ -14,7 +14,14 @@
 
 body {
   margin: 0;
-  color: #ffffff;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
 }
 
 .button {

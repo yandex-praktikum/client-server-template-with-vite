@@ -12,10 +12,10 @@ type TUserProfileFormInput = {
   id: string
   name: string
   type: string
-  value?: string
   labelText: string
   placeholder: string
   isDisabled: boolean
+  value?: string
   touched?: FormikTouched<FormikValues>
   errors?: FormikErrors<FormikValues>
   className?: string
@@ -27,7 +27,7 @@ export const UserProfileFormInput = ({
   type,
   labelText,
   isDisabled,
-  value = '',
+  value,
   placeholder,
   touched = {},
   errors = {},
@@ -45,7 +45,7 @@ export const UserProfileFormInput = ({
           id={id}
           name={name}
           type={type}
-          value={value}
+          value={value ?? ''}
           disabled={isDisabled}
           placeholder={placeholder}
           className={`${styles.userFormInput} ${styles.font_14} ${

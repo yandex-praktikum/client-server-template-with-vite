@@ -1,6 +1,7 @@
 import React from 'react'
-import s from './index.module.scss'
 import { useNavigate } from 'react-router-dom'
+import arrowUrl from '../../assets/arrow.svg'
+import s from './index.module.scss'
 
 const GoBack = () => {
   const navigate = useNavigate()
@@ -11,7 +12,7 @@ const GoBack = () => {
 
   return (
     <button className={s.link} onClick={handleClick}>
-      <img className={s.img} src="src/assets/arrow.svg" alt="arrow" />
+      <img className={s.img} src={arrowUrl} alt="Вернуться" />
     </button>
   )
 }
