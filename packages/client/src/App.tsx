@@ -15,8 +15,8 @@ import Error5XX from './pages/Error_5XX'
 import LeaderBoardPage from './pages/LeaderBoard'
 import { BaseComponent } from './components/Base'
 import { ErrorBoundary } from './hoc/ErrorBoundary'
-import { setUser } from './store/reducers/user'
-import { useAppDispatch } from './store'
+import { setUser } from './store/user/slice'
+import { useAppDispatch } from './hook/hook'
 
 const App: FC = () => {
   const navigate = useNavigate()
