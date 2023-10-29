@@ -1,11 +1,12 @@
-export const convertISOtoTimeDateMonth = (date: string) => {
+export const convertISOtoTimeDateMonth = (date: string): string => {
   const targetDate = new Date(date)
-  const hours = targetDate.getHours()
-  const minutes = targetDate.getMinutes()
-  const month = targetDate.getMonth()
-  const day = targetDate.getDay()
+  const hours = targetDate.getHours().toString()
+  const minutes = targetDate.getMinutes().toString()
+  const month = targetDate.getMonth().toString()
+  const day = targetDate.getDay().toString()
 
-  return `${hours}:${minutes < 10 ? `0${minutes}` : minutes} ${
-    day < 10 ? `0${day}` : day
-  }.${month < 10 ? `0${month}` : month}`
+  return `${hours}:${minutes.padStart(2, '0')} ${day.padStart(
+    2,
+    '0'
+  )}.${month.padStart(2, '0')}`
 }

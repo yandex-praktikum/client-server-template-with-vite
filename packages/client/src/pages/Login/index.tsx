@@ -13,7 +13,6 @@ import { FormLinkButton } from '../../components/FormAsLinkButton'
 import { FormSubmitButton } from '../../components/FormSubmitButton'
 
 const LoginPage = () => {
-  console.log(123)
   const navigate = useNavigate()
   const [errorMessage, setErrorMessage] = useState('')
 
