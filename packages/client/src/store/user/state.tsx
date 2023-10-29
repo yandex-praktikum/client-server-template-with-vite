@@ -1,7 +1,11 @@
 import { TUserData } from '../../api/types'
 
+export type Status = 'idle' | 'loading' | 'rejected' | 'received'
+
 type userSlice = {
   user: TUserData
+  status: Status
+  error: string | null
 }
 
 export const initialState: userSlice = {
@@ -15,4 +19,6 @@ export const initialState: userSlice = {
     display_name: '',
     avatar: '',
   },
+  status: 'idle',
+  error: null,
 }

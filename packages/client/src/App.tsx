@@ -8,15 +8,14 @@ import RegistrationPage from './pages/RegistrationPage'
 import UserProfilePage from './pages/UserProfile'
 import MainPage from './pages/Main'
 import GamePage from './pages/Game'
-
 import ForumPage from './pages/Forum'
 import Error404 from './pages/Error_404'
 import Error5XX from './pages/Error_5XX'
 import LeaderBoardPage from './pages/LeaderBoard'
 import { BaseComponent } from './components/Base'
 import { ErrorBoundary } from './hoc/ErrorBoundary'
-import { setUser } from './store/user/slice'
 import { useAppDispatch } from './hook/hook'
+import { getUser } from './store/user/slice'
 
 const App: FC = () => {
   const navigate = useNavigate()
@@ -31,17 +30,14 @@ const App: FC = () => {
         path === ROUTES_NAMES.SETTINGS
       )
     ) {
-      authApi
-        .getUserData()
-        .then(response => {
-          dispatch(setUser(response.data))
-        })
-        .catch(error => {
-          console.log(error)
-          navigate(ROUTES_NAMES.SIGN_IN)
-        })
+      try {
+        dispatch(getUser())
+      } catch (error) {
+        console.log(error)
+        navigate(ROUTES_NAMES.SIGN_IN)
+      }
     }
-  }, [path])
+  }, [dispatch, path])
 
   const logoutHandler = () => {
     authApi
