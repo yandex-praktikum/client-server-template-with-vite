@@ -14,7 +14,9 @@ const userSlice = createSlice({
       })
       .addCase(getUser.rejected, (state, action) => {
         state.status = 'rejected'
-        state.error = action.payload as string
+        if (action.error.message) {
+          state.error = action.error.message
+        }
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.status = 'received'
