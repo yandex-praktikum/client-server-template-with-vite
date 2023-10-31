@@ -15,7 +15,7 @@ import LeaderBoardPage from './pages/LeaderBoard'
 import { BaseComponent } from './components/Base'
 import { ErrorBoundary } from './hoc/ErrorBoundary'
 import { useAppDispatch } from './hook/hook'
-import { getUser } from './store/user/slice'
+import { getUser } from './store/user/actions'
 
 const App: FC = () => {
   const navigate = useNavigate()
@@ -30,12 +30,9 @@ const App: FC = () => {
         path === ROUTES_NAMES.SETTINGS
       )
     ) {
-      try {
-        dispatch(getUser())
-      } catch (error) {
-        console.log(error)
-        navigate(ROUTES_NAMES.SIGN_IN)
-      }
+      dispatch(getUser())
+    } else {
+      navigate(ROUTES_NAMES.SIGN_IN)
     }
   }, [dispatch, path])
 
