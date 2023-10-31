@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { authApi } from './api/authApi'
 import { ROUTES_NAMES } from './const/routeNames'
@@ -15,11 +15,12 @@ import { ForumCreation } from './pages/Forum/ForumCreation'
 import { ForumDetails } from './pages/Forum/ForumDetails'
 import './App.scss'
 import { ErrorBoundary } from './hoc/ErrorBoundary'
+import { withAuthCheck } from './hoc/WithAuthCheck'
 import { useAppDispatch } from './hook/hook'
 import { getUser } from './store/user/actions'
 import { ForumPage } from './pages/Forum/ForumsList'
 
-const App: FC = () => {
+const AppComponent = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const path = useLocation().pathname
@@ -48,17 +49,6 @@ const App: FC = () => {
         navigate(ROUTES_NAMES.SIGN_IN)
       })
   }
-
-  // useEffect(() => {
-  //   const fetchServerData = async () => {
-  //     const url = `http://localhost:${__SERVER_PORT__}`
-  //     const response = await fetch(url)
-  //     const data = await response.json()
-  //     console.log(data)
-  //   }
-  //
-  //   fetchServerData()
-  // }, [])
 
   return (
     <ErrorBoundary>
@@ -96,5 +86,7 @@ const App: FC = () => {
     </ErrorBoundary>
   )
 }
+
+const App = withAuthCheck(AppComponent)
 
 export default App
