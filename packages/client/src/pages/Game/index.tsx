@@ -1,4 +1,5 @@
 import React from 'react'
+import Canvas from '../../components/Canvas/Canvas'
 
 type TGamePage = {
   logoutCallback: () => void
@@ -7,7 +8,7 @@ type TGamePage = {
 const GamePage = ({ logoutCallback }: TGamePage) => {
   return (
     <div>
-      GamePage
+      <Canvas />
       <button onClick={logoutCallback}>Logout</button>
     </div>
   )

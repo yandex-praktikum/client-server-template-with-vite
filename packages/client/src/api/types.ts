@@ -25,7 +25,7 @@ export type TUserData = {
   display_name: string
   phone: string
   login: string
-  avatar: string
+  avatar: string | null
   email: string
 }
 

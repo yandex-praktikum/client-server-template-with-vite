@@ -14,6 +14,8 @@ export type InputType =
   | 'newPassword'
   | 'repeatNewPassword'
   | 'passwordRepeat'
+  | 'description'
+  | 'title'
   | ''
 
 type TValidate = (value: string, inputName: InputType) => Record<string, string>
@@ -121,8 +123,8 @@ const phoneValidator: TValidate = (phone, inputName) => {
   }
   if (!REGEXP.phoneValidation.test(phone)) {
     errors[inputName] = 'Можно использовать только цифры и плюс в начале номера'
-    return errors
   }
+
   return errors
 }
 
@@ -131,8 +133,28 @@ const messageValidator: TValidate = (message, inputName) => {
 
   if (!message.trim()) {
     errors[inputName] = 'Сообщение не должно быть пустым.'
-    return errors
   }
+
+  return errors
+}
+
+const descriptionValidator: TValidate = (message, inputName) => {
+  const errors: Record<string, string> = {}
+
+  if (!message.trim()) {
+    errors[inputName] = 'Описание не может быть пустым'
+  }
+
+  return errors
+}
+
+const titleValidator: TValidate = (message, inputName) => {
+  const errors: Record<string, string> = {}
+
+  if (!message.trim()) {
+    errors[inputName] = 'Название не может быть пустым'
+  }
+
   return errors
 }
 
@@ -159,6 +181,10 @@ export const validate: (values: FormikValues) => void | object = values => {
         return phoneValidator(values, inputName)
       case 'message':
         return messageValidator(values, inputName)
+      case 'description':
+        return descriptionValidator(values, inputName)
+      case 'title':
+        return titleValidator(values, inputName)
       default:
         return {}
     }

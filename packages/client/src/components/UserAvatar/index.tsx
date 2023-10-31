@@ -9,7 +9,7 @@ import {
 import style from './index.module.scss'
 
 type TUserAvatar = {
-  url: string
+  url: string | null
   changeAvatarHandler: (data: FormData) => Promise<string>
   className?: string
 }

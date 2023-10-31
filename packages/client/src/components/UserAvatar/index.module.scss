@@ -10,13 +10,14 @@
 .avatar {
   position: relative;
   background-color: $avatar-background;
-  border-radius: 99px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   height: 7rem;
   width: 7rem;
+  outline: 1px solid $image-outline;
 }
 
 .avatarCover {

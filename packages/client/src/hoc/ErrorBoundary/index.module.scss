@@ -1,3 +1,6 @@
+@import '../../assets/style/variables.scss';
+@import '../../assets/style/fonts.scss';
+
 .wrapper {
   background-image: url('/src/assets/bg.jpg');
   background-repeat: no-repeat;
@@ -8,4 +11,5 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  color: $azure;
 }

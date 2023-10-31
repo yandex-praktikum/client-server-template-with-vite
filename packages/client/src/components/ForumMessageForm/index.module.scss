@@ -1,0 +1,26 @@
+@import '../../assets/style/variables.scss';
+@import '../../assets/style/fonts.scss';
+
+.message-form {
+  width: 100%;
+  display: flex;
+  gap: 32px;
+  align-items: flex-end;
+}
+
+.message-control-container {
+  width: 100%;
+}
+
+.message-control {
+  border: 2px solid $azure;
+  background-color: transparent;
+}
+
+.message-submit {
+  border: 2px solid $azure;
+  background-color: transparent;
+  color: $azure;
+  padding: 14px 24px;
+  cursor: pointer;
+}
