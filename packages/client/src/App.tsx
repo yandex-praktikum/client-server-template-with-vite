@@ -1,5 +1,5 @@
-import React, { FC, useEffect } from 'react'
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import React from 'react'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import { authApi } from './api/authApi'
 import { ROUTES_NAMES } from './const/routeNames'
 import LoginPage from './pages/Login'
@@ -16,28 +16,10 @@ import { ForumCreation } from './pages/Forum/ForumCreation'
 import { ForumDetails } from './pages/Forum/ForumDetails'
 import './App.scss'
 import { ErrorBoundary } from './hoc/ErrorBoundary'
+import { withAuthCheck } from './hoc/WithAuthCheck'
 
-const App: FC = () => {
+const AppComponent = () => {
   const navigate = useNavigate()
-  const path = useLocation().pathname
-
-  useEffect(() => {
-    if (
-      !(
-        path === ROUTES_NAMES.SIGNUP ||
-        path === ROUTES_NAMES.SIGN_IN ||
-        path === ROUTES_NAMES.SETTINGS
-      )
-    ) {
-      authApi
-        .getUserData()
-        .then(response => console.log(response))
-        .catch(error => {
-          console.log(error)
-          navigate(ROUTES_NAMES.SIGN_IN)
-        })
-    }
-  }, [path])
 
   const logoutHandler = () => {
     authApi
@@ -51,17 +33,6 @@ const App: FC = () => {
         navigate(ROUTES_NAMES.SIGN_IN)
       })
   }
-
-  // useEffect(() => {
-  //   const fetchServerData = async () => {
-  //     const url = `http://localhost:${__SERVER_PORT__}`
-  //     const response = await fetch(url)
-  //     const data = await response.json()
-  //     console.log(data)
-  //   }
-  //
-  //   fetchServerData()
-  // }, [])
 
   return (
     <ErrorBoundary>
@@ -99,5 +70,7 @@ const App: FC = () => {
     </ErrorBoundary>
   )
 }
+
+const App = withAuthCheck(AppComponent)
 
 export default App
