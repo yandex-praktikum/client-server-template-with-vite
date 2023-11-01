@@ -15,16 +15,21 @@ export const withAuthCheck = <P extends Record<string, unknown>>(
     const [isDataFetched, setIsDataFetched] = useState<boolean>(false)
 
     useEffect(() => {
-      authApi
-        .getUserData()
-        .then(() => {
+      const fetchData = async () => {
+        try {
+          await authApi.getUserData() // Запрос к API
+          // Если запрос выполнен успешно, то устанавливаем isAuth в значение true и isDataFetch в значение true
           setIsAuth(true)
-          setIsDataFetched(true)
-        })
-        .catch(() => {
+        } catch (error) {
+          // Если запрос выполнен с ошибкой, то устанавливаем isAuth в значение false и isDataFetch в значение true
           setIsAuth(false)
+        } finally {
+          // В финале устанавливает флаг завершения получения данных в true
           setIsDataFetched(true)
-        })
+        }
+      }
+
+      fetchData()
     }, [pathname])
 
     useEffect(() => {
