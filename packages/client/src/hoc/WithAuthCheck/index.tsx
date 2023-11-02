@@ -1,7 +1,10 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { authApi } from '../../api/authApi'
 import { ROUTES_NAMES } from '../../const/routeNames'
+import { getUserSliceData } from '../../store/user/selectors'
+import { useAppDispatch, useAppSelector } from '../../hook/hook'
+import { setIsAuth, setIsDataFetched } from '../../store/user/slice'
 
 // Создаем функцию высшего порядка (HOC)
 export const withAuthCheck = <P extends Record<string, unknown>>(
@@ -10,27 +13,28 @@ export const withAuthCheck = <P extends Record<string, unknown>>(
   // Возвращаем новый компонент
   return function Component(props: P) {
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
     const { pathname } = useLocation()
-    const [isAuth, setIsAuth] = useState<boolean>(false)
-    const [isDataFetched, setIsDataFetched] = useState<boolean>(false)
+    const { isAuth, isDataFetched } = useAppSelector(getUserSliceData)
 
     useEffect(() => {
       const fetchData = async () => {
         try {
           await authApi.getUserData() // Запрос к API
-          // Если запрос выполнен успешно, то устанавливаем isAuth в значение true и isDataFetch в значение true
-          setIsAuth(true)
+          // Если запрос выполнен успешно, то устанавливаем isAuth в значение true
+          dispatch(setIsAuth(true))
         } catch (error) {
-          // Если запрос выполнен с ошибкой, то устанавливаем isAuth в значение false и isDataFetch в значение true
-          setIsAuth(false)
+          // Если запрос выполнен с ошибкой, то устанавливаем isAuth в значение false
+          dispatch(setIsAuth(false))
         } finally {
           // В финале устанавливает флаг завершения получения данных в true
-          setIsDataFetched(true)
+          dispatch(setIsDataFetched(true))
         }
       }
-
-      fetchData()
-    }, [pathname])
+      if (!isAuth && !isDataFetched) {
+        fetchData()
+      }
+    }, [isAuth, isDataFetched, dispatch, pathname])
 
     useEffect(() => {
       if (isDataFetched) {

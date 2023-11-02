@@ -1,33 +1,36 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { authApi } from '../api/authApi'
 import { ROUTES_NAMES } from '../const/routeNames'
+import { useAppDispatch, useAppSelector } from './hook'
+import { getUserSliceData } from '../store/user/selectors'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { setIsAuth, setIsDataFetched } from '../store/user/slice'
 
 // Создаем кастомный хук для осуществления проверки авторизации пользователя
 export const useAuthCheck = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const { pathname } = useLocation()
-  const [isAuth, setIsAuth] = useState<boolean>(false)
-  const [isDataFetched, setIsDataFetched] = useState<boolean>(false)
+  const { isAuth, isDataFetched } = useAppSelector(getUserSliceData)
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
         await authApi.getUserData() // Запрос к API
-        // Если запрос выполнен успешно, то устанавливаем isAuth в значение true и isDataFetch в значение true
-        setIsAuth(true)
+        // Если запрос выполнен успешно, то устанавливаем isAuth в значение true
+        dispatch(setIsAuth(true))
       } catch (error) {
-        // Если запрос выполнен с ошибкой, то устанавливаем isAuth в значение false и isDataFetch в значение true
-        setIsAuth(false)
+        // Если запрос выполнен с ошибкой, то устанавливаем isAuth в значение false
+        dispatch(setIsAuth(false))
       } finally {
         // В финале устанавливает флаг завершения получения данных в true
-        setIsDataFetched(true)
+        dispatch(setIsDataFetched(true))
       }
     }
-
-    checkAuth() // Инициализация функции
-  }, [pathname])
-
+    if (!isAuth && !isDataFetched) {
+      checkAuth()
+    }
+  }, [isAuth, isDataFetched, dispatch, pathname])
   // Обрабатываем изменения состояния загрузки данных и авторизации
   useEffect(() => {
     if (isDataFetched) {

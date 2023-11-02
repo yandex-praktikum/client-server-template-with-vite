@@ -16,14 +16,17 @@ import { ForumDetails } from './pages/Forum/ForumDetails'
 import './App.scss'
 import { ErrorBoundary } from './hoc/ErrorBoundary'
 import { withAuthCheck } from './hoc/WithAuthCheck'
-import { useAppDispatch } from './hook/hook'
+import { useAppDispatch, useAppSelector } from './hook/hook'
 import { getUser } from './store/user/actions'
 import { ForumPage } from './pages/Forum/ForumsList'
+import { setIsAuth, setIsDataFetched } from './store/user/slice'
+import { getUserSliceData } from './store/user/selectors'
 
 const AppComponent = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const path = useLocation().pathname
+  const { user } = useAppSelector(getUserSliceData)
 
   useEffect(() => {
     if (
@@ -31,7 +34,8 @@ const AppComponent = () => {
         path === ROUTES_NAMES.SIGNUP ||
         path === ROUTES_NAMES.SIGN_IN ||
         path === ROUTES_NAMES.SETTINGS
-      )
+      ) &&
+      !user.id
     ) {
       dispatch(getUser())
     }
@@ -40,12 +44,14 @@ const AppComponent = () => {
   const logoutHandler = () => {
     authApi
       .logout()
-      .then(response => {
-        console.log(response)
+      .then(() => {
+        dispatch(setIsAuth(false))
+        dispatch(setIsDataFetched(false))
         navigate(ROUTES_NAMES.SIGN_IN)
       })
-      .catch(error => {
-        console.log(error)
+      .catch(() => {
+        dispatch(setIsAuth(false))
+        dispatch(setIsDataFetched(false))
         navigate(ROUTES_NAMES.SIGN_IN)
       })
   }
