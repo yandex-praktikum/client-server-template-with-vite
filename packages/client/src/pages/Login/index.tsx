@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Form, Formik } from 'formik'
 import { authApi } from '../../api/authApi'
+import { useAppDispatch } from '../../hook/hook'
 import { API_ERROR_MESSAGES } from '../../const/api'
 import { TSignInRequestData } from '../../api/types'
 import { ROUTES_NAMES } from '../../const/routeNames'
@@ -11,21 +12,26 @@ import { FormWrapper } from '../../components/FormWrapper'
 import { MyErrorMessage } from '../../components/MyErrorMessage'
 import { FormLinkButton } from '../../components/FormAsLinkButton'
 import { FormSubmitButton } from '../../components/FormSubmitButton'
+import { setIsAuth, setIsDataFetched } from '../../store/user/slice'
 
 const LoginPage = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const [errorMessage, setErrorMessage] = useState('')
 
   const authHandler = (data: TSignInRequestData) => {
     authApi
       .login(data)
-      .then(response => {
-        console.log(response)
+      .then(() => {
+        dispatch(setIsAuth(true))
+        dispatch(setIsDataFetched(true))
         navigate(ROUTES_NAMES.MAIN)
       })
       .catch(error => {
         const { reason } = error.response.data
         if (reason === API_ERROR_MESSAGES.USER_ALREADY_IN_SYSTEM) {
+          dispatch(setIsAuth(true))
+          dispatch(setIsDataFetched(true))
           navigate(ROUTES_NAMES.MAIN)
         }
 

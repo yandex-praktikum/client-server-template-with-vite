@@ -2,13 +2,17 @@ import { TUserData } from '../../api/types'
 
 export type Status = 'idle' | 'loading' | 'rejected' | 'received'
 
-type userSlice = {
+export type TUserSlice = {
+  isAuth: boolean
+  isDataFetched: boolean
   user: TUserData
   status: Status
   error: string | null
 }
 
-export const initialState: userSlice = {
+export const initialState: TUserSlice = {
+  isAuth: false,
+  isDataFetched: false,
   user: {
     id: 0,
     first_name: '',

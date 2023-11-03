@@ -1,11 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { initialState } from './state'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { initialState, TUserSlice } from './state'
 import { getUser } from './actions'
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    setIsAuth: (state: TUserSlice, action: PayloadAction<boolean>) => {
+      state.isAuth = action.payload
+    },
+    setIsDataFetched: (state: TUserSlice, action: PayloadAction<boolean>) => {
+      state.isDataFetched = action.payload
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(getUser.pending, state => {
@@ -25,4 +32,5 @@ const userSlice = createSlice({
   },
 })
 
+export const { setIsAuth, setIsDataFetched } = userSlice.actions
 export default userSlice.reducer
