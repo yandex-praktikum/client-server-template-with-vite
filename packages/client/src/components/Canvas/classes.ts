@@ -1,61 +1,6 @@
 import { Mouse, EnemyTypes, WaypointsType } from './interfaces'
 import { offset } from './consts'
 
-export class Rect {
-  x: number
-  y: number
-  color: string
-  w: number
-  h: number
-  active: boolean
-  center: { x: number; y: number }
-  context: CanvasRenderingContext2D | null
-
-  constructor(
-    x: number,
-    y: number,
-    w: number,
-    h: number,
-    color: string,
-    context: CanvasRenderingContext2D | null
-  ) {
-    this.x = x
-    this.y = y
-    this.color = color
-
-    this.w = w
-    this.h = h
-
-    this.active = true
-
-    this.center = {
-      x: this.x + this.w / 2,
-      y: this.y + this.h / 2,
-    }
-    this.context = context
-  }
-
-  draw(context: CanvasRenderingContext2D) {
-    const localContext = context
-
-    localContext.beginPath()
-
-    localContext.fillStyle = this.color
-    localContext.fillRect(this.x, this.y, this.w, this.h)
-
-    localContext.fillStyle = 'rgba(1,1,1,0.5)'
-    localContext.strokeRect(this.x, this.y, this.w, this.h)
-
-    localContext.closePath()
-  }
-
-  update() {
-    if (this.context) {
-      this.draw(this.context)
-    }
-  }
-}
-
 export class Enemy {
   x: number
   y: number
@@ -66,6 +11,11 @@ export class Enemy {
   radius: number
   context: CanvasRenderingContext2D | null
   waypoints: WaypointsType[]
+  health: number
+  velocity: {
+    x: number
+    y: number
+  }
 
   constructor(
     x: number,
@@ -85,6 +35,11 @@ export class Enemy {
     this.radius = 15
     this.context = context
     this.waypoints = waypoints
+    this.health = 30
+    this.velocity = {
+      x: 0,
+      y: 0,
+    }
   }
 
   draw() {
@@ -99,6 +54,17 @@ export class Enemy {
         Math.PI * 2
       )
       this.context.fill()
+
+      this.context.fillStyle = 'red'
+      this.context.fillRect(this.x, this.y - 10, this.width, 8)
+
+      this.context.fillStyle = 'green'
+      this.context.fillRect(
+        this.x,
+        this.y - 10,
+        (this.width * this.health) / 30,
+        8
+      )
     }
   }
 
@@ -111,13 +77,20 @@ export class Enemy {
       const xDistance = waypoint.x - this.x
       const angle = Math.atan2(yDistance, xDistance)
 
-      this.x += Math.cos(angle)
-      this.y += Math.sin(angle)
+      const speed = 2
+
+      this.velocity.x = Math.cos(angle) * speed
+      this.velocity.y = Math.sin(angle) * speed
+
+      this.x += this.velocity.x
+      this.y += this.velocity.y
 
       if (
-        Math.round(this.x) === Math.round(waypoint.x) &&
-        Math.round(this.y) === Math.round(waypoint.y) &&
-        this.waypointIndex !== this.waypoints.length - 1
+        Math.abs(Math.round(this.x) - Math.round(waypoint.x)) <
+          Math.abs(this.velocity.x) &&
+        Math.abs(Math.round(this.y) - Math.round(waypoint.y)) <
+          Math.abs(this.velocity.y) &&
+        this.waypointIndex < this.waypoints.length - 1
       ) {
         this.waypointIndex++
       }
@@ -141,7 +114,7 @@ export class TowerPlace {
   constructor(x: number, y: number, context: CanvasRenderingContext2D | null) {
     this.x = x
     this.y = y
-    this.size = 50
+    this.size = 32
     this.color = 'rgba(255,255,255,0.6)'
     this.occupied = false
     this.context = context
@@ -179,7 +152,7 @@ export class Shot {
   }
   radius: number
   context: CanvasRenderingContext2D | null
-
+  img: HTMLImageElement
   constructor(
     x: number,
     y: number,
@@ -195,14 +168,18 @@ export class Shot {
     this.enemy = enemy
     this.radius = 5
     this.context = context
+    this.img = new Image()
+    this.img.src = 'src/assets/game/shot.png'
   }
 
   draw() {
     if (this.context) {
-      this.context.beginPath()
-      this.context.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
-      this.context.fillStyle = 'rgb(255,140,0)'
-      this.context.fill()
+      this.context.drawImage(this.img, this.x, this.y)
+
+      // this.context.beginPath()
+      // this.context.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+      // this.context.fillStyle = 'rgb(255,140,0)'
+      // this.context.fill()
     }
   }
 
@@ -252,17 +229,17 @@ export class BuildTower {
   draw() {
     if (this.context) {
       this.context.fillStyle = 'rgb(0,56,176)'
-      this.context.fillRect(this.x, this.y, offset, offset)
+      this.context.fillRect(this.x, this.y, offset * 2, offset)
 
       this.context.beginPath()
       this.context.arc(
-        this.x + offset / 2,
+        this.x + (offset * 2) / 2,
         this.y + offset / 2,
         this.radius,
         0,
         Math.PI * 2
       )
-      this.context.fillStyle = 'rgba(0,56,176, .5)'
+      this.context.fillStyle = 'rgba(0,56,176, .1)'
       this.context.fill()
     }
   }
@@ -276,6 +253,27 @@ export class BuildTower {
       }
 
       this.frames++
+    }
+  }
+}
+
+export class Sprite {
+  x: number
+  y: number
+  img: HTMLImageElement
+  context: CanvasRenderingContext2D | null
+
+  constructor(x: number, y: number, context: CanvasRenderingContext2D | null) {
+    this.x = x
+    this.y = y
+    this.img = new Image()
+    this.img.src = 'src/assets/game/shot.png'
+    this.context = context
+  }
+
+  draw() {
+    if (this.context) {
+      this.context.drawImage(this.img, this.x, this.y)
     }
   }
 }

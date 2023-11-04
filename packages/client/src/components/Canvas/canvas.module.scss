@@ -1,0 +1,33 @@
+@import '../../assets/style/variables.scss';
+@import '../../assets/style/fonts.scss';
+
+.wrap{
+  position: relative;
+  display: inline-block;
+}
+.end_game{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+  color: $white;
+}
+.heats{
+  position: absolute;
+  top: 0;
+  right: 10px;
+  font-size: 20px;
+  color: $white;
+}
+.coins{
+  position: absolute;
+  top: 0;
+  right: 70px;
+  font-size: 20px;
+  color: $white;
+}

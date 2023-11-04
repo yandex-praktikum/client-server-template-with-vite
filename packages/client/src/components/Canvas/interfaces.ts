@@ -11,6 +11,7 @@ export interface EnemyTypes {
   waypointIndex: number
   center: { x: number; y: number }
   radius: number
+  health: number
 }
 
 export type TowerPlaceType = {
