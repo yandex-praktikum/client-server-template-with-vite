@@ -228,6 +228,9 @@ const Canvas: React.FC = () => {
           new BuildTower(activeBuildPlace.x, activeBuildPlace.y, context)
         )
         ;(activeBuildPlace as BuildPlace).isOccupied = true
+        buildingTower.sort((a, b) => {
+          return a.y - b.y
+        })
       }
     }
 

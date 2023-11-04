@@ -1,7 +1,77 @@
 import { Mouse, EnemyTypes, WaypointsType } from './interfaces'
 import { offset } from './consts'
 
-export class Enemy {
+export class Sprite {
+  x: number
+  y: number
+  img: HTMLImageElement
+  context: CanvasRenderingContext2D | null
+  frames: {
+    max: number
+    current: number
+    elapsed: number
+    hold: number
+  }
+  offset: {
+    x: number
+    y: number
+  }
+  constructor(
+    x: number,
+    y: number,
+    context: CanvasRenderingContext2D | null,
+    imgSrc: string,
+    frames = { max: 1 },
+    offset = { x: 0, y: 0 }
+  ) {
+    this.x = x
+    this.y = y
+    this.img = new Image()
+    this.img.src = imgSrc
+    this.context = context
+    this.frames = {
+      max: frames.max,
+      current: 0,
+      elapsed: 0,
+      hold: 6,
+    }
+    this.offset = offset
+  }
+
+  draw() {
+    if (this.context) {
+      const cutWidth = this.img.width / this.frames.max
+      const cut = {
+        x: cutWidth * this.frames.current,
+        y: 0,
+        width: cutWidth,
+        height: this.img.height,
+      }
+
+      this.context.drawImage(
+        this.img,
+        cut.x,
+        cut.y,
+        cut.width,
+        cut.height,
+        this.x + this.offset.x,
+        this.y + this.offset.y,
+        cut.width,
+        cut.height
+      )
+
+      this.frames.elapsed++
+      if (this.frames.elapsed % this.frames.hold === 0) {
+        this.frames.current++
+        if (this.frames.current >= this.frames.max - 1) {
+          this.frames.current = 0
+        }
+      }
+    }
+  }
+}
+
+export class Enemy extends Sprite {
   x: number
   y: number
   height: number
@@ -23,6 +93,7 @@ export class Enemy {
     context: CanvasRenderingContext2D | null,
     waypoints: WaypointsType[]
   ) {
+    super(x, y, context, 'src/assets/game/enemy.png', { max: 4 })
     this.x = x
     this.y = y
     this.height = 30
@@ -44,16 +115,18 @@ export class Enemy {
 
   draw() {
     if (this.context) {
-      this.context.fillStyle = 'red'
-      this.context.beginPath()
-      this.context.arc(
-        this.center.x,
-        this.center.y,
-        this.radius,
-        0,
-        Math.PI * 2
-      )
-      this.context.fill()
+      // this.context.fillStyle = 'red'
+      // this.context.beginPath()
+      // this.context.arc(
+      //   this.center.x,
+      //   this.center.y,
+      //   this.radius,
+      //   0,
+      //   Math.PI * 2
+      // )
+      // this.context.fill()
+
+      super.draw()
 
       this.context.fillStyle = 'red'
       this.context.fillRect(this.x, this.y - 10, this.width, 8)
@@ -142,7 +215,7 @@ export class TowerPlace {
   }
 }
 
-export class Shot {
+export class Shot extends Sprite {
   x: number
   y: number
   enemy: EnemyTypes
@@ -159,6 +232,7 @@ export class Shot {
     enemy: EnemyTypes,
     context: CanvasRenderingContext2D | null
   ) {
+    super(x, y, context, 'src/assets/game/shot.png')
     this.x = x
     this.y = y
     this.velocity = {
@@ -170,17 +244,6 @@ export class Shot {
     this.context = context
     this.img = new Image()
     this.img.src = 'src/assets/game/shot.png'
-  }
-
-  draw() {
-    if (this.context) {
-      this.context.drawImage(this.img, this.x, this.y)
-
-      // this.context.beginPath()
-      // this.context.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
-      // this.context.fillStyle = 'rgb(255,140,0)'
-      // this.context.fill()
-    }
   }
 
   update() {
@@ -200,7 +263,7 @@ export class Shot {
   }
 }
 
-export class BuildTower {
+export class BuildTower extends Sprite {
   x: number
   y: number
   center: {
@@ -210,10 +273,18 @@ export class BuildTower {
   shots: Shot[]
   radius: number
   target: EnemyTypes | null = null
-  frames: number
+  spawnTime: number
   context: CanvasRenderingContext2D | null
 
   constructor(x: number, y: number, context: CanvasRenderingContext2D | null) {
+    super(
+      x,
+      y,
+      context,
+      'src/assets/game/tower.png',
+      { max: 6 },
+      { x: 0, y: -90 }
+    )
     this.x = x
     this.y = y
     this.center = {
@@ -223,13 +294,14 @@ export class BuildTower {
     this.shots = []
     this.radius = 200
     this.target
-    this.frames = 0
+    this.spawnTime = 0
     this.context = context
   }
   draw() {
     if (this.context) {
-      this.context.fillStyle = 'rgb(0,56,176)'
-      this.context.fillRect(this.x, this.y, offset * 2, offset)
+      super.draw()
+      // this.context.fillStyle = 'rgb(0,56,176)'
+      // this.context.fillRect(this.x, this.y, offset * 2, offset)
 
       this.context.beginPath()
       this.context.arc(
@@ -246,34 +318,13 @@ export class BuildTower {
   update() {
     if (this.context) {
       this.draw()
-      if (this.frames % 100 === 0 && this.target) {
+      if (this.spawnTime % 100 === 0 && this.target) {
         this.shots.push(
           new Shot(this.center.x, this.center.y, this.target, this.context)
         )
       }
 
-      this.frames++
-    }
-  }
-}
-
-export class Sprite {
-  x: number
-  y: number
-  img: HTMLImageElement
-  context: CanvasRenderingContext2D | null
-
-  constructor(x: number, y: number, context: CanvasRenderingContext2D | null) {
-    this.x = x
-    this.y = y
-    this.img = new Image()
-    this.img.src = 'src/assets/game/shot.png'
-    this.context = context
-  }
-
-  draw() {
-    if (this.context) {
-      this.context.drawImage(this.img, this.x, this.y)
+      this.spawnTime++
     }
   }
 }
