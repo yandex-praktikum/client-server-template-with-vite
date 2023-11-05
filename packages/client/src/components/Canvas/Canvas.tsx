@@ -185,7 +185,7 @@ const Canvas: React.FC = () => {
           enemies.splice(i, 1)
           if (newHearts === 0) {
             enemies.splice(0, enemies.length)
-
+            buildingTower.splice(0, buildingTower.length)
             setTimeout(() => {
               endGame = true
               setEndGame(true)
