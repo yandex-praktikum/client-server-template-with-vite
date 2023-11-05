@@ -22,7 +22,7 @@ export const authApi = {
     )
   },
   logout() {
-    return axiosInstance.post(END_POINTS_URL.AUTH_LOGOUT)
+    return axiosInstance.post<TRequestStatus>(END_POINTS_URL.AUTH_LOGOUT)
   },
   getUserData() {
     return axiosInstance.get<TUserData>(END_POINTS_URL.AUTH_USER)

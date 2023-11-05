@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { FormikValues } from 'formik'
+import React, { useEffect, useState } from 'react'
 import { ErrorMessage } from '../ErrorMessage'
+import { TUserSlice } from '../../store/user/state'
 import { UserProfileForm } from '../UserProfileForm'
 import { TUserData, TUserPassword } from '../../api/types'
 import { PasswordChangeForm } from '../PasswordChangeForm'
@@ -9,10 +9,10 @@ import { UserProfileButtonBlock } from '../UserProfileButtonBlock'
 import style from './index.module.scss'
 
 type TUserProfileFormTemplate = {
-  userData: TUserData
+  userData: TUserSlice
   logout: () => void
-  changeUserDataHandler: (data: FormikValues) => Promise<string>
-  changeUserPasswordHandler: (data: TUserPassword) => Promise<string>
+  changeUserDataHandler: (data: TUserData) => void
+  changeUserPasswordHandler: (data: TUserPassword) => void
 }
 
 export const UserProfileFormTemplate = ({
@@ -26,7 +26,14 @@ export const UserProfileFormTemplate = ({
   const [isPasswordEdit, setIsPasswordEdit] = useState(false)
   const [error, setError] = useState('')
 
-  const { first_name, second_name } = userData
+  const { isLoading, isError, user, errorMessage } = userData
+  const { first_name, second_name } = user
+
+  useEffect(() => {
+    if ((isEdit || isPasswordEdit) && !isError && !isLoading) {
+      disableEditMode()
+    }
+  }, [isError, isLoading])
 
   const userDataEditToggle = () => {
     setHideButtons(true)
@@ -44,35 +51,20 @@ export const UserProfileFormTemplate = ({
     setIsPasswordEdit(false)
   }
 
-  const changeUserData = async (values: FormikValues) => {
-    setError('')
-
-    const result = await changeUserDataHandler(values)
-
-    if (!result) {
-      disableEditMode()
-    }
-    if (result) {
-      setError(result)
-    }
+  const changeUserData = (values: TUserData) => {
+    changeUserDataHandler(values)
   }
 
   const changeUserPassword = async (values: TUserPassword) => {
-    const { newPassword, repeatNewPassword } = values
+    setError('')
 
+    const { newPassword, repeatNewPassword } = values
     if (newPassword !== repeatNewPassword) {
       setError(USER_PROFILE_ERRORS_TEXT.PASSWORD_NOT_SAME)
       return
     }
 
-    setError('')
-    const result = await changeUserPasswordHandler(values)
-
-    if (result) {
-      setError(result)
-    } else {
-      disableEditMode()
-    }
+    changeUserPasswordHandler(values)
   }
 
   return (
@@ -85,8 +77,11 @@ export const UserProfileFormTemplate = ({
           {second_name}
         </span>
       </div>
-      {error ? (
-        <ErrorMessage text={error} className="error-message-margin" />
+      {error || isError ? (
+        <ErrorMessage
+          text={error || errorMessage}
+          className="error-message-margin"
+        />
       ) : null}
       {isPasswordEdit ? (
         <PasswordChangeForm
@@ -96,7 +91,7 @@ export const UserProfileFormTemplate = ({
         />
       ) : (
         <UserProfileForm
-          userData={userData}
+          userData={user}
           isDisable={!isEdit}
           onsubmit={changeUserData}
           className={style.userProfileFormMargin}
