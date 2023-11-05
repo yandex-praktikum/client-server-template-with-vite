@@ -4,7 +4,7 @@
   margin-bottom: 45px;
   text-align: center;
   font-size: 36px;
-  color: #ffffff;
+  color: $white;
 }
 
 .avatar {
@@ -22,7 +22,7 @@
 
 .thead {
   text-align: center;
-  color: $medium-turquoise;
+  color: $button-color;
   font-size: 28px;
 }
 
@@ -31,7 +31,7 @@
   align-items: center;
   grid-template-columns: 1fr 2fr 1fr;
   grid-auto-rows: minmax(80px, auto);
-  border-bottom: #ffffff solid 2px;
+  border-bottom: $white solid 2px;
 }
 .td_name {
   display: flex;
@@ -43,5 +43,5 @@
 .td_body {
   text-align: center;
   font-size: 26px;
-  color: #ffffff;
+  color: $white;
 }

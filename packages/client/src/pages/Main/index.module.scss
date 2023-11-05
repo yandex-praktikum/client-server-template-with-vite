@@ -25,10 +25,10 @@
 }
 
 .btn {
-  border: 1px solid $azure;
-  background-color: $medium-turquoise;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  color: $azure;
+  border: 1px solid $common-white-text;
+  background-color: $button-color;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  color: $common-white-text;
   font-size: 26px;
   font-style: normal;
   font-weight: 500;
@@ -51,7 +51,7 @@
 
 .btn_wrapper {
   display: grid;
-  grid-template-columns: 250px, 400px, 250px;
+  grid-template-columns: 250px 400px 250px;
   grid-template-rows: repeat(3, 150px);
   grid-template-areas:
     '. play .'

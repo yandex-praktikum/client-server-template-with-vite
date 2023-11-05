@@ -8,12 +8,12 @@
 }
 
 .formLabel {
-  color: $azure;
+  color: $common-white-text;
 }
 
 .formInput {
   border: none;
-  border-bottom: 1px solid $azure;
+  border-bottom: 1px solid $common-white-text;
   padding: 0.5rem 1rem;
   width: 100%;
 }
@@ -30,7 +30,7 @@
 }
 
 .formInput::placeholder {
-  color: $light-gray;
+  color: $common-placeholder-color;
 }
 
 .form-error-message {

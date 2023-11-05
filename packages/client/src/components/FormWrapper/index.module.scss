@@ -1,9 +1,9 @@
 @import 'src/assets/style/variables';
 
 .formWrapper {
-  background-color: $medium-turquoise;
-  border: 2px solid $azure;
-  box-shadow: 0 4px 4px 0 #00000040;
+  background-color: $button-color;
+  border: 2px solid $common-white-text;
+  box-shadow: 0 4px 4px 0 $shadow-color;
   padding: 3.0625rem 1.8125rem 3.875rem;
   max-width: 21.25rem;
   width: 100%;

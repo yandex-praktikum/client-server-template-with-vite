@@ -19,13 +19,13 @@
 
 .link {
   text-decoration: none;
-  color: #ffffff;
+  color: $white;
   font-size: 20px;
 }
 
 .active {
   font-size: 20px;
-  color: $medium-turquoise;
+  color: $button-color;
   text-decoration: underline;
 }
 
