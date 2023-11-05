@@ -5,10 +5,14 @@ import { height, width, towersPlace, buildingTower } from './consts'
 import s from './canvas.module.scss'
 
 const Canvas: React.FC = () => {
-  const endRef = useRef<HTMLDivElement | null>(null)
   const refCanvas = useRef<HTMLCanvasElement | null>(null)
+
   const [hearts, setHeart] = useState(10)
   const [coins, setCoins] = useState(100)
+  const [startNewGame, setStartNewGame] = useState(false)
+  const [wayCounterIn, setWayCounterIn] = useState(0)
+  const [enemyDeadCounter, setEnemyDeadCounter] = useState(0)
+  const [endGame, setEndGame] = useState(false)
 
   const waypoints = [
     {
@@ -37,11 +41,11 @@ const Canvas: React.FC = () => {
     },
   ]
   const towerPlaceInit = [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0,
-    8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0,
-    8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 8,
-    0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8,
     0, 8, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0,
     8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 0,
@@ -53,24 +57,24 @@ const Canvas: React.FC = () => {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    8, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0,
-    8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 0, 8, 0, 8, 0, 8, 0, 8, 0, 0, 0,
+    8, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 8, 0, 8, 0, 8, 0, 8, 0, 0, 0,
     0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0,
     8, 0, 8, 0, 0, 8, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 8, 0, 8, 0, 8,
     0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 8, 0, 8, 0, 8, 0, 0, 8, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 0,
-    8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8,
-    0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0,
-    8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0,
+    8, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0,
+    8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0,
     8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0,
-    8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8,
-    0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0,
     8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0,
     8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 8, 0, 8,
@@ -81,6 +85,21 @@ const Canvas: React.FC = () => {
   const towerPlace2D: any = []
   const towerPlace: any = []
 
+  const startGame = () => {
+    setStartNewGame(true)
+  }
+  const reStartGame = () => {
+    setStartNewGame(false)
+    setTimeout(() => {
+      setStartNewGame(true)
+      setEndGame(false)
+      setCoins(100)
+      setHeart(10)
+      setWayCounterIn(0)
+      setEnemyDeadCounter(0)
+    }, 100)
+  }
+
   useEffect(() => {
     const enemies: Enemy[] = []
     let activeBuildPlace: BuildPlace | TowerPlaceType | null
@@ -89,6 +108,9 @@ const Canvas: React.FC = () => {
     let newHearts = hearts
     let newCoins = coins
     let endGame = false
+    let wayCounter = wayCounterIn
+    let enemyDead = enemyDeadCounter
+
     const mouse: Mouse = {
       x: 0,
       y: 0,
@@ -109,6 +131,9 @@ const Canvas: React.FC = () => {
     const img = new Image()
     img.src = 'src/assets/game/map.png'
     img.onload = () => {
+      if (startNewGame) {
+        updateAnimation()
+      }
       context.drawImage(img, 0, 0)
     }
 
@@ -158,15 +183,21 @@ const Canvas: React.FC = () => {
           newHearts -= 1
           setHeart(newHearts)
           enemies.splice(i, 1)
-          if (newHearts === 0 && endRef.current) {
-            endGame = true
-            endRef.current.style.display = 'flex'
+          if (newHearts === 0) {
+            enemies.splice(0, enemies.length)
+
+            setTimeout(() => {
+              endGame = true
+              setEndGame(true)
+            }, 100)
           }
         }
       }
       if (enemies.length === 0) {
         enemiesCounter += 2
+        wayCounter += 1
         spawnEnemies(enemiesCounter)
+        setWayCounterIn(wayCounter)
       }
 
       towersPlace.forEach(tower => {
@@ -174,7 +205,7 @@ const Canvas: React.FC = () => {
       })
 
       buildingTower.forEach(building => {
-        building.update()
+        building.update(mouse)
 
         const validEnemies = enemies.filter(enemy => {
           const xDiff = enemy.center.x - building.center.x
@@ -203,6 +234,8 @@ const Canvas: React.FC = () => {
                 enemies.splice(enemyIndex, 1)
                 newCoins += 50
                 setCoins(newCoins)
+                enemyDead++
+                setEnemyDeadCounter(enemyDead)
               }
             }
 
@@ -257,8 +290,6 @@ const Canvas: React.FC = () => {
     canvas.addEventListener('click', buildTowerHandler)
     window.addEventListener('mousemove', mouseActiveBuildPlace)
 
-    updateAnimation()
-
     return () => {
       canvas.removeEventListener('click', buildTowerHandler)
       window.removeEventListener('mousemove', mouseActiveBuildPlace)
@@ -267,16 +298,39 @@ const Canvas: React.FC = () => {
         cancelAnimationFrame(animationFrame)
       }
     }
-  }, [])
+  }, [startNewGame])
 
   return (
     <div className={s.wrap}>
-      <canvas width={800} height={450} ref={refCanvas} />
-      <div ref={endRef} className={s.end_game}>
-        Конец игры
+      {!startNewGame && (
+        <div className={s.wrap_start}>
+          <button className={`button form-button`} onClick={startGame}>
+            начать игру
+          </button>
+        </div>
+      )}
+      <div className={s.info}>
+        <div>противников убито: {enemyDeadCounter}</div>
+        <div className={s.way}>волна: {wayCounterIn}</div>
+        <div className={s.coins}>
+          <img src="src/assets/game/coins.svg" alt="coins" />
+          <span>{coins}</span>
+        </div>
+        <div className={s.heats}>
+          <img src="src/assets/game/heart.svg" alt="heart" />
+          <span>{hearts}</span>
+        </div>
       </div>
-      <div className={s.heats}>{hearts}</div>
-      <div className={s.coins}>{coins}</div>
+
+      <canvas width={800} height={450} ref={refCanvas} />
+      {endGame && (
+        <div className={s.end_game}>
+          <div>Конец игры</div>
+          <button className={`button form-button`} onClick={reStartGame}>
+            новая игра
+          </button>
+        </div>
+      )}
     </div>
   )
 }

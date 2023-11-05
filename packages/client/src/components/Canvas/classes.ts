@@ -69,8 +69,10 @@ export class Sprite {
       }
     }
   }
+  updateSprite(newSrcImg: string) {
+    this.img.src = newSrcImg
+  }
 }
-
 export class Enemy extends Sprite {
   x: number
   y: number
@@ -112,20 +114,8 @@ export class Enemy extends Sprite {
       y: 0,
     }
   }
-
   draw() {
     if (this.context) {
-      // this.context.fillStyle = 'red'
-      // this.context.beginPath()
-      // this.context.arc(
-      //   this.center.x,
-      //   this.center.y,
-      //   this.radius,
-      //   0,
-      //   Math.PI * 2
-      // )
-      // this.context.fill()
-
       super.draw()
 
       this.context.fillStyle = 'red'
@@ -144,11 +134,25 @@ export class Enemy extends Sprite {
   update() {
     if (this.context) {
       this.draw()
-
       const waypoint = this.waypoints[this.waypointIndex]
       const yDistance = waypoint.y - this.y
       const xDistance = waypoint.x - this.x
       const angle = Math.atan2(yDistance, xDistance)
+
+      const prevPostWay = {
+        prev: this.waypoints[this.waypointIndex - 1],
+        post: this.waypoints[this.waypointIndex],
+      }
+
+      if (
+        prevPostWay.prev !== undefined &&
+        prevPostWay.post !== undefined &&
+        prevPostWay.post.x < prevPostWay.prev.x
+      ) {
+        super.updateSprite('src/assets/game/enemy_scale.png')
+      } else {
+        super.updateSprite('src/assets/game/enemy.png')
+      }
 
       const speed = 2
 
@@ -188,7 +192,7 @@ export class TowerPlace {
     this.x = x
     this.y = y
     this.size = 32
-    this.color = 'rgba(255,255,255,0.6)'
+    this.color = 'rgba(255,255,255,0.05)'
     this.occupied = false
     this.context = context
   }
@@ -210,12 +214,12 @@ export class TowerPlace {
     ) {
       this.color = 'white'
     } else {
-      this.color = 'rgba(255,255,255,0.6)'
+      this.color = 'rgba(255,255,255,0.05)'
     }
   }
 }
 
-export class Shot extends Sprite {
+export class Shot {
   x: number
   y: number
   enemy: EnemyTypes
@@ -225,14 +229,13 @@ export class Shot extends Sprite {
   }
   radius: number
   context: CanvasRenderingContext2D | null
-  img: HTMLImageElement
+
   constructor(
     x: number,
     y: number,
     enemy: EnemyTypes,
     context: CanvasRenderingContext2D | null
   ) {
-    super(x, y, context, 'src/assets/game/shot.png')
     this.x = x
     this.y = y
     this.velocity = {
@@ -242,8 +245,15 @@ export class Shot extends Sprite {
     this.enemy = enemy
     this.radius = 5
     this.context = context
-    this.img = new Image()
-    this.img.src = 'src/assets/game/shot.png'
+  }
+
+  draw() {
+    if (this.context) {
+      this.context.beginPath()
+      this.context.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+      this.context.fillStyle = 'rgb(255,140,0)'
+      this.context.fill()
+    }
   }
 
   update() {
@@ -300,22 +310,9 @@ export class BuildTower extends Sprite {
   draw() {
     if (this.context) {
       super.draw()
-      // this.context.fillStyle = 'rgb(0,56,176)'
-      // this.context.fillRect(this.x, this.y, offset * 2, offset)
-
-      this.context.beginPath()
-      this.context.arc(
-        this.x + (offset * 2) / 2,
-        this.y + offset / 2,
-        this.radius,
-        0,
-        Math.PI * 2
-      )
-      this.context.fillStyle = 'rgba(0,56,176, .1)'
-      this.context.fill()
     }
   }
-  update() {
+  update(mouse: Mouse) {
     if (this.context) {
       this.draw()
       if (this.spawnTime % 100 === 0 && this.target) {
@@ -325,6 +322,24 @@ export class BuildTower extends Sprite {
       }
 
       this.spawnTime++
+
+      if (
+        mouse.x > this.x &&
+        mouse.x < this.x + offset * 2 &&
+        mouse.y > this.y &&
+        mouse.y < this.y + offset
+      ) {
+        this.context.beginPath()
+        this.context.arc(
+          this.x + (offset * 2) / 2,
+          this.y + offset / 2,
+          this.radius,
+          0,
+          Math.PI * 2
+        )
+        this.context.fillStyle = 'rgba(0,56,176, .1)'
+        this.context.fill()
+      }
     }
   }
 }
