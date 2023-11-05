@@ -89,10 +89,7 @@ const App: FC = () => {
           element={<MainPage logoutCallback={logoutHandler} />}
         />
 
-        <Route
-          path={ROUTES_NAMES.GAME}
-          element={<GamePage logoutCallback={logoutHandler} />}
-        />
+        <Route path={ROUTES_NAMES.GAME} element={<GamePage />} />
         <Route path={ROUTES_NAMES.ERROR_5XX} element={<Error5XX />} />
         <Route path={ROUTES_NAMES.ERROR_404} element={<Error404 />} />
       </Routes>
