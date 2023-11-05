@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { authApi } from './api/authApi'
 import { ROUTES_NAMES } from './const/routeNames'
@@ -7,7 +7,6 @@ import RegistrationPage from './pages/RegistrationPage'
 import UserProfilePage from './pages/UserProfile'
 import MainPage from './pages/Main'
 import GamePage from './pages/Game'
-import { ForumPage } from './pages/Forum/ForumsList'
 import Error404 from './pages/Error_404'
 import Error5XX from './pages/Error_5XX'
 import LeaderBoardPage from './pages/LeaderBoard'
@@ -16,10 +15,18 @@ import { ForumCreation } from './pages/Forum/ForumCreation'
 import { ForumDetails } from './pages/Forum/ForumDetails'
 import './App.scss'
 import { ErrorBoundary } from './hoc/ErrorBoundary'
+import { withAuthCheck } from './hoc/WithAuthCheck'
+import { useAppDispatch, useAppSelector } from './hook/hook'
+import { getUser } from './store/user/actions'
+import { ForumPage } from './pages/Forum/ForumsList'
+import { setIsAuth, setIsDataFetched } from './store/user/slice'
+import { getUserSliceData } from './store/user/selectors'
 
-const App: FC = () => {
+const AppComponent = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const path = useLocation().pathname
+  const { user } = useAppSelector(getUserSliceData)
 
   useEffect(() => {
     if (
@@ -27,41 +34,27 @@ const App: FC = () => {
         path === ROUTES_NAMES.SIGNUP ||
         path === ROUTES_NAMES.SIGN_IN ||
         path === ROUTES_NAMES.SETTINGS
-      )
+      ) &&
+      !user.id
     ) {
-      authApi
-        .getUserData()
-        .then(response => console.log(response))
-        .catch(error => {
-          console.log(error)
-          navigate(ROUTES_NAMES.SIGN_IN)
-        })
+      dispatch(getUser())
     }
-  }, [path])
+  }, [dispatch, path])
 
   const logoutHandler = () => {
     authApi
       .logout()
-      .then(response => {
-        console.log(response)
+      .then(() => {
+        dispatch(setIsAuth(false))
+        dispatch(setIsDataFetched(false))
         navigate(ROUTES_NAMES.SIGN_IN)
       })
-      .catch(error => {
-        console.log(error)
+      .catch(() => {
+        dispatch(setIsAuth(false))
+        dispatch(setIsDataFetched(false))
         navigate(ROUTES_NAMES.SIGN_IN)
       })
   }
-
-  // useEffect(() => {
-  //   const fetchServerData = async () => {
-  //     const url = `http://localhost:${__SERVER_PORT__}`
-  //     const response = await fetch(url)
-  //     const data = await response.json()
-  //     console.log(data)
-  //   }
-  //
-  //   fetchServerData()
-  // }, [])
 
   return (
     <ErrorBoundary>
@@ -96,5 +89,7 @@ const App: FC = () => {
     </ErrorBoundary>
   )
 }
+
+const App = withAuthCheck(AppComponent)
 
 export default App
