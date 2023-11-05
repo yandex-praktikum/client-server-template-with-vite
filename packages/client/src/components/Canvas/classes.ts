@@ -1,5 +1,5 @@
 import { Mouse, EnemyTypes, WaypointsType } from './interfaces'
-import { offset } from './consts'
+import { enemy_left, enemy_right, offsetCanvasRect } from './consts'
 
 export class Sprite {
   x: number
@@ -149,9 +149,9 @@ export class Enemy extends Sprite {
         prevPostWay.post !== undefined &&
         prevPostWay.post.x < prevPostWay.prev.x
       ) {
-        super.updateSprite('src/assets/game/enemy_scale.png')
+        super.updateSprite(enemy_left)
       } else {
-        super.updateSprite('src/assets/game/enemy.png')
+        super.updateSprite(enemy_right)
       }
 
       const speed = 2
@@ -298,8 +298,8 @@ export class BuildTower extends Sprite {
     this.x = x
     this.y = y
     this.center = {
-      x: this.x + offset / 2,
-      y: this.y + offset / 2,
+      x: this.x + offsetCanvasRect / 2,
+      y: this.y + offsetCanvasRect / 2,
     }
     this.shots = []
     this.radius = 200
@@ -325,14 +325,14 @@ export class BuildTower extends Sprite {
 
       if (
         mouse.x > this.x &&
-        mouse.x < this.x + offset * 2 &&
+        mouse.x < this.x + offsetCanvasRect * 2 &&
         mouse.y > this.y &&
-        mouse.y < this.y + offset
+        mouse.y < this.y + offsetCanvasRect
       ) {
         this.context.beginPath()
         this.context.arc(
-          this.x + (offset * 2) / 2,
-          this.y + offset / 2,
+          this.x + (offsetCanvasRect * 2) / 2,
+          this.y + offsetCanvasRect / 2,
           this.radius,
           0,
           Math.PI * 2
