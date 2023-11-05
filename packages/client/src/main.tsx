@@ -14,3 +14,12 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     </Provider>
   </React.StrictMode>
 )
+
+if ('serviceWorker' in navigator && import.meta.env.MODE === 'production') {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('cacheWorker.js', {
+      scope: '/',
+      type: 'module',
+    })
+  })
+}
