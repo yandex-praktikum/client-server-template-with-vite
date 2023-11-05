@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Form, Formik } from 'formik'
 import { authApi } from '../../api/authApi'
 import { validate } from '../../utils/validator'
+import { useAppDispatch } from '../../hook/hook'
 import { API_ERROR_MESSAGES } from '../../const/api'
 import { TSignupRequestData } from '../../api/types'
 import { ROUTES_NAMES } from '../../const/routeNames'
@@ -12,10 +13,12 @@ import { FormWrapper } from '../../components/FormWrapper'
 import { MyErrorMessage } from '../../components/MyErrorMessage'
 import { FormLinkButton } from '../../components/FormAsLinkButton'
 import { FormSubmitButton } from '../../components/FormSubmitButton'
+import { setIsAuth, setIsDataFetched } from '../../store/user/slice'
 import { inputsData, REG_FORM_ERROR } from '../../const/registrationPage'
 
 const RegistrationPage = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const [errorMessage, setErrorMessage] = useState('')
 
   const registrationHandler = (
@@ -34,15 +37,18 @@ const RegistrationPage = () => {
 
     authApi
       .signup(data)
-      .then(response => {
-        console.log(response)
+      .then(() => {
         navigate(ROUTES_NAMES.MAIN)
+        dispatch(setIsAuth(true))
+        dispatch(setIsDataFetched(true))
       })
       .catch(error => {
         const { reason } = error.response.data
 
         if (reason === API_ERROR_MESSAGES.USER_ALREADY_IN_SYSTEM) {
           navigate(ROUTES_NAMES.MAIN)
+          dispatch(setIsAuth(true))
+          dispatch(setIsDataFetched(true))
         }
 
         setErrorMessage(reason)
