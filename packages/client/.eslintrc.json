@@ -11,6 +11,7 @@
     "react/prop-types": "off",
     "max-len": ["warn", 120],
     "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/ban-types": "off",
     "no-param-reassign": [
       "error",
       {
