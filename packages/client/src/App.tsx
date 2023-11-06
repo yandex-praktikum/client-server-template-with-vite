@@ -1,59 +1,37 @@
 import React, { useEffect } from 'react'
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
-import { authApi } from './api/authApi'
-import { ROUTES_NAMES } from './const/routeNames'
-import LoginPage from './pages/Login'
-import RegistrationPage from './pages/RegistrationPage'
-import UserProfilePage from './pages/UserProfile'
+import { Route, Routes } from 'react-router-dom'
 import MainPage from './pages/Main'
 import GamePage from './pages/Game'
+import LoginPage from './pages/Login'
 import Error404 from './pages/Error_404'
 import Error5XX from './pages/Error_5XX'
+import { ROUTES_NAMES } from './const/routeNames'
+import UserProfilePage from './pages/UserProfile'
 import LeaderBoardPage from './pages/LeaderBoard'
 import { BaseComponent } from './components/Base'
-import { ForumCreation } from './pages/Forum/ForumCreation'
-import { ForumDetails } from './pages/Forum/ForumDetails'
-import './App.scss'
 import { ErrorBoundary } from './hoc/ErrorBoundary'
 import { withAuthCheck } from './hoc/WithAuthCheck'
-import { useAppDispatch, useAppSelector } from './hook/hook'
-import { getUser } from './store/user/actions'
 import { ForumPage } from './pages/Forum/ForumsList'
-import { setIsAuth, setIsDataFetched } from './store/user/slice'
-import { getUserSliceData } from './store/user/selectors'
+import { getUserData } from './store/user/selectors'
+import RegistrationPage from './pages/RegistrationPage'
+import { ForumDetails } from './pages/Forum/ForumDetails'
+import { ForumCreation } from './pages/Forum/ForumCreation'
+import { useAppDispatch, useAppSelector } from './hook/hook'
+import { getUserDataThunk, logout } from './store/user/dispatchecrs'
+import './App.scss'
 
 const AppComponent = () => {
-  const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const path = useLocation().pathname
-  const { user } = useAppSelector(getUserSliceData)
+  const { user } = useAppSelector(getUserData)
 
   useEffect(() => {
-    if (
-      !(
-        path === ROUTES_NAMES.SIGNUP ||
-        path === ROUTES_NAMES.SIGN_IN ||
-        path === ROUTES_NAMES.SETTINGS
-      ) &&
-      !user.id
-    ) {
-      dispatch(getUser())
+    if (!user.id) {
+      dispatch(getUserDataThunk())
     }
-  }, [dispatch, path])
+  })
 
   const logoutHandler = () => {
-    authApi
-      .logout()
-      .then(() => {
-        dispatch(setIsAuth(false))
-        dispatch(setIsDataFetched(false))
-        navigate(ROUTES_NAMES.SIGN_IN)
-      })
-      .catch(() => {
-        dispatch(setIsAuth(false))
-        dispatch(setIsDataFetched(false))
-        navigate(ROUTES_NAMES.SIGN_IN)
-      })
+    dispatch(logout())
   }
 
   return (

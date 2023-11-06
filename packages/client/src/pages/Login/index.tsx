@@ -1,47 +1,30 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React from 'react'
 import { Form, Formik } from 'formik'
-import { authApi } from '../../api/authApi'
-import { useAppDispatch } from '../../hook/hook'
-import { API_ERROR_MESSAGES } from '../../const/api'
+import { validate } from '../../utils/validator'
+import { clearError } from '../../store/user/slice'
 import { TSignInRequestData } from '../../api/types'
 import { ROUTES_NAMES } from '../../const/routeNames'
+import { login } from '../../store/user/dispatchecrs'
 import { FormInput } from '../../components/FormInput'
 import { FormHeader } from '../../components/FormHeader'
+import { getUserData } from '../../store/user/selectors'
 import { FormWrapper } from '../../components/FormWrapper'
+import { useAppDispatch, useAppSelector } from '../../hook/hook'
 import { MyErrorMessage } from '../../components/MyErrorMessage'
 import { FormLinkButton } from '../../components/FormAsLinkButton'
 import { FormSubmitButton } from '../../components/FormSubmitButton'
-import { setIsAuth, setIsDataFetched } from '../../store/user/slice'
 
 const LoginPage = () => {
-  const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const [errorMessage, setErrorMessage] = useState('')
+  const { isError, errorMessage } = useAppSelector(getUserData)
 
   const authHandler = (data: TSignInRequestData) => {
-    authApi
-      .login(data)
-      .then(() => {
-        dispatch(setIsAuth(true))
-        dispatch(setIsDataFetched(true))
-        navigate(ROUTES_NAMES.MAIN)
-      })
-      .catch(error => {
-        const { reason } = error.response.data
-        if (reason === API_ERROR_MESSAGES.USER_ALREADY_IN_SYSTEM) {
-          dispatch(setIsAuth(true))
-          dispatch(setIsDataFetched(true))
-          navigate(ROUTES_NAMES.MAIN)
-        }
-
-        setErrorMessage(reason)
-      })
+    dispatch(login(data))
   }
 
   const cleanFetchErrorHandler = () => {
     if (errorMessage) {
-      setErrorMessage('')
+      dispatch(clearError())
     }
   }
 
@@ -52,6 +35,7 @@ const LoginPage = () => {
           login: '',
           password: '',
         }}
+        validate={validate}
         onSubmit={authHandler}>
         <Form onChange={cleanFetchErrorHandler} className="form">
           <FormWrapper>
@@ -71,7 +55,7 @@ const LoginPage = () => {
                 labelText="Пароль"
                 placeholder="Введите пароль"
               />
-              {errorMessage ? <MyErrorMessage message={errorMessage} /> : null}
+              {isError ? <MyErrorMessage message={errorMessage} /> : null}
             </div>
           </FormWrapper>
           <div className="form-buttons-wrapper button-block-login-page">

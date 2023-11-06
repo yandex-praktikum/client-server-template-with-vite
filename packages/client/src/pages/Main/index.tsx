@@ -1,13 +1,17 @@
 import React from 'react'
-import s from './index.module.scss'
 import { Link } from 'react-router-dom'
+import { useAppSelector } from '../../hook/hook'
+import { Avatar } from '../../components/Avatar'
 import { ROUTES_NAMES } from '../../const/routeNames'
+import { getUserData } from '../../store/user/selectors'
+import s from './index.module.scss'
 
 type TMainPage = {
   logoutCallback: () => void
 }
 
 const MainPage = ({ logoutCallback }: TMainPage) => {
+  const { user } = useAppSelector(getUserData)
   return (
     <div className={s.wrapper}>
       <div className={s.container}>
@@ -15,9 +19,7 @@ const MainPage = ({ logoutCallback }: TMainPage) => {
           <button onClick={logoutCallback} className={s.btn}>
             Выйти
           </button>
-          <div className={s.avatar}>
-            <img src="/src/assets/avatar.svg" alt="avatar" />
-          </div>
+          <Avatar imageUrl={user.avatar} className={s.avatar} />
         </header>
 
         <main className={s.main}>

@@ -34,7 +34,7 @@ export const UserProfileFormInput = ({
   className = '',
 }: TUserProfileFormInput) => {
   return (
-    <div className={`${styles.useFformInputBlockWrapper} ${className}`}>
+    <div className={`${styles.useFormInputBlockWrapper} ${className}`}>
       <label
         htmlFor={id}
         className={`${styles.userFormLabel} ${styles.font_13}`}>

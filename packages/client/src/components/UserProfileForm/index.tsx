@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Formik, FormikValues } from 'formik'
+import { Form, Formik } from 'formik'
 import { TUserData } from '../../api/types'
 import { validate } from '../../utils/validator'
 import { UserProfileFormInput } from '../UserProfileFormInput'
@@ -9,7 +9,7 @@ import style from './index.module.scss'
 type TUserProfileForm = {
   isDisable: boolean
   userData: TUserData
-  onsubmit: (values: FormikValues) => void
+  onsubmit: (values: TUserData) => void
   className?: string
 }
 
