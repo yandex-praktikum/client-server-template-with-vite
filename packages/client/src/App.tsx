@@ -37,6 +37,7 @@ const App: FC = () => {
         })
     }
   }, [path])
+}
 
   const logoutHandler = () => {
     authApi
