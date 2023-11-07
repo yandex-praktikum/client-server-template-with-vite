@@ -1,62 +1,79 @@
 import { Mouse, EnemyTypes, WaypointsType } from './interfaces'
-import { offset } from './consts'
+import { enemy_left, enemy_right, offsetCanvasRect } from './consts'
 
-export class Rect {
+export class Sprite {
   x: number
   y: number
-  color: string
-  w: number
-  h: number
-  active: boolean
-  center: { x: number; y: number }
+  img: HTMLImageElement
   context: CanvasRenderingContext2D | null
-
+  frames: {
+    max: number
+    current: number
+    elapsed: number
+    hold: number
+  }
+  offset: {
+    x: number
+    y: number
+  }
   constructor(
     x: number,
     y: number,
-    w: number,
-    h: number,
-    color: string,
-    context: CanvasRenderingContext2D | null
+    context: CanvasRenderingContext2D | null,
+    imgSrc: string,
+    frames = { max: 1 },
+    offset = { x: 0, y: 0 }
   ) {
     this.x = x
     this.y = y
-    this.color = color
-
-    this.w = w
-    this.h = h
-
-    this.active = true
-
-    this.center = {
-      x: this.x + this.w / 2,
-      y: this.y + this.h / 2,
-    }
+    this.img = new Image()
+    this.img.src = imgSrc
     this.context = context
-  }
-
-  draw(context: CanvasRenderingContext2D) {
-    const localContext = context
-
-    localContext.beginPath()
-
-    localContext.fillStyle = this.color
-    localContext.fillRect(this.x, this.y, this.w, this.h)
-
-    localContext.fillStyle = 'rgba(1,1,1,0.5)'
-    localContext.strokeRect(this.x, this.y, this.w, this.h)
-
-    localContext.closePath()
-  }
-
-  update() {
-    if (this.context) {
-      this.draw(this.context)
+    this.frames = {
+      max: frames.max,
+      current: 0,
+      elapsed: 0,
+      hold: 6,
     }
+    this.offset = offset
+  }
+
+  draw() {
+    if (this.context) {
+      const cutWidth = this.img.width / this.frames.max
+      const cut = {
+        x: cutWidth * this.frames.current,
+        y: 0,
+        width: cutWidth,
+        height: this.img.height,
+      }
+
+      this.context.drawImage(
+        this.img,
+        cut.x,
+        cut.y,
+        cut.width,
+        cut.height,
+        this.x + this.offset.x,
+        this.y + this.offset.y,
+        cut.width,
+        cut.height
+      )
+
+      this.frames.elapsed++
+      if (this.frames.elapsed % this.frames.hold === 0) {
+        this.frames.current++
+        if (this.frames.current >= this.frames.max - 1) {
+          this.frames.current = 0
+        }
+      }
+    }
+  }
+  updateSprite(newSrcImg: string) {
+    this.img.src = newSrcImg
   }
 }
-
-export class Enemy {
+export class Enemy extends Sprite {
   x: number
   y: number
   height: number
@@ -66,6 +83,11 @@ export class Enemy {
   radius: number
   context: CanvasRenderingContext2D | null
   waypoints: WaypointsType[]
+  health: number
+  velocity: {
+    x: number
+    y: number
+  }
 
   constructor(
     x: number,
@@ -73,6 +95,7 @@ export class Enemy {
     context: CanvasRenderingContext2D | null,
     waypoints: WaypointsType[]
   ) {
+    super(x, y, context, 'src/assets/game/enemy.png', { max: 4 })
     this.x = x
     this.y = y
     this.height = 30
@@ -85,39 +108,66 @@ export class Enemy {
     this.radius = 15
     this.context = context
     this.waypoints = waypoints
+    this.health = 30
+    this.velocity = {
+      x: 0,
+      y: 0,
+    }
   }
-
   draw() {
     if (this.context) {
+      super.draw()
+
       this.context.fillStyle = 'red'
-      this.context.beginPath()
-      this.context.arc(
-        this.center.x,
-        this.center.y,
-        this.radius,
-        0,
-        Math.PI * 2
+      this.context.fillRect(this.x, this.y - 10, this.width, 8)
+
+      this.context.fillStyle = 'green'
+      this.context.fillRect(
+        this.x,
+        this.y - 10,
+        (this.width * this.health) / 30,
+        8
       )
-      this.context.fill()
     }
   }
 
   update() {
     if (this.context) {
       this.draw()
-
       const waypoint = this.waypoints[this.waypointIndex]
       const yDistance = waypoint.y - this.y
       const xDistance = waypoint.x - this.x
       const angle = Math.atan2(yDistance, xDistance)
 
-      this.x += Math.cos(angle)
-      this.y += Math.sin(angle)
+      const prevPostWay = {
+        prev: this.waypoints[this.waypointIndex - 1],
+        post: this.waypoints[this.waypointIndex],
+      }
 
       if (
-        Math.round(this.x) === Math.round(waypoint.x) &&
-        Math.round(this.y) === Math.round(waypoint.y) &&
-        this.waypointIndex !== this.waypoints.length - 1
+        prevPostWay.prev !== undefined &&
+        prevPostWay.post !== undefined &&
+        prevPostWay.post.x < prevPostWay.prev.x
+      ) {
+        super.updateSprite(enemy_left)
+      } else {
+        super.updateSprite(enemy_right)
+      }
+
+      const speed = 2
+
+      this.velocity.x = Math.cos(angle) * speed
+      this.velocity.y = Math.sin(angle) * speed
+
+      this.x += this.velocity.x
+      this.y += this.velocity.y
+
+      if (
+        Math.abs(Math.round(this.x) - Math.round(waypoint.x)) <
+          Math.abs(this.velocity.x) &&
+        Math.abs(Math.round(this.y) - Math.round(waypoint.y)) <
+          Math.abs(this.velocity.y) &&
+        this.waypointIndex < this.waypoints.length - 1
       ) {
         this.waypointIndex++
       }
@@ -141,8 +191,8 @@ export class TowerPlace {
   constructor(x: number, y: number, context: CanvasRenderingContext2D | null) {
     this.x = x
     this.y = y
-    this.size = 50
-    this.color = 'rgba(255,255,255,0.6)'
+    this.size = 32
+    this.color = 'rgba(255,255,255,0.05)'
     this.occupied = false
     this.context = context
   }
@@ -164,7 +214,7 @@ export class TowerPlace {
     ) {
       this.color = 'white'
     } else {
-      this.color = 'rgba(255,255,255,0.6)'
+      this.color = 'rgba(255,255,255,0.05)'
     }
   }
 }
@@ -223,7 +273,7 @@ export class Shot {
   }
 }
 
-export class BuildTower {
+export class BuildTower extends Sprite {
   x: number
   y: number
   center: {
@@ -233,49 +283,63 @@ export class BuildTower {
   shots: Shot[]
   radius: number
   target: EnemyTypes | null = null
-  frames: number
+  spawnTime: number
   context: CanvasRenderingContext2D | null
 
   constructor(x: number, y: number, context: CanvasRenderingContext2D | null) {
+    super(
+      x,
+      y,
+      context,
+      'src/assets/game/tower.png',
+      { max: 6 },
+      { x: 0, y: -90 }
+    )
     this.x = x
     this.y = y
     this.center = {
-      x: this.x + offset / 2,
-      y: this.y + offset / 2,
+      x: this.x + offsetCanvasRect / 2,
+      y: this.y + offsetCanvasRect / 2,
     }
     this.shots = []
     this.radius = 200
     this.target
-    this.frames = 0
+    this.spawnTime = 0
     this.context = context
   }
   draw() {
     if (this.context) {
-      this.context.fillStyle = 'rgb(0,56,176)'
-      this.context.fillRect(this.x, this.y, offset, offset)
-
-      this.context.beginPath()
-      this.context.arc(
-        this.x + offset / 2,
-        this.y + offset / 2,
-        this.radius,
-        0,
-        Math.PI * 2
-      )
-      this.context.fillStyle = 'rgba(0,56,176, .5)'
-      this.context.fill()
+      super.draw()
     }
   }
-  update() {
+  update(mouse: Mouse) {
     if (this.context) {
       this.draw()
-      if (this.frames % 100 === 0 && this.target) {
+      if (this.spawnTime % 100 === 0 && this.target) {
         this.shots.push(
           new Shot(this.center.x, this.center.y, this.target, this.context)
         )
       }
 
-      this.frames++
+      this.spawnTime++
+
+      if (
+        mouse.x > this.x &&
+        mouse.x < this.x + offsetCanvasRect * 2 &&
+        mouse.y > this.y &&
+        mouse.y < this.y + offsetCanvasRect
+      ) {
+        this.context.beginPath()
+        this.context.arc(
+          this.x + (offsetCanvasRect * 2) / 2,
+          this.y + offsetCanvasRect / 2,
+          this.radius,
+          0,
+          Math.PI * 2
+        )
+        this.context.fillStyle = 'rgba(0,56,176, .1)'
+        this.context.fill()
+      }
     }
   }
 }
