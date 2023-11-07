@@ -8,7 +8,7 @@
 
 .comment {
   padding: 12px 16px;
-  border: 2px solid $azure;
+  border: 2px solid $common-white-text;
   display: flex;
   gap: 16px;
 }
@@ -51,7 +51,7 @@
 }
 
 .likeButtonCount {
-  color: $medium-turquoise;
+  color: $button-color;
 }
 
 .comment:not(:last-child) {

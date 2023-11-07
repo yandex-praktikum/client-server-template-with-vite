@@ -8,7 +8,7 @@
 }
 
 .forumTitle {
-  color: $azure;
+  color: $common-white-text;
   text-align: center;
   margin-bottom: 32px;
 }
@@ -24,14 +24,14 @@
 }
 
 .forum {
-  border: 1px solid $azure;
+  border: 1px solid $common-white-text;
   padding: 24px 32px;
   width: 100%;
   display: inline-block;
-  color: $azure;
-  background-color: $medium-turquoise;
+  color: $common-white-text;
+  background-color: $button-color;
   cursor: pointer;
-  box-shadow: 0px 4px 4px 0px $shadow-color;
+  box-shadow: 0 4px 4px 0 $shadow-color;
 }
 
 .forumCreation {

@@ -5,6 +5,9 @@ export type Status = 'idle' | 'loading' | 'rejected' | 'received'
 export type TUserSlice = {
   isAuth: boolean
   isDataFetched: boolean
+  isError: boolean
+  isLoading: boolean
+  errorMessage: string
   user: TUserData
   status: Status
   error: string | null
@@ -13,6 +16,9 @@ export type TUserSlice = {
 export const initialState: TUserSlice = {
   isAuth: false,
   isDataFetched: false,
+  isLoading: false,
+  isError: false,
+  errorMessage: '',
   user: {
     id: 0,
     first_name: '',

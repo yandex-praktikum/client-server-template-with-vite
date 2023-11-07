@@ -10,11 +10,10 @@ import GamePage from './pages/Game'
 import { ForumPage } from './pages/Forum/ForumsList'
 import Error404 from './pages/Error_404'
 import Error5XX from './pages/Error_5XX'
+import { ROUTES_NAMES } from './const/routeNames'
+import UserProfilePage from './pages/UserProfile'
 import LeaderBoardPage from './pages/LeaderBoard'
 import { BaseComponent } from './components/Base'
-import { ForumCreation } from './pages/Forum/ForumCreation'
-import { ForumDetails } from './pages/Forum/ForumDetails'
-import './App.scss'
 import { ErrorBoundary } from './hoc/ErrorBoundary'
 
 const App: FC = () => {
@@ -50,7 +49,7 @@ const App: FC = () => {
         console.log(error)
         navigate(ROUTES_NAMES.SIGN_IN)
       })
-  }
+
 
   return (
     <ErrorBoundary>

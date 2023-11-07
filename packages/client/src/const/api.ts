@@ -18,4 +18,5 @@ export enum END_POINTS_URL {
 export enum API_ERROR_MESSAGES {
   COOKIE_NOT_VALID = 'Cookie is not valid',
   USER_ALREADY_IN_SYSTEM = 'User already in system',
+  UNKNOWN_ERROR = 'Unknown error, please, reload page',
 }
