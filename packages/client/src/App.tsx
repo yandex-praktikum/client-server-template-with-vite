@@ -1,13 +1,8 @@
-import React, { FC, useEffect } from 'react'
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
-import { authApi } from './api/authApi'
-import { ROUTES_NAMES } from './const/routeNames'
-import LoginPage from './pages/Login'
-import RegistrationPage from './pages/RegistrationPage'
-import UserProfilePage from './pages/UserProfile'
+import React, { useEffect } from 'react'
+import { Route, Routes } from 'react-router-dom'
 import MainPage from './pages/Main'
 import GamePage from './pages/Game'
-import { ForumPage } from './pages/Forum/ForumsList'
+import LoginPage from './pages/Login'
 import Error404 from './pages/Error_404'
 import Error5XX from './pages/Error_5XX'
 import { ROUTES_NAMES } from './const/routeNames'
@@ -15,42 +10,29 @@ import UserProfilePage from './pages/UserProfile'
 import LeaderBoardPage from './pages/LeaderBoard'
 import { BaseComponent } from './components/Base'
 import { ErrorBoundary } from './hoc/ErrorBoundary'
+import { withAuthCheck } from './hoc/WithAuthCheck'
+import { ForumPage } from './pages/Forum/ForumsList'
+import { getUserData } from './store/user/selectors'
+import RegistrationPage from './pages/RegistrationPage'
+import { ForumDetails } from './pages/Forum/ForumDetails'
+import { ForumCreation } from './pages/Forum/ForumCreation'
+import { useAppDispatch, useAppSelector } from './hook/hook'
+import { getUserDataThunk, logout } from './store/user/dispatchecrs'
+import './App.scss'
 
-const App: FC = () => {
-  const navigate = useNavigate()
-  const path = useLocation().pathname
+const AppComponent = () => {
+  const dispatch = useAppDispatch()
+  const { user } = useAppSelector(getUserData)
 
   useEffect(() => {
-    if (
-      !(
-        path === ROUTES_NAMES.SIGNUP ||
-        path === ROUTES_NAMES.SIGN_IN ||
-        path === ROUTES_NAMES.SETTINGS
-      )
-    ) {
-      authApi
-        .getUserData()
-        .then(response => console.log(response))
-        .catch(error => {
-          console.log(error)
-          navigate(ROUTES_NAMES.SIGN_IN)
-        })
+    if (!user.id) {
+      dispatch(getUserDataThunk())
     }
-  }, [path])
-}
+  })
 
   const logoutHandler = () => {
-    authApi
-      .logout()
-      .then(response => {
-        console.log(response)
-        navigate(ROUTES_NAMES.SIGN_IN)
-      })
-      .catch(error => {
-        console.log(error)
-        navigate(ROUTES_NAMES.SIGN_IN)
-      })
-
+    dispatch(logout())
+  }
 
   return (
     <ErrorBoundary>
@@ -78,12 +60,17 @@ const App: FC = () => {
           element={<MainPage logoutCallback={logoutHandler} />}
         />
 
-        <Route path={ROUTES_NAMES.GAME} element={<GamePage />} />
+        <Route
+          path={ROUTES_NAMES.GAME}
+          element={<GamePage logoutCallback={logoutHandler} />}
+        />
         <Route path={ROUTES_NAMES.ERROR_5XX} element={<Error5XX />} />
         <Route path={ROUTES_NAMES.ERROR_404} element={<Error404 />} />
       </Routes>
     </ErrorBoundary>
   )
 }
+
+const App = withAuthCheck(AppComponent)
 
 export default App
