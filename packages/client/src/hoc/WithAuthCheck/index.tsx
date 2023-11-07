@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { authApi } from '../../api/authApi'
 import { ROUTES_NAMES } from '../../const/routeNames'
-import { getUserSliceData } from '../../store/user/selectors'
+import { getUserData } from '../../store/user/selectors'
 import { useAppDispatch, useAppSelector } from '../../hook/hook'
 import { setIsAuth, setIsDataFetched } from '../../store/user/slice'
 
@@ -15,7 +15,7 @@ export const withAuthCheck = <P extends Record<string, unknown>>(
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const { pathname } = useLocation()
-    const { isAuth, isDataFetched } = useAppSelector(getUserSliceData)
+    const { isAuth, isDataFetched } = useAppSelector(getUserData)
 
     useEffect(() => {
       const fetchData = async () => {

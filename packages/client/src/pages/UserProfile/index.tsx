@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { FormikValues } from 'formik'
-import { userApi } from '../../api/userApi'
-import { authApi } from '../../api/authApi'
-import { ROUTES_NAMES } from '../../const/routeNames'
+import React, { useEffect } from 'react'
+import { getUserData } from '../../store/user/selectors'
 import { UserAvatar } from '../../components/UserAvatar'
 import { TUserData, TUserPassword } from '../../api/types'
-import { initialData, USER_PROFILE_ERRORS_TEXT } from '../../const/userProfile'
+import { useAppDispatch, useAppSelector } from '../../hook/hook'
 import { UserProfileFormTemplate } from '../../components/UserProfileFormTemplate'
+import {
+  setUserAvatar,
+  changeUserData,
+  getUserDataThunk,
+  changeUserPassword,
+} from '../../store/user/dispatchecrs'
 import style from './index.module.scss'
 
 type TUserProfilePage = {
@@ -15,73 +17,39 @@ type TUserProfilePage = {
 }
 
 const UserProfilePage = ({ logoutCallback }: TUserProfilePage) => {
-  const navigate = useNavigate()
-  const [userData, setUserData] = useState<TUserData>(initialData)
+  const dispatch = useAppDispatch()
+  const userState = useAppSelector(getUserData)
+  const { user, isError, errorMessage } = userState
 
   useEffect(() => {
-    if (!userData.id) {
-      authApi
-        .getUserData()
-        .then(response => {
-          setUserData(response.data)
-        })
-        .catch(() => {
-          navigate(ROUTES_NAMES.SIGN_IN)
-        })
+    if (!user.id) {
+      dispatch(getUserDataThunk())
     }
-  }, [userData.id])
+  }, [dispatch])
 
-  const changeAvatarHandler = (data: FormData): Promise<string> => {
-    return userApi
-      .setNewAvatarData(data)
-      .then(response => {
-        setUserData(response.data)
-        return ''
-      })
-      .catch(error => {
-        return (
-          error.response?.data?.reason || USER_PROFILE_ERRORS_TEXT.UNKNOWN_ERROR
-        )
-      })
+  const changeAvatarHandler = (data: FormData) => {
+    dispatch(setUserAvatar(data))
   }
 
-  const changeUserDataHandler = (data: FormikValues) => {
-    return userApi
-      .changeUserProfileData(data as TUserData)
-      .then(response => {
-        setUserData(response.data)
-        return ''
-      })
-      .catch(error => {
-        return (
-          error.response?.data?.reason || USER_PROFILE_ERRORS_TEXT.UNKNOWN_ERROR
-        )
-      })
+  const changeUserDataHandler = (data: TUserData) => {
+    dispatch(changeUserData(data))
   }
 
-  const changeUserPasswordHandler = (data: TUserPassword): Promise<string> => {
-    return userApi
-      .changeUserPasswordData(data)
-      .then(response => {
-        console.log(response.data)
-        return ''
-      })
-      .catch(error => {
-        return (
-          error.response?.data?.reason || USER_PROFILE_ERRORS_TEXT.UNKNOWN_ERROR
-        )
-      })
+  const changeUserPasswordHandler = (data: TUserPassword) => {
+    dispatch(changeUserPassword(data))
   }
 
   return (
     <div className={style.settingsPageWrapper}>
       <UserAvatar
-        url={userData.avatar}
+        isError={isError}
+        url={user.avatar}
+        errorMessage={errorMessage}
         changeAvatarHandler={changeAvatarHandler}
         className={style.userAvatarMargin}
       />
       <UserProfileFormTemplate
-        userData={userData}
+        userData={userState}
         logout={logoutCallback}
         changeUserDataHandler={changeUserDataHandler}
         changeUserPasswordHandler={changeUserPasswordHandler}

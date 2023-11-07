@@ -1,25 +1,23 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React from 'react'
 import { Form, Formik } from 'formik'
-import { authApi } from '../../api/authApi'
 import { validate } from '../../utils/validator'
-import { useAppDispatch } from '../../hook/hook'
-import { API_ERROR_MESSAGES } from '../../const/api'
+import { clearError } from '../../store/user/slice'
 import { TSignupRequestData } from '../../api/types'
 import { ROUTES_NAMES } from '../../const/routeNames'
 import { FormInput } from '../../components/FormInput'
+import { signup } from '../../store/user/dispatchecrs'
 import { FormHeader } from '../../components/FormHeader'
+import { getUserData } from '../../store/user/selectors'
 import { FormWrapper } from '../../components/FormWrapper'
 import { MyErrorMessage } from '../../components/MyErrorMessage'
+import { useAppDispatch, useAppSelector } from '../../hook/hook'
 import { FormLinkButton } from '../../components/FormAsLinkButton'
 import { FormSubmitButton } from '../../components/FormSubmitButton'
-import { setIsAuth, setIsDataFetched } from '../../store/user/slice'
 import { inputsData, REG_FORM_ERROR } from '../../const/registrationPage'
 
 const RegistrationPage = () => {
-  const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const [errorMessage, setErrorMessage] = useState('')
+  const { isError, errorMessage } = useAppSelector(getUserData)
 
   const registrationHandler = (
     data: TSignupRequestData,
@@ -35,29 +33,12 @@ const RegistrationPage = () => {
       return
     }
 
-    authApi
-      .signup(data)
-      .then(() => {
-        navigate(ROUTES_NAMES.MAIN)
-        dispatch(setIsAuth(true))
-        dispatch(setIsDataFetched(true))
-      })
-      .catch(error => {
-        const { reason } = error.response.data
-
-        if (reason === API_ERROR_MESSAGES.USER_ALREADY_IN_SYSTEM) {
-          navigate(ROUTES_NAMES.MAIN)
-          dispatch(setIsAuth(true))
-          dispatch(setIsDataFetched(true))
-        }
-
-        setErrorMessage(reason)
-      })
+    dispatch(signup(data))
   }
 
   const cleanFetchErrorHandler = () => {
     if (errorMessage) {
-      setErrorMessage('')
+      dispatch(clearError())
     }
   }
 
@@ -93,7 +74,7 @@ const RegistrationPage = () => {
             <FormHeader text="Регистрация" />
             <div className="form-inputs-wrapper">
               {formInputs}
-              {errorMessage ? <MyErrorMessage message={errorMessage} /> : null}
+              {isError ? <MyErrorMessage message={errorMessage} /> : null}
             </div>
           </FormWrapper>
           <div className="form-buttons-wrapper button-block-login-reg-page">

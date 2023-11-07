@@ -1,3 +1,3 @@
 import { RootState } from '../index'
 
-export const getUserSliceData = (store: RootState) => store.user
+export const getUserData = (store: RootState) => store.user

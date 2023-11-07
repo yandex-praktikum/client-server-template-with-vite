@@ -9,13 +9,17 @@ import {
 import style from './index.module.scss'
 
 type TUserAvatar = {
+  isError: boolean
   url: string | null
-  changeAvatarHandler: (data: FormData) => Promise<string>
+  errorMessage: string
+  changeAvatarHandler: (data: FormData) => void
   className?: string
 }
 
 export const UserAvatar = ({
   url,
+  isError,
+  errorMessage,
   changeAvatarHandler,
   className = '',
 }: TUserAvatar) => {
@@ -25,10 +29,10 @@ export const UserAvatar = ({
   const [error, setError] = useState('')
 
   useEffect(() => {
-    if (error && ref.current?.files) {
+    if (isError && ref.current?.files) {
       ref.current.value = ''
     }
-  }, [error])
+  }, [isError])
 
   const onMouseOverHandler = () => {
     setIsShow(true)
@@ -44,9 +48,7 @@ export const UserAvatar = ({
     }
   }
 
-  const onChangeHandler = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files, name } = event.currentTarget
 
     setError('')
@@ -59,11 +61,7 @@ export const UserAvatar = ({
         const formData = new FormData()
         formData.append(name, file)
 
-        const result = await changeAvatarHandler(formData)
-
-        if (result) {
-          setError(result)
-        }
+        changeAvatarHandler(formData)
       } else {
         setError(USER_PROFILE_ERRORS_TEXT.FILE_EXTENSION)
       }
@@ -95,8 +93,11 @@ export const UserAvatar = ({
           onChange={onChangeHandler}
         />
       </div>
-      {error ? (
-        <ErrorMessage text={error} className="error-message-margin" />
+      {error || isError ? (
+        <ErrorMessage
+          text={error || errorMessage}
+          className="error-message-margin"
+        />
       ) : null}
     </div>
   )

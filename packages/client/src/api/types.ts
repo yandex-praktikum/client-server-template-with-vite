@@ -105,3 +105,5 @@ export type TMessage = {
   is_read: boolean
   file: null
 }
+
+export type TRejectWithValue = { rejectValue: string }

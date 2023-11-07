@@ -1,7 +1,7 @@
 @import 'src/assets/style/variables';
 @import 'src/assets/style/fonts';
 
-.useFformInputBlockWrapper {
+.useFormInputBlockWrapper {
   border-bottom: 1px solid white;
   display: flex;
   flex-grow: 1;
@@ -40,9 +40,9 @@
 }
 
 .userFormInput:disabled {
-  color: $medium-turquoise;
+  color: $button-color;
 }
 
 .userFormInput:disabled::placeholder {
-  color: $medium-turquoise;
+  color: $button-color;
 }
