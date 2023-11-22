@@ -1,44 +1,40 @@
 import React, { useEffect } from 'react'
 
-import s from './index.module.scss'
+import { setNewScore } from '../../store/leaderBoard/slice'
 import { useAppDispatch, useAppSelector } from '../../hook/hook'
 import { LeaderBoardItem } from '../../components/LeaderBoardItem'
-import {
-  addNewUserToLeadBoard,
-  getLeaderBoardThunk,
-} from '../../store/leaderBoard/dispatchers'
 import { getLeaderBoardPageData } from '../../store/leaderBoard/selectors'
-import { TeamName } from '../../const/api'
+import {
+  getLeaderBoardThunk,
+  addNewUserToLeadBoard,
+} from '../../store/leaderBoard/dispatchers'
+
+import s from './index.module.scss'
 
 const LeaderBordPage = () => {
   const dispatch = useAppDispatch()
-  const { data } = useAppSelector(getLeaderBoardPageData)
+  const { data, newScore } = useAppSelector(getLeaderBoardPageData)
 
   useEffect(() => {
     dispatch(getLeaderBoardThunk())
   }, [dispatch])
 
   const addLeadHandler = () => {
-    const data = {
-      ratingFieldName: 'Vasia',
-      score: 222,
-    }
-
-    const requestData = {
-      data,
-      ratingFieldName: 'Vasia',
-      teamName: TeamName,
-    }
-
-    dispatch(addNewUserToLeadBoard(requestData))
+    dispatch(addNewUserToLeadBoard(+newScore))
   }
 
-  const leaderBoardItems = data.map(({ name, score }, index) => (
+  const setNewScoreHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.currentTarget
+    dispatch(setNewScore(value))
+  }
+
+  const leaderBoardItems = data.map(({ name, score, avatar }, index) => (
     <LeaderBoardItem
       key={`${name}${score}`}
-      name={name}
       place={index + 1}
+      name={name}
       score={score}
+      avatar={avatar}
     />
   ))
 
@@ -46,7 +42,10 @@ const LeaderBordPage = () => {
     <>
       <h1 className={s.title}>Доска лидеров</h1>
       <div className={s.table}>{leaderBoardItems}</div>
-      <button onClick={addLeadHandler}>AddLead</button>
+      <div className={s.wrapper}>
+        <input value={newScore} type={'number'} onChange={setNewScoreHandler} />
+        <button onClick={addLeadHandler}>AddLead</button>
+      </div>
     </>
   )
 }

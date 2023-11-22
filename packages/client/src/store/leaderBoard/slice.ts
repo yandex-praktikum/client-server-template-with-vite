@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { TLeaderBoardItem } from '../../api/types'
 import { getLeaderBoardThunk } from './dispatchers'
 import { initialState, TLeaderBoardSlice } from './state'
-import { TGetLeaderBoardResponse, TLeaderBoardItem } from '../../api/types'
 
 const pendingState = (state: TLeaderBoardSlice) => {
   state.isError = false
@@ -12,8 +12,8 @@ const rejectedState = (
   state: TLeaderBoardSlice,
   action: PayloadAction<string | undefined>
 ) => {
-  state.isLoading = false
   state.isError = true
+  state.isLoading = false
   state.errorMessage = action.payload || ''
 }
 
@@ -23,9 +23,12 @@ export const leaderBoardSlice = createSlice({
   reducers: {
     setLeaderBoardData(
       state: TLeaderBoardSlice,
-      action: PayloadAction<TGetLeaderBoardResponse>
+      action: PayloadAction<TLeaderBoardItem[]>
     ) {
       state.data = action.payload
+    },
+    setNewScore(state: TLeaderBoardSlice, action: PayloadAction<string>) {
+      state.newScore = action.payload.replace(/\D/g, '')
     },
   },
   extraReducers: builder => {
@@ -37,13 +40,14 @@ export const leaderBoardSlice = createSlice({
           state: TLeaderBoardSlice,
           action: PayloadAction<TLeaderBoardItem[]>
         ) => {
+          console.log(action.payload)
           state.isLoading = false
           state.data = action.payload
         }
       )
-      .addCase(getLeaderBoardThunk.rejected, rejectedState)
+    builder.addCase(getLeaderBoardThunk.rejected, rejectedState)
   },
 })
 
 export const leaderBoardReducer = leaderBoardSlice.reducer
-export const { setLeaderBoardData } = leaderBoardSlice.actions
+export const { setLeaderBoardData, setNewScore } = leaderBoardSlice.actions

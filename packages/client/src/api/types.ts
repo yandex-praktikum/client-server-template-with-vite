@@ -111,22 +111,13 @@ export type TRejectWithValue = { rejectValue: string }
 export type TLeaderBoardItem = {
   name: string
   score: number
+  avatar: string
 }
 
-export type TGetLeaderBoardResponse = TLeaderBoardItem[]
-
-export type TSetLeaderBoardItemData = {
-  name: string
-  score: number
-}
-
-export type TNewLeaderBoardItem = {
-  ratingFieldName: string
-  score: number
-}
+export type TGetLeaderBoardResponse = { data: TLeaderBoardItem }[]
 
 export type TLeaderBoardNewLeaderRequestData = {
-  data: TNewLeaderBoardItem
+  data: TLeaderBoardItem
   ratingFieldName: string
   teamName: string
 }

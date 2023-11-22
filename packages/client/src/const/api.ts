@@ -14,6 +14,7 @@ export enum END_POINTS_URL {
   CHANGE_USER_PASSWORD = '/user/password',
   CHANGE_USER_PROFILE_AVATAR = '/user/profile/avatar',
   LEADER_BOARD = '/leaderboard',
+  LEADER_BOARD_ALL = '/leaderboard/all',
 }
 
 export enum API_ERROR_MESSAGES {
