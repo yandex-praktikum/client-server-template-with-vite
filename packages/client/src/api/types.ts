@@ -107,3 +107,17 @@ export type TMessage = {
 }
 
 export type TRejectWithValue = { rejectValue: string }
+
+export type TLeaderBoardItem = {
+  name: string
+  score: number
+  avatar: string
+}
+
+export type TGetLeaderBoardResponse = { data: TLeaderBoardItem }[]
+
+export type TLeaderBoardNewLeaderRequestData = {
+  data: TLeaderBoardItem
+  ratingFieldName: string
+  teamName: string
+}
