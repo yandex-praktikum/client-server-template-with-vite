@@ -1,10 +1,10 @@
 @import '../../assets/style/variables.scss';
 @import '../../assets/style/fonts.scss';
 
-.wrap{
+.wrap {
   position: relative;
   display: inline-block;
-  &_start{
+  &_start {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -12,13 +12,13 @@
     left: 0;
     bottom: 0;
     right: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
   }
 }
-.end_game{
+.end_game {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -26,7 +26,7 @@
   left: 0;
   bottom: 0;
   right: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,7 +34,7 @@
   font-size: 50px;
   color: $white;
 }
-.info{
+.info {
   position: absolute;
   top: 0;
   display: flex;
@@ -42,18 +42,18 @@
   align-items: center;
   width: 100%;
   padding: 0 50px;
-  &>div{
+  & > div {
     margin-left: 20px;
     font-size: 20px;
   }
 }
-.heats{
+.heats {
   height: 35px;
   right: 50px;
   color: black;
   display: flex;
   align-items: center;
-  img{
+  img {
     position: relative;
     top: 3px;
     margin-right: 5px;
@@ -63,14 +63,14 @@
     min-height: 25px;
   }
 }
-.coins{
+.coins {
   top: 0;
   height: 35px;
   right: 120px;
   color: black;
   display: flex;
   align-items: center;
-  img{
+  img {
     position: relative;
     top: 3px;
     margin-right: 5px;

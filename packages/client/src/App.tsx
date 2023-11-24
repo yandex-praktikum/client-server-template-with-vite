@@ -28,7 +28,7 @@ const AppComponent = () => {
     if (!user.id) {
       dispatch(getUserDataThunk())
     }
-  })
+  }, [dispatch])
 
   const logoutHandler = () => {
     dispatch(logout())
