@@ -4,9 +4,11 @@ export const leaderBoardMockData: TLeaderBoardItem[] = [
   {
     name: 'Vasia',
     score: 222,
+    avatar: null,
   },
   {
     name: 'Petia',
     score: 111,
+    avatar: null,
   },
 ]

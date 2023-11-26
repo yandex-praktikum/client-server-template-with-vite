@@ -111,7 +111,7 @@ export type TRejectWithValue = { rejectValue: string }
 export type TLeaderBoardItem = {
   name: string
   score: number
-  avatar: string
+  avatar: string | null
 }
 
 export type TGetLeaderBoardResponse = { data: TLeaderBoardItem }[]
