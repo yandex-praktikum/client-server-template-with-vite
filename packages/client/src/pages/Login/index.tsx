@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../hook/hook'
 import { MyErrorMessage } from '../../components/MyErrorMessage'
 import { FormLinkButton } from '../../components/FormAsLinkButton'
 import { FormSubmitButton } from '../../components/FormSubmitButton'
+import { YandexAuth } from '../../components/YandexAuth'
 
 const LoginPage = () => {
   const dispatch = useAppDispatch()
@@ -64,6 +65,7 @@ const LoginPage = () => {
               buttonType="submit"
               buttonText="Авторизоваться"
             />
+            <YandexAuth />
             <FormLinkButton
               to={ROUTES_NAMES.SIGNUP}
               buttonText="Нет аккаунта?"

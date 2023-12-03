@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { authApi } from '../../api/authApi'
 import { ROUTES_NAMES } from '../../const/routeNames'
 import { getUserData } from '../../store/user/selectors'
@@ -15,11 +15,19 @@ export const withAuthCheck = <P extends Record<string, unknown>>(
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const { pathname } = useLocation()
+    const [searchParams] = useSearchParams()
     const { isAuth, isDataFetched } = useAppSelector(getUserData)
 
     useEffect(() => {
       const fetchData = async () => {
         try {
+          if (searchParams.get('code')) {
+            await authApi.loginOAuth({
+              code: searchParams.get('code') ?? '',
+              redirect_uri: 'http://localhost:3000',
+            })
+          }
+
           await authApi.getUserData() // Запрос к API
           // Если запрос выполнен успешно, то устанавливаем isAuth в значение true
           dispatch(setIsAuth(true))

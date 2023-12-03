@@ -111,7 +111,7 @@ export type TRejectWithValue = { rejectValue: string }
 export type TLeaderBoardItem = {
   name: string
   score: number
-  avatar: string | null
+  avatar: string
 }
 
 export type TGetLeaderBoardResponse = { data: TLeaderBoardItem }[]
@@ -120,4 +120,21 @@ export type TLeaderBoardNewLeaderRequestData = {
   data: TLeaderBoardItem
   ratingFieldName: string
   teamName: string
+}
+
+export type TOAuthRequestData = {
+  code: string
+  redirect_uri: string
+}
+
+export type TOAuthResponseData = {
+  data: {
+    service_id: string
+  }
+}
+
+export interface ServerError {
+  data: {
+    reason: string
+  }
 }

@@ -7,6 +7,8 @@ export enum END_POINTS_URL {
   SIGN_IN = '/auth/signin',
   AUTH_USER = '/auth/user',
   AUTH_LOGOUT = '/auth/logout',
+  AUTH_YANDEX_LOGIN = '/oauth/yandex',
+  GET_AUTH_YANDEX_INFORMATION = '/oauth/yandex/service-id',
   // userApi
   GET_USER_BY_ID = '/user/',
   SEARCH_USER = '/user/search',
@@ -24,3 +26,5 @@ export enum API_ERROR_MESSAGES {
 }
 
 export const TeamName = 'cherryPies'
+
+export const OAUTH_REDIRECT_URL = 'http://localhost:3000'

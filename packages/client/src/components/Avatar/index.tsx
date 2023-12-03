@@ -14,7 +14,6 @@ export const Avatar = ({
   size = '1.875rem',
   className = '',
 }: TAvatar) => {
-  console.log(imageUrl)
   const src = getFullUrlToResource(imageUrl, BASE_RESOURCES_URL)
 
   return (

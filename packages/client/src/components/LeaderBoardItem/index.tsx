@@ -8,7 +8,7 @@ type TLeaderBoardItemProps = {
   place: number
   name: string
   score: number
-  avatar: string | null
+  avatar: string
 }
 
 export const LeaderBoardItem = ({

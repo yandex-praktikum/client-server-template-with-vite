@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAppSelector } from '../../hook/hook'
 import { Avatar } from '../../components/Avatar'
 import { ROUTES_NAMES } from '../../const/routeNames'
 import { getUserData } from '../../store/user/selectors'
 import s from './index.module.scss'
+import notificationApi from '../../utils/notificationApi'
 
 type TMainPage = {
   logoutCallback: () => void
@@ -12,6 +13,16 @@ type TMainPage = {
 
 const MainPage = ({ logoutCallback }: TMainPage) => {
   const { user } = useAppSelector(getUserData)
+
+  useEffect(() => {
+    const data = {
+      title: 'Notification API',
+      body: 'This is Notification API',
+      src: 'src/assets/tower-icon.png',
+    }
+    notificationApi(data)
+  }, [])
+
   return (
     <div className={s.wrapper}>
       <div className={s.container}>
