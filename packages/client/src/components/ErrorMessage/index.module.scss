@@ -1,0 +1,9 @@
+@import '../../style/variables';
+@import '../../style/fonts';
+
+.errorMessage {
+  color: $red-alert;
+  text-align: center;
+  word-break: break-word;
+  width: 12rem;
+}

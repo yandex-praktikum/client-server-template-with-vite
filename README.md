@@ -1,3 +1,14 @@
+### SSR
+
+1. cd client
+2. yarn build:ssr
+3. yarm build
+4. yarn link "client"
+5. cd server
+6. yarn link client
+7. yarn build
+8. NODE_ENV=development node dist/index.js
+
 ### Как запускать?
 
 1. Убедитесь что у вас установлен `node` и `docker`

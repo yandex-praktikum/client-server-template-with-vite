@@ -1,0 +1,26 @@
+@import '../../style/variables.scss';
+@import '../../style/fonts.scss';
+
+.message-form {
+  width: 100%;
+  display: flex;
+  gap: 32px;
+  align-items: flex-end;
+}
+
+.message-control-container {
+  width: 100%;
+}
+
+.message-control {
+  border: 2px solid $common-white-text;
+  background-color: transparent;
+}
+
+.message-submit {
+  border: 2px solid $common-white-text;
+  background-color: transparent;
+  color: $common-white-text;
+  padding: 14px 24px;
+  cursor: pointer;
+}

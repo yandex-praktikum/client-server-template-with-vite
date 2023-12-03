@@ -1,0 +1,22 @@
+.userFormWrapper {
+  width: 100%;
+}
+
+.userForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  width: 100%;
+}
+
+.submitButtonWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.inputBlockWithoutBorder {
+  border: none;
+}

@@ -1,0 +1,30 @@
+@import '../../style/variables';
+@import '../../style/fonts';
+
+.profileWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 31.875rem;
+  width: 100%;
+}
+
+.saveButton {
+  margin-top: 2.3125rem;
+}
+
+.userProfileFormMargin {
+  margin-bottom: 1.6875rem;
+}
+
+.userNameWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.userNameText {
+  color: $common-black-text;
+  text-align: center;
+}

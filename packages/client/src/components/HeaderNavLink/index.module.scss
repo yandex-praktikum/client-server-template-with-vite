@@ -1,0 +1,13 @@
+@import '../../style/variables';
+
+.link {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 20px;
+}
+
+.active {
+  font-size: 20px;
+  color: $button-color;
+  text-decoration: underline;
+}

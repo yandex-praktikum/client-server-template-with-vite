@@ -1,0 +1,38 @@
+@import '../../style/variables';
+@import '../../style/fonts';
+
+.formInputBlockWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formLabel {
+  color: $common-white-text;
+}
+
+.formInput {
+  border: none;
+  border-bottom: 1px solid $common-white-text;
+  padding: 0.5rem 1rem;
+  width: 100%;
+}
+
+.formInput:focus,
+.formInput:active,
+.formInput:focus-visible {
+  outline: none;
+}
+
+.formInput:disabled {
+  border: none;
+  background: none;
+}
+
+.formInput::placeholder {
+  color: $common-placeholder-color;
+}
+
+.form-error-message {
+  color: $red-alert;
+}

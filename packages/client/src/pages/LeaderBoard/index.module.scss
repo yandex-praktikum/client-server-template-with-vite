@@ -1,0 +1,47 @@
+@import '../../style/variables';
+
+.title {
+  margin-bottom: 45px;
+  text-align: center;
+  font-size: 36px;
+  color: $white;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+}
+
+.table {
+  margin: 0 auto;
+  width: 570px;
+  display: flex;
+  flex-direction: column;
+}
+
+.thead {
+  text-align: center;
+  color: $button-color;
+  font-size: 28px;
+}
+
+.row {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-auto-rows: minmax(80px, auto);
+  border-bottom: $white solid 2px;
+}
+.td_name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.td_body {
+  text-align: center;
+  font-size: 26px;
+  color: $white;
+}

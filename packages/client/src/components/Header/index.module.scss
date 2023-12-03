@@ -1,0 +1,35 @@
+@import '../../style/variables';
+
+.header {
+  height: 95px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+}
+
+.link {
+  text-decoration: none;
+  color: $white;
+  font-size: 20px;
+}
+
+.active {
+  font-size: 20px;
+  color: $button-color;
+  text-decoration: underline;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+}

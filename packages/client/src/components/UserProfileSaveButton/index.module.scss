@@ -1,0 +1,20 @@
+@import '../../style/variables';
+@import '../../style/fonts';
+
+.userProfileButton {
+  color: $common-white-text;
+  cursor: pointer;
+  background-color: $button-color;
+  border: 1px solid $common-white-text;
+  box-shadow: 0 4px 4px 0 $shadow-color;
+  height: 3.125rem;
+  max-width: 18.75rem;
+  width: 100%;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.userProfileButtonText {
+  text-shadow: 0 4px 4px 0 $shadow-color;
+}

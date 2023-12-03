@@ -1,0 +1,54 @@
+@import '../../style/variables';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  position: relative;
+  background-color: $avatar-background;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 7rem;
+  width: 7rem;
+  outline: 1px solid $image-outline;
+}
+
+.avatarCover {
+  position: absolute;
+  background-color: $avatar-hover-background;
+  border-radius: 99px;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  place-content: center;
+  word-break: break-word;
+  height: 7rem;
+  width: 7rem;
+}
+
+.avatarCover {
+  background-color: $avatar-hover-background;
+  border-radius: 99px;
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  word-break: break-word;
+}
+
+.avatarCoverText {
+  line-height: 0.875rem;
+  text-align: center;
+  width: 80%;
+}
+
+.avatarImage {
+  height: 7rem;
+  width: 7rem;
+}

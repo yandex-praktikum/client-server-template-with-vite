@@ -1,0 +1,10 @@
+@import '../../style/fonts';
+@import '../../style/variables';
+
+.formHeader {
+  color: $common-white-text;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}

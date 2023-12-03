@@ -1,0 +1,59 @@
+@import '../../style/variables.scss';
+@import '../../style/fonts.scss';
+
+.commentAvatarContainer {
+  width: 30px;
+  height: 30px;
+}
+
+.comment {
+  padding: 12px 16px;
+  border: 2px solid $common-white-text;
+  display: flex;
+  gap: 16px;
+}
+
+.commentUserAvatar {
+  width: 30px;
+  height: 30px;
+  outline: 1px solid $image-outline;
+  border-radius: 50%;
+  filter: drop-shadow(0px 4px 4px $shadow-color);
+}
+
+.commentUsername {
+  margin-bottom: 8px;
+}
+
+.commentText {
+  margin-bottom: 16px;
+}
+
+.commentActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.commentLikeButton {
+  border-radius: 16px;
+  background-color: $white;
+  display: flex;
+  align-items: center;
+  border: none;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.likeButtonImage {
+  width: 20px;
+  height: 20px;
+}
+
+.likeButtonCount {
+  color: $button-color;
+}
+
+.comment:not(:last-child) {
+  margin-bottom: 16px;
+}

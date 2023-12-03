@@ -1,0 +1,16 @@
+@import '../../style/variables';
+
+.link {
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  width: 64px;
+  height: 64px;
+  background-color: $button-color;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.img {
+  margin: auto;
+}

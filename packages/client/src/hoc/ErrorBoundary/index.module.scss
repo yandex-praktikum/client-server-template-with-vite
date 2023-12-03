@@ -1,0 +1,15 @@
+@import '../../style/variables.scss';
+@import '../../style/fonts.scss';
+
+.wrapper {
+  background-image: url('/src/assets/bg.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: $common-white-text;
+}

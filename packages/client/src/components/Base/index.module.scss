@@ -1,0 +1,21 @@
+@import '../../style/variables';
+
+.wrapper {
+  background-image: url('/src/assets/bg.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.main {
+  padding-top: 45px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 95px);
+}

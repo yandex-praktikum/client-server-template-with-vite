@@ -1,0 +1,48 @@
+@import '../../style/variables';
+@import '../../style/fonts';
+
+.useFormInputBlockWrapper {
+  border-bottom: 1px solid white;
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.625rem;
+}
+
+.userFormLabel {
+  color: $common-black-text;
+}
+
+.userFormInputWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.userFormInput {
+  border: none;
+  background: none;
+  color: $common-black-text;
+  text-align: right;
+  width: 100%;
+}
+
+.userFormInput::placeholder {
+  color: $common-black-text;
+}
+
+.userFormInput:focus,
+.userFormInput:active,
+.userFormInput:focus-visible {
+  outline: none;
+}
+
+.userFormInput:disabled {
+  color: $button-color;
+}
+
+.userFormInput:disabled::placeholder {
+  color: $button-color;
+}

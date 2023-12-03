@@ -1,0 +1,23 @@
+@import '../../style/variables';
+@import '../../style/fonts';
+
+.button {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+.linkButton {
+  color: $link-button-text-color;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
